@@ -701,7 +701,7 @@ public class LivingRoom {
 
 public class CommonGoal {
     CommonGoalType commonGoalType;
-    private List<ScoringToken> token_list;
+    private List<ScoringTokensType> token_list;
     private RuleCommonGoal ruleCommonGoal;
     private LivingRoom livingRoom;
 
@@ -713,9 +713,10 @@ public class CommonGoal {
         this.livingRoom=livingRoom;
     }
 
-    public List<ScoringToken> setTokenList(){
+    public List<ScoringTokensType> setTokenList(){
         this.token_list = livingRoom.getTokenList();
     }
+
 
 
     public void setTokens(int playersNumber){
@@ -739,63 +740,46 @@ public class CommonGoal {
 
 
     public boolean checkGoal() {
-        if(commonGoalType==COMMONGOAL02){
-            if (ruleCommonGoal.checkCorner()){
-                return true
-            }
-            if(commonGoalType==COMMONGOAL02){
-                if(ruleCommonGoal.checkSixCouples()){
-                    return true}}
-
-            if(commonGoalType==CommonGoal03){
-                if(ruleCommonGoal.checkFourGroups()){
-                    return true
-                }}
-
-            if(commonGoalType==COMMONGOAL04){
-                if(ruleCommonGoal.checkSquare()){
-                    return true}
-            }
-
-            if(commonGoalType==COMMONGOAL05){
-                if(ruleCommonGoal.checkColumn1()){
-                    return true}
-            }
-
-            if(commonGoalType==COMMONGOAL06){
-                if(ruleCommonGoal.checkEight()){
-                    return true;}
-            }
-
-            if(commonGoalType==COMMONGOAL07){
-                if(ruleCommonGoal.checkdiagonal()){
-                    return true;}
-            }
-
-            if(commonGoalType==COMMONGOAL08){
-                if(ruleCommonGoal.checkline2()){
-                    return true}
-            }
-
-            if(commonGoalType==COMMONGOAL09){
-                if(ruleCommonGoal.checkColumn2()){
-                    return true}
-            }
-
-            if(commonGoalType==COMMONGOAL10){
-                if(ruleCommonGoal.checkLine3()){
-                    return true;}
-            }
-
-            if(commonGoalType==COMMONGOAL11){
-                if(ruleCommonGoal.checkCrux()){
-                    return true;}
-            }
-
-            if(commonGoalType==COMMONGOAL12){
-                if(ruleCommonGoal.checkStair()){
-                    return true;}
-            }}}
+        switch (commonGoalType) {
+            case COMMONGOAL02:
+                return ruleCommonGoal.checkCorner();
+                break;
+            case COMMONGOAL01:
+                return ruleCommonGoal.checkSixCouples();
+                break;
+            case CommonGOAL03:
+                return ruleCommonGoal.checkFourGroups();
+                break;
+            case COMMONGOAL04:
+                return ruleCommonGoal.checkSquare();
+                break;
+            case COMMONGOAL05:
+                return ruleCommonGoal.CheckColumn1();
+                break;
+            case COMMONGOAL06:
+                return ruleCommonGoal.checkEight();
+                break;
+                case COMMONGOAL07:
+                return ruleCommonGoal.checkDiagonal();
+            break;
+            case COMMONGOAL08:
+                return ruleCommonGoal.CheckLine2();
+            break;
+            case COMMONGOAL09:
+                return ruleCommonGoal.CheckColumn2();
+            break;
+            case COMMONGOAL10
+                return ruleCommonGoal.CheckLine3();
+            break;
+            case COMMONGOAL11:
+                return ruleCommonGoal.checkCrux();
+            break;
+            case COMMONGOAL12:
+                return ruleCommonGoal.checkStair();
+            break;
+        }
+        }
+    }
 
     public int getPoint(){
         public final int i=0;
