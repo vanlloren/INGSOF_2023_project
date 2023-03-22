@@ -5,6 +5,7 @@ package org.example;
 import java.util.List;
 import java.util.Random;
 import java.util.ArrayList;
+import java.util.Vector;
 
 public class GameModel {
     private String chairOwner;
@@ -128,9 +129,11 @@ public class Player {
 
 public class Shelf {
     private ItemTile[][] structure;
-    private structure = new ItemTile[6][5];
-    public boolean getTile(int x;int y){
+    private ItemTile[][] structure = new ItemTile[6][5];
+
+    public boolean getTile(int x, int y){
         //metodo che non serve probabilmente//
+        return false;
     }
     public ItemTile[][] getStructure(){
         return structure;
@@ -142,16 +145,16 @@ public class Shelf {
         boolean availability,validation;
         availability = iscolumnAvailable(int y)[0];
         CellsAvailable = iscolumnAvailable(int y)[1];
-        if (availability == true ) {
+        if (availability) {
             // metodo che permette di distinguire i 3 casi di posizionamento: per una tessera , per due tessere e tre tessere
             // Nella pratica posiziona la tessera in una delle posizioni libere della libreria
-            if (structure[ int x ][int y] ==null && structure[ int x -1][int y ] !=null){
+            if (structure[ int x ][int y]==null && structure[ int x -1][int y ] !=null){
                 structure[ int x ][int y] =ItemTile Tile;
                 position.add(y);
-            }else if (structure[ int x ][int y] ==null ){
+            }elseif (structure[ int x ][int y] ==null ){
                 // caso inserimento in base
                 structure[ int x ][int y] =ItemTile Tile;
-                position.add(y)
+                position.add(y);
             }
         /*else{
             System.err.println("The cell choosen is full");
@@ -170,7 +173,7 @@ public class Shelf {
             int firstElement = y[0];
             // confrontiamo ogni elemento del vettore con il primo elemento
             for (int i = 1; i < y.size(); i++) {
-                if (y[i] != firstElement) {
+                if (y.get(i) != firstElement) {
                     System.out.println("DUMB,tiles picked in the same round MUST be in the same column!")
                     return false;
                 }
@@ -237,6 +240,9 @@ public class Shelf {
         return true;
     }
 
+    public void setStructure(ItemTile[][] structure) {
+        this.structure = structure;
+    }
 }
 
 
