@@ -4,7 +4,6 @@ package org.example;
 
 import java.util.List;
 import java.util.Random;
-import java.util.Collection;
 import java.util.ArrayList;
 
 public class GameModel {
@@ -12,7 +11,7 @@ public class GameModel {
     private int playersNumber;
     private String currPlayer;
     private String matchWinner;
-    private Gameboard myShelfie;
+    private GameBoard myShelfie;
     private List<Player> playersInGame;
     private Player[] turnOrder;
     private Player[] has;
@@ -36,7 +35,7 @@ public class GameModel {
     }
 
     public List<Player> getPlayersInGame(List<Player> playersInGame) {
-        playersInGame = new ArrayList<>();
+        playersInGame = new ArrayList<Player>();
         playersNumber =
         return playersInGame;
     }
@@ -88,7 +87,7 @@ public class Player {
 
     public string getName(){
         return this.nickname;}
-    public List<ScoringToken> setListToken(){
+    public List<ScoringTokensType> setListToken(){
 
 
 
@@ -103,7 +102,7 @@ public class Player {
         if(commonGoal2.checkGoal()) {
             this.points = this.points + commonGoal2.getPoint(){
             }
-            if(personalGoal.checkPersonalGoal()){
+            if(personalGoal){
                 this.points=this.points+personalGoal.getPoint();
 
 
@@ -353,7 +352,7 @@ public class LivingRoom {
     private ItemTile[][] gameTable;
     private CommonGoal commonGoal1;
     private CommonGoal commonGoal2;
-    private List<ScoringToken> tokenList;
+    private List<ScoringTokensType> tokenList;
 
     public void createGameTable(int playerNum) {
         if (playerNum == 2) {
@@ -367,11 +366,11 @@ public class LivingRoom {
             this.gameTable = factory.create();
         }
     }
-    public List<ScoringToken> setTokenList(){
+    public List<ScoringTokensType> setTokenList(){
         tokenList = new ArrayList();
 
     }
-    public List<ScoringToken> getTokenList(){
+    public List<ScoringTokensType> getTokenList(){
         return tokenList;
 
     }
@@ -768,7 +767,7 @@ public class CommonGoal {
             case COMMONGOAL09:
                 return ruleCommonGoal.CheckColumn2();
             break;
-            case COMMONGOAL10
+            case COMMONGOAL10:
                 return ruleCommonGoal.CheckLine3();
             break;
             case COMMONGOAL11:
@@ -782,6 +781,7 @@ public class CommonGoal {
     }
 
     public int getPoint(){
+
         public final int i=0;
         if() // metodo che gestisce lista dei punti token sopra
             // le common goal e quando uno ottiene per primo il token prende i punti e si toglie token dalla lisa
@@ -800,7 +800,7 @@ public class RuleCommonGoal {
     private Shelf myShelf;
     private ItemTile[][] structure;
 
-    public Shelf setMyShelf(Shelf myShelf){
+    public void setMyShelf(Shelf myShelf){
         this.myShelf = myShelf
 
     }
@@ -817,7 +817,8 @@ public class RuleCommonGoal {
     }
 
     public boolean checkSixCouples(){
-        int
+
+
     }
 
 
@@ -857,13 +858,11 @@ public class RuleCommonGoal {
         if(x==1) return true;
         else return false;
     }
-    public boolean checkCrux(ItemTile[][] myshelf){
-        public final int i=1;
-        public final int j=1;
-        for (int i = 1; i <= 4; i++){
+    public boolean checkCrux(){
+        for (int i = 1; i <= 4; i++)
             for (int j = 1; j <= 3; j++) {
                 if (structure[i][j]==structure[i-1][j-1]&&structure[i][j]==structure[i+1][j+1]&&structure[i][j]==structure[i+1][j-1]&&structure[i][j]==structure[i-1][j+1])
-                    return true;}}
+                    return true;}
         return false;
     }
 
@@ -900,9 +899,9 @@ public class RuleCommonGoal {
     }
     public boolean checkEight(){
 
-        public final int i;
-        public final int count;
-        public final int k;
+        int i;
+        int count;
+        int k;
         for(i=k;i<=4;i++){
             for(j=0;j<=5;j++){
                 for(x=){
