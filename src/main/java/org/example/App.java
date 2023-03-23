@@ -849,17 +849,7 @@ public class RuleCommonGoal {
                 break;
             }
         }
-        for(int i=1;i<=3;i++){
-            if(structure[i][i+3]!=structure[i+1][i+2]) {           //devo sistemare antidiagonale con altro for annidato o con una variabile ausiliare
-                x=0;
-                break;
-            }}
-        for(int i=0;i<=3;i++){
-            if(structure[i][i]!=structure[i+1][i+1]) {
-                x=0;
-                break;
-            }}
-    if(x==1) {return true};
+    if(x==1) {return true;}
     else return false;
     }
     public boolean checkCrux(){
@@ -872,19 +862,49 @@ public class RuleCommonGoal {
                     structure[i][j].getColour().equals(structure[i+1][j-1].getColour())&&
                     structure[i][j].getColour().equals(structure[i-1][j+1].getColour())
                     )
-                    return true;}}
+                    return true;
+            }
+        }
         return false;
     }
 
     public boolean checkStair(){
+        boolean checker = true;
+            int k=4;
+            for(int i=5;i>=0;i--){
+                for(int j=k;j>=0;j--){
+                    if(structure[i][j]==null){
+                        checker= false;
+                    }
+                }
+                int z=4;
+                while(z>k) {
+                    if (structure[i][z] != null)
+                        checker = false;
+                    z--;
+                }
+                k--;
+            }
+            int k=0;
+            for(int i=5;i>=0;i--) {
+                for (int j = k; j <= 4; j++) {
+                    if (structure[i][j] == null) {
+                        checker = false;
+                    }
+                    int z = 0;
+                    while (z < k) {
+                        if (structure[i][z] != null)
+                            checker = false;
+                        z++;
+                    }
+                    k++;
+                }
+            }
 
-
-
-
-
-
-    return false;
+    return checker;
     }
+
+
     public boolean CheckColumn1(){
 
 
