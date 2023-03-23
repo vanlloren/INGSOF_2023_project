@@ -801,7 +801,7 @@ public class RuleCommonGoal {
     private ItemTile[][] structure;
 
     public void setMyShelf(Shelf myShelf){
-        this.myShelf = myShelf
+        this.myShelf = myShelf;
 
     }
     public ItemTile[][] setStructure(){
@@ -811,9 +811,7 @@ public class RuleCommonGoal {
 
 
     public boolean checkCorner(){
-        if(structure[0][0].equals(structure[0][4])&&structure[0][0].equals(structure[5][0])&&structure[0][0].equals(structure[5][4])&&structure[0][0]!=null)
-            return true;
-        return false;
+        return structure[0][0] != null && structure[0][0].equals(structure[0][4]) && structure[0][0].equals(structure[5][0]) && structure[0][0].equals(structure[5][4]);
     }
 
     public boolean checkSixCouples(){
@@ -833,45 +831,59 @@ public class RuleCommonGoal {
 
 
 
+
     }
     public boolean checkDiagonal(){
-        public final int i;
-        public final int x=1;
-        for(i=0;i<=3,i++){
-            if(structure[i][i]!=structure[i+1][i+1]) {
+        int x=1;
+        for(int i=0;i<=3;i++){
+            if(structure[i][i]!=null&&structure[i+1][i+1]!=null&&
+               !(structure[i][i].getColour().equals(structure[i+1][i+1].getColour()))){
                 x=0;
+                break;
             }
         }
-        for(i=1;i<=4,i++){
-            if(structure[i][i]!=structure[i+1][i+1]) {
+        for(int i=1;i<=4;i++){
+            if(structure[i][i]!=null&&structure[i+1][i+1]!=null&&
+               !(structure[i][i].getColour().equals(structure[i+1][i+1].getColour()))) {
                 x=0;
+                break;
             }
         }
-        for(i=1;i>=3,i++){
+        for(int i=1;i<=3;i++){
             if(structure[i][i+3]!=structure[i+1][i+2]) {           //devo sistemare antidiagonale con altro for annidato o con una variabile ausiliare
                 x=0;
+                break;
             }}
-        for(i=0;i<=3,i++){
+        for(int i=0;i<=3;i++){
             if(structure[i][i]!=structure[i+1][i+1]) {
                 x=0;
+                break;
             }}
-        if(x==1) return true;
-        else return false;
+    if(x==1) {return true};
+    else return false;
     }
     public boolean checkCrux(){
-        for (int i = 1; i <= 4; i++)
+        for (int i = 1; i <= 4; i++){
             for (int j = 1; j <= 3; j++) {
-                if (structure[i][j]==structure[i-1][j-1]&&structure[i][j]==structure[i+1][j+1]&&structure[i][j]==structure[i+1][j-1]&&structure[i][j]==structure[i-1][j+1])
-                    return true;}
+                if (structure[i][j]!=null&&structure[i-1][j-1]!=null&&
+                    structure[i+1][j+1]!=null&&structure[i+1][j-1]!=null&&structure[i-1][j+1]!=null&&
+                    structure[i][j].getColour().equals(structure[i-1][j-1].getColour())&&
+                    structure[i][j].getColour().equals(structure[i+1][j+1].getColour())&&
+                    structure[i][j].getColour().equals(structure[i+1][j-1].getColour())&&
+                    structure[i][j].getColour().equals(structure[i-1][j+1].getColour())
+                    )
+                    return true;}}
         return false;
     }
 
-    public boolean checkStair()  {
+    public boolean checkStair(){
 
 
 
 
 
+
+    return false;
     }
     public boolean CheckColumn1(){
 
