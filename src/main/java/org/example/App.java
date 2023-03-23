@@ -79,13 +79,13 @@ public class Player {
 
     }
     public setRuleCommonGoal(){
-        ruleCommonGoal = new RuleCommonGoal()
-        ruleCommonGoal.setMyShelf(personalShelf)}
+        ruleCommonGoal = new RuleCommonGoal();
+        ruleCommonGoal.setMyShelf(personalShelf);}
 
     public Shelf setShelf(){
-        personalShelf= new Shelf() }
+        personalShelf= new Shelf(); }
 
-    public string getName(){
+    public String getName(){
         return this.nickname;}
     public List<ScoringTokensType> setListToken(){
 
@@ -96,11 +96,11 @@ public class Player {
     public int calculatePoint(){
         if(commonGoal1.checkGoal()){
 
-            this.points=this.points+commonGoal1.getPoint()
+            this.points=this.points+commonGoal1.getPoint();
 
         }
         if(commonGoal2.checkGoal()) {
-            this.points = this.points + commonGoal2.getPoint(){
+            this.points = this.points + commonGoal2.getPoint();{
             }
             if(personalGoal){
                 this.points=this.points+personalGoal.getPoint();
@@ -118,7 +118,7 @@ public class Player {
         commonGoal2 = new CommonGoal();
         commonGoal2 = livingRoom.setCommonGoal2();
     }
-    public void insertTile(int x;int y) throw NotValidCoordinate,Notavailable{
+    public void insertTile(int x,int y) throws NotValidCoordinate,Notavailable{
         //metodo che gestisce inserimento in libreria
     }
 }
@@ -129,7 +129,7 @@ public class Player {
 public class Shelf {
     private ItemTile[][] structure;
     private structure = new ItemTile[6][5];
-    public boolean getTile(int x;int y){
+    public boolean getTile(int x,int y){
         //metodo che non serve probabilmente//
     }
     public ItemTile[][] getStructure(){
@@ -251,11 +251,12 @@ public class GameBoard {
     private int firstX;
     private int firstY;
 
-    private List<PlayableItemTile> ToPlayerTiles;//sono le tessere che il giocatore ha raccolto dalla plancia, forse si può fare meglio
+    private List<PlayableItemTile> toPlayerTiles;//sono le tessere che il giocatore ha raccolto dalla plancia, forse si può fare meglio
 
     public GameBoard(){
         this.getItemBag();
-        this.getLivingRoom(playerNum //sarà fornito dal GameModel, DA FARE);
+        this.getLivingRoom(playerNum); //sarà fornito dal GameModel, DA FARE);
+        toPlayerTiles = new ArrayList<PlayableItemTile>();
     }
     public void getItemBag(){ //genera la ItemBag a ogni inizio partita
         ItemBag helperBag = new ItemBag();
@@ -284,7 +285,7 @@ public class GameBoard {
     }
 
     public void getNextInGameTile(){
-        this.NextInGameTile = bag.randPickTile;
+        this.nextInGameTile = bag.randPickTile();
     }
 
     public boolean pickedTilesNum() {//tiene conto del numero d' ItemTiles pescate ogni turno
@@ -974,30 +975,54 @@ public class ItemBag(){
 
     private List<PlayableItemTile> bag;
 
-    public void putTiles() throws PlayableItemTileInsertionException{
 
+
+    public void putTiles(){
+        bag = new ArrayList<PlayableItemTile>();
         PlayableItemTileFactory factory = new PlayableItemTileFactory();
 
         for(int i=0; i<132; i++){
             if(i<22){
-                bag.add(factory.createPlayableItemTile("GREEN", i+1));
+                try {
+                    bag.add(factory.createPlayableItemTile("GREEN", i + 1));
+                }catch(InvalidPlayableItemTileColourException exc){
+
+                }
             }else if(i<44){
-                bag.add(factory.createPlayableItemTile("WHITE", i+1));
+                try{
+                    bag.add(factory.createPlayableItemTile("WHITE", i+1));
+                }catch(InvalidPlayableItemTileColourException exc){
+
+                }
             }else if(i<66){
-                bag.add(factory.createPlayableItemTile("YELLOW", i+1));
+                try{
+                    bag.add(factory.createPlayableItemTile("YELLOW", i+1));
+                }catch(InvalidPlayableItemTileColourException exc){
+
+                }
             }else if(i<88){
-                bag.add(factory.createPlayableItemTile("BLUE", i+1));
+                try{
+                    bag.add(factory.createPlayableItemTile("BLUE", i+1));
+                }catch(InvalidPlayableItemTileColourException exc){
+
+                }
             }else if(i<110){
-                bag.add(factory.createPlayableItemTile("CYAN", i+1));
+                try{
+                    bag.add(factory.createPlayableItemTile("CYAN", i+1));
+                }catch(InvalidPlayableItemTileColourException exc){
+
+                }
             }else if(i<132){
-                bag.add(factory.createPlayableItemTile("PINK", i+1));
-            }else{
-                throw new PlayableItemTileInsertionException();
+                try{
+                    bag.add(factory.createPlayableItemTile("PINK", i+1));
+                }catch(InvalidPlayableItemTileColourException exc){
+
+                }
             }
         }
     }
 
-    //dovrebbe effettuare pick randomico di ItemTile da ItemBag
+    //dovrebbe effettuare pick random di ItemTile da ItemBag
     public PlayableItemTile randPickTile(){
         final Random RAND = new Random();
         int index = RAND.nextInt(bag.size());
@@ -1074,7 +1099,6 @@ public class NullItemTile extends ItemTile{
     }
 }
 public class PlayableItemTile extends ItemTile {
-    //private ItemsTileType type;
     private Colour colour;
     private int idCode;
     private boolean availability;
