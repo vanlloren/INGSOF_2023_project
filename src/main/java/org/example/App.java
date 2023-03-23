@@ -762,13 +762,13 @@ public class CommonGoal {
                 return ruleCommonGoal.checkDiagonal();
             break;
             case COMMONGOAL08:
-                return ruleCommonGoal.CheckLine2();
+                return ruleCommonGoal.CheckLine1();
             break;
             case COMMONGOAL09:
                 return ruleCommonGoal.CheckColumn2();
             break;
             case COMMONGOAL10:
-                return ruleCommonGoal.CheckLine3();
+                return ruleCommonGoal.CheckLine2();
             break;
             case COMMONGOAL11:
                 return ruleCommonGoal.checkCrux();
@@ -811,9 +811,9 @@ public class RuleCommonGoal {
 
 
     public boolean checkCorner(){
-
-        if(structure[0][0]==structure[0][4]&&structure[0][0]==structure[5][0]&&structure[0][0]==structure[5][4])
+        if(structure[0][0].equals(structure[0][4])&&structure[0][0].equals(structure[5][0])&&structure[0][0].equals(structure[5][4])&&structure[0][0]!=null)
             return true;
+        return false;
     }
 
     public boolean checkSixCouples(){
@@ -893,29 +893,41 @@ public class RuleCommonGoal {
 
 
     }
-    public boolean CheckLine3(){
 
 
-    }
+
+
     public boolean checkEight(){
-
-        int i;
-        int count;
-        int k;
-        for(i=k;i<=4;i++){
-            for(j=0;j<=5;j++){
-                for(x=){
-
+        for(int i=0;i< structure.length;i++) {
+            for (int j = 0; j < structure.length; j++) {
+                int count = 0;
+                if (structure[i][j] != null) {
+                    Colour value = structure[i][j].getColour();
+                    for (int k = 0; k < structure.length; k++) {
+                        for (int l = 0; l < structure.length; l++) {
+                            if (structure[k][l] != null && structure[k][l].getColour().equals(value)) {
+                                count++;
+                            }
+                            if (count >= 8) {
+                                return true;
+                                break;
+                            }
+                        }
+                    }
                 }
             }
-
-
         }
-
-
-
+        return false;
     }
 }
+
+
+
+
+
+
+
+
 
 <<<<<<< HEAD
 
