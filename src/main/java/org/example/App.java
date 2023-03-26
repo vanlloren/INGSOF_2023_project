@@ -833,18 +833,84 @@ public class RuleCommonGoal {
     }
 
     public boolean checkSixCouples(){
-        //guarda checksquare perchè è versione semplificata
+        Colour[][] matrix = new Colour[][];
+        int count = 0;
+
+        for(int i=0;i<6;i++) {
+            for (int j = 0; j < 5; j++) {
+                if (structure[i][j] != null) {
+                    matrix[i][j] = structure[i][j].getColour();
+                }
+            }
+        }
+            //inizio a controllare quante coppie ci sono e appena ne trovo una la rendo null per evitare sovrapposizione(caso particolare forma ad L di 4 tessere uguali devo valutare la disposizione della coppia
+            //in maniera tale da contare 2 coppie e non una coppia sbagliata con due caselle non adiacenti che se avessi scelto meglio avrei ottenuto due coppie
+            for(int i=5;i>0;i--){
+                for(int j=0;j<4;j++){
+                    if(matrix[i][j]!=null&&matrix[i][j+1]!=null&&
+                       matrix[i][j+1]==matrix[i][j]) {
+                        count++;
+                        matrix[i][j] = null;
+                        matrix[i][j+1] = null;
+                    }
+                    if(i<5){
+                        if(matrix[i][j]!=null&&matrix[i+1][j]!=null&&
+                           matrix[i][j]==matrix[i+1][j]){
+                            count++;
+                            matrix[i][j] = null;
+                            matrix[i+1][j] = null;
+                        }
+                    }
+                }
+            }
+            if(count>=6)
+                return true ;
+            else return false;
+        }
 
 
-    }
+
 
 
 
 
     public boolean checkFourGroups(){
-
-
-
+        Colour[][] matrix = new Colour[][];
+        int count = 0;
+        for(int i=0;i<6;i++) {
+            for (int j = 0; j < 5; j++) {
+                if (structure[i][j] != null) {
+                    matrix[i][j] = structure[i][j].getColour();
+                }
+            }
+        }
+        for(int i=5;i>0;i--){
+            for(int j=0;j<2;j++){
+                if(matrix[i][j]!=null&&matrix[i][j+1]!=null&&
+                   matrix[i][j+2]!=null&&matrix[i][j+3]!=null&&matrix[i][j+1]==matrix[i][j]
+                   &&matrix[i][j+2]==matrix[i][j]&& matrix[i][j+3]==matrix[i][j]) {
+                    count++;
+                    matrix[i][j] = null;
+                    matrix[i][j+1] = null;
+                    matrix[i][j+2] = null;
+                    matrix[i][j+3] = null;
+                }
+                if(i<2){
+                    if(matrix[i][j]!=null&&matrix[i+1][j]!=null&&
+                            matrix[i+2][j]!=null&&matrix[i+3][j]!=null&&
+                            matrix[i][j]==matrix[i+1][j]&&matrix[i][j]==matrix[i+2][j]&&matrix[i][j]==matrix[i+3][j]){
+                        count++;
+                        matrix[i][j] = null;
+                        matrix[i+1][j] = null;
+                        matrix[i+2][j] = null;
+                        matrix[i+3][j] = null;
+                    }
+                }
+            }
+        }
+        if(count>=4)
+            return true ;
+        else return false;
     }
     public boolean checkSquare(){                          //per scrivere codice che controlla le 6 coppie sfrutta questo algoritmo modificando alcuni parametri
         boolean checker = false;
