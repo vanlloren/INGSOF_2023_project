@@ -315,6 +315,7 @@ public class GameBoard {
     //della tessera da raccogliere dalla LivingRoom
     public void getToPlayerFirstTile(int x, int y) throws UnavailableTileException{ //prende tessera 1 dalla LivingRoom
 
+        toPlayerTiles = new ArrayList<PlayableItemTile>();
         boolean isAvailable = livingRoom.isTileAvailable(x, y);
         //questo check si focalizza sulla disponibilità della tessera che l'utente vuole
         if(isAvailable) {
@@ -1231,37 +1232,37 @@ public class ItemBag(){
                 try {
                     bag.add(factory.createPlayableItemTile("GREEN", i + 1));
                 }catch(InvalidPlayableItemTileColourException exc){
-
+                    //exc.printError();
                 }
             }else if(i<44){
                 try{
                     bag.add(factory.createPlayableItemTile("WHITE", i+1));
                 }catch(InvalidPlayableItemTileColourException exc){
-
+                    //exc.printError();
                 }
             }else if(i<66){
                 try{
                     bag.add(factory.createPlayableItemTile("YELLOW", i+1));
                 }catch(InvalidPlayableItemTileColourException exc){
-
+                    exc.printError();
                 }
             }else if(i<88){
                 try{
                     bag.add(factory.createPlayableItemTile("BLUE", i+1));
                 }catch(InvalidPlayableItemTileColourException exc){
-
+                    exc.printError();
                 }
             }else if(i<110){
                 try{
                     bag.add(factory.createPlayableItemTile("CYAN", i+1));
                 }catch(InvalidPlayableItemTileColourException exc){
-
+                    exc.printError();
                 }
             }else if(i<132){
                 try{
                     bag.add(factory.createPlayableItemTile("PINK", i+1));
                 }catch(InvalidPlayableItemTileColourException exc){
-
+                    exc.printError();
                 }
             }
         }
@@ -1639,6 +1640,11 @@ public class PlayableItemTileInsertionException extends Exception {
 }
 
 public class InvalidPlayableItemTileColourException extends Exception {
+    /*
+     public void printError(){
+        System.out.println("Invalid Colour");
+    }
+    */
 }
 
 public class MaxTilesPickedException extends Exception {
