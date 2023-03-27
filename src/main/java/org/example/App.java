@@ -169,22 +169,41 @@ public class Player {
 //-------------------------------------------------
 
 public class Shelf {
-    private ItemTile[][] structure
-    private structure = new ItemTile[6][5];
-    public boolean getTile(int x,int y){
-        //metodo che non serve probabilmente//
-    }
+    private ItemTile[][] structure = new ItemTile[5][4];
+
     public ItemTile[][] getStructure(){
         return this.structure;
     }
-    public Vector<Integer> putTile ( int x , int y , ItemTile Tile , int NumberOfTilesPicked){
-        int CellsAvailable;
+    public void setStructure(ItemTile[][] structure) {
+        this.structure = structure;
+    }
+    public ItemTile getShelfTile(int x ,int y){
+        return this.structure[x][y];
+    }
+    public ItemTile[][] getShelf(){
+        return structure;
+    }
+    public void isColumnAvailableInGame(int y){
+        if(structure[0][y]!=null){
+            System.out.println("The column is full");
+        }else{
+            int count = 0;
+            for (int i = 0; i < 5; i++) {
+                if (structure[i][Y] == null) {
+                    count++;
+                }
+            }
+            System.out.println("The column is available and the number of cells free are: " + count);
+        }
+    }
+    public Vector<Integer> putTile (int x , int y , ItemTile Tile , int numberOfTilesPicked){
+
+        Object CellsAvailable;
         Vector<Integer> position = new Vector<Integer>();// The Vector class implements a growable array of objects. Like an array, it contains components that can be accessed using an integer index.
         // However, the size of a Vector can grow or shrink as needed to accommodate adding and removing items after the Vector has been created.
-        Object availability;
-        availability = iscolumnAvailable(y, numberOfTilesPicked)[0];
-        CellsAvailable = iscolumnAvailable(y, numberOfTilesPicked)[1];
-        if (availability[0]==true) {
+        boolean availability;
+        availability = (boolean) iscolumnAvailable(y, numberOfTilesPicked)[0];
+        if (availability==true) {
             // metodo che permette di distinguire i 3 casi di posizionamento: per una tessera , per due tessere e tre tessere
             // Nella pratica posiziona la tessera in una delle posizioni libere della libreria
             if (structure[x][y]==null && structure[x -1][y] !=null){
@@ -223,19 +242,20 @@ public class Shelf {
             return false;
         }
     }
-
-    public static Object[] iscolumnAvailable ( int Y , int NumberOfTilesPicked) {
+    public Object[] iscolumnAvailable ( int Y , int NumberOfTilesPicked) {
         // Metodo che permette di controllare che la colonna scelta dal giocatore per il posizionamento delle tessere sia effettivamente disponibile;
         // Dato che l'inserimento avviene stile pila(ovvero prendo un tile singola e la inserisco immediatamente nella libreria) applicheremo un approccio LIFO.
         int cellsAvailable = 0;
         boolean condition = false;
         boolean flag = true;
-        while (flag) {
-            for (int i = 0; i < 5; i++) {
+        while (flag && cellsAvailable != 4) {
+            for (int i = 0; i < 4; i++) {
                 if (structure[i][Y] != null) {
                     flag = false;
+                    break; // Esci dal ciclo for quando trovi una cella non-vuota
+                } else {
+                    cellsAvailable = i; // Aggiorna l'indice dell'ultima cella vuota
                 }
-                cellsAvailable = i;
             }
         }
         if (cellsAvailable != 0) {
@@ -266,7 +286,7 @@ public class Shelf {
             System.err.println("The column chosen is not available");
             System.err.println("Please choose another column or pick a different number of tiles");
         }
-        Object[] conditions = {condition, cellsAvailable};
+        Object[] conditions =new Object[]{condition, cellsAvailable};
         return conditions;
     }
 //nel controller

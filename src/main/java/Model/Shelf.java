@@ -4,13 +4,26 @@ import org.example.ItemTile;
 
 
 public class Shelf {
-    private ItemTile[][] structure
+    private ItemTile[][] structure;
     private structure = new ItemTile[6][5];
     public boolean getTile(int x,int y){
         //metodo che non serve probabilmente//
     }
     public ItemTile[][] getStructure(){
         return this.structure;
+    }
+    public void isColumnAvailableInGame(int y) {
+        if (structure[0][y] != null) {
+            System.out.println("The column is full");
+        } else {
+            int count = 0;
+            for (int i = 0; i < 5; i++) {
+                if (structure[i][Y] == null) {
+                    count++;
+                }
+            }
+            System.out.println("The column is available and the number of cells free are: " + count);
+        }
     }
     public Vector<Integer> putTile ( int x , int y , ItemTile Tile , int NumberOfTilesPicked){
         int CellsAvailable;
@@ -57,7 +70,7 @@ public class Shelf {
             return false;
         }
     }
-    public static Object[] iscolumnAvailable ( int Y , int NumberOfTilesPicked) {
+    public Object[] iscolumnAvailable(int Y, int NumberOfTilesPicked) {
         // Metodo che permette di controllare che la colonna scelta dal giocatore per il posizionamento delle tessere sia effettivamente disponibile;
         // Dato che l'inserimento avviene stile pila(ovvero prendo un tile singola e la inserisco immediatamente nella libreria) applicheremo un approccio LIFO.
         int cellsAvailable;
@@ -69,33 +82,36 @@ public class Shelf {
             for (int i = 0; i < 5; i++) {
                 if (structure[i][Y] != null) {
                     flag = false;
+                    break; // Esci dal ciclo for quando trovi una cella non-vuota
+                } else {
+                    cellsAvailable = i; // Aggiorna l'indice dell'ultima cella vuota
                 }
-                cellsAvailable = i;
             }
         }
         if (cellsAvailable != 0) {
-            switch (cellsAvailable)
-            case 1:
-                System.out.println("You can put ONLY one tile in the column:" + int Y);
-                if (cellsAvailable < NumberOfTilesPicked) {
-                    System.err.println("Too many tiles picked");
-                    System.out.println("Please select another column of the shelf");
-                } else {
+            switch (cellsAvailable) {
+                case 1:
+                    System.out.println("You can put ONLY one tile in the column:" + int Y);
+                    if (cellsAvailable < NumberOfTilesPicked) {
+                        System.err.println("Too many tiles picked");
+                        System.out.println("Please select another column of the shelf");
+                    } else {
+                        condition = true;
+                    }
+                    break;
+                case 2:
+                    System.out.println("You can put ONLY two tiles in the column:" + int Y);
+                    if (cellsAvailable < NumberOfTilesPicked) {
+                        System.err.println("Too many tiles picked");
+                        System.out.println("Please select another column of the shelf");
+                    } else {
+                        condition = true;
+                    }
+                    break;
+                default:
+                    System.out.println("You can put up to 3 tiles in the column:" + int Y);
                     condition = true;
-                }
-                break;
-            case 2:
-                System.out.println("You can put ONLY two tiles in the column:" + int Y);
-                if (cellsAvailable < NumberOfTilesPicked) {
-                    System.err.println("Too many tiles picked");
-                    System.out.println("Please select another column of the shelf");
-                } else {
-                    condition = true;
-                }
-                break;
-            default:
-                System.out.println("You can put up to 3 tiles in the column:" + int Y);
-                condition = true;
+            }
         } else {
             System.err.println("The column chosen is not available");
             System.err.println("Please choose another column or pick a different number of tiles");
