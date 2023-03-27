@@ -214,13 +214,6 @@ public class Shelf {
                 structure[x][y]=Tile;
                 position.add(y);
             }
-        /*else{
-            System.err.println("The cell choosen is full");
-            System.err.println("Please choose another cell");
-        }*/
-    /*else {
-        System.err.println("You cannot choose different columns ");
-    }*/
         }
         return position;
     }
