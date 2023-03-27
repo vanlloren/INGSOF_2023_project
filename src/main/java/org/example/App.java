@@ -164,10 +164,10 @@ public class Shelf {
     }
     public ItemTile[][] putTile ( int x , int y , ItemTile Tile , int numberOfTilesPicked){
 
-        object CellsAvailable;
+        Object CellsAvailable;
         Vector<Integer> position = new Vector<Integer>();// The Vector class implements a growable array of objects. Like an array, it contains components that can be accessed using an integer index.
         // However, the size of a Vector can grow or shrink as needed to accommodate adding and removing items after the Vector has been created.
-        object availability;
+        Object availability;
         availability = iscolumnAvailable(y, numberOfTilesPicked)[0];
         CellsAvailable = iscolumnAvailable(y, numberOfTilesPicked)[1];
         if (availability[0]==true) {
@@ -208,14 +208,12 @@ public class Shelf {
             return false;
         }
     }
-    public static object[] iscolumnAvailable ( int Y , int NumberOfTilesPicked) {
+    public static Object[] iscolumnAvailable ( int Y , int NumberOfTilesPicked) {
         // Metodo che permette di controllare che la colonna scelta dal giocatore per il posizionamento delle tessere sia effettivamente disponibile;
         // Dato che l'inserimento avviene stile pila(ovvero prendo un tile singola e la inserisco immediatamente nella libreria) applicheremo un approccio LIFO.
-        int cellsAvailable;
-        cellsAvailable = 0;
-        boolean condition, flag;
-        condition = false;
-        flag = true;
+        int cellsAvailable = 0;
+        boolean condition = false;
+        boolean flag = true;
         while (flag) {
             for (int i = 0; i < 5; i++) {
                 if (structure[i][Y] != null) {
@@ -252,7 +250,8 @@ public class Shelf {
             System.err.println("The column chosen is not available");
             System.err.println("Please choose another column or pick a different number of tiles");
         }
-        return new object[]{condition, cellsAvailable};
+        Object[] conditions = {condition, cellsAvailable};
+        return conditions;
     }
 
     public boolean isFull(ItemTile[][] structure) {
