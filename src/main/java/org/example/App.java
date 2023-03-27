@@ -1,11 +1,8 @@
 package org.example;
-
 package org.example;
 
-import java.util.List;
-import java.util.Random;
-import java.util.ArrayList;
-import java.util.Vector;
+import java.lang.reflect.Array;
+import java.util.*;
 
 public class GameModel {
     private String chairOwner;
@@ -151,7 +148,7 @@ public class Player {
 
 
 public class Shelf {
-    private ItemTile[][] structure = new ItemTile[6][5];
+    private ItemTile[][] structure = new ItemTile[5][4];
 
     public ItemTile[][] getStructure(){
         return this.structure;
@@ -162,7 +159,22 @@ public class Shelf {
     public ItemTile getShelfTile(int x ,int y){
         return this.structure[x][y];
     }
-    public ItemTile[][] putTile ( int x , int y , ItemTile Tile , int numberOfTilesPicked){
+    public void isColumnAvailableInGame(int y){
+        if(structure[0][y]!=null){
+            System.out.println("The column is full");
+        }else{
+            ItemTile[] column = new ItemTile[5];
+            column = structure[0][Y];
+            int count = 0;
+            for (int i = 0; i < 5; i++) {
+                if (column[i] == null) {
+                    count++;
+                }
+            }
+            System.out.println("The column is available and the number of cells free are: " + count);
+        }
+    }
+    public Vector<Integer> putTile (int x , int y , ItemTile Tile , int numberOfTilesPicked){
 
         Object CellsAvailable;
         Vector<Integer> position = new Vector<Integer>();// The Vector class implements a growable array of objects. Like an array, it contains components that can be accessed using an integer index.
@@ -189,17 +201,17 @@ public class Shelf {
         System.err.println("You cannot choose different columns ");
     }*/
         }
-        return structure;
+        return position;
     }
     public boolean CheckSamePosition(Vector<Integer> y){
         // verifichiamo se il vettore ha almeno un elemento
         if (y.size() > 0) {
             // memorizziamo il primo elemento del vettore in una variabile
-            int firstElement = y[0];
+            int firstElement = y.get(0);
             // confrontiamo ogni elemento del vettore con il primo elemento
             for (int i = 1; i < y.size(); i++) {
                 if (y.get(i) != firstElement) {
-                    System.out.println("DUMB,tiles picked in the same round MUST be in the same column!")
+                    System.out.println("DUMB,tiles picked in the same round MUST be in the same column!");
                     return false;
                 }
             }
