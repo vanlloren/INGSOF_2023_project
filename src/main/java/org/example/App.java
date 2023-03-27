@@ -159,6 +159,9 @@ public class Shelf {
     public ItemTile getShelfTile(int x ,int y){
         return this.structure[x][y];
     }
+    public ItemTile[][] getShelf(){
+        return structure;
+    }
     public void isColumnAvailableInGame(int y){
         if(structure[0][y]!=null){
             System.out.println("The column is full");
