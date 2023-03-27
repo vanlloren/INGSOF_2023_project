@@ -13,7 +13,7 @@ public class GameModel {
     private String currPlayer;
     private String matchWinner;
     private GameBoard myShelfie;
-    private List<Player> playersInGame;
+    private ArrayList<Player> playersInGame = new ArrayList<Player>();
     private Player[] turnOrder;
     private Player[] has;
 
@@ -27,27 +27,39 @@ public class GameModel {
 
 
     }
+    public int getPlayersNumber(){
+        return this.playersNumber;
+    }
+    public void setPlayersNumber(){
+        this.playersNumber = playersInGame.size();
 
-
+    }
 
     public void setChairOwner(Player) {
         // ipotizzo di determinare/ricevere il nome utente di chi effettua il primo turno di gioco e di
         // inserirlo in chairOwner
     }
 
-    public List<Player> getPlayersInGame(List<Player> playersInGame) {
-        playersInGame = new ArrayList<Player>();
-        playersNumber =
+    public ArrayList<Player> getPlayersInGame() {
         return playersInGame;
     }
+    public void setPlayersInGame(){
+        //metodo che inserisce i giocatori quando si collegano va implementato
 
-    public String addPlayer() {
-        return player;
+
     }
 
-    public void generateGameBoard() {
-        GameBoard helperBoard = new GameBoard();
-        myShelfie = helperBoard;
+
+
+
+
+
+
+    public void setGameBoard() {
+        myShelfie = new GameBoard();
+    }
+    public GameBoard getMyShelfie(){
+        return myShelfie;
     }
 
     public void nextTurn() {
@@ -61,67 +73,78 @@ public class GameModel {
 
     }
 
+
 }
 
 public class Player {
     private String nickname;
     private int points;
-    private Shelf personalShelf;
+    private Shelf personalShelf = new Shelf();
     private PersonalGoal personalGoal;
-    private CommonGoal commonGoal1;
-    private CommonGoal commonGoal2;
-    private RuleCommonGoal ruleCommonGoal;
+    private CommonGoal commonGoal1 = new CommonGoal();
+    private CommonGoal commonGoal2 = new CommonGoal();
     private LivingRoom livingRoom;
+    private boolean hasCommonGoal1=false;
+    private boolean hasCommonGoal2=false;
 
-    public LivingRoom setLivingRoom(LivingRoom livingRoom){
+
+    public LivingRoom setLivingRoom(LivingRoom livingRoom){ // metodo importante che serve ad assegnare ai giocatori la stessa plancia di gioco nel caso ci siano partite multiple da gestire
         this.livingRoom= livingRoom;
 
 
 
     }
-    public setRuleCommonGoal(){
-        ruleCommonGoal = new RuleCommonGoal()
-        ruleCommonGoal.setMyShelf(personalShelf)}
 
-    public Shelf setShelf(){
-        personalShelf= new Shelf() }
-
-    public string getName(){
-        return this.nickname;}
-    public List<ScoringTokensType> setListToken(){
-
-
-
+    public Shelf getPersonalShelf(){
+        return this.personalShelf;
     }
 
-    public int calculatePoint(){
-        if(commonGoal1.checkGoal()){
+    public String getName(){
+        return this.nickname;}
 
-            this.points=this.points+commonGoal1.getPoint()
+
+// va nel controller
+    public void calculatePoint(){
+        if(!hasCommonGoal1&&commonGoal1.checkGoal()){
+
+            this.points=this.points+commonGoal1.getPoint();
+            hasCommonGoal1=true;
 
         }
-        if(commonGoal2.checkGoal()) {
-            this.points = this.points + commonGoal2.getPoint(){
+        if(!hasCommonGoal2&&commonGoal2.checkGoal()) {
+            this.points = this.points + commonGoal2.getPoint();
+            hasCommonGoal2 = true;
             }
             if(personalGoal){
                 this.points=this.points+personalGoal.getPoint();
 
 
-            }}}
-    public void setPersonalGoal(){
+            }}
+    //
+    public void setPersonalGoal(){ // questo viene propriamente inizializzato dal player mentre i commongoal appartengono alla living room
         personalGoal = new PersonalGoal();
         //funzione che assegna personalgoal//
         return personalGoal;
     }
-    public void setCommonGoal(){
-        commonGoal1 = new CommonGoal();
-        commonGoal1 = livingRoom.setCommonGoal1();
-        commonGoal2 = new CommonGoal();
-        commonGoal2 = livingRoom.setCommonGoal2();
+
+    public void setCommonGoals(){
+        commonGoal1 = livingRoom.getCommonGoal1();
+        commonGoal2 = livingRoom.getCommonGoal2();
     }
-    public void insertTile(int x;int y) throw NotValidCoordinate,Notavailable{
+
+    public CommonGoal getCommonGoal1(){
+       return commonGoal1;
+
+    }
+
+    public CommonGoal getCommonGoal2(){
+        return commonGoal2;
+    }
+    //controller
+    public void insertTile(int x,int y) throws NotValidCoordinate,Notavailable{
         //metodo che gestisce inserimento in libreria
     }
+    //
 }
 
 
@@ -136,7 +159,7 @@ public class Shelf {
         return false;
     }
     public ItemTile[][] getStructure(){
-        return structure;
+        return this.structure;
     }
     public Vector<Integer> putTile ( int x , int y , ItemTile Tile , int NumberOfTilesPicked){
         int CellsAvailable;
@@ -187,7 +210,6 @@ public class Shelf {
         // Metodo che permette di controllare che la colonna scelta dal giocatore per il posizionamento delle tessere sia effettivamente disponibile;
         // Dato che l'inserimento avviene stile pila(ovvero prendo un tile singola e la inserisco immediatamente nella libreria) applicheremo un approccio LIFO.
         int cellsAvailable;
-        flag = 0;
         cellsAvailable = 0;
         boolean condition, flag;
         condition = false;
@@ -257,19 +279,15 @@ public class GameBoard {
     private int firstX;
     private int firstY;
 
-    private List<PlayableItemTile> ToPlayerTiles;//sono le tessere che il giocatore ha raccolto dalla plancia, forse si può fare meglio
+    private List<PlayableItemTile> toPlayerTiles;//sono le tessere che il giocatore ha raccolto dalla plancia, forse si può fare meglio
 
-    public GameBoard(){
-        this.getItemBag();
-        this.getLivingRoom(playerNum //sarà fornito dal GameModel, DA FARE);
-    }
-    public void getItemBag(){ //genera la ItemBag a ogni inizio partita
+    public void setItemBag(){ //genera la ItemBag a ogni inizio partita
         ItemBag helperBag = new ItemBag();
         helperBag.putTiles();
         this.bag = helperBag;
     }
 
-    public void getLivingRoom(int playerNum){
+    public void setLivingRoom(int playerNum){
         LivingRoom helperLivingRoom = new LivingRoom();
         helperLivingRoom.createGameTable(playerNum);
         this.livingRoom = helperLivingRoom;
@@ -290,7 +308,7 @@ public class GameBoard {
     }
 
     public void getNextInGameTile(){
-        this.NextInGameTile = bag.randPickTile;
+        this.nextInGameTile = bag.randPickTile();
     }
 
     public boolean pickedTilesNum() {//tiene conto del numero d' ItemTiles pescate ogni turno
@@ -356,11 +374,11 @@ public class GameBoard {
 public class LivingRoom {
 
     private ItemTile[][] gameTable;
-    private CommonGoal commonGoal1;
-    private CommonGoal commonGoal2;
-    private List<ScoringTokensType> tokenList;
+    private CommonGoal commonGoal1 = new CommonGoal();
+    private CommonGoal commonGoal2 = new CommonGoal();
 
-    public void createGameTable(int playerNum) {
+
+    public void createGameTable(int playerNum) { //nell'inserimento di playernum chiamo metodo di gamemodel getnumplayer e lo metto come argomento
         if (playerNum == 2) {
             LivingRoomFactory factory = new TwoLivingRoomFactory();
             this.gameTable = factory.create();
@@ -372,25 +390,18 @@ public class LivingRoom {
             this.gameTable = factory.create();
         }
     }
-    public List<ScoringTokensType> setTokenList(){
-        tokenList = new ArrayList();
 
-    }
-    public List<ScoringTokensType> getTokenList(){
-        return tokenList;
 
+    public void setCommonGoal(){
+        //usare un metodo random che sceglie che commongoaltype  da assegnare a commongoal1 e poi tenendo conto che non ho piu un commongoaltype richiamo il metodo
+        // random e assegno a commongoal2
     }
 
-
-    public CommonGoal pickCommonGoal() {
-        //metodo che instanzia ed estrae common goal
-    }
-    public CommonGoal setCommonGoal1(){
-
-
+    public CommonGoal getCommonGoal1() {  // questi due metodi verranno chiamati da tutti i player cosicchè vadano a ottenre i common goal della living room e internamente gestire i check dal controller
         return commonGoal1;
     }
-    public CommonGoal setCommonGoal2(){
+
+    public CommonGoal getCommonGoal2() {
         return commonGoal2;
     }
 
@@ -704,24 +715,18 @@ public class LivingRoom {
     }
 }
 
+public class PersonalGoal(){
+
+    // codice diletta
+
+
+
+}
+
+
 public class CommonGoal {
     CommonGoalType commonGoalType;
-    private List<ScoringTokensType> token_list;
-    private RuleCommonGoal ruleCommonGoal;
-    private LivingRoom livingRoom;
-
-    public RuleCommonGoal setRC(RuleCommonGoal ruleCommonGoal){
-        this.ruleCommonGoal=ruleCommonGoal;
-    }
-
-    public LivingRoom setLivingRoom(LivingRoom livingRoom){
-        this.livingRoom=livingRoom;
-    }
-
-    public List<ScoringTokensType> setTokenList(){
-        this.token_list = livingRoom.getTokenList();
-    }
-
+    private ArrayList<ScoringTokensType> token_list = new ArrayList<ScoringTokensType>();
 
 
     public void setTokens(int playersNumber){
@@ -743,7 +748,7 @@ public class CommonGoal {
         }
     }
 
-
+//questo va messo nel controller
     public boolean checkGoal() {
         switch (commonGoalType) {
             case COMMONGOAL02:
@@ -768,13 +773,13 @@ public class CommonGoal {
                 return ruleCommonGoal.checkDiagonal();
             break;
             case COMMONGOAL08:
-                return ruleCommonGoal.CheckLine2();
+                return ruleCommonGoal.CheckLine1();
             break;
             case COMMONGOAL09:
                 return ruleCommonGoal.CheckColumn2();
             break;
             case COMMONGOAL10:
-                return ruleCommonGoal.CheckLine3();
+                return ruleCommonGoal.CheckLine2();
             break;
             case COMMONGOAL11:
                 return ruleCommonGoal.checkCrux();
@@ -784,8 +789,15 @@ public class CommonGoal {
             break;
         }
         }
-    }
 
+        public void algorithmCommonGoal(){
+        //metodo che ho messo per vedere se lasciare la classe rule common goal o semplicemente nel controller usare direttamente un metodo
+
+
+
+        }
+
+//anche questo va nel controller
     public int getPoint(){
 
         public final int i=0;
@@ -801,13 +813,14 @@ public class CommonGoal {
             }
     }}
 
-
+//questo va inserito nel controller ma devo valutare se usare classe o direttamnete un metodo con tutti gli algoritmi devo capie meglio
+//lista di tutti gli algoritmi che implementano le regole delle common goal avendo a disposizione la matrice della libreria del rispettivo giocatore
 public class RuleCommonGoal {
     private Shelf myShelf;
     private ItemTile[][] structure;
 
     public void setMyShelf(Shelf myShelf){
-        this.myShelf = myShelf
+        this.myShelf = myShelf;
 
     }
     public ItemTile[][] setStructure(){
@@ -817,111 +830,388 @@ public class RuleCommonGoal {
 
 
     public boolean checkCorner(){
+        boolean checker = false;
+        if( structure[0][0] != null && structure[0][0].getColour()==structure[0][4].getColour()
+            && structure[0][0].getColour()==structure[5][0].getColour() && structure[0][0].getColour()==structure[5][4].getColour())
+            checker = true;
+        return checker;
 
-        if(structure[0][0]==structure[0][4]&&structure[0][0]==structure[5][0]&&structure[0][0]==structure[5][4])
-            return true;
     }
 
     public boolean checkSixCouples(){
+        Colour[][] matrix = new Colour[][];
+        int count = 0;
+
+        for(int i=0;i<6;i++) {
+            for (int j = 0; j < 5; j++) {
+                if (structure[i][j] != null) {
+                    matrix[i][j] = structure[i][j].getColour();
+                }
+            }
+        }
+            //inizio a controllare quante coppie ci sono e appena ne trovo una la rendo null per evitare sovrapposizione(caso particolare forma ad L di 4 tessere uguali devo valutare la disposizione della coppia
+            //in maniera tale da contare 2 coppie e non una coppia sbagliata con due caselle non adiacenti che se avessi scelto meglio avrei ottenuto due coppie
+            for(int i=5;i>0;i--){
+                for(int j=0;j<4;j++){
+                    if(matrix[i][j]!=null&&matrix[i][j+1]!=null&&
+                       matrix[i][j+1]==matrix[i][j]) {
+                        count++;
+                        matrix[i][j] = null;
+                        matrix[i][j+1] = null;
+                    }
+                    if(i<5){
+                        if(matrix[i][j]!=null&&matrix[i+1][j]!=null&&
+                           matrix[i][j]==matrix[i+1][j]){
+                            count++;
+                            matrix[i][j] = null;
+                            matrix[i+1][j] = null;
+                        }
+                    }
+                }
+            }
+            if(count>=6)
+                return true ;
+            else return false;
+        }
 
 
-    }
+
 
 
 
 
     public boolean checkFourGroups(){
-
-
-
-    }
-    public boolean checkSquare(){
-
-
-
-    }
-    public boolean checkDiagonal(){
-        public final int i;
-        public final int x=1;
-        for(i=0;i<=3,i++){
-            if(structure[i][i]!=structure[i+1][i+1]) {
-                x=0;
+        Colour[][] matrix = new Colour[][];
+        int count = 0;
+        for(int i=0;i<6;i++) {
+            for (int j = 0; j < 5; j++) {
+                if (structure[i][j] != null) {
+                    matrix[i][j] = structure[i][j].getColour();
+                }
             }
         }
-        for(i=1;i<=4,i++){
-            if(structure[i][i]!=structure[i+1][i+1]) {
-                x=0;
+        for(int i=5;i>0;i--){
+            for(int j=0;j<2;j++){
+                if(matrix[i][j]!=null&&matrix[i][j+1]!=null&&
+                   matrix[i][j+2]!=null&&matrix[i][j+3]!=null&&matrix[i][j+1]==matrix[i][j]
+                   &&matrix[i][j+2]==matrix[i][j]&& matrix[i][j+3]==matrix[i][j]) {
+                    count++;
+                    matrix[i][j] = null;
+                    matrix[i][j+1] = null;
+                    matrix[i][j+2] = null;
+                    matrix[i][j+3] = null;
+                }
+                if(i<2){
+                    if(matrix[i][j]!=null&&matrix[i+1][j]!=null&&
+                            matrix[i+2][j]!=null&&matrix[i+3][j]!=null&&
+                            matrix[i][j]==matrix[i+1][j]&&matrix[i][j]==matrix[i+2][j]&&matrix[i][j]==matrix[i+3][j]){
+                        count++;
+                        matrix[i][j] = null;
+                        matrix[i+1][j] = null;
+                        matrix[i+2][j] = null;
+                        matrix[i+3][j] = null;
+                    }
+                }
             }
         }
-        for(i=1;i>=3,i++){
-            if(structure[i][i+3]!=structure[i+1][i+2]) {           //devo sistemare antidiagonale con altro for annidato o con una variabile ausiliare
-                x=0;
-            }}
-        for(i=0;i<=3,i++){
-            if(structure[i][i]!=structure[i+1][i+1]) {
-                x=0;
-            }}
-        if(x==1) return true;
+        if(count>=4)
+            return true ;
         else return false;
     }
+    public boolean checkSquare(){                          //per scrivere codice che controlla le 6 coppie sfrutta questo algoritmo modificando alcuni parametri
+        boolean checker = false;
+    for(int i=0;i<=4;i++) {
+        for (int j = 0; j <= 3; j++) {
+            if(structure[i][j]!=null){
+            Colour value = structure[i][j].getColour();
+            if (structure[i][j+1]!=null&&structure[i+1][j]!=null&&structure[i+1][j+1]!=null&&structure[i][j+1].getColour()==value&&
+                structure[i+1][j].getColour()==value&&structure[i+][j+1].getColour()==value) {
+                int k=i;
+                while(k<2){
+                    int l=j+2;
+                    while(l<4){
+                        //scrivi controlla quadrato//
+                        if(){
+                            checker=true;
+                        }
+
+                    }
+                }
+                k=i+2;
+                while(k<5){
+                    int l=j;
+                    while(l<5){
+                        //uguale a commento sopra//
+
+                        if(){
+                            checker=true;
+                        }
+                    }
+
+                }
+
+            }
+
+        }
+    }
+    }return checker;
+    }
+    public boolean checkDiagonal(){
+        int x=1;
+        for(int i=0;i<=3;i++){
+            if(structure[i][i]!=null&&structure[i+1][i+1]!=null&&
+               !(structure[i][i].getColour().equals(structure[i+1][i+1].getColour()))){
+                x=0;
+                break;
+            }
+        }
+        for(int i=1;i<=4;i++){
+            if(structure[i][i]!=null&&structure[i+1][i+1]!=null&&
+               !(structure[i][i].getColour().equals(structure[i+1][i+1].getColour()))) {
+                x=0;
+                break;
+            }
+        }
+    if(x==1) {return true;}
+    else return false;
+    }
     public boolean checkCrux(){
-        for (int i = 1; i <= 4; i++)
+        for (int i = 1; i <= 4; i++){
             for (int j = 1; j <= 3; j++) {
-                if (structure[i][j]==structure[i-1][j-1]&&structure[i][j]==structure[i+1][j+1]&&structure[i][j]==structure[i+1][j-1]&&structure[i][j]==structure[i-1][j+1])
-                    return true;}
+                if (structure[i][j]!=null&&structure[i-1][j-1]!=null&&
+                    structure[i+1][j+1]!=null&&structure[i+1][j-1]!=null&&structure[i-1][j+1]!=null&&
+                    structure[i][j].getColour().equals(structure[i-1][j-1].getColour())&&
+                    structure[i][j].getColour().equals(structure[i+1][j+1].getColour())&&
+                    structure[i][j].getColour().equals(structure[i+1][j-1].getColour())&&
+                    structure[i][j].getColour().equals(structure[i-1][j+1].getColour())
+                    )
+                    return true;
+            }
+        }
         return false;
     }
 
-    public boolean checkStair()  {
-
-
-
-
-
-    }
-    public boolean CheckColumn1(){
-
-
-
-    }
-    public boolean CheckColumn2(){
-
-
-
-    }
-    public boolean CheckLine1(){
-
-
-
-    }
-    public boolean CheckLine2(){
-
-
-
-    }
-    public boolean CheckLine3(){
-
-
-    }
-    public boolean checkEight(){
-
-        int i;
-        int count;
-        int k;
-        for(i=k;i<=4;i++){
-            for(j=0;j<=5;j++){
-                for(x=){
-
+    public boolean checkStair(){
+        boolean checker = true;
+            int k=4;
+            for(int i=5;i>=0;i--){
+                for(int j=k;j>=0;j--){
+                    if(structure[i][j]==null){
+                        checker= false;
+                    }
+                }
+                int z=4;
+                while(z>k) {
+                    if (structure[i][z] != null)
+                        checker = false;
+                    z--;
+                }
+                k--;
+            }
+            int k=0;
+            for(int i=5;i>=0;i--) {
+                for (int j = k; j <= 4; j++) {
+                    if (structure[i][j] == null) {
+                        checker = false;
+                    }
+                    int z = 0;
+                    while (z < k) {
+                        if (structure[i][z] != null)
+                            checker = false;
+                        z++;
+                    }
+                    k++;
                 }
             }
 
+    return checker;
+    }
+
+
+    public boolean CheckColumn1(){//scorro colonne e uso algoritmo che controlla un max di 3 tipi diversi tramite un counter
+        int columnCount = 0;
+        boolean checker = false;
+
+        for(int j=0;j<5;j++) {
+            if (structure[0][j] != null) {
+                ArrayList<Colour> list = new ArrayList<Colour>();
+                for(int i=0;i<6;i++){
+                    list.add(structure[i][j].getColour());
+                }
+                int distinctCount = 0;
+                for(int l=0; l<list.size(); l++) {
+                    boolean isDistinct = true;
+                    for(int k=0; k<l; k++) {
+                        if(list.get(l).equals(list.get(k))) {
+                            isDistinct = false;
+                            break;
+                        }
+                    }
+                    if(isDistinct) {
+                        distinctCount++;
+                    }
+                }
+                if(distinctCount<=3){
+                columnCount++;
+                }
+            }
 
         }
+        if(columnCount>=3)
+            checker = true;
+    return checker;
+    }
+    public boolean CheckColumn2(){//due colonne di 6 tipi diversi una cazzata basta fare controllo delle colonne con due per considerarer le 6 righe e scorro avanti di colonne quindi usa un while con dentro un for e usa un counter
+        int columnCount = 0;
+        boolean checker = false;
+
+        for(int j=0;j<5;j++) {
+            if (structure[0][j] != null) {
+                ArrayList<Colour> list = new ArrayList<Colour>();
+                for(int i=0;i<6;i++){
+                    list.add(structure[i][j].getColour());
+                }
+                int distinctCount = 0;
+                for(int l=0; l<list.size(); l++) {
+                    boolean isDistinct = true;
+                    for(int k=0; k<l; k++) {
+                        if(list.get(l).equals(list.get(k))) {
+                            isDistinct = false;
+                            break;
+                        }
+                    }
+                    if(isDistinct) {
+                        distinctCount++;
+                    }
+                }
+                if(distinctCount==6){
+                    columnCount++;
+                }
+            }
+
+        }
+        if(columnCount>=2)
+            checker = true;
+        return checker;
+
+    }
+    public boolean CheckLine1() { //uguale a column 1 ma sviluppato per righe
+        int lineCount = 0;
+        boolean checker = false;
+        for (int i = 5; i >= 0; i--) {
+            int val = 1;
+            for (int j = 0; j < 5; j++) {
+                if (structure[i][j] == null) {
+                    val = 0;
+                    break;
+                }
+            }
+            if (val == 1) {
+                ArrayList<Colour> list = new ArrayList<Colour>();
+                for (int k = 0; k < 5; k++) {
+                    list.add(structure[i][k].getColour());
+                }
+                int distinctCount = 0;
+                for (int l = 0; l < list.size(); l++) {
+                    boolean isDistinct = true;
+                    for (int z = 0; z < l; z++) {
+                        if (list.get(l).equals(list.get(z))) {
+                            isDistinct = false;
+                            break;
+                        }
+                    }
+                    if (isDistinct) {
+                        distinctCount++;
+                    }
+                }
+                if (distinctCount <= 3) {
+                    lineCount++;
+                }
+            }
+            else break; //se la riga inferiore rispetto a quella controllata non è completa non ha senso continuare il for perchè l'obiettivo non è raggiungibile per come è composto l'inserimento delle carte dal basso verso l'alto
+        }
+        if (lineCount >= 4)
+            checker = true;
+        return checker;
+
+    }
+
+    public boolean CheckLine2(){ //uguale a column 2 ma sviluppato per le righe
+        int lineCount = 0;
+        boolean checker = false;
+        for (int i = 5; i >= 0; i--) {
+            int val = 1;
+            for (int j = 0; j < 5; j++) {
+                if (structure[i][j] == null) {
+                    val = 0;
+                    break;
+                }
+            }
+            if (val == 1) {
+                ArrayList<Colour> list = new ArrayList<Colour>();
+                for (int k = 0; k < 5; k++) {
+                    list.add(structure[i][k].getColour());
+                }
+                int distinctCount = 0;
+                for (int l = 0; l < list.size(); l++) {
+                    boolean isDistinct = true;
+                    for (int z = 0; z < l; z++) {
+                        if (list.get(l).equals(list.get(z))) {
+                            isDistinct = false;
+                            break;
+                        }
+                    }
+                    if (isDistinct) {
+                        distinctCount++;
+                    }
+                }
+                if (distinctCount == 5) {
+                    lineCount++;
+                }
+            }
+            else break; //se la riga inferiore rispetto a quella controllata non è completa non ha senso continuare il for perchè l'obiettivo non è raggiungibile per come è composto l'inserimento delle carte dal basso verso l'alto
+        }
+        if (lineCount >=2)
+            checker = true;
+        return checker;
 
 
 
     }
+
+
+
+
+    public boolean checkEight(){
+        for(int i=0;i< structure.length;i++) {
+            for (int j = 0; j < structure.length; j++) {
+                int count = 0;
+                if (structure[i][j] != null) {
+                    Colour value = structure[i][j].getColour();
+                    for (int k = 0; k < structure.length; k++) {
+                        for (int l = 0; l < structure.length; l++) {
+                            if (structure[k][l] != null && structure[k][l].getColour().equals(value)) {
+                                count++;
+                            }
+                            if (count >= 8) {
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
 }
+
+
+
+
+
+
+
+
 
 <<<<<<< HEAD
 
@@ -936,30 +1226,54 @@ public class ItemBag(){
 
     private List<PlayableItemTile> bag;
 
-    public void putTiles() throws PlayableItemTileInsertionException{
 
+
+    public void putTiles(){
+        bag = new ArrayList<PlayableItemTile>();
         PlayableItemTileFactory factory = new PlayableItemTileFactory();
 
         for(int i=0; i<132; i++){
             if(i<22){
-                bag.add(factory.createPlayableItemTile("GREEN", i+1));
+                try {
+                    bag.add(factory.createPlayableItemTile("GREEN", i + 1));
+                }catch(InvalidPlayableItemTileColourException exc){
+
+                }
             }else if(i<44){
-                bag.add(factory.createPlayableItemTile("WHITE", i+1));
+                try{
+                    bag.add(factory.createPlayableItemTile("WHITE", i+1));
+                }catch(InvalidPlayableItemTileColourException exc){
+
+                }
             }else if(i<66){
-                bag.add(factory.createPlayableItemTile("YELLOW", i+1));
+                try{
+                    bag.add(factory.createPlayableItemTile("YELLOW", i+1));
+                }catch(InvalidPlayableItemTileColourException exc){
+
+                }
             }else if(i<88){
-                bag.add(factory.createPlayableItemTile("BLUE", i+1));
+                try{
+                    bag.add(factory.createPlayableItemTile("BLUE", i+1));
+                }catch(InvalidPlayableItemTileColourException exc){
+
+                }
             }else if(i<110){
-                bag.add(factory.createPlayableItemTile("CYAN", i+1));
+                try{
+                    bag.add(factory.createPlayableItemTile("CYAN", i+1));
+                }catch(InvalidPlayableItemTileColourException exc){
+
+                }
             }else if(i<132){
-                bag.add(factory.createPlayableItemTile("PINK", i+1));
-            }else{
-                throw new PlayableItemTileInsertionException();
+                try{
+                    bag.add(factory.createPlayableItemTile("PINK", i+1));
+                }catch(InvalidPlayableItemTileColourException exc){
+
+                }
             }
         }
     }
 
-    //dovrebbe effettuare pick randomico di ItemTile da ItemBag
+    //dovrebbe effettuare pick random di ItemTile da ItemBag
     public PlayableItemTile randPickTile(){
         final Random RAND = new Random();
         int index = RAND.nextInt(bag.size());
@@ -1036,7 +1350,6 @@ public class NullItemTile extends ItemTile{
     }
 }
 public class PlayableItemTile extends ItemTile {
-    //private ItemsTileType type;
     private Colour colour;
     private int idCode;
     private boolean availability;
