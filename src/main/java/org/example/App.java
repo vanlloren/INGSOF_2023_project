@@ -275,6 +275,7 @@ public class GameBoard {
 
     private List<PlayableItemTile> toPlayerTiles;//sono le tessere che il giocatore ha raccolto dalla plancia, forse si può fare meglio
 
+    //MODEL
     public void setItemBag(){ //genera la ItemBag a ogni inizio partita
         ItemBag helperBag = new ItemBag();
         helperBag.putTiles();
@@ -305,14 +306,6 @@ public class GameBoard {
         this.nextInGameTile = bag.randPickTile();
     }
 
-    public boolean pickedTilesNum() {//tiene conto del numero d' ItemTiles pescate ogni turno
-        return toPlayerTiles.size() < 3;
-    }
-
-    //Check sulle tessere adiacenti già fatto, getToPlayerTile deve controllare al massimo
-    //per TRE volte che la tessera che l'utente vuole sia disponibile.
-    //getToPlayerTile riceverà dal GameBoard (e in principio quindi dal Player) le coordinate
-    //della tessera da raccogliere dalla LivingRoom
     public void getToPlayerFirstTile(int x, int y) throws UnavailableTileException{ //prende tessera 1 dalla LivingRoom
 
         toPlayerTiles = new ArrayList<PlayableItemTile>();
@@ -338,6 +331,17 @@ public class GameBoard {
             throw new UnavailableTileException();
         }
     }
+
+    // CONTROLLER
+    public boolean pickedTilesNum() {//tiene conto del numero d' ItemTiles pescate ogni turno
+        return toPlayerTiles.size() < 3;
+    }
+
+    //Check sulle tessere adiacenti già fatto, getToPlayerTile deve controllare al massimo
+    //per TRE volte che la tessera che l'utente vuole sia disponibile.
+    //getToPlayerTile riceverà dal GameBoard (e in principio quindi dal Player) le coordinate
+    //della tessera da raccogliere dalla LivingRoom
+
 }
 
 //SEQUENZA CORRETTA GAMEBOARD<-->LIVINGROOM:
@@ -373,6 +377,7 @@ public class LivingRoom {
     private CommonGoal commonGoal2 = new CommonGoal();
 
 
+    //MODEL
     public void createGameTable(int playerNum) { //nell'inserimento di playernum chiamo metodo di gamemodel getnumplayer e lo metto come argomento
         if (playerNum == 2) {
             LivingRoomFactory factory = new TwoLivingRoomFactory();
@@ -400,6 +405,7 @@ public class LivingRoom {
         return commonGoal2;
     }
 
+    //MODEL
     public PlayableItemTile pickTile(int x, int y) {//questo metodo permette alla LivingRoom di passare una sua tessera alla GameBoard
         PlayableItemTile helperTile;
         helperTile = (PlayableItemTile) gameTable[x][y];
@@ -409,6 +415,7 @@ public class LivingRoom {
         return helperTile;
     }
 
+    //MODEL
     public boolean searchVoid(int x, int y){
         if(gameTable[x][y] != null){
             return false;
@@ -416,16 +423,19 @@ public class LivingRoom {
         return true;
     }
 
+    //MODEL
     public void fillVoid(int x, int y, PlayableItemTile tile){
         gameTable[x][y] = tile;
     }
 
+    //CONTROLLER
     public boolean isTileAvailable(int x, int y) {//verifica se la singola Tile nella LivingRoom alle
         // coordinate x e y è disponibile per essere presa dal player
 
         return gameTable[x][y].isAvailable();
     }
 
+    //CONTROLLER
     public boolean hasAdjacentTiles() {//check a inizio round su tessere adiacenti
         //ritorna true se almeno una PlayableItemTile ha una tessera adiacente != null e
         //la cui funzione nullDetection restituisce false
@@ -541,6 +551,7 @@ public class LivingRoom {
 
     }
 
+    //MODEL
     public void updateAvailability() {//determina per ogni tile sulla LivingRoom se essa é disponibile o meno
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
@@ -614,6 +625,7 @@ public class LivingRoom {
         }
     }
 
+    //MODEL
     public void updateAdjacentAvailabilityV1(int x, int y) {
         //Setta la variabile adjacency delle ItemTiles adiacenti
 
@@ -645,6 +657,7 @@ public class LivingRoom {
         }
     }
 
+    //MODEL
     public void updateAdjacentAvailabilityV2(int x, int y, int firstX, int firstY) {
         //Setta la variabile adjacency delle ItemTiles adiacenti
 
@@ -694,6 +707,7 @@ public class LivingRoom {
         }
     }
 
+    //CONTROLLER
     public boolean checkAdjacentAvailability() {//controlla se almeno una delle tessere adiacenti è
         // disponibile
 
@@ -1222,7 +1236,7 @@ public class ItemBag(){
     private List<PlayableItemTile> bag;
 
 
-
+    //MODEL
     public void putTiles(){
         bag = new ArrayList<PlayableItemTile>();
         PlayableItemTileFactory factory = new PlayableItemTileFactory();
@@ -1244,30 +1258,31 @@ public class ItemBag(){
                 try{
                     bag.add(factory.createPlayableItemTile("YELLOW", i+1));
                 }catch(InvalidPlayableItemTileColourException exc){
-                    exc.printError();
+                    //exc.printError();
                 }
             }else if(i<88){
                 try{
                     bag.add(factory.createPlayableItemTile("BLUE", i+1));
                 }catch(InvalidPlayableItemTileColourException exc){
-                    exc.printError();
+                    //exc.printError();
                 }
             }else if(i<110){
                 try{
                     bag.add(factory.createPlayableItemTile("CYAN", i+1));
                 }catch(InvalidPlayableItemTileColourException exc){
-                    exc.printError();
+                    //exc.printError();
                 }
             }else if(i<132){
                 try{
                     bag.add(factory.createPlayableItemTile("PINK", i+1));
                 }catch(InvalidPlayableItemTileColourException exc){
-                    exc.printError();
+                    //exc.printError();
                 }
             }
         }
     }
 
+    //MODEL
     //dovrebbe effettuare pick random di ItemTile da ItemBag
     public PlayableItemTile randPickTile(){
         final Random RAND = new Random();
@@ -1312,33 +1327,45 @@ public class NullItemTile extends ItemTile{
         idCode = 0;
     }
 
+    //CONTROLLER?
     @java.lang.Override
     public org.example.Colour getColour() {
         return colour;
     }
 
+    //CONTROLLER?
     @Override
     public int getIdCode() {
         return idCode;
     }
 
+    //MODEL
     public void makeAvailable(){}
 
+    //MODEL
     public void makeUnavailable() {}
 
+    //CONTROLLER
     @java.lang.Override
     public boolean isAvailable() {
         return false;
     }
 
+    //CONTROLLER
     @Override
     public boolean nullDetection() {
         return true;
     }
+
+    //MODEL
     public void setAdjacency(){};
+
+    //CONTROLLER?
     public boolean getAdjacency(){
         return adjacency;
     };
+
+    //MODEL
     @Override
     public void resetAdjacency() {
         adjacency = false;
@@ -1350,46 +1377,55 @@ public class PlayableItemTile extends ItemTile {
     private boolean availability;
     private boolean adjacency=false;
 
+    //CONTROLLER?
     @java.lang.Override
     public org.example.Colour getColour() {
         return colour;
     }
 
+    //CONTROLLER?
     @Override
     public int getIdCode() {
         return idCode;
     }
 
+    //CONTROLLER
     @Override
     public boolean nullDetection() {
         return false;
     }
 
+    //CONTROLLER
     @Override
     public boolean isAvailable() {
         return availability;
     }
 
+    //MODEL
     @Override
     public void makeAvailable() {
         availability = true;
     }
 
+    //MODEL
     @Override
     public void makeUnavailable() {
         availability = false;
     }
 
+    //CONTROLLER?
     @Override
     public boolean getAdjacency() {
         return adjacency;
     }
 
+    //MODEL
     @Override
     public void setAdjacency() {
         adjacency = true;
     }
 
+    //MODEL
     @Override
     public void resetAdjacency() {
         adjacency = false;
