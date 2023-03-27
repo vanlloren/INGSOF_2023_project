@@ -16,6 +16,7 @@ public class GameModel {
     private Player[] turnOrder;
     private Player[] has;
 
+    // VA SPOSTATO NEL CONTROLLER!!
     public void launchGame_Myshelfie(){
         // va scritta tutta la partita con lo svolgimento//
 
@@ -29,20 +30,20 @@ public class GameModel {
     public int getPlayersNumber(){
         return this.playersNumber;
     }
-    public void setPlayersNumber(){
-        this.playersNumber = playersInGame.size();
+    public void setPlayersNumber(int playersNumber){ // inserito dal controller
+        this.playersNumber = playersNumber;
 
     }
-
-    public void setChairOwner(Player) {
-        // ipotizzo di determinare/ricevere il nome utente di chi effettua il primo turno di gioco e di
-        // inserirlo in chairOwner
+//questo metodo verrà chiamato dal controller a cui delego di usare un proprio metodo per decidere random il turno dei giocatori
+    public void setChairOwner(Player player ) {
+       this.chairOwner = player;
     }
 
     public ArrayList<Player> getPlayersInGame() {
         return playersInGame;
     }
-    public void setPlayersInGame(){
+    public void setPlayersInGame(){ //metodo chiamato dal controller che tramite la view riceverà i giocatori e dovra poi chiamare
+        // questo metodo per aggiornare la logica di dati del gioco
         //metodo che inserisce i giocatori quando si collegano va implementato
 
 
@@ -61,15 +62,18 @@ public class GameModel {
         return myShelfie;
     }
 
-    public void nextTurn() {
+    public void setTurn() { // metodo ch va messo nel controller che va a modificare il chairowner e quindi quale player sta giocando
+        //in questo momento
+
     }
-    public boolean haslaunchTerminate() {
+    public boolean haslaunchTerminate() { //verra chiamato dal controller per poi dire che da qui comincia l'ultimo turno di gioco
         points++;
         return true;
 
     }
-    public List<Player> getTurnOrder(){
-
+    public List<Player> getTurnOrder(){  // metodo chiamato dal controller
+        // per ottenere la lista dei giocatori attuale e modificarla chiamando poi il set
+     return this.playersInGame;  /// RIGUARDARE ASSIEME QUESTI METODI PER CAPIRE COME IMPOSTARE I TURNI E CHI HA LA SEDIA
     }
 
 
@@ -83,23 +87,47 @@ public class Player {
     private CommonGoal commonGoal1 = new CommonGoal();
     private CommonGoal commonGoal2 = new CommonGoal();
     private LivingRoom livingRoom;
-    private boolean hasCommonGoal1=false;
-    private boolean hasCommonGoal2=false;
+    private boolean hasCommonGoal1;
+    private boolean hasCommonGoal2;
+    private boolean hasPersonalGoal;
 
+    // questi tre metodi vengono chiamati dal controller quando il player ha soddisfatto gli obbiettivi carte
+    public void sethasCommonGoal1(){
+        this.hasCommonGoal1 = true;
+    }
 
-    public LivingRoom setLivingRoom(LivingRoom livingRoom){ // metodo importante che serve ad assegnare ai giocatori la stessa plancia di gioco nel caso ci siano partite multiple da gestire
+    public void sethasCommonGoal2(){
+        this.hasCommonGoal2 = true;
+    }
+
+    public void setHasPersonalGoal(){
+        this.hasPersonalGoal = true;
+    }
+
+  //metodo che verra chiamato dal controller il quale preventivamente crea una living room per i giocatori che si sono collegati e assegna a tutti la STESSA LIVING ROOM
+    public void setLivingRoom(LivingRoom livingRoom){ // metodo importante che serve ad assegnare ai giocatori la stessa plancia di gioco nel caso ci siano partite multiple da gestire
         this.livingRoom= livingRoom;
 
 
 
     }
 
-    public Shelf getPersonalShelf(){
+    public LivingRoom getLivingRoom(){ //metodo chiamato dal controller per ottenere il riferimento della living room del player e chiamerà poi set per assegnare la living room che lo stesso controller crea
+        return this.livingRoom
+    }
+
+    public Shelf getPersonalShelf(){ // metodo che verrà chiamato dal controller per poter accedere alla libreria
+        //personale del giocatore e avviare tutti i check che controllano se gli obbiettivi sono stati soddisfatti
         return this.personalShelf;
     }
 
-    public String getName(){
+    public String getNickname(){
         return this.nickname;}
+
+    public void setNickname (String nickname){ //il controller chiama questo metodo per settare nicknames
+        this.nickname= nickname;
+
+    }
 
 
 // va nel controller
@@ -126,38 +154,33 @@ public class Player {
         return personalGoal;
     }
 
-    public void setCommonGoals(){
-        commonGoal1 = livingRoom.getCommonGoal1();
-        commonGoal2 = livingRoom.getCommonGoal2();
+    public void setCommonGoals(){ //chiamato da controller a cascata quando chiamo il generatore di common goal dalla living room
+        this.commonGoal1 = livingRoom.getCommonGoal1();
+        this.commonGoal2 = livingRoom.getCommonGoal2();
     }
 
-    public CommonGoal getCommonGoal1(){
-       return commonGoal1;
 
-    }
-
-    public CommonGoal getCommonGoal2(){
-        return commonGoal2;
-    }
     //controller
-    public void insertTile(int x,int y) throws NotValidCoordinate,Notavailable{
+    public void insertTile(int x,int y,ItemTile tile) throws NotValidCoordinate,Notavailable{ //parametri passati dal controller;chiamato dal controller quando il player da le istruzioni in cui dice dove mettere l item sulla shelf
+       this.personalShelf.putTile(x,y,tile,..) //chiedi alfi come funziona questo metodo
         //metodo che gestisce inserimento in libreria
     }
-    //
 }
 
 
-
+//-------------------------------------------------
 
 public class Shelf {
     private ItemTile[][] structure
     private structure = new ItemTile[6][5];
-    public boolean getTile(int x,int y){
-        //metodo che non serve probabilmente//
-    }
+
+
     public ItemTile[][] getStructure(){
         return this.structure;
-    }
+    } //chiamato dal controller a cascata
+    //quando chiama getShelf per poter cosi accedere alla struttura in se degli item e chiamare gli algoritmi di check
+
+    //chiamato dal controller
     public Vector<Integer> putTile ( int x , int y , ItemTile Tile , int NumberOfTilesPicked){
         int CellsAvailable;
         Vector<Integer> position = new Vector<Integer>();// The Vector class implements a growable array of objects. Like an array, it contains components that can be accessed using an integer index.
@@ -186,6 +209,7 @@ public class Shelf {
         }
         return position;
     }
+    //i seguenti metodi vanno a supporto dell'inserimento corretto dell'item nella shelf
     public boolean CheckSamePosition(Vector<Integer> y){
         // verifichiamo se il vettore ha almeno un elemento
         if (y.size() > 0) {
@@ -203,6 +227,7 @@ public class Shelf {
             return false;
         }
     }
+
     public static Object[] iscolumnAvailable ( int Y , int NumberOfTilesPicked) {
         // Metodo che permette di controllare che la colonna scelta dal giocatore per il posizionamento delle tessere sia effettivamente disponibile;
         // Dato che l'inserimento avviene stile pila(ovvero prendo un tile singola e la inserisco immediatamente nella libreria) applicheremo un approccio LIFO.
@@ -248,7 +273,7 @@ public class Shelf {
         }
         return new Object[]{condition, cellsAvailable};
     }
-
+//nel controller
     public boolean isFull(ItemTile[][] structure) {
         for (int j = 0; j < 4; j++) {
             if (structure[0][j] == null) {
@@ -256,6 +281,7 @@ public class Shelf {
                 return false;
             }
         }
+        System.out.println("you have completed your shelf"); // i due print vanno visti meglio perchè devono finire nella view non dovrebbero stare nel model
         return true;
     }
 
@@ -266,7 +292,6 @@ public class Shelf {
 public class GameBoard {
     private ItemBag bag;
     private LivingRoom livingRoom;
-
     private PlayableItemTile nextInGameTile;//é la tessera "da mettere in gioco" ovvero quella che dalla bag sta venendo piazzata sulla plancia
 
     //servono per regolare correttamente le adiacenze
@@ -275,18 +300,18 @@ public class GameBoard {
 
     private List<PlayableItemTile> toPlayerTiles;//sono le tessere che il giocatore ha raccolto dalla plancia, forse si può fare meglio
 
-    public void setItemBag(){ //genera la ItemBag a ogni inizio partita
+    public void setItemBag(){ //genera la ItemBag a ogni inizio partita ; chiamato dal controller
         ItemBag helperBag = new ItemBag();
         helperBag.putTiles();
         this.bag = helperBag;
     }
 
-    public void setLivingRoom(int playerNum){
+    public void setLivingRoom(int playerNum){ // il parametro viene passato dal controller
         LivingRoom helperLivingRoom = new LivingRoom();
         helperLivingRoom.createGameTable(playerNum);
         this.livingRoom = helperLivingRoom;
     }
-
+   // metodo che va messo nel controller perchè è un metodo che agisce
     public void fillLivingRoom(){//riempie la LivingRoom di tessere usando getNextInGameTile e putNextInGameTile
         boolean isVoid;
 
@@ -300,7 +325,7 @@ public class GameBoard {
             }
         }
     }
-
+//va messo nel controller
     public void getNextInGameTile(){
         this.nextInGameTile = bag.randPickTile();
     }
