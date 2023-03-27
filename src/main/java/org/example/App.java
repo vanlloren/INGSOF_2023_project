@@ -166,11 +166,9 @@ public class Shelf {
         if(structure[0][y]!=null){
             System.out.println("The column is full");
         }else{
-            ItemTile[] column = new ItemTile[5];
-            column = structure[0][Y];
             int count = 0;
             for (int i = 0; i < 5; i++) {
-                if (column[i] == null) {
+                if (structure[i][Y] == null) {
                     count++;
                 }
             }
