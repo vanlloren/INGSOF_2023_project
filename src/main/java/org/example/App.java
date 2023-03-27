@@ -151,32 +151,34 @@ public class Player {
 
 
 public class Shelf {
-    private ItemTile[][] structure;
     private ItemTile[][] structure = new ItemTile[6][5];
 
-    public boolean getTile(int x, int y){
-        //metodo che non serve probabilmente//
-        return false;
-    }
     public ItemTile[][] getStructure(){
         return this.structure;
     }
-    public Vector<Integer> putTile ( int x , int y , ItemTile Tile , int NumberOfTilesPicked){
-        int CellsAvailable;
+    public void setStructure(ItemTile[][] structure) {
+        this.structure = structure;
+    }
+    public ItemTile getShelfTile(int x ,int y){
+        return this.structure[x][y];
+    }
+    public ItemTile[][] putTile ( int x , int y , ItemTile Tile , int numberOfTilesPicked){
+
+        object CellsAvailable;
         Vector<Integer> position = new Vector<Integer>();// The Vector class implements a growable array of objects. Like an array, it contains components that can be accessed using an integer index.
         // However, the size of a Vector can grow or shrink as needed to accommodate adding and removing items after the Vector has been created.
-        boolean availability,validation;
-        availability = iscolumnAvailable(int y)[0];
-        CellsAvailable = iscolumnAvailable(int y)[1];
-        if (availability) {
+        object availability;
+        availability = iscolumnAvailable(y, numberOfTilesPicked)[0];
+        CellsAvailable = iscolumnAvailable(y, numberOfTilesPicked)[1];
+        if (availability[0]==true) {
             // metodo che permette di distinguire i 3 casi di posizionamento: per una tessera , per due tessere e tre tessere
             // Nella pratica posiziona la tessera in una delle posizioni libere della libreria
-            if (structure[ int x ][int y]==null && structure[ int x -1][int y ] !=null){
-                structure[ int x ][int y] =ItemTile Tile;
+            if (structure[x][y]==null && structure[x -1][y] !=null){
+                structure[x][y] =Tile;
                 position.add(y);
-            }elseif (structure[ int x ][int y] ==null ){
+            }else if (structure[x][y]==null){
                 // caso inserimento in base
-                structure[ int x ][int y] =ItemTile Tile;
+                structure[x][y]=Tile;
                 position.add(y);
             }
         /*else{
@@ -187,7 +189,7 @@ public class Shelf {
         System.err.println("You cannot choose different columns ");
     }*/
         }
-        return position;
+        return structure;
     }
     public boolean CheckSamePosition(Vector<Integer> y){
         // verifichiamo se il vettore ha almeno un elemento
@@ -206,7 +208,7 @@ public class Shelf {
             return false;
         }
     }
-    public static Object[] iscolumnAvailable ( int Y , int NumberOfTilesPicked) {
+    public static object[] iscolumnAvailable ( int Y , int NumberOfTilesPicked) {
         // Metodo che permette di controllare che la colonna scelta dal giocatore per il posizionamento delle tessere sia effettivamente disponibile;
         // Dato che l'inserimento avviene stile pila(ovvero prendo un tile singola e la inserisco immediatamente nella libreria) applicheremo un approccio LIFO.
         int cellsAvailable;
@@ -223,33 +225,34 @@ public class Shelf {
             }
         }
         if (cellsAvailable != 0) {
-            switch (cellsAvailable)
-            case 1:
-                System.out.println("You can put ONLY one tile in the column:" + int Y);
-                if (cellsAvailable < NumberOfTilesPicked) {
-                    System.err.println("Too many tiles picked");
-                    System.out.println("Please select another column of the shelf");
-                } else {
+            switch (cellsAvailable) {
+                case 1:
+                    System.out.println("You can put ONLY one tile in the column:" +  Y);
+                    if (cellsAvailable < NumberOfTilesPicked) {
+                        System.err.println("Too many tiles picked");
+                        System.out.println("Please select another column of the shelf");
+                    } else {
+                        condition = true;
+                    }
+                    break;
+                case 2:
+                    System.out.println("You can put ONLY two tiles in the column:" + Y);
+                    if (cellsAvailable < NumberOfTilesPicked) {
+                        System.err.println("Too many tiles picked");
+                        System.out.println("Please select another column of the shelf");
+                    } else {
+                        condition = true;
+                    }
+                    break;
+                default:
+                    System.out.println("You can put up to 3 tiles in the column:" + Y);
                     condition = true;
-                }
-                break;
-            case 2:
-                System.out.println("You can put ONLY two tiles in the column:" + int Y);
-                if (cellsAvailable < NumberOfTilesPicked) {
-                    System.err.println("Too many tiles picked");
-                    System.out.println("Please select another column of the shelf");
-                } else {
-                    condition = true;
-                }
-                break;
-            default:
-                System.out.println("You can put up to 3 tiles in the column:" + int Y);
-                condition = true;
-        } else {
+            }
+        }else{
             System.err.println("The column chosen is not available");
             System.err.println("Please choose another column or pick a different number of tiles");
         }
-        return new Object[]{condition, cellsAvailable};
+        return new object[]{condition, cellsAvailable};
     }
 
     public boolean isFull(ItemTile[][] structure) {
@@ -262,9 +265,6 @@ public class Shelf {
         return true;
     }
 
-    public void setStructure(ItemTile[][] structure) {
-        this.structure = structure;
-    }
 }
 
 
