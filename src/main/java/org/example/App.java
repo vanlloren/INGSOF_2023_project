@@ -2,7 +2,6 @@ package org.example;
 package org.example;
 
 import java.awt.*;
-import java.lang.reflect.Array;
 import java.util.*;
 import java.util.List;
 
@@ -766,12 +765,14 @@ public class LivingRoom {
         return false;
     }
 }
-public class rulePersonalGoal(){
-    public boolean checkFourCard(int[][] MyShelf){
+public class rulePersonalGoal() {
+    public boolean checkFourCard(int[][] MyShelf) {
     }
-    public boolean checkFiveCard(int[][] MyShelf){
+
+    public boolean checkFiveCard(int[][] MyShelf) {
     }
-    public boolean checkSixCard(int[][] MyShelf){
+
+    public boolean checkSixCard(int[][] MyShelf) {
     }
 
     public boolean checkThreeCard(int[][] MyShelf) {
@@ -786,40 +787,40 @@ public class rulePersonalGoal(){
                     for (x = i + 1; x <= i + 2; x++) {
                         for (y = j + 1; y <= j + 2; j++) {
                             if (MyShelf[i][y] == item && MyShelf[i][y + 1] == item) {
-                                return true
+                                return true;
                             }
                             if (MyShelf[i][y] == item && MyShelf[x][y] == item) {
-                                return true
+                                return true;
                             }
                             if (MyShelf[i][y] == item && MyShelf[x][j] == item) {
-                                return true
+                                return true;
                             }
                             if (MyShelf[x][j] == item && MyShelf[x][y] == item) {
-                                return true
+                                return true;
                             }
                             if (MyShelf[x][j] == item && MyShelf[x + 1][j] == item) {
-                                return true
+                                return true;
                             }
                         }
                     }
                 }
-                if (i == 0 && j = !0) {
+                if (i == 0 && j =! 0) {
                     for (x = i + 1; x <= i + 2; x++) {
                         for (y = j - 2; y <= j + 2; y++) {
                             if ((y == j - 2 || y == j + 1) && MyShelf[i][y] == item && MyShelf[i][y + 1] == item) {
-                                return true
+                                return true;
                             }
                             if (y == j - 1 && MyShelf[i][y] == item && MyShelf[i][y + 2] == item) {
-                                return true
+                                return true;
                             }
                             if ((y == j - 1 && x == i + 1) || (y == j + 1 && x == i + 1) && MyShelf[i][y] == item && MyShelf[x][y] == item) {
-                                return true
+                                return true;
                             }
                             if (x == i + 1 && MyShelf[x][j] == item && MyShelf[x + 1][j] == item) {
-                                return true
+                                return true;
                             }
                             if ((x == i + 1 && y == j - 1) || (x == i + 1 && y == j + 1) && MyShelf[x][y] == item && MyShelf[x][j] == item) {
-                                return true
+                                return true;
                             }
 
                         }
@@ -829,19 +830,19 @@ public class rulePersonalGoal(){
                     for (x = i - 2; x <= i + 2; x++) {
                         for (y = j + 1; y <= j + 2; y++) {
                             if ((x == i - 2 || x == i + 1) && MyShelf[x][j] == item && MyShelf[x + 1][j] == item) {
-                                return true
+                                return true;
                             }
                             if (x == i - 1 && MyShelf[x][j] == item && MyShelf[x + 2][j] == item) {
-                                return true
+                                return true;
                             }
                             if (y == j + 1 && MyShelf[i][y] == item && MyShelf[i][y + 1] == item) {
-                                return true
+                                return true;
                             }
                             if ((y == j + 1 && x == i + 1) && (MyShelf[i][y] == item && MyShelf[x][y] == item) || (MyShelf[x][j] == item && MyShelf[x][y] == item)) {
-                                return true
+                                return true;
                             }
                             if ((x == i - 1 && y == j + 1) && (MyShelf[x][y] == item && MyShelf[x][j] == item) || (MyShelf[x][y] == item && MyShelf[i][y] == item)) {
-                                return true
+                                return true;
                             }
                         }
                     }
@@ -856,1800 +857,1965 @@ public class rulePersonalGoal(){
             }
         }
     }
-    public class PersonalGoal(){
-    public boolean Personal_goal_1 (int[][] MyShelf) {
-        int i, j;
-        int count = 0;
-        if (i == 0 && j == 0 && int[i][j]==Color.PINK){
-            if (count > 2 && count <= 4) {
-                count += 2;
-            }
-            if (count < 2) {
-                count++;
-            }
-            if (count > 3 && count <= 5) {
-                count += 3;
-            }
-        }
-        if (i == 2 && j == 0 && int[i][j]==Colour.BLUE){
-            if (count > 2 && count <= 4) {
-                count += 2;
-            }
-            if (count < 2) {
-                count++;
-            }
-            if (count > 3 && count <= 5) {
-                count += 3;
-            }
-        }
-        if (i == 4 && j == 1 && int[i][j]==Colour.GREEN){
-            if (count > 2 && count <= 4) {
-                count += 2;
-            }
-            if (count < 2) {
-                count++;
-            }
-            if (count > 3 && count <= 5) {
-                count += 3;
-            }
-        }
-        if (i == 3 && j == 2 && int[i][j]==Colour.WHITE){
-            if (count > 2 && count <= 4) {
-                count += 2;
-            }
-            if (count < 2) {
-                count++;
-            }
-            if (count > 3 && count <= 5) {
-                count += 3;
-            }
-        }
-        if (i == 1 && j == 3 && int[i][j]==Colour.YELLOW){
-            if (count > 2 && count <= 4) {
-                count += 2;
-            }
-            if (count < 2) {
-                count++;
-            }
-            if (count > 3 && count <= 5) {
-                count += 3;
-            }
-        }
-        if (i == 2 && j == 5 int[i][j]==Colour.CYAN){
-            if (count > 2 && count <= 4) {
-                count += 2;
-            }
-            if (count < 2) {
-                count++;
-            }
-            if (count > 3 && count <= 5) {
-                count += 3;
-            }
-        }
-        return count;
-    }
-    public boolean Personal_goal_2 (int[][] MyShelf) {
-        int count = 0;
-        int i, j;
-        if (i == 1 && j == 1 && int[i][j]==Colour.PINK){
-            if (count > 2 && count <= 4) {
-                count += 2;
-            }
-            if (count < 2) {
-                count++;
-            }
-            if (count > 3 && count <= 5) {
-                count += 3;
-            }
-        }
-        if (i == 0 && j == 2 && int[i][j]==Colour.GREEN){
-            if (count > 2 && count <= 4) {
-                count += 2;
-            }
-            if (count < 2) {
-                count++;
-            }
-            if (count > 3 && count <= 5) {
-                count += 3;
-            }
-        }
-        if (i == 2 && j == 2 && int[i][j]==Colour.YELLOW){
-            if (count > 2 && count <= 4) {
-                count += 2;
-            }
-            if (count < 2) {
-                count++;
-            }
-            if (count > 3 && count <= 5) {
-                count += 3;
-            }
-        }
-        if (i == 4 && j == 3 && int[i][j]==Colour.WHITE){
-            if (count > 2 && count <= 4) {
-                count += 2;
-            }
-            if (count < 2) {
-                count++;
-            }
-            if (count > 3 && count <= 5) {
-                count += 3;
-            }
-        }
-        if (i == 3 && j == 4 && int[i][j]==Colour.CYAN){
-            if (count > 2 && count <= 4) {
-                count += 2;
-            }
-            if (count < 2) {
-                count++;
-            }
-            if (count > 3 && count <= 5) {
-                count += 3;
-            }
-        }
-        if (i == 4 && j == 5 && int[i][j]==Colour.BLUE){
-            if (count > 2 && count <= 4) {
-                count += 2;
-            }
-            if (count < 2) {
-                count++;
-            }
-            if (count > 3 && count <= 5) {
-                count += 3;
-            }
-        }
-        return count;
-    }
-    public boolean Personal_goal_3 (int[][] MyShelf) {
-        int count=0;
-        int i, j;
-        if (i == 0 && j == 1 && int[i][j]==Colour.BLUE){
-            if (count > 2 && count <= 4) {
-                count += 2;
-            }
-            if (count < 2) {
-                count++;
-            }
-            if (count > 3 && count <= 5) {
-                count += 3;
-            }
-        }
-        if (i == 3 && j == 1 && int[i][j]==Colour.YELLOW){
-            if (count > 2 && count <= 4) {
-                count += 2;
-            }
-            if (count < 2) {
-                count++;
-            }
-            if (count > 3 && count <= 5) {
-                count += 3;
-            }
-        }
-        if (i == 2 && j == 2 && int[i][j]==Colour.PINK){
-            if (count > 2 && count <= 4) {
-                count += 2;
-            }
-            if (count < 2) {
-                count++;
-            }
-            if (count > 3 && count <= 5) {
-                count += 3;
-            }
-        }
-        if (i == 1 && j == 3 && int[i][j]==Colour.GREEN){
-            if (count > 2 && count <= 4) {
-                count += 2;
-            }
-            if (count < 2) {
-                count++;
-            }
-            if (count > 3 && count <= 5) {
-                count += 3;
-            }
-        }
-        if (i == 4 && j == 3 && int[i][j]==Colour.CYAN){
-            if (count > 2 && count <= 4) {
-                count += 2;
-            }
-            if (count < 2) {
-                count++;
-            }
-            if (count > 3 && count <= 5) {
-                count += 3;
-            }
-        }
-        if (i == 0 && j == 5 && int[i][j]==Colour.WHITE){
-            if (count > 2 && count <= 4) {
-                count += 2;
-            }
-            if (count < 2) {
-                count++;
-            }
-            if (count > 3 && count <= 5) {
-                count += 3;
-            }
-        }
-        return count;
-    }
-    public boolean Personal_goal_4 (int[][] MyShelf) {
-        int count = 0;
-        int i, j;
-        if (i == 4 && j == 0 && int[i][j]==Colour.YELLOW){
-            if (count > 2 && count <= 4) {
-                count += 2;
-            }
-            if (count < 2) {
-                count++;
-            }
-            if (count > 3 && count <= 5) {
-                count += 3;
-            }
-        }
-        if (i == 0 && j == 2 && int[i][j]==Colour.CYAN){
-            if (count > 2 && count <= 4) {
-                count += 2;
-            }
-            if (count < 2) {
-                count++;
-            }
-            if (count > 3 && count <= 5) {
-                count += 3;
-            }
-        }
-        if (i == 2 && j == 2 && int[i][j]==Colour.BLUE){
-            if (count > 2 && count <= 4) {
-                count += 2;
-            }
-            if (count < 2) {
-                count++;
-            }
-            if (count > 3 && count <= 5) {
-                count += 3;
-            }
-        }
-        if (i == 3 && j == 3 && int[i][j]==Colour.PINK){
-            if (count > 2 && count <= 4) {
-                count += 2;
-            }
-            if (count < 2) {
-                count++;
-            }
-            if (count > 3 && count <= 5) {
-                count += 3;
-            }
-        }
-        if (i == 1 && j == 4 && int[i][j]==Colour.WHITE){
-            if (count > 2 && count <= 4) {
-                count += 2;
-            }
-            if (count < 2) {
-                count++;
-            }
-            if (count > 3 && count <= 5) {
-                count += 3;
-            }
-        }
-        if (i == 2 && j == 4 && int[i][j]==Colour.GREEN){
-            if (count > 2 && count <= 4) {
-                count += 2;
-            }
-            if (count < 2) {
-                count++;
-            }
-            if (count > 3 && count <= 5) {
-                count += 3;
-            }
-        }
-        return count;
-    }
-    public boolean Personal_goal_5 (int[][] MyShelf) {
-        int count = 0;
-        int i, j;
-        if (i == 1 && j == 1 && int[i][j]==Colour.CYAN){
-            if (count > 2 && count <= 4) {
-                count += 2;
-            }
-            if (count < 2) {
-                count++;
-            }
-            if (count > 3 && count <= 5) {
-                count += 3;
-            }
-        }
-        if (i == 1 && j == 3 && int[i][j]==Colour.BLUE){
-            if (count > 2 && count <= 4) {
-                count += 2;
-            }
-            if (count < 2) {
-                count++;
-            }
-            if (count > 3 && count <= 5) {
-                count += 3;
-            }
-        }
-        if (i == 2 && j == 3 && int[i][j]==Colour.WHITE){
-            if (count > 2 && count <= 4) {
-                count += 2;
-            }
-            if (count < 2) {
-                count++;
-            }
-            if (count > 3 && count <= 5) {
-                count += 3;
-            }
-        }
-        if (i == 4 && j == 4 && int[i][j]==Colour.PINK){
-            if (count > 2 && count <= 4) {
-                count += 2;
-            }
-            if (count < 2) {
-                count++;
-            }
-            if (count > 3 && count <= 5) {
-                count += 3;
-            }
-        }
-        if (i == 0 && j == 5 && int[i][j]==Colour.YELLOW){
-            if (count > 2 && count <= 4) {
-                count += 2;
-            }
-            if (count < 2) {
-                count++;
-            }
-            if (count > 3 && count <= 5) {
-                count += 3;
-            }
-        }
-        if (i == 3 && j == 5 && int[i][j]==Colour.GREEN){
-            if (count > 2 && count <= 4) {
-                count += 2;
-            }
-            if (count < 2) {
-                count++;
-            }
-            if (count > 3 && count <= 5) {
-                count += 3;
-            }
-        }
-        return count;
-    }
-    public boolean Personal_goal_6 (int[][] MyShelf) {
-        int count = 0;
-        int i, j;
-        if (i == 2 && j == 0 && int[i][j]==Colour.CYAN){
-            if (count > 2 && count <= 4) {
-                count += 2;
-            }
-            if (count < 2) {
-                count++;
-            }
-            if (count > 3 && count <= 5) {
-                count += 3;
-            }
-        }
-        if (i == 4 && j == 0 && int[i][j]==Colour.GREEN){
-            if (count > 2 && count <= 4) {
-                count += 2;
-            }
-            if (count < 2) {
-                count++;
-            }
-            if (count > 3 && count <= 5) {
-                count += 3;
-            }
-        }
-        if (i == 3 && j == 2 && int[i][j]==Colour.WHITE){
-            if (count > 2 && count <= 4) {
-                count += 2;
-            }
-            if (count < 2) {
-                count++;
-            }
-            if (count > 3 && count <= 5) {
-                count += 3;
-            }
-        }
-        if (i == 2 && j == 4 && int[i][j]==Colour.YELLOW){
-            if (count > 2 && count <= 4) {
-                count += 2;
-            }
-            if (count < 2) {
-                count++;
-            }
-            if (count > 3 && count <= 5) {
-                count += 3;
-            }
-        }
-        if (i == 3 && j == 4 && int[i][j]==Colour.BLUE){
-            if (count > 2 && count <= 4) {
-                count += 2;
-            }
-            if (count < 2) {
-                count++;
-            }
-            if (count > 3 && count <= 5) {
-                count += 3;
-            }
-        }
-        if (i == 0 && j == 5 && int[i][j]==Colour.PINK){
-            if (count > 2 && count <= 4) {
-                count += 2;
-            }
-            if (count < 2) {
-                count++;
-            }
-            if (count > 3 && count <= 5) {
-                count += 3;
-            }
-        }
-        return count;
-    }
-    public boolean Persoal_goal_7 (int[][] MyShelf) {
-        int count = 0;
-        int i, j;
-        if (i == 0 && j == 0 && int[i][j]==Colour.GREEN){
-            if (count > 2 && count <= 4) {
-                count += 2;
-            }
-            if (count < 2) {
-                count++;
-            }
-            if (count > 3 && count <= 5) {
-                count += 3;
-            }
-        }
-        if (i == 3 && j == 1 && int[i][j]==Colour.BLUE){
-            if (count > 2 && count <= 4) {
-                count += 2;
-            }
-            if (count < 2) {
-                count++;
-            }
-            if (count > 3 && count <= 5) {
-                count += 3;
-            }
-        }
-        if (i == 1 && j == 2 && int[i][j]==Colour.PINK){
-            if (count > 2 && count <= 4) {
-                count += 2;
-            }
-            if (count < 2) {
-                count++;
-            }
-            if (count > 3 && count <= 5) {
-                count += 3;
-            }
-        }
-        if (i == 0 && j == 3 && int[i][j]==Colour.CYAN){
-            if (count > 2 && count <= 4) {
-                count += 2;
-            }
-            if (count < 2) {
-                count++;
-            }
-            if (count > 3 && count <= 5) {
-                count += 3;
-            }
-        }
-        if (i == 4 && j == 4 && int[i][j]==Colour.YELLOW){
-            if (count > 2 && count <= 4) {
-                count += 2;
-            }
-            if (count < 2) {
-                count++;
-            }
-            if (count > 3 && count <= 5) {
-                count += 3;
-            }
-        }
-        if (i == 2 && j == 5 && int[i][j]==Colour.WHITE){
-            if (count > 2 && count <= 4) {
-                count += 2;
-            }
-            if (count < 2) {
-                count++;
-            }
-            if (count > 3 && count <= 5) {
-                count += 3;
-            }
-        }
-        return count;
-    }
-    public boolean Personal_goal_8 (int[][] MyShelf) {
-        int count = 0;
-        int i, j;
-        if (i == 4 && j == 0 && int[i][j]==Colour.BLUE){
-            if (count > 2 && count <= 4) {
-                count += 2;
-            }
-            if (count < 2) {
-                count++;
-            }
-            if (count > 3 && count <= 5) {
-                count += 3;
-            }
-        }
-        if (i == 1 && j == 1 && int[i][j]==Colour.GREEN){
-            if (count > 2 && count <= 4) {
-                count += 2;
-            }
-            if (count < 2) {
-                count++;
-            }
-            if (count > 3 && count <= 5) {
-                count += 3;
-            }
-        }
-        if (i == 2 && j == 2 && int[i][j]==Colour.CYAN){
-            if (count > 2 && count <= 4) {
-                count += 2;
-            }
-            if (count < 2) {
-                count++;
-            }
-            if (count > 3 && count <= 5) {
-                count += 3;
-            }
-        }
-        if (i == 0 && j == 3 && int[i][j]==Colour.PINK){
-            if (count > 2 && count <= 4) {
-                count += 2;
-            }
-            if (count < 2) {
-                count++;
-            }
-            if (count > 3 && count <= 5) {
-                count += 3;
-            }
-        }
-        if (i == 3 && j == 4 && int[i][j]==Colour.WHITE){
-            if (count > 2 && count <= 4) {
-                count += 2;
-            }
-            if (count < 2) {
-                count++;
-            }
-            if (count > 3 && count <= 5) {
-                count += 3;
-            }
-        }
-        if (i == 3 && j == 5 && int[i][j]==Colour.YELLOW){
-            if (count > 2 && count <= 4) {
-                count += 2;
-            }
-            if (count < 2) {
-                count++;
-            }
-            if (count > 3 && count <= 5) {
-                count += 3;
-            }
-        }
-        return count;
-    }
-    public boolean Personal_goal_9 (int[][] MyShelf) {
-        int count = 0;
-        int i, j;
-        if (i == 2 && j == 0 && int[i][j]==Colour.YELLOW){
-            if (count > 2 && count <= 4) {
-                count += 2;
-            }
-            if (count < 2) {
-                count++;
-            }
-            if (count > 3 && count <= 5) {
-                count += 3;
-            }
-        }
-        if (i == 2 && j == 2 && int[i][j]==Colour.GREEN){
-            if (count > 2 && count <= 4) {
-                count += 2;
-            }
-            if (count < 2) {
-                count++;
-            }
-            if (count > 3 && count <= 5) {
-                count += 3;
-            }
-        }
-        if (i == 4 && j == 3 && int[i][j]==Colour.WHITE){
-            if (count > 2 && count <= 4) {
-                count += 2;
-            }
-            if (count < 2) {
-                count++;
-            }
-            if (count > 3 && count <= 5) {
-                count += 3;
-            }
-        }
-        if (i == 2 && j == 4 && int[i][j]==Colour.CYAN){
-            if (count > 2 && count <= 4) {
-                count += 2;
-            }
-            if (count < 2) {
-                count++;
-            }
-            if (count > 3 && count <= 5) {
-                count += 3;
-            }
-        }
-        if (i == 4 && j == 4 && int[i][j]==Colour.PINK){
-            if (count > 2 && count <= 4) {
-                count += 2;
-            }
-            if (count < 2) {
-                count++;
-            }
-            if (count > 3 && count <= 5) {
-                count += 3;
-            }
-        }
-        if (i == 0 && j == 5 && int[i][j]==Colour.BLUE){
-            if (count > 2 && count <= 4) {
-                count += 2;
-            }
-            if (count < 2) {
-                count++;
-            }
-            if (count > 3 && count <= 5) {
-                count += 3;
-            }
-        }
-        return count;
-    }
-    public boolean Personal_goal_10 (int[][] MyShelf) {
-        int count = 0;
-        int i, j;
-        if (i == 4 && j == 0 && int[i][j]==Colour.CYAN){
-            if (count > 2 && count <= 4) {
-                count += 2;
-            }
-            if (count < 2) {
-                count++;
-            }
-            if (count > 3 && count <= 5) {
-                count += 3;
-            }
-        }
-        if (i == 1 && j == 1 && int[i][j]==Colour.YELLOW){
-            if (count > 2 && count <= 4) {
-                count += 2;
-            }
-            if (count < 2) {
-                count++;
-            }
-            if (count > 3 && count <= 5) {
-                count += 3;
-            }
-        }
-        if (i == 0 && j == 2 && int[i][j]==Colour.WHITE){
-            if (count > 2 && count <= 4) {
-                count += 2;
-            }
-            if (count < 2) {
-                count++;
-            }
-            if (count > 3 && count <= 5) {
-                count += 3;
-            }
-        }
-        if (i == 3 && j == 3 && int[i][j]==Colour.GREEN){
-            if (count > 2 && count <= 4) {
-                count += 2;
-            }
-            if (count < 2) {
-                count++;
-            }
-            if (count > 3 && count <= 5) {
-                count += 3;
-            }
-        }
-        if (i == 1 && j == 4 && int[i][j]==Colour.BLUE){
-            if (count > 2 && count <= 4) {
-                count += 2;
-            }
-            if (count < 2) {
-                count++;
-            }
-            if (count > 3 && count <= 5) {
-                count += 3;
-            }
-        }
-        if (i == 3 && j == 5 && int[i][j]==Colour.PINK){
-            if (count > 2 && count <= 4) {
-                count += 2;
-            }
-            if (count < 2) {
-                count++;
-            }
-            if (count > 3 && count <= 5) {
-                count += 3;
-            }
-        }
-        return count;
-    }
-    public boolean Personal_goal_11 (int[][] MyShelf){
-        int count=0;
-        int i, j;
-        if (i == 2 && j == 0 && int[i][j]==Colour.PINK){
-            if (count > 2 && count <= 4) {
-                count += 2;
-            }
-            if (count < 2) {
-                count++;
-            }
-            if (count > 3 && count <= 5) {
-                count += 3;
-            }
-        }
-        if (i == 1 && j == 1 && int[i][j]==Colour.WHITE){
-            if (count > 2 && count <= 4) {
-                count += 2;
-            }
-            if (count < 2) {
-                count++;
-            }
-            if (count > 3 && count <= 5) {
-                count += 3;
-            }
-        }
-        if (i == 0 && j == 2 && int[i][j]==Colour.YELLOW){
-            if (count > 2 && count <= 4) {
-                count += 2;
-            }
-            if (count < 2) {
-                count++;
-            }
-            if (count > 3 && count <= 5) {
-                count += 3;
-            }
-        }
-        if (i == 2 && j == 3 && int[i][j]==Colour.BLUE){
-            if (count > 2 && count <= 4) {
-                count += 2;
-            }
-            if (count < 2) {
-                count++;
-            }
-            if (count > 3 && count <= 5) {
-                count += 3;
-            }
-        }
-        if (i == 4 && j == 4 && int[i][j]==Colour.GREEN){
-            if (count > 2 && count <= 4) {
-                count += 2;
-            }
-            if (count < 2) {
-                count++;
-            }
-            if (count > 3 && count <= 5) {
-                count += 3;
-            }
-        }
-        if (i == 3 && j == 5 && int[i][j]==Colour.CYAN){
-            if (count > 2 && count <= 4) {
-                count += 2;
-            }
-            if (count < 2) {
-                count++;
-            }
-            if (count > 3 && count <= 5) {
-                count += 3;
-            }
-        }
-        return count;
-    }
-    public boolean Personal_goal_12 (int[][] MyShelf){
-        int i, j;
-        int count=0;
-        if (i == 2 && j == 0 && int[i][j]==Colour.WHITE){
-            if (count > 2 && count <= 4) {
-                count += 2;
-            }
-            if (count < 2) {
-                count++;
-            }
-            if (count > 3 && count <= 5) {
-                count += 3;
-            }
-        }
-        if (i == 1 && j == 1 && int[i][j]==Colour.PINK){
-            if (count > 2 && count <= 4) {
-                count += 2;
-            }
-            if (count < 2) {
-                count++;
-            }
-            if (count > 3 && count <= 5) {
-                count += 3;
-            }
-        }
-        if (i == 2 && j == 2 && int[i][j]==Colour.BLUE){
-            if (count > 2 && count <= 4) {
-                count += 2;
-            }
-            if (count < 2) {
-                count++;
-            }
-            if (count > 3 && count <= 5) {
-                count += 3;
-            }
-        }
-        if (i == 3 && j == 3 && int[i][j]==Colour.CYAN){
-            if (count > 2 && count <= 4) {
-                count += 2;
-            }
-            if (count < 2) {
-                count++;
-            }
-            if (count > 3 && count <= 5) {
-                count += 3;
-            }
-        }
-        if (i == 4 && j == 4 && int[i][j]==Colour.YELLOW){
-            if (count > 2 && count <= 4) {
-                count += 2;
-            }
-            if (count < 2) {
-                count++;
-            }
-            if (count > 3 && count <= 5) {
-                count += 3;
-            }
-        }
-        if (i == 0 && j == 5 && int[i][j]==Colour.GREEN){
-            if (count > 2 && count <= 4) {
-                count += 2;
-            }
-            if (count < 2) {
-                count++;
-            }
-            if (count > 3 && count <= 5) {
-                count += 3;
-            }
-        }
-        return count;
-    }
-    public void addPoint(int num, int add){
-        num=num+add;
-    }
-    enum personalGoalType{PERSONALGOAL1, PERSONALGOAL2, PERSONALGOAL3, PERSONALGOAL4}
-        public boolean checkPersonalGoal(){
-        int n=0;
-        int a;
-            if(personalGoalType.PERSONALGOAL1){
-                if(rulePersonalGoal.checkThreeCard()){
-                    addPoint(n,a=2);
-                }
-            }
-            if(personalGoalType.PERSONALGOAL2){
-                if(rulePersonalGoal.checkFourCard()){
-                    addPoint(n,a=1);
-                }
-            }
-            if(personalGoalType.PERSONALGOAL3){
-                if(rulePersonalGoal.checkFiveCard()){
-                    addPoint(n,a=2);
-                }
-            }
-            if(personalGoalType.PERSONALGOAL4){
-                if(rulePersonalGoal.checkSixCard()){
-                    addPoint(n,a=3);
-                }
-            }
-        }
-
-    }
-
-    // codice diletta
-
-    public void setPersonalGoalType(CommonGoalType commonGoalType){ // chiamato e passato dal controller quando decide random che tipo di carta viene estratta
-        this.commonGoalType = commonGoalType;
-    }
-
-
 }
+
+public class PersonalGoal() {
+    public int Personal_goal_1(int[][] MyShelf) {
+        int i, j;
+        int count = 0;
+        if (i == 0 && j == 0) {
+            if ( int[i][j]==Colour.PINK){
+
+                if (count > 2 && count <= 4) {
+                    count += 2;
+                }
+                if (count < 2) {
+                    count++;
+                }
+                if (count > 3 && count <= 5) {
+                    count += 3;
+                }
+            }
+        }
+        if (i == 2 && j == 0) {
+            if ( int[i][j]==Colour.BLUE){
+                if (count > 2 && count <= 4) {
+                    count += 2;
+                }
+                if (count < 2) {
+                    count++;
+                }
+                if (count > 3 && count <= 5) {
+                    count += 3;
+                }
+            }
+        }
+        if (i == 4 && j == 1) {
+            if ( int[i][j]==Colour.GREEN){
+                if (count > 2 && count <= 4) {
+                    count += 2;
+                }
+                if (count < 2) {
+                    count++;
+                }
+                if (count > 3 && count <= 5) {
+                    count += 3;
+                }
+            }
+        }
+        if (i == 3 && j == 2) {
+            if ( int[i][j]==Colour.WHITE){
+                if (count > 2 && count <= 4) {
+                    count += 2;
+                }
+                if (count < 2) {
+                    count++;
+                }
+                if (count > 3 && count <= 5) {
+                    count += 3;
+                }
+            }
+        }
+        if (i == 1 && j == 3) {
+            if ( int[i][j]==Colour.YELLOW){
+                if (count > 2 && count <= 4) {
+                    count += 2;
+                }
+                if (count < 2) {
+                    count++;
+                }
+                if (count > 3 && count <= 5) {
+                    count += 3;
+                }
+            }
+        }
+        if (i == 2 && j == 5) {
+            if ( int[i][j]==Colour.CYAN){
+                if (count > 2 && count <= 4) {
+                    count += 2;
+                }
+                if (count < 2) {
+                    count++;
+                }
+                if (count > 3 && count <= 5) {
+                    count += 3;
+                }
+            }
+        }
+        return count;
+    }
+
+    public int Personal_goal_2(int[][] MyShelf) {
+        int count = 0;
+        int i, j;
+        if (i == 1 && j == 1) {
+            if ( int[i][j]==Colour.PINK){
+                if (count > 2 && count <= 4) {
+                    count += 2;
+                }
+                if (count < 2) {
+                    count++;
+                }
+                if (count > 3 && count <= 5) {
+                    count += 3;
+                }
+            }
+        }
+        if (i == 0 && j == 2) {
+            if ( int[i][j]==Colour.GREEN){
+                if (count > 2 && count <= 4) {
+                    count += 2;
+                }
+                if (count < 2) {
+                    count++;
+                }
+                if (count > 3 && count <= 5) {
+                    count += 3;
+                }
+            }
+        }
+        if (i == 2 && j == 2) {
+            if ( int[i][j]==Colour.YELLOW){
+                if (count > 2 && count <= 4) {
+                    count += 2;
+                }
+                if (count < 2) {
+                    count++;
+                }
+                if (count > 3 && count <= 5) {
+                    count += 3;
+                }
+            }
+        }
+        if (i == 4 && j == 3) {
+            if ( int[i][j]==Colour.WHITE){
+                if (count > 2 && count <= 4) {
+                    count += 2;
+                }
+                if (count < 2) {
+                    count++;
+                }
+                if (count > 3 && count <= 5) {
+                    count += 3;
+                }
+            }
+        }
+        if (i == 3 && j == 4) {
+            if ( int[i][j]==Colour.CYAN){
+                if (count > 2 && count <= 4) {
+                    count += 2;
+                }
+                if (count < 2) {
+                    count++;
+                }
+                if (count > 3 && count <= 5) {
+                    count += 3;
+                }
+            }
+        }
+        if (i == 4 && j == 5) {
+            if ( int[i][j]==Colour.BLUE){
+                if (count > 2 && count <= 4) {
+                    count += 2;
+                }
+                if (count < 2) {
+                    count++;
+                }
+                if (count > 3 && count <= 5) {
+                    count += 3;
+                }
+            }
+        }
+        return count;
+    }
+
+    public int Personal_goal_3(int[][] MyShelf) {
+        int count = 0;
+        int i, j;
+        if (i == 0 && j == 1) {
+            if ( int[i][j]==Colour.BLUE){
+                if (count > 2 && count <= 4) {
+                    count += 2;
+                }
+                if (count < 2) {
+                    count++;
+                }
+                if (count > 3 && count <= 5) {
+                    count += 3;
+                }
+            }
+        }
+        if (i == 3 && j == 1) {
+            if ( int[i][j]==Colour.YELLOW){
+                if (count > 2 && count <= 4) {
+                    count += 2;
+                }
+                if (count < 2) {
+                    count++;
+                }
+                if (count > 3 && count <= 5) {
+                    count += 3;
+                }
+            }
+        }
+
+        if (i == 2 && j == 2) {
+            if ( int[i][j]==Colour.PINK){
+                if (count > 2 && count <= 4) {
+                    count += 2;
+                }
+                if (count < 2) {
+                    count++;
+                }
+                if (count > 3 && count <= 5) {
+                    count += 3;
+                }
+            }
+        }
+        if (i == 1 && j == 3) {
+            if ( int[i][j]==Colour.GREEN){
+                if (count > 2 && count <= 4) {
+                    count += 2;
+                }
+                if (count < 2) {
+                    count++;
+                }
+                if (count > 3 && count <= 5) {
+                    count += 3;
+                }
+            }
+        }
+
+        if (i == 4 && j == 3) {
+            if ( int[i][j]==Colour.CYAN){
+                if (count > 2 && count <= 4) {
+                    count += 2;
+                }
+                if (count < 2) {
+                    count++;
+                }
+                if (count > 3 && count <= 5) {
+                    count += 3;
+                }
+            }
+        }
+        if (i == 0 && j == 5) {
+            if ( int[i][j]==Colour.WHITE){
+                if (count > 2 && count <= 4) {
+                    count += 2;
+                }
+                if (count < 2) {
+                    count++;
+                }
+                if (count > 3 && count <= 5) {
+                    count += 3;
+                }
+            }
+        }
+        return count;
+    }
+
+    public int Personal_goal_4(int[][] MyShelf) {
+        int count = 0;
+        int i, j;
+        if (i == 4 && j == 0) {
+            if ( int[i][j]==Colour.YELLOW){
+                if (count > 2 && count <= 4) {
+                    count += 2;
+                }
+                if (count < 2) {
+                    count++;
+                }
+                if (count > 3 && count <= 5) {
+                    count += 3;
+                }
+            }
+        }
+        if (i == 0 && j == 2) {
+            if ( int[i][j]==Colour.CYAN){
+                if (count > 2 && count <= 4) {
+                    count += 2;
+                }
+                if (count < 2) {
+                    count++;
+                }
+                if (count > 3 && count <= 5) {
+                    count += 3;
+                }
+            }
+        }
+        if (i == 2 && j == 2) {
+            if ( int[i][j]==Colour.BLUE){
+                if (count > 2 && count <= 4) {
+                    count += 2;
+                }
+                if (count < 2) {
+                    count++;
+                }
+                if (count > 3 && count <= 5) {
+                    count += 3;
+                }
+            }
+        }
+        if (i == 3 && j == 3) {
+            if ( int[i][j]==Colour.PINK){
+                if (count > 2 && count <= 4) {
+                    count += 2;
+                }
+                if (count < 2) {
+                    count++;
+                }
+                if (count > 3 && count <= 5) {
+                    count += 3;
+                }
+            }
+        }
+        if (i == 1 && j == 4) {
+            if ( int[i][j]==Colour.WHITE){
+                if (count > 2 && count <= 4) {
+                    count += 2;
+                }
+                if (count < 2) {
+                    count++;
+                }
+                if (count > 3 && count <= 5) {
+                    count += 3;
+                }
+            }
+        }
+        if (i == 2 && j == 4) {
+            if ( int[i][j]==Colour.GREEN){
+                if (count > 2 && count <= 4) {
+                    count += 2;
+                }
+                if (count < 2) {
+                    count++;
+                }
+                if (count > 3 && count <= 5) {
+                    count += 3;
+                }
+            }
+        }
+        return count;
+    }
+
+    public int Personal_goal_5(int[][] MyShelf) {
+        int count = 0;
+        int i, j;
+        if (i == 1 && j == 1) {
+            if ( int[i][j]==Colour.CYAN){
+                if (count > 2 && count <= 4) {
+                    count += 2;
+                }
+                if (count < 2) {
+                    count++;
+                }
+                if (count > 3 && count <= 5) {
+                    count += 3;
+                }
+            }
+        }
+        if (i == 1 && j == 3) {
+            if ( int[i][j]==Colour.BLUE){
+                if (count > 2 && count <= 4) {
+                    count += 2;
+                }
+                if (count < 2) {
+                    count++;
+                }
+                if (count > 3 && count <= 5) {
+                    count += 3;
+                }
+            }
+        }
+        if (i == 2 && j == 3) {
+            if ( int[i][j]==Colour.WHITE){
+                if (count > 2 && count <= 4) {
+                    count += 2;
+                }
+                if (count < 2) {
+                    count++;
+                }
+                if (count > 3 && count <= 5) {
+                    count += 3;
+                }
+            }
+        }
+        if (i == 4 && j == 4) {
+            if ( int[i][j]==Colour.PINK){
+                if (count > 2 && count <= 4) {
+                    count += 2;
+                }
+                if (count < 2) {
+                    count++;
+                }
+                if (count > 3 && count <= 5) {
+                    count += 3;
+                }
+            }
+        }
+        if (i == 0 && j == 5) {
+            if ( int[i][j]==Colour.YELLOW){
+                if (count > 2 && count <= 4) {
+                    count += 2;
+                }
+                if (count < 2) {
+                    count++;
+                }
+                if (count > 3 && count <= 5) {
+                    count += 3;
+                }
+            }
+        }
+        if (i == 3 && j == 5) {
+            if ( int[i][j]==Colour.GREEN){
+                if (count > 2 && count <= 4) {
+                    count += 2;
+                }
+                if (count < 2) {
+                    count++;
+                }
+                if (count > 3 && count <= 5) {
+                    count += 3;
+                }
+            }
+        }
+        return count;
+    }
+
+    public int Personal_goal_6(int[][] MyShelf) {
+        int count = 0;
+        int i, j;
+        if (i == 2 && j == 0) {
+            if ( int[i][j]==Colour.CYAN){
+                if (count > 2 && count <= 4) {
+                    count += 2;
+                }
+                if (count < 2) {
+                    count++;
+                }
+                if (count > 3 && count <= 5) {
+                    count += 3;
+                }
+            }
+        }
+        if (i == 4 && j == 0) {
+            if ( int[i][j]==Colour.GREEN){
+                if (count > 2 && count <= 4) {
+                    count += 2;
+                }
+                if (count < 2) {
+                    count++;
+                }
+                if (count > 3 && count <= 5) {
+                    count += 3;
+                }
+            }
+        }
+        if (i == 3 && j == 2) {
+            if ( int[i][j]==Colour.WHITE){
+                if (count > 2 && count <= 4) {
+                    count += 2;
+                }
+                if (count < 2) {
+                    count++;
+                }
+                if (count > 3 && count <= 5) {
+                    count += 3;
+                }
+            }
+        }
+        if (i == 2 && j == 4) {
+            if ( int[i][j]==Colour.YELLOW){
+                if (count > 2 && count <= 4) {
+                    count += 2;
+                }
+                if (count < 2) {
+                    count++;
+                }
+                if (count > 3 && count <= 5) {
+                    count += 3;
+                }
+            }
+        }
+        if (i == 3 && j == 4) {
+            if ( int[i][j]==Colour.BLUE){
+                if (count > 2 && count <= 4) {
+                    count += 2;
+                }
+                if (count < 2) {
+                    count++;
+                }
+                if (count > 3 && count <= 5) {
+                    count += 3;
+                }
+            }
+        }
+        if (i == 0 && j == 5) {
+            if ( int[i][j]==Colour.PINK){
+                if (count > 2 && count <= 4) {
+                    count += 2;
+                }
+                if (count < 2) {
+                    count++;
+                }
+                if (count > 3 && count <= 5) {
+                    count += 3;
+                }
+            }
+        }
+        return count;
+    }
+
+    public int Persoal_goal_7(int[][] MyShelf) {
+        int count = 0;
+        int i, j;
+        if (i == 0 && j == 0) {
+            if ( int[i][j]==Color.GREEN){
+                if (count > 2 && count <= 4) {
+                    count += 2;
+                }
+                if (count < 2) {
+                    count++;
+                }
+                if (count > 3 && count <= 5) {
+                    count += 3;
+                }
+            }
+        }
+        if (i == 3 && j == 1) {
+            if ( int[i][j]==Colour.BLUE){
+                if (count > 2 && count <= 4) {
+                    count += 2;
+                }
+                if (count < 2) {
+                    count++;
+                }
+                if (count > 3 && count <= 5) {
+                    count += 3;
+                }
+            }
+        }
+        if (i == 1 && j == 2) {
+            if ( int[i][j]==Colour.PINK){
+                if (count > 2 && count <= 4) {
+                    count += 2;
+                }
+                if (count < 2) {
+                    count++;
+                }
+                if (count > 3 && count <= 5) {
+                    count += 3;
+                }
+            }
+        }
+        if (i == 0 && j == 3) {
+            if ( int[i][j]==Colour.CYAN){
+                if (count > 2 && count <= 4) {
+                    count += 2;
+                }
+                if (count < 2) {
+                    count++;
+                }
+                if (count > 3 && count <= 5) {
+                    count += 3;
+                }
+            }
+        }
+        if (i == 4 && j == 4) {
+            if ( int[i][j]==Colour.YELLOW){
+                if (count > 2 && count <= 4) {
+                    count += 2;
+                }
+                if (count < 2) {
+                    count++;
+                }
+                if (count > 3 && count <= 5) {
+                    count += 3;
+                }
+            }
+        }
+        if (i == 2 && j == 5) {
+            if ( int[i][j]==Colour.WHITE){
+                if (count > 2 && count <= 4) {
+                    count += 2;
+                }
+                if (count < 2) {
+                    count++;
+                }
+                if (count > 3 && count <= 5) {
+                    count += 3;
+                }
+            }
+        }
+        return count;
+    }
+
+
+    public int Personal_goal_8(int[][] MyShelf) {
+        int count = 0;
+        int i, j;
+        if (i == 4 && j == 0) {
+            if ( int[i][j]==Colour.BLUE){
+                if (count > 2 && count <= 4) {
+                    count += 2;
+                }
+                if (count < 2) {
+                    count++;
+                }
+                if (count > 3 && count <= 5) {
+                    count += 3;
+                }
+            }
+        }
+        if (i == 1 && j == 1) {
+            if ( int[i][j]==Colour.GREEN){
+                if (count > 2 && count <= 4) {
+                    count += 2;
+                }
+                if (count < 2) {
+                    count++;
+                }
+                if (count > 3 && count <= 5) {
+                    count += 3;
+                }
+            }
+        }
+        if (i == 2 && j == 2) {
+            if ( int[i][j]==Colour.CYAN){
+                if (count > 2 && count <= 4) {
+                    count += 2;
+                }
+                if (count < 2) {
+                    count++;
+                }
+                if (count > 3 && count <= 5) {
+                    count += 3;
+                }
+            }
+        }
+        if (i == 0 && j == 3) {
+            if ( int[i][j]==Colour.PINK){
+                if (count > 2 && count <= 4) {
+                    count += 2;
+                }
+                if (count < 2) {
+                    count++;
+                }
+                if (count > 3 && count <= 5) {
+                    count += 3;
+                }
+            }
+        }
+        if (i == 3 && j == 4) {
+            if ( int[i][j]==Colour.WHITE){
+                if (count > 2 && count <= 4) {
+                    count += 2;
+                }
+                if (count < 2) {
+                    count++;
+                }
+                if (count > 3 && count <= 5) {
+                    count += 3;
+                }
+            }
+        }
+        if (i == 3 && j == 5) {
+            if ( int[i][j]==Colour.YELLOW){
+                if (count > 2 && count <= 4) {
+                    count += 2;
+                }
+                if (count < 2) {
+                    count++;
+                }
+                if (count > 3 && count <= 5) {
+                    count += 3;
+                }
+            }
+        }
+        return count;
+    }
+
+    public int Personal_goal_9(int[][] MyShelf) {
+        int count = 0;
+        int i, j;
+        if (i == 2 && j == 0) {
+            if ( int[i][j]==Colour.YELLOW){
+                if (count > 2 && count <= 4) {
+                    count += 2;
+                }
+                if (count < 2) {
+                    count++;
+                }
+                if (count > 3 && count <= 5) {
+                    count += 3;
+                }
+            }
+        }
+        if (i == 2 && j == 2) {
+            if ( int[i][j]==Colour.GREEN){
+                if (count > 2 && count <= 4) {
+                    count += 2;
+                }
+                if (count < 2) {
+                    count++;
+                }
+                if (count > 3 && count <= 5) {
+                    count += 3;
+                }
+            }
+        }
+        if (i == 4 && j == 3) {
+            if ( int[i][j]==Colour.WHITE){
+                if (count > 2 && count <= 4) {
+                    count += 2;
+                }
+                if (count < 2) {
+                    count++;
+                }
+                if (count > 3 && count <= 5) {
+                    count += 3;
+                }
+            }
+        }
+        if (i == 2 && j == 4) {
+            if ( int[i][j]==Colour.CYAN){
+                if (count > 2 && count <= 4) {
+                    count += 2;
+                }
+                if (count < 2) {
+                    count++;
+                }
+                if (count > 3 && count <= 5) {
+                    count += 3;
+                }
+            }
+        }
+        if (i == 4 && j == 4) {
+            if ( int[i][j]==Colour.PINK){
+                if (count > 2 && count <= 4) {
+                    count += 2;
+                }
+                if (count < 2) {
+                    count++;
+                }
+                if (count > 3 && count <= 5) {
+                    count += 3;
+                }
+            }
+        }
+        if (i == 0 && j == 5) {
+            if ( int[i][j]==Colour.BLUE){
+                if (count > 2 && count <= 4) {
+                    count += 2;
+                }
+                if (count < 2) {
+                    count++;
+                }
+                if (count > 3 && count <= 5) {
+                    count += 3;
+                }
+            }
+        }
+        return count;
+    }
+
+    public int Personal_goal_10(int[][] MyShelf) {
+        int count = 0;
+        int i, j;
+        if (i == 4 && j == 0) {
+            if ( int[i][j]==Colour.CYAN){
+                if (count > 2 && count <= 4) {
+                    count += 2;
+                }
+                if (count < 2) {
+                    count++;
+                }
+                if (count > 3 && count <= 5) {
+                    count += 3;
+                }
+            }
+        }
+        if (i == 1 && j == 1) {
+            if ( int[i][j]==Colour.YELLOW){
+                if (count > 2 && count <= 4) {
+                    count += 2;
+                }
+                if (count < 2) {
+                    count++;
+                }
+                if (count > 3 && count <= 5) {
+                    count += 3;
+                }
+            }
+        }
+        if (i == 0 && j == 2) {
+            if ( int[i][j]==Colour.WHITE){
+                if (count > 2 && count <= 4) {
+                    count += 2;
+                }
+                if (count < 2) {
+                    count++;
+                }
+                if (count > 3 && count <= 5) {
+                    count += 3;
+                }
+            }
+        }
+        if (i == 3 && j == 3) {
+            if ( int[i][j]==Colour.GREEN){
+                if (count > 2 && count <= 4) {
+                    count += 2;
+                }
+                if (count < 2) {
+                    count++;
+                }
+                if (count > 3 && count <= 5) {
+                    count += 3;
+                }
+            }
+        }
+        if (i == 1 && j == 4) {
+            if ( int[i][j]==Colour.BLUE){
+                if (count > 2 && count <= 4) {
+                    count += 2;
+                }
+                if (count < 2) {
+                    count++;
+                }
+                if (count > 3 && count <= 5) {
+                    count += 3;
+                }
+            }
+        }
+        if (i == 3 && j == 5) {
+            int([i][j] == Colour.PINK){
+                if (count > 2 && count <= 4) {
+                    count += 2;
+                }
+                if (count < 2) {
+                    count++;
+                }
+                if (count > 3 && count <= 5) {
+                    count += 3;
+                }
+            }
+        }
+        return count;
+    }
+
+    public int Personal_goal_11(int[][] MyShelf) {
+        int count = 0;
+        int i, j;
+        if (i == 2 && j == 0) {
+            if ( int[i][j]==Colour.PINK){
+                if (count > 2 && count <= 4) {
+                    count += 2;
+                }
+                if (count < 2) {
+                    count++;
+                }
+                if (count > 3 && count <= 5) {
+                    count += 3;
+                }
+            }
+        }
+        if (i == 1 && j == 1) {
+            if ( int[i][j]==Colour.WHITE){
+                if (count > 2 && count <= 4) {
+                    count += 2;
+                }
+                if (count < 2) {
+                    count++;
+                }
+                if (count > 3 && count <= 5) {
+                    count += 3;
+                }
+            }
+        }
+        if (i == 0 && j == 2) {
+            if ( int[i][j]==Colour.YELLOW){
+                if (count > 2 && count <= 4) {
+                    count += 2;
+                }
+                if (count < 2) {
+                    count++;
+                }
+                if (count > 3 && count <= 5) {
+                    count += 3;
+                }
+            }
+        }
+        if (i == 2 && j == 3) {
+            if ( int[i][j]==Colour.BLUE){
+                if (count > 2 && count <= 4) {
+                    count += 2;
+                }
+                if (count < 2) {
+                    count++;
+                }
+                if (count > 3 && count <= 5) {
+                    count += 3;
+                }
+            }
+        }
+        if (i == 4 && j == 4) {
+            if ( int[i][j]==Color.GREEN){
+                if (count > 2 && count <= 4) {
+                    count += 2;
+                }
+                if (count < 2) {
+                    count++;
+                }
+                if (count > 3 && count <= 5) {
+                    count += 3;
+                }
+            }
+        }
+        if (i == 3 && j == 5) {
+            if ( int[i][j]==Colour.CYAN){
+                if (count > 2 && count <= 4) {
+                    count += 2;
+                }
+                if (count < 2) {
+                    count++;
+                }
+                if (count > 3 && count <= 5) {
+                    count += 3;
+                }
+            }
+        }
+        return count;
+    }
+
+    public int Personal_goal_12(int[][] MyShelf) {
+        int i, j;
+        int count = 0;
+        if (i == 2 && j == 0) {
+            if ( int[i][j]==Colour.WHITE){
+                if (count > 2 && count <= 4) {
+                    count += 2;
+                }
+                if (count < 2) {
+                    count++;
+                }
+                if (count > 3 && count <= 5) {
+                    count += 3;
+                }
+            }
+        }
+        if (i == 1 && j == 1) {
+            if ( int[i][j]==Colour.PINK){
+                if (count > 2 && count <= 4) {
+                    count += 2;
+                }
+                if (count < 2) {
+                    count++;
+                }
+                if (count > 3 && count <= 5) {
+                    count += 3;
+                }
+            }
+        }
+        if (i == 2 && j == 2) {
+            if ( int[i][j]==Colour.BLUE){
+                if (count > 2 && count <= 4) {
+                    count += 2;
+                }
+                if (count < 2) {
+                    count++;
+                }
+                if (count > 3 && count <= 5) {
+                    count += 3;
+                }
+            }
+        }
+        if (i == 3 && j == 3) {
+            if ( int[i][j]==Colour.CYAN){
+                if (count > 2 && count <= 4) {
+                    count += 2;
+                }
+                if (count < 2) {
+                    count++;
+                }
+                if (count > 3 && count <= 5) {
+                    count += 3;
+                }
+            }
+        }
+        if (i == 4 && j == 4) {
+            if ( int[i][j]==Colour.YELLOW){
+                if (count > 2 && count <= 4) {
+                    count += 2;
+                }
+                if (count < 2) {
+                    count++;
+                }
+                if (count > 3 && count <= 5) {
+                    count += 3;
+                }
+            }
+        }
+        if (i == 0 && j == 5) {
+            if ( int[i][j]==Colour.GREEN){
+                if (count > 2 && count <= 4) {
+                    count += 2;
+                }
+                if (count < 2) {
+                    count++;
+                }
+                if (count > 3 && count <= 5) {
+                    count += 3;
+                }
+            }
+        }
+        return count;
+    }
+
+    public void addPoint(int num, int add) {
+        num = num + add;
+    }
+
+
+    enum personalGoalType {PERSONALGOAL1, PERSONALGOAL2, PERSONALGOAL3, PERSONALGOAL4}
+
+    public int checkPersonalGoal() {
+        int n = 0;
+        int a;
+        if (personalGoalType.PERSONALGOAL1) {
+            if (rulePersonalGoal.checkThreeCard()) {
+                addPoint(n, a = 2);
+            }
+        }
+        if (personalGoalType.PERSONALGOAL2) {
+            if (rulePersonalGoal.checkFourCard()) {
+                addPoint(n, a = 1);
+            }
+        }
+        if (personalGoalType.PERSONALGOAL3) {
+            if (rulePersonalGoal.checkFiveCard()) {
+                addPoint(n, a = 2);
+            }
+        }
+        if (personalGoalType.PERSONALGOAL4) {
+            if (rulePersonalGoal.checkSixCard()) {
+                addPoint(n, a = 3);
+            }
+        }
+       return n;
+    }
+}
+
 
 
 public class CommonGoal {
-    CommonGoalType commonGoalType;
-    private ArrayList<Integer> token_list = new ArrayList<Integer>();
+            CommonGoalType commonGoalType;
+            private ArrayList<Integer> token_list = new ArrayList<Integer>();
 
 
-    public void setTokens(int playersNumber){ //parametro dato dal controller
-        if(playersNumber==2){
-            token_list.add(4);
-            token_list.add(8);
-        }
-        if(playersNumber==3){
-            token_list.add(4);
-            token_list.add(6);
-            token_list.add(8);
-        }
-        if(playersNumber==4) {
-            token_list.add(2);
-            token_list.add(4);
-            token_list.add(6);
-            token_list.add(8);
-        }
-    }
+            public void setTokens(int playersNumber) { //parametro dato dal controller
+                if (playersNumber == 2) {
+                    token_list.add(4);
+                    token_list.add(8);
+                }
+                if (playersNumber == 3) {
+                    token_list.add(4);
+                    token_list.add(6);
+                    token_list.add(8);
+                }
+                if (playersNumber == 4) {
+                    token_list.add(2);
+                    token_list.add(4);
+                    token_list.add(6);
+                    token_list.add(8);
+                }
+            }
 
-//questo va messo nel controller
-    public boolean checkGoal(ItemTile[][] structure) { //il parametro è gia passato quando chiamo calculatepoints
-        boolean checker = false;
-        switch (commonGoalType) {
-            case COMMONGOAL02:
-                checker = Algorithm.checkCorner(structure);
-                break;
-            case COMMONGOAL01:
-                checker = Algorithm.checkSixCouples(structure);
-                break;
-            case CommonGOAL03:
-                checker = Algorithm.checkFourGroups(structure);
-                break;
-            case COMMONGOAL04:
-                checker = Algorithm.checkSquare(structure);
-                break;
-            case COMMONGOAL05:
-                checker = Algorithm.CheckColumn1(structure);
-                break;
-            case COMMONGOAL06:
-                checker = Algorithm.checkEight(structure);
-                break;
-                case COMMONGOAL07:
-                checker = Algorithm.checkDiagonal(structure);
-            break;
-            case COMMONGOAL08:
-                checker = Algorithm.CheckLine1(structure);
-            break;
-            case COMMONGOAL09:
-                checker = Algorithm.CheckColumn2(structure);
-            break;
-            case COMMONGOAL10:
-                checker = Algorithm.CheckLine2(structure);
-            break;
-            case COMMONGOAL11:
-                checker = Algorithm.checkCrux(structure);
-            break;
-            case COMMONGOAL12:
-                checker = Algorithm.checkStair(structure);
-            break;
-        }
-        return checker;
-        }
+            //questo va messo nel controller
+            public boolean checkGoal(ItemTile[][] structure) { //il parametro è gia passato quando chiamo calculatepoints
+                boolean checker = false;
+                switch (commonGoalType) {
+                    case COMMONGOAL02:
+                        checker = Algorithm.checkCorner(structure);
+                        break;
+                    case COMMONGOAL01:
+                        checker = Algorithm.checkSixCouples(structure);
+                        break;
+                    case CommonGOAL03:
+                        checker = Algorithm.checkFourGroups(structure);
+                        break;
+                    case COMMONGOAL04:
+                        checker = Algorithm.checkSquare(structure);
+                        break;
+                    case COMMONGOAL05:
+                        checker = Algorithm.CheckColumn1(structure);
+                        break;
+                    case COMMONGOAL06:
+                        checker = Algorithm.checkEight(structure);
+                        break;
+                    case COMMONGOAL07:
+                        checker = Algorithm.checkDiagonal(structure);
+                        break;
+                    case COMMONGOAL08:
+                        checker = Algorithm.CheckLine1(structure);
+                        break;
+                    case COMMONGOAL09:
+                        checker = Algorithm.CheckColumn2(structure);
+                        break;
+                    case COMMONGOAL10:
+                        checker = Algorithm.CheckLine2(structure);
+                        break;
+                    case COMMONGOAL11:
+                        checker = Algorithm.checkCrux(structure);
+                        break;
+                    case COMMONGOAL12:
+                        checker = Algorithm.checkStair(structure);
+                        break;
+                }
+                return checker;
+            }
 
 
-//anche questo va nel controller
-    public int getPoint(){
-        int i=0; // se ho finite le carte punteggio si assegnano zero punti
-        if(0 < token_list.size()) {
-            i = token_list.get(token_list.size());
-            token_list.remove(token_list.size() - 1);
+            //anche questo va nel controller
+            public int getPoint() {
+                int i = 0; // se ho finite le carte punteggio si assegnano zero punti
+                if (0 < token_list.size()) {
+                    i = token_list.get(token_list.size());
+                    token_list.remove(token_list.size() - 1);
+                }
+                return i;
+            }
         }
-        return i;
-    }
-}
 
 //questo va inserito nel controller ma devo valutare se usare classe o direttamnete un metodo con tutti gli algoritmi devo capie meglio
 //lista di tutti gli algoritmi che implementano le regole delle common goal avendo a disposizione la matrice della libreria del rispettivo giocatore
 
 // classe di supporto che ha metodi statici quindi non va instanziata per funzionare
-public class Algorithm{
-    public static boolean checkCorner(ItemTile[][] structure){
-        boolean checker = false;
-        if( structure[0][0] != null && structure[0][0].getColour()==structure[0][4].getColour()
-            && structure[0][0].getColour()==structure[5][0].getColour() && structure[0][0].getColour()==structure[5][4].getColour())
-            checker = true;
-        return checker;
+        public class Algorithm {
+            public static boolean checkCorner(ItemTile[][] structure) {
+                boolean checker = false;
+                if (structure[0][0] != null && structure[0][0].getColour() == structure[0][4].getColour()
+                        && structure[0][0].getColour() == structure[5][0].getColour() && structure[0][0].getColour() == structure[5][4].getColour())
+                    checker = true;
+                return checker;
 
-    }
-
-    public static boolean checkSixCouples(ItemTile[][] structure){
-        Colour[][] matrix = new Colour[][];
-        int count = 0;
-
-        for(int i=0;i<6;i++) {
-            for (int j = 0; j < 5; j++) {
-                if (structure[i][j] != null) {
-                    matrix[i][j] = structure[i][j].getColour();
-                }
             }
-        }
-            //inizio a controllare quante coppie ci sono e appena ne trovo una la rendo null per evitare sovrapposizione(caso particolare forma ad L di 4 tessere uguali devo valutare la disposizione della coppia
-            //in maniera tale da contare 2 coppie e non una coppia sbagliata con due caselle non adiacenti che se avessi scelto meglio avrei ottenuto due coppie
-            for(int i=5;i>0;i--){
-                for(int j=0;j<4;j++){
-                    if(matrix[i][j]!=null&&matrix[i][j+1]!=null&&
-                       matrix[i][j+1]==matrix[i][j]) {
-                        count++;
-                        matrix[i][j] = null;
-                        matrix[i][j+1] = null;
+
+            public static boolean checkSixCouples(ItemTile[][] structure) {
+                Colour[][] matrix = new Colour[][];
+                int count = 0;
+
+                for (int i = 0; i < 6; i++) {
+                    for (int j = 0; j < 5; j++) {
+                        if (structure[i][j] != null) {
+                            matrix[i][j] = structure[i][j].getColour();
+                        }
                     }
-                    if(i<5){
-                        if(matrix[i][j]!=null&&matrix[i+1][j]!=null&&
-                           matrix[i][j]==matrix[i+1][j]){
+                }
+                //inizio a controllare quante coppie ci sono e appena ne trovo una la rendo null per evitare sovrapposizione(caso particolare forma ad L di 4 tessere uguali devo valutare la disposizione della coppia
+                //in maniera tale da contare 2 coppie e non una coppia sbagliata con due caselle non adiacenti che se avessi scelto meglio avrei ottenuto due coppie
+                for (int i = 5; i > 0; i--) {
+                    for (int j = 0; j < 4; j++) {
+                        if (matrix[i][j] != null && matrix[i][j + 1] != null &&
+                                matrix[i][j + 1] == matrix[i][j]) {
                             count++;
                             matrix[i][j] = null;
-                            matrix[i+1][j] = null;
+                            matrix[i][j + 1] = null;
+                        }
+                        if (i < 5) {
+                            if (matrix[i][j] != null && matrix[i + 1][j] != null &&
+                                    matrix[i][j] == matrix[i + 1][j]) {
+                                count++;
+                                matrix[i][j] = null;
+                                matrix[i + 1][j] = null;
+                            }
                         }
                     }
                 }
-            }
-            if(count>=6)
-                return true ;
-            else return false;
-        }
-
-
-
-
-
-
-
-    public static boolean checkFourGroups(ItemTile[][] structure){
-        Colour[][] matrix = new Colour[][];
-        int count = 0;
-        for(int i=0;i<6;i++) {
-            for (int j = 0; j < 5; j++) {
-                if (structure[i][j] != null) {
-                    matrix[i][j] = structure[i][j].getColour();
-                }
-            }
-        }
-        for(int i=5;i>0;i--){
-            for(int j=0;j<2;j++){
-                if(matrix[i][j]!=null&&matrix[i][j+1]!=null&&
-                   matrix[i][j+2]!=null&&matrix[i][j+3]!=null&&matrix[i][j+1]==matrix[i][j]
-                   &&matrix[i][j+2]==matrix[i][j]&& matrix[i][j+3]==matrix[i][j]) {
-                    count++;
-                    matrix[i][j] = null;
-                    matrix[i][j+1] = null;
-                    matrix[i][j+2] = null;
-                    matrix[i][j+3] = null;
-                }
-                if(i<2){
-                    if(matrix[i][j]!=null&&matrix[i+1][j]!=null&&
-                            matrix[i+2][j]!=null&&matrix[i+3][j]!=null&&
-                            matrix[i][j]==matrix[i+1][j]&&matrix[i][j]==matrix[i+2][j]&&matrix[i][j]==matrix[i+3][j]){
-                        count++;
-                        matrix[i][j] = null;
-                        matrix[i+1][j] = null;
-                        matrix[i+2][j] = null;
-                        matrix[i+3][j] = null;
-                    }
-                }
-            }
-        }
-        if(count>=4)
-            return true ;
-        else return false;
-    }
-
-    public static boolean checkSquare(ItemTile[][] structure){                          //per scrivere codice che controlla le 6 coppie sfrutta questo algoritmo modificando alcuni parametri
-        boolean checker = false;
-    for(int i=0;i<=4;i++) {
-        for (int j = 0; j <= 3; j++) {
-            if(structure[i][j]!=null){
-            Colour value = structure[i][j].getColour();
-            if (structure[i][j+1]!=null&&structure[i+1][j]!=null&&structure[i+1][j+1]!=null&&structure[i][j+1].getColour()==value&&
-                structure[i+1][j].getColour()==value&&structure[i+][j+1].getColour()==value) {
-                int k=i;
-                while(k<2){
-                    int l=j+2;
-                    while(l<4){
-                        //scrivi controlla quadrato//
-                        if(){
-                            checker=true;
-                        }
-
-                    }
-                }
-                k=i+2;
-                while(k<5){
-                    int l=j;
-                    while(l<5){
-                        //uguale a commento sopra//
-
-                        if(){
-                            checker=true;
-                        }
-                    }
-
-                }
-
-            }
-
-        }
-    }
-    }return checker;
-    }
-    public static boolean checkDiagonal(ItemTile[][] structure){
-        int x=1;
-        for(int i=0;i<=3;i++){
-            if(structure[i][i]!=null&&structure[i+1][i+1]!=null&&
-               !(structure[i][i].getColour().equals(structure[i+1][i+1].getColour()))){
-                x=0;
-                break;
-            }
-        }
-        for(int i=1;i<=4;i++){
-            if(structure[i][i]!=null&&structure[i+1][i+1]!=null&&
-               !(structure[i][i].getColour().equals(structure[i+1][i+1].getColour()))) {
-                x=0;
-                break;
-            }
-        }
-    if(x==1) {return true;}
-    else return false;
-    }
-
-    public static boolean checkCrux(ItemTile[][] structure){
-        for (int i = 1; i <= 4; i++){
-            for (int j = 1; j <= 3; j++) {
-                if (structure[i][j]!=null&&structure[i-1][j-1]!=null&&
-                    structure[i+1][j+1]!=null&&structure[i+1][j-1]!=null&&structure[i-1][j+1]!=null&&
-                    structure[i][j].getColour().equals(structure[i-1][j-1].getColour())&&
-                    structure[i][j].getColour().equals(structure[i+1][j+1].getColour())&&
-                    structure[i][j].getColour().equals(structure[i+1][j-1].getColour())&&
-                    structure[i][j].getColour().equals(structure[i-1][j+1].getColour())
-                    )
+                if (count >= 6)
                     return true;
+                else return false;
             }
-        }
-        return false;
-    }
 
-    public static boolean checkStair(ItemTile[][] structure){
-        boolean checker = true;
-            int k=4;
-            for(int i=5;i>=0;i--){
-                for(int j=k;j>=0;j--){
-                    if(structure[i][j]==null){
-                        checker= false;
+
+            public static boolean checkFourGroups(ItemTile[][] structure) {
+                Colour[][] matrix = new Colour[][];
+                int count = 0;
+                for (int i = 0; i < 6; i++) {
+                    for (int j = 0; j < 5; j++) {
+                        if (structure[i][j] != null) {
+                            matrix[i][j] = structure[i][j].getColour();
+                        }
                     }
                 }
-                int z=4;
-                while(z>k) {
-                    if (structure[i][z] != null)
-                        checker = false;
-                    z--;
+                for (int i = 5; i > 0; i--) {
+                    for (int j = 0; j < 2; j++) {
+                        if (matrix[i][j] != null && matrix[i][j + 1] != null &&
+                                matrix[i][j + 2] != null && matrix[i][j + 3] != null && matrix[i][j + 1] == matrix[i][j]
+                                && matrix[i][j + 2] == matrix[i][j] && matrix[i][j + 3] == matrix[i][j]) {
+                            count++;
+                            matrix[i][j] = null;
+                            matrix[i][j + 1] = null;
+                            matrix[i][j + 2] = null;
+                            matrix[i][j + 3] = null;
+                        }
+                        if (i < 2) {
+                            if (matrix[i][j] != null && matrix[i + 1][j] != null &&
+                                    matrix[i + 2][j] != null && matrix[i + 3][j] != null &&
+                                    matrix[i][j] == matrix[i + 1][j] && matrix[i][j] == matrix[i + 2][j] && matrix[i][j] == matrix[i + 3][j]) {
+                                count++;
+                                matrix[i][j] = null;
+                                matrix[i + 1][j] = null;
+                                matrix[i + 2][j] = null;
+                                matrix[i + 3][j] = null;
+                            }
+                        }
+                    }
                 }
-                k--;
+                if (count >= 4)
+                    return true;
+                else return false;
             }
-            int k=0;
-            for(int i=5;i>=0;i--) {
-                for (int j = k; j <= 4; j++) {
-                    if (structure[i][j] == null) {
-                        checker = false;
+
+            public static boolean checkSquare(ItemTile[][] structure) {                          //per scrivere codice che controlla le 6 coppie sfrutta questo algoritmo modificando alcuni parametri
+                boolean checker = false;
+                for (int i = 0; i <= 4; i++) {
+                    for (int j = 0; j <= 3; j++) {
+                        if (structure[i][j] != null) {
+                            Colour value = structure[i][j].getColour();
+                            if (structure[i][j + 1] != null && structure[i + 1][j] != null && structure[i + 1][j + 1] != null && structure[i][j + 1].getColour() == value &&
+                                    structure[i + 1][j].getColour() == value && structure[i +][j + 1].getColour() == value) {
+                                int k = i;
+                                while (k < 2) {
+                                    int l = j + 2;
+                                    while (l < 4) {
+                                        //scrivi controlla quadrato//
+                                        if () {
+                                            checker = true;
+                                        }
+
+                                    }
+                                }
+                                k = i + 2;
+                                while (k < 5) {
+                                    int l = j;
+                                    while (l < 5) {
+                                        //uguale a commento sopra//
+
+                                        if () {
+                                            checker = true;
+                                        }
+                                    }
+
+                                }
+
+                            }
+
+                        }
                     }
-                    int z = 0;
-                    while (z < k) {
+                } return checker;
+            }
+
+            public static boolean checkDiagonal(ItemTile[][] structure) {
+                int x = 1;
+                for (int i = 0; i <= 3; i++) {
+                    if (structure[i][i] != null && structure[i + 1][i + 1] != null &&
+                            !(structure[i][i].getColour().equals(structure[i + 1][i + 1].getColour()))) {
+                        x = 0;
+                        break;
+                    }
+                }
+                for (int i = 1; i <= 4; i++) {
+                    if (structure[i][i] != null && structure[i + 1][i + 1] != null &&
+                            !(structure[i][i].getColour().equals(structure[i + 1][i + 1].getColour()))) {
+                        x = 0;
+                        break;
+                    }
+                }
+                if (x == 1) {
+                    return true;
+                } else return false;
+            }
+
+            public static boolean checkCrux(ItemTile[][] structure) {
+                for (int i = 1; i <= 4; i++) {
+                    for (int j = 1; j <= 3; j++) {
+                        if (structure[i][j] != null && structure[i - 1][j - 1] != null &&
+                                structure[i + 1][j + 1] != null && structure[i + 1][j - 1] != null && structure[i - 1][j + 1] != null &&
+                                structure[i][j].getColour().equals(structure[i - 1][j - 1].getColour()) &&
+                                structure[i][j].getColour().equals(structure[i + 1][j + 1].getColour()) &&
+                                structure[i][j].getColour().equals(structure[i + 1][j - 1].getColour()) &&
+                                structure[i][j].getColour().equals(structure[i - 1][j + 1].getColour())
+                        )
+                            return true;
+                    }
+                }
+                return false;
+            }
+
+            public static boolean checkStair(ItemTile[][] structure) {
+                boolean checker = true;
+                int k = 4;
+                for (int i = 5; i >= 0; i--) {
+                    for (int j = k; j >= 0; j--) {
+                        if (structure[i][j] == null) {
+                            checker = false;
+                        }
+                    }
+                    int z = 4;
+                    while (z > k) {
                         if (structure[i][z] != null)
                             checker = false;
-                        z++;
+                        z--;
                     }
-                    k++;
+                    k--;
                 }
-            }
-
-    return checker;
-    }
-
-
-    public static boolean CheckColumn1(ItemTile[][] structure){//scorro colonne e uso algoritmo che controlla un max di 3 tipi diversi tramite un counter
-        int columnCount = 0;
-        boolean checker = false;
-
-        for(int j=0;j<5;j++) {
-            if (structure[0][j] != null) {
-                ArrayList<Colour> list = new ArrayList<Colour>();
-                for(int i=0;i<6;i++){
-                    list.add(structure[i][j].getColour());
-                }
-                int distinctCount = 0;
-                for(int l=0; l<list.size(); l++) {
-                    boolean isDistinct = true;
-                    for(int k=0; k<l; k++) {
-                        if(list.get(l).equals(list.get(k))) {
-                            isDistinct = false;
-                            break;
+                int k = 0;
+                for (int i = 5; i >= 0; i--) {
+                    for (int j = k; j <= 4; j++) {
+                        if (structure[i][j] == null) {
+                            checker = false;
                         }
-                    }
-                    if(isDistinct) {
-                        distinctCount++;
-                    }
-                }
-                if(distinctCount<=3){
-                columnCount++;
-                }
-            }
-
-        }
-        if(columnCount>=3)
-            checker = true;
-    return checker;
-    }
-    public static boolean CheckColumn2(ItemTile[][] structure){//due colonne di 6 tipi diversi una cazzata basta fare controllo delle colonne con due per considerarer le 6 righe e scorro avanti di colonne quindi usa un while con dentro un for e usa un counter
-        int columnCount = 0;
-        boolean checker = false;
-
-        for(int j=0;j<5;j++) {
-            if (structure[0][j] != null) {
-                ArrayList<Colour> list = new ArrayList<Colour>();
-                for(int i=0;i<6;i++){
-                    list.add(structure[i][j].getColour());
-                }
-                int distinctCount = 0;
-                for(int l=0; l<list.size(); l++) {
-                    boolean isDistinct = true;
-                    for(int k=0; k<l; k++) {
-                        if(list.get(l).equals(list.get(k))) {
-                            isDistinct = false;
-                            break;
+                        int z = 0;
+                        while (z < k) {
+                            if (structure[i][z] != null)
+                                checker = false;
+                            z++;
                         }
-                    }
-                    if(isDistinct) {
-                        distinctCount++;
+                        k++;
                     }
                 }
-                if(distinctCount==6){
-                    columnCount++;
-                }
+
+                return checker;
             }
 
-        }
-        if(columnCount>=2)
-            checker = true;
-        return checker;
 
-    }
-    public static boolean CheckLine1(ItemTile[][] structure) { //uguale a column 1 ma sviluppato per righe
-        int lineCount = 0;
-        boolean checker = false;
-        for (int i = 5; i >= 0; i--) {
-            int val = 1;
-            for (int j = 0; j < 5; j++) {
-                if (structure[i][j] == null) {
-                    val = 0;
-                    break;
-                }
-            }
-            if (val == 1) {
-                ArrayList<Colour> list = new ArrayList<Colour>();
-                for (int k = 0; k < 5; k++) {
-                    list.add(structure[i][k].getColour());
-                }
-                int distinctCount = 0;
-                for (int l = 0; l < list.size(); l++) {
-                    boolean isDistinct = true;
-                    for (int z = 0; z < l; z++) {
-                        if (list.get(l).equals(list.get(z))) {
-                            isDistinct = false;
-                            break;
+            public static boolean CheckColumn1(ItemTile[][] structure) {//scorro colonne e uso algoritmo che controlla un max di 3 tipi diversi tramite un counter
+                int columnCount = 0;
+                boolean checker = false;
+
+                for (int j = 0; j < 5; j++) {
+                    if (structure[0][j] != null) {
+                        ArrayList<Colour> list = new ArrayList<Colour>();
+                        for (int i = 0; i < 6; i++) {
+                            list.add(structure[i][j].getColour());
                         }
-                    }
-                    if (isDistinct) {
-                        distinctCount++;
-                    }
-                }
-                if (distinctCount <= 3) {
-                    lineCount++;
-                }
-            }
-            else break; //se la riga inferiore rispetto a quella controllata non è completa non ha senso continuare il for perchè l'obiettivo non è raggiungibile per come è composto l'inserimento delle carte dal basso verso l'alto
-        }
-        if (lineCount >= 4)
-            checker = true;
-        return checker;
-
-    }
-
-    public static boolean CheckLine2(ItemTile[][] structure){ //uguale a column 2 ma sviluppato per le righe
-        int lineCount = 0;
-        boolean checker = false;
-        for (int i = 5; i >= 0; i--) {
-            int val = 1;
-            for (int j = 0; j < 5; j++) {
-                if (structure[i][j] == null) {
-                    val = 0;
-                    break;
-                }
-            }
-            if (val == 1) {
-                ArrayList<Colour> list = new ArrayList<Colour>();
-                for (int k = 0; k < 5; k++) {
-                    list.add(structure[i][k].getColour());
-                }
-                int distinctCount = 0;
-                for (int l = 0; l < list.size(); l++) {
-                    boolean isDistinct = true;
-                    for (int z = 0; z < l; z++) {
-                        if (list.get(l).equals(list.get(z))) {
-                            isDistinct = false;
-                            break;
-                        }
-                    }
-                    if (isDistinct) {
-                        distinctCount++;
-                    }
-                }
-                if (distinctCount == 5) {
-                    lineCount++;
-                }
-            }
-            else break; //se la riga inferiore rispetto a quella controllata non è completa non ha senso continuare il for perchè l'obiettivo non è raggiungibile per come è composto l'inserimento delle carte dal basso verso l'alto
-        }
-        if (lineCount >=2)
-            checker = true;
-        return checker;
-
-
-
-    }
-
-
-
-
-    public static boolean checkEight(ItemTile[][] structure){
-        for(int i=0;i< structure.length;i++) {
-            for (int j = 0; j < structure.length; j++) {
-                int count = 0;
-                if (structure[i][j] != null) {
-                    Colour value = structure[i][j].getColour();
-                    for (int k = 0; k < structure.length; k++) {
-                        for (int l = 0; l < structure.length; l++) {
-                            if (structure[k][l] != null && structure[k][l].getColour().equals(value)) {
-                                count++;
+                        int distinctCount = 0;
+                        for (int l = 0; l < list.size(); l++) {
+                            boolean isDistinct = true;
+                            for (int k = 0; k < l; k++) {
+                                if (list.get(l).equals(list.get(k))) {
+                                    isDistinct = false;
+                                    break;
+                                }
                             }
-                            if (count >= 8) {
-                                return true;
+                            if (isDistinct) {
+                                distinctCount++;
                             }
                         }
+                        if (distinctCount <= 3) {
+                            columnCount++;
+                        }
+                    }
+
+                }
+                if (columnCount >= 3)
+                    checker = true;
+                return checker;
+            }
+
+            public static boolean CheckColumn2(ItemTile[][] structure) {//due colonne di 6 tipi diversi una cazzata basta fare controllo delle colonne con due per considerarer le 6 righe e scorro avanti di colonne quindi usa un while con dentro un for e usa un counter
+                int columnCount = 0;
+                boolean checker = false;
+
+                for (int j = 0; j < 5; j++) {
+                    if (structure[0][j] != null) {
+                        ArrayList<Colour> list = new ArrayList<Colour>();
+                        for (int i = 0; i < 6; i++) {
+                            list.add(structure[i][j].getColour());
+                        }
+                        int distinctCount = 0;
+                        for (int l = 0; l < list.size(); l++) {
+                            boolean isDistinct = true;
+                            for (int k = 0; k < l; k++) {
+                                if (list.get(l).equals(list.get(k))) {
+                                    isDistinct = false;
+                                    break;
+                                }
+                            }
+                            if (isDistinct) {
+                                distinctCount++;
+                            }
+                        }
+                        if (distinctCount == 6) {
+                            columnCount++;
+                        }
+                    }
+
+                }
+                if (columnCount >= 2)
+                    checker = true;
+                return checker;
+
+            }
+
+            public static boolean CheckLine1(ItemTile[][] structure) { //uguale a column 1 ma sviluppato per righe
+                int lineCount = 0;
+                boolean checker = false;
+                for (int i = 5; i >= 0; i--) {
+                    int val = 1;
+                    for (int j = 0; j < 5; j++) {
+                        if (structure[i][j] == null) {
+                            val = 0;
+                            break;
+                        }
+                    }
+                    if (val == 1) {
+                        ArrayList<Colour> list = new ArrayList<Colour>();
+                        for (int k = 0; k < 5; k++) {
+                            list.add(structure[i][k].getColour());
+                        }
+                        int distinctCount = 0;
+                        for (int l = 0; l < list.size(); l++) {
+                            boolean isDistinct = true;
+                            for (int z = 0; z < l; z++) {
+                                if (list.get(l).equals(list.get(z))) {
+                                    isDistinct = false;
+                                    break;
+                                }
+                            }
+                            if (isDistinct) {
+                                distinctCount++;
+                            }
+                        }
+                        if (distinctCount <= 3) {
+                            lineCount++;
+                        }
+                    } else
+                        break; //se la riga inferiore rispetto a quella controllata non è completa non ha senso continuare il for perchè l'obiettivo non è raggiungibile per come è composto l'inserimento delle carte dal basso verso l'alto
+                }
+                if (lineCount >= 4)
+                    checker = true;
+                return checker;
+
+            }
+
+            public static boolean CheckLine2(ItemTile[][] structure) { //uguale a column 2 ma sviluppato per le righe
+                int lineCount = 0;
+                boolean checker = false;
+                for (int i = 5; i >= 0; i--) {
+                    int val = 1;
+                    for (int j = 0; j < 5; j++) {
+                        if (structure[i][j] == null) {
+                            val = 0;
+                            break;
+                        }
+                    }
+                    if (val == 1) {
+                        ArrayList<Colour> list = new ArrayList<Colour>();
+                        for (int k = 0; k < 5; k++) {
+                            list.add(structure[i][k].getColour());
+                        }
+                        int distinctCount = 0;
+                        for (int l = 0; l < list.size(); l++) {
+                            boolean isDistinct = true;
+                            for (int z = 0; z < l; z++) {
+                                if (list.get(l).equals(list.get(z))) {
+                                    isDistinct = false;
+                                    break;
+                                }
+                            }
+                            if (isDistinct) {
+                                distinctCount++;
+                            }
+                        }
+                        if (distinctCount == 5) {
+                            lineCount++;
+                        }
+                    } else
+                        break; //se la riga inferiore rispetto a quella controllata non è completa non ha senso continuare il for perchè l'obiettivo non è raggiungibile per come è composto l'inserimento delle carte dal basso verso l'alto
+                }
+                if (lineCount >= 2)
+                    checker = true;
+                return checker;
+
+
+            }
+
+
+            public static boolean checkEight(ItemTile[][] structure) {
+                for (int i = 0; i < structure.length; i++) {
+                    for (int j = 0; j < structure.length; j++) {
+                        int count = 0;
+                        if (structure[i][j] != null) {
+                            Colour value = structure[i][j].getColour();
+                            for (int k = 0; k < structure.length; k++) {
+                                for (int l = 0; l < structure.length; l++) {
+                                    if (structure[k][l] != null && structure[k][l].getColour().equals(value)) {
+                                        count++;
+                                    }
+                                    if (count >= 8) {
+                                        return true;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                return false;
+            }
+        }
+
+
+
+
+
+
+
+
+
+<<<<<<<HEAD
+
+
+        public class ItemBag() {
+
+            private List<PlayableItemTile> bag;
+
+
+            public void putTiles() {
+                bag = new ArrayList<PlayableItemTile>();
+                PlayableItemTileFactory factory = new PlayableItemTileFactory();
+
+                for (int i = 0; i < 132; i++) {
+                    if (i < 22) {
+                        try {
+                            bag.add(factory.createPlayableItemTile("GREEN", i + 1));
+                        } catch (InvalidPlayableItemTileColourException exc) {
+
+                        }
+                    } else if (i < 44) {
+                        try {
+                            bag.add(factory.createPlayableItemTile("WHITE", i + 1));
+                        } catch (InvalidPlayableItemTileColourException exc) {
+
+                        }
+                    } else if (i < 66) {
+                        try {
+                            bag.add(factory.createPlayableItemTile("YELLOW", i + 1));
+                        } catch (InvalidPlayableItemTileColourException exc) {
+
+                        }
+                    } else if (i < 88) {
+                        try {
+                            bag.add(factory.createPlayableItemTile("BLUE", i + 1));
+                        } catch (InvalidPlayableItemTileColourException exc) {
+
+                        }
+                    } else if (i < 110) {
+                        try {
+                            bag.add(factory.createPlayableItemTile("CYAN", i + 1));
+                        } catch (InvalidPlayableItemTileColourException exc) {
+
+                        }
+                    } else if (i < 132) {
+                        try {
+                            bag.add(factory.createPlayableItemTile("PINK", i + 1));
+                        } catch (InvalidPlayableItemTileColourException exc) {
+
+                        }
                     }
                 }
             }
-        }
-        return false;
-    }
-}
 
-
-
-
-
-
-
-
-
-<<<<<<< HEAD
-
-
-
-
-
-
-
-
-public class ItemBag(){
-
-    private List<PlayableItemTile> bag;
-
-
-
-    public void putTiles(){
-        bag = new ArrayList<PlayableItemTile>();
-        PlayableItemTileFactory factory = new PlayableItemTileFactory();
-
-        for(int i=0; i<132; i++){
-            if(i<22){
-                try {
-                    bag.add(factory.createPlayableItemTile("GREEN", i + 1));
-                }catch(InvalidPlayableItemTileColourException exc){
-
-                }
-            }else if(i<44){
-                try{
-                    bag.add(factory.createPlayableItemTile("WHITE", i+1));
-                }catch(InvalidPlayableItemTileColourException exc){
-
-                }
-            }else if(i<66){
-                try{
-                    bag.add(factory.createPlayableItemTile("YELLOW", i+1));
-                }catch(InvalidPlayableItemTileColourException exc){
-
-                }
-            }else if(i<88){
-                try{
-                    bag.add(factory.createPlayableItemTile("BLUE", i+1));
-                }catch(InvalidPlayableItemTileColourException exc){
-
-                }
-            }else if(i<110){
-                try{
-                    bag.add(factory.createPlayableItemTile("CYAN", i+1));
-                }catch(InvalidPlayableItemTileColourException exc){
-
-                }
-            }else if(i<132){
-                try{
-                    bag.add(factory.createPlayableItemTile("PINK", i+1));
-                }catch(InvalidPlayableItemTileColourException exc){
-
-                }
+            //dovrebbe effettuare pick random di ItemTile da ItemBag
+            public PlayableItemTile randPickTile() {
+                final Random RAND = new Random();
+                int index = RAND.nextInt(bag.size());
+                PlayableItemTile helperTile = bag.get(index);
+                bag.remove(index);
+                return helperTile;
             }
         }
-    }
 
-    //dovrebbe effettuare pick random di ItemTile da ItemBag
-    public PlayableItemTile randPickTile(){
-        final Random RAND = new Random();
-        int index = RAND.nextInt(bag.size());
-        PlayableItemTile helperTile = bag.get(index);
-        bag.remove(index);
-        return helperTile;
-    }
-}
+        public abstract class ItemTile {
+            private Colour colour;
+            private int idCode;
+            private boolean availability;
+            private boolean adjacency;
 
-public abstract class ItemTile{
-    private Colour colour;
-    private int idCode;
-    private boolean availability;
-    private boolean adjacency;
+            public abstract Colour getColour();
 
-    public abstract Colour getColour();
-    public abstract int getIdCode();
-    public abstract boolean nullDetection();
-    public abstract boolean isAvailable();
+            public abstract int getIdCode();
 
-    public abstract void makeAvailable();
+            public abstract boolean nullDetection();
 
-    public abstract void makeUnavailable();
+            public abstract boolean isAvailable();
 
-    public abstract void setAdjacency();
-    public abstract boolean getAdjacency();
+            public abstract void makeAvailable();
 
-    public abstract void resetAdjacency();
-}
+            public abstract void makeUnavailable();
 
-public class NullItemTile extends ItemTile{
-    private Colour colour;
-    private int idCode;
-    private boolean availability;
-    private boolean adjacency;
+            public abstract void setAdjacency();
 
-    public NullItemTile(){
-        colour = Colour.VOID;
-        availability = false;
-        adjacency = false;
-        idCode = 0;
-    }
+            public abstract boolean getAdjacency();
 
-    @java.lang.Override
-    public org.example.Colour getColour() {
-        return colour;
-    }
-
-    @Override
-    public int getIdCode() {
-        return idCode;
-    }
-
-    public void makeAvailable(){}
-
-    public void makeUnavailable() {}
-
-    @java.lang.Override
-    public boolean isAvailable() {
-        return false;
-    }
-
-    @Override
-    public boolean nullDetection() {
-        return true;
-    }
-    public void setAdjacency(){};
-    public boolean getAdjacency(){
-        return adjacency;
-    };
-    @Override
-    public void resetAdjacency() {
-        adjacency = false;
-    }
-}
-public class PlayableItemTile extends ItemTile {
-    private Colour colour;
-    private int idCode;
-    private boolean availability;
-    private boolean adjacency=false;
-
-    @java.lang.Override
-    public org.example.Colour getColour() {
-        return colour;
-    }
-
-    @Override
-    public int getIdCode() {
-        return idCode;
-    }
-
-    @Override
-    public boolean nullDetection() {
-        return false;
-    }
-
-    @Override
-    public boolean isAvailable() {
-        return availability;
-    }
-
-    @Override
-    public void makeAvailable() {
-        availability = true;
-    }
-
-    @Override
-    public void makeUnavailable() {
-        availability = false;
-    }
-
-    @Override
-    public boolean getAdjacency() {
-        return adjacency;
-    }
-
-    @Override
-    public void setAdjacency() {
-        adjacency = true;
-    }
-
-    @Override
-    public void resetAdjacency() {
-        adjacency = false;
-    }
-
-    public PlayableItemTile(String colour, int id){
-        if(colour.equals("GREEN")) {
-            Colour helperColour = Colour.GREEN;
-            this.colour = helperColour;
-            this.idCode = id;
-        } else if (colour.equals("WHITE")) {
-            Colour helperColour = Colour.WHITE;
-            this.colour = helperColour;
-            this.idCode = id;
-        } else if (colour.equals("YELLOW")) {
-            Colour helperColour = Colour.YELLOW;
-            this.colour = helperColour;
-            this.idCode = id;
-        } else if (colour.equals("BLUE")) {
-            Colour helperColour = Colour.BLUE;
-            this.colour = helperColour;
-            this.idCode = id;
-        } else if (colour.equals("CYAN")) {
-            Colour helperColour = Colour.CYAN;
-            this.colour = helperColour;
-            this.idCode = id;
-        } else {
-            Colour helperColour = Colour.PINK;
-            this.colour = helperColour;
-            this.idCode = id;
+            public abstract void resetAdjacency();
         }
-    }
-}
 
+        public class NullItemTile extends ItemTile {
+            private Colour colour;
+            private int idCode;
+            private boolean availability;
+            private boolean adjacency;
 
-enum CommonGoalType {
-    COMMONGOAL01,
-    COMMONGOAL02,
-    CommonGOAL03,
-    COMMONGOAL04,
-    COMMONGOAL05,
-    COMMONGOAL06,
-    COMMONGOAL07,
-    COMMONGOAL08,
-    COMMONGOAL09,
-    COMMONGOAL10,
-    COMMONGOAL11,
-    COMMONGOAL12,
-}
-
-<<<<<<< HEAD
-
-
-abstract class LivingRoomFactory{
-    abstract public ItemTile[][] create();
-}
-
-public class TwoLivingRoomFactory extends LivingRoomFactory{
-    @Override
-    public ItemTile[][] create() {
-        ItemTile[][] helperTable = new ItemTile[9][9];
-        NullItemTile nullTile = new NullItemTile();
-
-        for(int i=0; i<9; i++){
-            //metto null Tiles da [0][0] a [0][8]
-            for(int j=0; j<9 && i==0; j++) {
-                helperTable[i][j] = nullTile;
-            }
-            //metto null Tiles da [1][0] a [1][2] e da [1][5] a [1][8]
-            for(int j=0; j<9 && i==1; j++) {
-                if (j < 3 || j > 4) {
-                    helperTable[i][j] = nullTile;
-                }
+            public NullItemTile() {
+                colour = Colour.VOID;
+                availability = false;
+                adjacency = false;
+                idCode = 0;
             }
 
-            //metto null Tiles da [7][0] a [7][3] e da [7][6] a [7][8]
-            for(int j=0; j<9 && i==7; j++) {
-                if (j < 4 || j > 5) {
-                    helperTable[i][j] = nullTile;
-                }
+            @java.lang.Override
+            public org.example.Colour getColour() {
+                return colour;
             }
-            //metto null Tiles da [2][0] a [2][2] e da [2][6] a [2][8]
-            //metto null Tiles da [6][0] a [6][2] e da [6][6] a [6][8]
-            for(int j=0; j<9 && (i==2 || i==6); j++) {
-                if (j < 3 || j > 5) {
-                    helperTable[i][j] = nullTile;
-                }
+
+            @Override
+            public int getIdCode() {
+                return idCode;
             }
-            //metto null Tile in [3][0] e [3][1] e [3][8]
-            helperTable[3][0] = nullTile;
-            helperTable[3][1] = nullTile;
-            helperTable[3][8] = nullTile;
 
-            //metto null Tile in [4][0] e [4][8]
-            helperTable[4][0] = nullTile;
-            helperTable[4][8] = nullTile;
+            public void makeAvailable() {
+            }
 
-            //metto null Tiles in [5][1] e [5][8] e [5][7]
-            helperTable[5][1] = nullTile;
-            helperTable[5][7] = nullTile;
-            helperTable[5][8] = nullTile;
+            public void makeUnavailable() {
+            }
 
+            @java.lang.Override
+            public boolean isAvailable() {
+                return false;
+            }
 
-            //metto null Tiles da [8][0] a [8][8]
-            for(int j=0; j<9 && i==8; j++) {
-                helperTable[i][j] = nullTile;
+            @Override
+            public boolean nullDetection() {
+                return true;
+            }
+
+            public void setAdjacency() {
+            }
+
+            ;
+
+            public boolean getAdjacency() {
+                return adjacency;
+            }
+
+            ;
+
+            @Override
+            public void resetAdjacency() {
+                adjacency = false;
             }
         }
-        return helperTable;
-    }
-}
+        public class PlayableItemTile extends ItemTile {
+            private Colour colour;
+            private int idCode;
+            private boolean availability;
+            private boolean adjacency = false;
 
-public class ThreeLivingRoomFactory extends LivingRoomFactory{
-    @Override
-    public ItemTile[][] create() {
-        ItemTile[][] helperTable = new ItemTile[9][9];
-        NullItemTile nullTile = new NullItemTile();
-
-        for(int i=0; i<9; i++){
-            //metto null Tiles da [0][0] a [0][2] e da [0][4] a [0][8]
-            for(int j=0; j<9 && i==0; j++) {
-                if (j != 3) {
-                    helperTable[i][j] = nullTile;
-                }
-            }
-            //metto null Tiles da [1][0] a [1][2] e da [1][5] a [1][8]
-            for(int j=0; j<9 && i==1; j++) {
-                if (j < 3 || j > 4) {
-                    helperTable[i][j] = nullTile;
-                }
+            @java.lang.Override
+            public org.example.Colour getColour() {
+                return colour;
             }
 
-            //metto null Tiles da [7][0] a [7][3] e da [7][6] a [7][8]
-            for(int j=0; j<9 && i==7; j++) {
-                if (j < 4 || j > 5) {
-                    helperTable[i][j] = nullTile;
-                }
+            @Override
+            public int getIdCode() {
+                return idCode;
             }
-            //metto null Tiles da [2][0] a [2][1] e da [2][7] a [2][8]
-            //metto null Tiles da [6][0] a [6][1] e da [6][7] a [6][8]
-            for(int j=0; j<9 && (i==2 || i==6); j++) {
-                if (j < 2 || j > 6) {
-                    helperTable[i][j] = nullTile;
-                }
+
+            @Override
+            public boolean nullDetection() {
+                return false;
             }
-            //metto null Tile in [3][0] e [3][1]
-            helperTable[3][0] = nullTile;
-            helperTable[3][1] = nullTile;
 
-            //metto null Tile in [4][0] e [4][8]
-            helperTable[4][0] = nullTile;
-            helperTable[4][8] = nullTile;
+            @Override
+            public boolean isAvailable() {
+                return availability;
+            }
 
-            //metto null Tiles da [5][8] e [5][7]
-            helperTable[5][7] = nullTile;
-            helperTable[5][8] = nullTile;
+            @Override
+            public void makeAvailable() {
+                availability = true;
+            }
 
+            @Override
+            public void makeUnavailable() {
+                availability = false;
+            }
 
-            //metto null Tiles da [8][0] a [8][4] e da [8][6] a [8][8]
-            for(int j=0; j<9 && i==8; j++) {
-                if (j != 5) {
-                    helperTable[i][j] = nullTile;
+            @Override
+            public boolean getAdjacency() {
+                return adjacency;
+            }
+
+            @Override
+            public void setAdjacency() {
+                adjacency = true;
+            }
+
+            @Override
+            public void resetAdjacency() {
+                adjacency = false;
+            }
+
+            public PlayableItemTile(String colour, int id) {
+                if (colour.equals("GREEN")) {
+                    Colour helperColour = Colour.GREEN;
+                    this.colour = helperColour;
+                    this.idCode = id;
+                } else if (colour.equals("WHITE")) {
+                    Colour helperColour = Colour.WHITE;
+                    this.colour = helperColour;
+                    this.idCode = id;
+                } else if (colour.equals("YELLOW")) {
+                    Colour helperColour = Colour.YELLOW;
+                    this.colour = helperColour;
+                    this.idCode = id;
+                } else if (colour.equals("BLUE")) {
+                    Colour helperColour = Colour.BLUE;
+                    this.colour = helperColour;
+                    this.idCode = id;
+                } else if (colour.equals("CYAN")) {
+                    Colour helperColour = Colour.CYAN;
+                    this.colour = helperColour;
+                    this.idCode = id;
+                } else {
+                    Colour helperColour = Colour.PINK;
+                    this.colour = helperColour;
+                    this.idCode = id;
                 }
             }
         }
 
-        return helperTable;
-    }
-}
 
-public class FourLivingRoomFactory extends LivingRoomFactory{
-    @Override
-    public ItemTile[][] create() {
-        ItemTile[][] helperTable = new ItemTile[9][9];
-        NullItemTile nullTile = new NullItemTile();
+        enum CommonGoalType {
+            COMMONGOAL01,
+            COMMONGOAL02,
+            CommonGOAL03,
+            COMMONGOAL04,
+            COMMONGOAL05,
+            COMMONGOAL06,
+            COMMONGOAL07,
+            COMMONGOAL08,
+            COMMONGOAL09,
+            COMMONGOAL10,
+            COMMONGOAL11,
+            COMMONGOAL12,
+        }
 
-        for(int i=0; i<9; i++){
-            //metto null Tiles da [0][0] a [0][2] e da [0][5] a [0][8]
-            for(int j=0; j<9 && i==0; j++) {
-                if (j < 3 || j > 4) {
-                    helperTable[i][j] = nullTile;
+<<<<<<<HEAD
+
+
+        abstract class LivingRoomFactory {
+            abstract public ItemTile[][] create();
+        }
+
+        public class TwoLivingRoomFactory extends LivingRoomFactory {
+            @Override
+            public ItemTile[][] create() {
+                ItemTile[][] helperTable = new ItemTile[9][9];
+                NullItemTile nullTile = new NullItemTile();
+
+                for (int i = 0; i < 9; i++) {
+                    //metto null Tiles da [0][0] a [0][8]
+                    for (int j = 0; j < 9 && i == 0; j++) {
+                        helperTable[i][j] = nullTile;
+                    }
+                    //metto null Tiles da [1][0] a [1][2] e da [1][5] a [1][8]
+                    for (int j = 0; j < 9 && i == 1; j++) {
+                        if (j < 3 || j > 4) {
+                            helperTable[i][j] = nullTile;
+                        }
+                    }
+
+                    //metto null Tiles da [7][0] a [7][3] e da [7][6] a [7][8]
+                    for (int j = 0; j < 9 && i == 7; j++) {
+                        if (j < 4 || j > 5) {
+                            helperTable[i][j] = nullTile;
+                        }
+                    }
+                    //metto null Tiles da [2][0] a [2][2] e da [2][6] a [2][8]
+                    //metto null Tiles da [6][0] a [6][2] e da [6][6] a [6][8]
+                    for (int j = 0; j < 9 && (i == 2 || i == 6); j++) {
+                        if (j < 3 || j > 5) {
+                            helperTable[i][j] = nullTile;
+                        }
+                    }
+                    //metto null Tile in [3][0] e [3][1] e [3][8]
+                    helperTable[3][0] = nullTile;
+                    helperTable[3][1] = nullTile;
+                    helperTable[3][8] = nullTile;
+
+                    //metto null Tile in [4][0] e [4][8]
+                    helperTable[4][0] = nullTile;
+                    helperTable[4][8] = nullTile;
+
+                    //metto null Tiles in [5][1] e [5][8] e [5][7]
+                    helperTable[5][1] = nullTile;
+                    helperTable[5][7] = nullTile;
+                    helperTable[5][8] = nullTile;
+
+
+                    //metto null Tiles da [8][0] a [8][8]
+                    for (int j = 0; j < 9 && i == 8; j++) {
+                        helperTable[i][j] = nullTile;
+                    }
                 }
+                return helperTable;
             }
-            //metto null Tiles da [1][0] a [1][2] e da [1][6] a [1][8]
-            //metto null Tiles da [7][0] a [7][2] e da [7][6] a [7][8]
-            for(int j=0; j<9 && (i==1 || i==7); j++) {
-                if (j < 3 || j > 5) {
-                    helperTable[i][j] = nullTile;
-                }
-            }
-            //metto null Tiles da [2][0] a [2][1] e da [2][7] a [2][8]
-            //metto null Tiles da [6][0] a [6][1] e da [6][7] a [6][8]
-            for(int j=0; j<9 && (i==2 || i==6); j++) {
-                if (j < 2 || j > 6) {
-                    helperTable[i][j] = nullTile;
-                }
-            }
-            //metto null Tile in [3][0]
-            helperTable[3][0] = nullTile;
+        }
 
-            //metto null Tiles da [5][8]
-            helperTable[5][8] = nullTile;
+        public class ThreeLivingRoomFactory extends LivingRoomFactory {
+            @Override
+            public ItemTile[][] create() {
+                ItemTile[][] helperTable = new ItemTile[9][9];
+                NullItemTile nullTile = new NullItemTile();
 
-            //metto null Tiles da [8][0] a [8][3] e da [8][6] a [8][8]
-            for(int j=0; j<9 && i==8; j++) {
-                if (j < 4 || j > 5) {
-                    helperTable[i][j] = nullTile;
+                for (int i = 0; i < 9; i++) {
+                    //metto null Tiles da [0][0] a [0][2] e da [0][4] a [0][8]
+                    for (int j = 0; j < 9 && i == 0; j++) {
+                        if (j != 3) {
+                            helperTable[i][j] = nullTile;
+                        }
+                    }
+                    //metto null Tiles da [1][0] a [1][2] e da [1][5] a [1][8]
+                    for (int j = 0; j < 9 && i == 1; j++) {
+                        if (j < 3 || j > 4) {
+                            helperTable[i][j] = nullTile;
+                        }
+                    }
+
+                    //metto null Tiles da [7][0] a [7][3] e da [7][6] a [7][8]
+                    for (int j = 0; j < 9 && i == 7; j++) {
+                        if (j < 4 || j > 5) {
+                            helperTable[i][j] = nullTile;
+                        }
+                    }
+                    //metto null Tiles da [2][0] a [2][1] e da [2][7] a [2][8]
+                    //metto null Tiles da [6][0] a [6][1] e da [6][7] a [6][8]
+                    for (int j = 0; j < 9 && (i == 2 || i == 6); j++) {
+                        if (j < 2 || j > 6) {
+                            helperTable[i][j] = nullTile;
+                        }
+                    }
+                    //metto null Tile in [3][0] e [3][1]
+                    helperTable[3][0] = nullTile;
+                    helperTable[3][1] = nullTile;
+
+                    //metto null Tile in [4][0] e [4][8]
+                    helperTable[4][0] = nullTile;
+                    helperTable[4][8] = nullTile;
+
+                    //metto null Tiles da [5][8] e [5][7]
+                    helperTable[5][7] = nullTile;
+                    helperTable[5][8] = nullTile;
+
+
+                    //metto null Tiles da [8][0] a [8][4] e da [8][6] a [8][8]
+                    for (int j = 0; j < 9 && i == 8; j++) {
+                        if (j != 5) {
+                            helperTable[i][j] = nullTile;
+                        }
+                    }
+                }
+
+                return helperTable;
+            }
+        }
+
+        public class FourLivingRoomFactory extends LivingRoomFactory {
+            @Override
+            public ItemTile[][] create() {
+                ItemTile[][] helperTable = new ItemTile[9][9];
+                NullItemTile nullTile = new NullItemTile();
+
+                for (int i = 0; i < 9; i++) {
+                    //metto null Tiles da [0][0] a [0][2] e da [0][5] a [0][8]
+                    for (int j = 0; j < 9 && i == 0; j++) {
+                        if (j < 3 || j > 4) {
+                            helperTable[i][j] = nullTile;
+                        }
+                    }
+                    //metto null Tiles da [1][0] a [1][2] e da [1][6] a [1][8]
+                    //metto null Tiles da [7][0] a [7][2] e da [7][6] a [7][8]
+                    for (int j = 0; j < 9 && (i == 1 || i == 7); j++) {
+                        if (j < 3 || j > 5) {
+                            helperTable[i][j] = nullTile;
+                        }
+                    }
+                    //metto null Tiles da [2][0] a [2][1] e da [2][7] a [2][8]
+                    //metto null Tiles da [6][0] a [6][1] e da [6][7] a [6][8]
+                    for (int j = 0; j < 9 && (i == 2 || i == 6); j++) {
+                        if (j < 2 || j > 6) {
+                            helperTable[i][j] = nullTile;
+                        }
+                    }
+                    //metto null Tile in [3][0]
+                    helperTable[3][0] = nullTile;
+
+                    //metto null Tiles da [5][8]
+                    helperTable[5][8] = nullTile;
+
+                    //metto null Tiles da [8][0] a [8][3] e da [8][6] a [8][8]
+                    for (int j = 0; j < 9 && i == 8; j++) {
+                        if (j < 4 || j > 5) {
+                            helperTable[i][j] = nullTile;
+                        }
+                    }
+                }
+
+                return helperTable;
+            }
+        }
+
+
+        public class PlayableItemTileFactory() {
+            public PlayableItemTile createPlayableItemTile(String colour, int id) throws InvalidPlayableItemTileColourException {
+                if (colour.equals("GREEN") || colour.equals("WHITE") || colour.equals("YELLOW") || colour.equals("BLUE") || colour.equals("CYAN") || colour.equals("PINK")) {
+                    PlayableItemTile helperTile = new PlayableItemTile(colour, id);
+                    return helperTile;
+                } else {
+                    throw new InvalidPlayableItemTileColourException();
                 }
             }
         }
 
-        return helperTable;
-    }
-}
+        enum Colour {GREEN, WHITE, YELLOW, BLUE, CYAN, PINK, VOID}
 
 
+        public class App {
+            public static void main(String[] args) {
+                System.out.println("Hello World!");
+            }
 
-public class PlayableItemTileFactory(){
-    public PlayableItemTile createPlayableItemTile(String colour, int id) throws InvalidPlayableItemTileColourException{
-        if(colour.equals("GREEN") || colour.equals("WHITE") || colour.equals("YELLOW") || colour.equals("BLUE") || colour.equals("CYAN") || colour.equals("PINK")){
-            PlayableItemTile helperTile = new PlayableItemTile(colour, id);
-            return helperTile;
-        }else{
-            throw new InvalidPlayableItemTileColourException();
+            // codice diletta
+            public void setPersonalGoalType(CommonGoalType commonGoalType) { // chiamato e passato dal controller quando decide random che tipo di carta viene estratta
+                this.commonGoalType = commonGoalType;
+            }
+        }
+
+        public class PlayableItemTileInsertionException extends Exception {
+        }
+
+        public class InvalidPlayableItemTileColourException extends Exception {
+        }
+
+        public class MaxTilesPickedException extends Exception {
+        }
+
+        public class UnavailableTileException extends Exception {
+        }
+
+        public class NoAvailableTilesException extends Exception {
         }
     }
-}
-
-enum Colour{GREEN, WHITE, YELLOW, BLUE, CYAN, PINK, VOID
-}
-
-public class App {
-    public static void main(String[] args) {
-        System.out.println("Hello World!");
-    }
-}
-
-public class PlayableItemTileInsertionException extends Exception {
-}
-
-public class InvalidPlayableItemTileColourException extends Exception {
-}
-
-public class MaxTilesPickedException extends Exception {
-}
-
-public class UnavailableTileException extends Exception {
-}
-
-public class NoAvailableTilesException extends Exception {
-}
