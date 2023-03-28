@@ -766,8 +766,97 @@ public class LivingRoom {
         return false;
     }
 }
+public class rulePersonalGoal(){
+    public boolean checkFourCard(int[][] MyShelf){
+    }
+    public boolean checkFiveCard(int[][] MyShelf){
+    }
+    public boolean checkSixCard(int[][] MyShelf){
+    }
 
-public class PersonalGoal(){
+    public boolean checkThreeCard(int[][] MyShelf) {
+        int count = 0;
+        int i, j, x, y;
+        int item;
+
+        for (i = 0; i <= MyShelf.length; i++) {
+            for (j = 0; j <= MyShelf.length; j++) {
+                item = MyShelf[i][j];
+                if (i == 0 && j == 0) {
+                    for (x = i + 1; x <= i + 2; x++) {
+                        for (y = j + 1; y <= j + 2; j++) {
+                            if (MyShelf[i][y] == item && MyShelf[i][y + 1] == item) {
+                                return true
+                            }
+                            if (MyShelf[i][y] == item && MyShelf[x][y] == item) {
+                                return true
+                            }
+                            if (MyShelf[i][y] == item && MyShelf[x][j] == item) {
+                                return true
+                            }
+                            if (MyShelf[x][j] == item && MyShelf[x][y] == item) {
+                                return true
+                            }
+                            if (MyShelf[x][j] == item && MyShelf[x + 1][j] == item) {
+                                return true
+                            }
+                        }
+                    }
+                }
+                if (i == 0 && j = !0) {
+                    for (x = i + 1; x <= i + 2; x++) {
+                        for (y = j - 2; y <= j + 2; y++) {
+                            if ((y == j - 2 || y == j + 1) && MyShelf[i][y] == item && MyShelf[i][y + 1] == item) {
+                                return true
+                            }
+                            if (y == j - 1 && MyShelf[i][y] == item && MyShelf[i][y + 2] == item) {
+                                return true
+                            }
+                            if ((y == j - 1 && x == i + 1) || (y == j + 1 && x == i + 1) && MyShelf[i][y] == item && MyShelf[x][y] == item) {
+                                return true
+                            }
+                            if (x == i + 1 && MyShelf[x][j] == item && MyShelf[x + 1][j] == item) {
+                                return true
+                            }
+                            if ((x == i + 1 && y == j - 1) || (x == i + 1 && y == j + 1) && MyShelf[x][y] == item && MyShelf[x][j] == item) {
+                                return true
+                            }
+
+                        }
+                    }
+                }
+                if (i != 0 && j == 0) {
+                    for (x = i - 2; x <= i + 2; x++) {
+                        for (y = j + 1; y <= j + 2; y++) {
+                            if ((x == i - 2 || x == i + 1) && MyShelf[x][j] == item && MyShelf[x + 1][j] == item) {
+                                return true
+                            }
+                            if (x == i - 1 && MyShelf[x][j] == item && MyShelf[x + 2][j] == item) {
+                                return true
+                            }
+                            if (y == j + 1 && MyShelf[i][y] == item && MyShelf[i][y + 1] == item) {
+                                return true
+                            }
+                            if ((y == j + 1 && x == i + 1) && (MyShelf[i][y] == item && MyShelf[x][y] == item) || (MyShelf[x][j] == item && MyShelf[x][y] == item)) {
+                                return true
+                            }
+                            if ((x == i - 1 && y == j + 1) && (MyShelf[x][y] == item && MyShelf[x][j] == item) || (MyShelf[x][y] == item && MyShelf[i][y] == item)) {
+                                return true
+                            }
+                        }
+                    }
+                }
+                if (i != 0 && j != 0) {
+                    for (x = i - 2; x <= i + 2; x++) {
+                        for (y = j - 2; y <= j + 2; y++) {
+
+                        }
+                    }
+                }
+            }
+        }
+    }
+    public class PersonalGoal(){
     public boolean Personal_goal_1 (int[][] MyShelf) {
         int i, j;
         int count = 0;
@@ -1620,6 +1709,7 @@ public class PersonalGoal(){
         }
         return count;
     }
+
     public boolean checkFourCard(int[][] MyShelf){
     }
     public boolean checkFiveCard(int[][] MyShelf){
@@ -1711,25 +1801,31 @@ public class PersonalGoal(){
 
 
     }
+    public void addPoint(int num, int add){
+        num=num+add;
+    }
+    enum personalGoalType{PERSONALGOAL1, PERSONALGOAL2, PERSONALGOAL3, PERSONALGOAL4}
         public boolean checkPersonalGoal(){
+        int n=0;
+        int a;
             if(personalGoalType.PERSONALGOAL1){
                 if(rulePersonalGoal.checkThreeCard()){
-                    addPoint(2)
+                    addPoint(n,a=2);
                 }
             }
             if(personalGoalType.PERSONALGOAL2){
                 if(rulePersonalGoal.checkFourCard()){
-                    addPoint(1)
+                    addPoint(n,a=1);
                 }
             }
             if(personalGoalType.PERSONALGOAL3){
                 if(rulePersonalGoal.checkFiveCard()){
-                    addPoint(2)
+                    addPoint(n,a=2);
                 }
             }
             if(personalGoalType.PERSONALGOAL4){
                 if(rulePersonalGoal.checkSixCard()){
-                    addPoint(3)
+                    addPoint(n,a=3);
                 }
             }
         }
