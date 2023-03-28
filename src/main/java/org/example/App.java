@@ -1,8 +1,10 @@
 package org.example;
 package org.example;
 
+import java.awt.*;
 import java.lang.reflect.Array;
 import java.util.*;
+import java.util.List;
 
 public class GameModel {
     private String chairOwner;
@@ -768,6 +770,845 @@ public class LivingRoom {
 }
 
 public class PersonalGoal(){
+    public boolean Personal_goal_1 (int[][] MyShelf) {
+        int count = 0;
+        if (i == 0 && j == 0 && int[i][j]==Color.PINK){
+            if (count > 2 && count <= 4) {
+                count += 2;
+            }
+            if (count < 2) {
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                count += 3;
+            }
+        }
+        if (i == 2 && j == 0 && int[i][j]==Colour.BLUE){
+            if (count > 2 && count <= 4) {
+                count += 2;
+            }
+            if (count < 2) {
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                count += 3;
+            }
+        }
+        if (i == 4 && j == 1 && int[i][j]==Colour.GREEN){
+            if (count > 2 && count <= 4) {
+                count += 2;
+            }
+            if (count < 2) {
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                count += 3;
+            }
+        }
+        if (i == 3 && j == 2 && int[i][j]==Colour.WHITE){
+            if (count > 2 && count <= 4) {
+                count += 2;
+            }
+            if (count < 2) {
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                count += 3;
+            }
+        }
+        if (i == 1 && j == 3 && int[i][j]==Colour.YELLOW){
+            if (count > 2 && count <= 4) {
+                count += 2;
+            }
+            if (count < 2) {
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                count += 3;
+            }
+        }
+        if (i == 2 && j == 5 int[i][j]==Colour.CYAN){
+            if (count > 2 && count <= 4) {
+                count += 2;
+            }
+            if (count < 2) {
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                count += 3;
+            }
+        }
+        return count;
+    }
+    public boolean Personal_goal_2 (int[][] MyShelf) {
+        int count = 0;
+        if (i == 1 && j == 1 && int[i][j]==Colour.PINK){
+            if (count > 2 && count <= 4) {
+                count += 2;
+            }
+            if (count < 2) {
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                count += 3;
+            }
+        }
+        if (i == 0 && j == 2 && int[i][j]==Colour.GREEN){
+            if (count > 2 && count <= 4) {
+                count += 2;
+            }
+            if (count < 2) {
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                count += 3;
+            }
+        }
+        if (i == 2 && j == 2 && int[i][j]==Colour.YELLOW){
+            if (count > 2 && count <= 4) {
+                count += 2;
+            }
+            if (count < 2) {
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                count += 3;
+            }
+        }
+        if (i == 4 && j == 3 && int[i][j]==Colour.WHITE){
+            if (count > 2 && count <= 4) {
+                count += 2;
+            }
+            if (count < 2) {
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                count += 3;
+            }
+        }
+        if (i == 3 && j == 4 && int[i][j]==Colour.CYAN){
+            if (count > 2 && count <= 4) {
+                count += 2;
+            }
+            if (count < 2) {
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                count += 3;
+            }
+        }
+        if (i == 4 && j == 5 && int[i][j]==Colour.BLUE){
+            if (count > 2 && count <= 4) {
+                count += 2;
+            }
+            if (count < 2) {
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                count += 3;
+            }
+        }
+        return count;
+    }
+    public boolean Personal_goal_3 (int[][] MyShelf) {
+        int count=0;
+        if (i == 0 && j == 1 && int[i][j]==Colour.BLUE){
+            if (count > 2 && count <= 4) {
+                count += 2;
+            }
+            if (count < 2) {
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                count += 3;
+            }
+        }
+        if (i == 3 && j == 1 && int[i][j]==Colour.YELLOW){
+            if (count > 2 && count <= 4) {
+                count += 2;
+            }
+            if (count < 2) {
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                count += 3;
+            }
+        }
+        if (i == 2 && j == 2 && int[i][j]==Colour.PINK){
+            if (count > 2 && count <= 4) {
+                count += 2;
+            }
+            if (count < 2) {
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                count += 3;
+            }
+        }
+        if (i == 1 && j == 3 && int[i][j]==Colour.GREEN){
+            if (count > 2 && count <= 4) {
+                count += 2;
+            }
+            if (count < 2) {
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                count += 3;
+            }
+        }
+        if (i == 4 && j == 3 && int[i][j]==Colour.CYAN){
+            if (count > 2 && count <= 4) {
+                count += 2;
+            }
+            if (count < 2) {
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                count += 3;
+            }
+        }
+        if (i == 0 && j == 5 && int[i][j]==Colour.WHITE){
+            if (count > 2 && count <= 4) {
+                count += 2;
+            }
+            if (count < 2) {
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                count += 3;
+            }
+        }
+        return count;
+    }
+    public boolean Personal_goal_4 (int[][] MyShelf) {
+        int count = =;
+        if (i == 4 && j == 0 && int[i][j]==Colour.YELLOW){
+            if (count > 2 && count <= 4) {
+                count += 2;
+            }
+            if (count < 2) {
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                count += 3;
+            }
+        }
+        if (i == 0 && j == 2 && int[i][j]==Colour.CYAN){
+            if (count > 2 && count <= 4) {
+                count += 2;
+            }
+            if (count < 2) {
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                count += 3;
+            }
+        }
+        if (i == 2 && j == 2 && int[i][j]==Colour.BLUE){
+            if (count > 2 && count <= 4) {
+                count += 2;
+            }
+            if (count < 2) {
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                count += 3;
+            }
+        }
+        if (i == 3 && j == 3 && int[i][j]==Colour.PINK){
+            if (count > 2 && count <= 4) {
+                count += 2;
+            }
+            if (count < 2) {
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                count += 3;
+            }
+        }
+        if (i == 1 && j == 4 && int[i][j]==Colour.WHITE){
+            if (count > 2 && count <= 4) {
+                count += 2;
+            }
+            if (count < 2) {
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                count += 3;
+            }
+        }
+        if (i == 2 && j == 4 && int[i][j]==Colour.GREEN){
+            if (count > 2 && count <= 4) {
+                count += 2;
+            }
+            if (count < 2) {
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                count += 3;
+            }
+        }
+        return count;
+    }
+    public boolean Personal_goal_5 (int[][] MyShelf) {
+        int count = 0;
+        if (i == 1 && j == 1 && int[i][j]==Colour.CYAN){
+            if (count > 2 && count <= 4) {
+                count += 2;
+            }
+            if (count < 2) {
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                count += 3;
+            }
+        }
+        if (i == 1 && j == 3 && int[i][j]==Colour.BLUE){
+            if (count > 2 && count <= 4) {
+                count += 2;
+            }
+            if (count < 2) {
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                count += 3;
+            }
+        }
+        if (i == 2 && j == 3 && int[i][j]==Colour.WHITE){
+            if (count > 2 && count <= 4) {
+                count += 2;
+            }
+            if (count < 2) {
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                count += 3;
+            }
+        }
+        if (i == 4 && j == 4 && int[i][j]==Colour.PINK){
+            if (count > 2 && count <= 4) {
+                count += 2;
+            }
+            if (count < 2) {
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                count += 3;
+            }
+        }
+        if (i == 0 && j == 5 && int[i][j]==Colour.YELLOW){
+            if (count > 2 && count <= 4) {
+                count += 2;
+            }
+            if (count < 2) {
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                count += 3;
+            }
+        }
+        if (i == 3 && j == 5 && int[i][j]==Colour.GREEN){
+            if (count > 2 && count <= 4) {
+                count += 2;
+            }
+            if (count < 2) {
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                count += 3;
+            }
+        }
+        return count;
+    }
+    public boolean Personal_goal_6 (int[][] MyShelf) {
+        int count = 0;
+        if (i == 2 && j == 0 && int[i][j]==Colour.CYAN){
+            if (count > 2 && count <= 4) {
+                count += 2;
+            }
+            if (count < 2) {
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                count += 3;
+            }
+        }
+        if (i == 4 && j == 0 && int[i][j]==Colour.GREEN){
+            if (count > 2 && count <= 4) {
+                count += 2;
+            }
+            if (count < 2) {
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                count += 3;
+            }
+        }
+        if (i == 3 && j == 2 && int[i][j]==Colour.WHITE){
+            if (count > 2 && count <= 4) {
+                count += 2;
+            }
+            if (count < 2) {
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                count += 3;
+            }
+        }
+        if (i == 2 && j == 4 && int[i][j]==Colour.YELLOW){
+            if (count > 2 && count <= 4) {
+                count += 2;
+            }
+            if (count < 2) {
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                count += 3;
+            }
+        }
+        if (i == 3 && j == 4 && int[i][j]==Colour.BLUE){
+            if (count > 2 && count <= 4) {
+                count += 2;
+            }
+            if (count < 2) {
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                count += 3;
+            }
+        }
+        if (i == 0 && j == 5 && int[i][j]==Colour.PINK){
+            if (count > 2 && count <= 4) {
+                count += 2;
+            }
+            if (count < 2) {
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                count += 3;
+            }
+        }
+        return count;
+    }
+    public boolean Persoal_goal_7 (int[][] MyShelf) {
+        int count = 0;
+        if (i == 0 && j == 0 && int[i][j]==Colour.GREEN){
+            if (count > 2 && count <= 4) {
+                count += 2;
+            }
+            if (count < 2) {
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                count += 3;
+            }
+        }
+        if (i == 3 && j == 1 && int[i][j]==Colour.BLUE){
+            if (count > 2 && count <= 4) {
+                count += 2;
+            }
+            if (count < 2) {
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                count += 3;
+            }
+        }
+        if (i == 1 && j == 2 && int[i][j]==Colour.PINK){
+            if (count > 2 && count <= 4) {
+                count += 2;
+            }
+            if (count < 2) {
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                count += 3;
+            }
+        }
+        if (i == 0 && j == 3 && int[i][j]==Colour.CYAN){
+            if (count > 2 && count <= 4) {
+                count += 2;
+            }
+            if (count < 2) {
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                count += 3;
+            }
+        }
+        if (i == 4 && j == 4 && int[i][j]==Colour.YELLOW){
+            if (count > 2 && count <= 4) {
+                count += 2;
+            }
+            if (count < 2) {
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                count += 3;
+            }
+        }
+        if (i == 2 && j == 5 && int[i][j]==Colour.WHITE){
+            if (count > 2 && count <= 4) {
+                count += 2;
+            }
+            if (count < 2) {
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                count += 3;
+            }
+        }
+        return count;
+    }
+    public boolean Personal_goal_8 (int[][] MyShelf) {
+        int count = 0;
+        if (i == 4 && j == 0 && int[i][j]==Colour.BLUE){
+            if (count > 2 && count <= 4) {
+                count += 2;
+            }
+            if (count < 2) {
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                count += 3;
+            }
+        }
+        if (i == 1 && j == 1 && int[i][j]==Colour.GREEN){
+            if (count > 2 && count <= 4) {
+                count += 2;
+            }
+            if (count < 2) {
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                count += 3;
+            }
+        }
+        if (i == 2 && j == 2 && int[i][j]==Colour.CYAN){
+            if (count > 2 && count <= 4) {
+                count += 2;
+            }
+            if (count < 2) {
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                count += 3;
+            }
+        }
+        if (i == 0 && j == 3 && int[i][j]==Colour.PINK){
+            if (count > 2 && count <= 4) {
+                count += 2;
+            }
+            if (count < 2) {
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                count += 3;
+            }
+        }
+        if (i == 3 && j == 4 && int[i][j]==Colour.WHITE){
+            if (count > 2 && count <= 4) {
+                count += 2;
+            }
+            if (count < 2) {
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                count += 3;
+            }
+        }
+        if (i == 3 && j == 5 && int[i][j]==Colour.YELLOW){
+            if (count > 2 && count <= 4) {
+                count += 2;
+            }
+            if (count < 2) {
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                count += 3;
+            }
+        }
+        return count;
+    }
+    public boolean Personal_goal_9 (int[][] MyShelf) {
+        int count = 0;
+        if (i == 2 && j == 0 && int[i][j]==Colour.YELLOW){
+            if (count > 2 && count <= 4) {
+                count += 2;
+            }
+            if (count < 2) {
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                count += 3;
+            }
+        }
+        if (i == 2 && j == 2 && int[i][j]==Colour.GREEN){
+            if (count > 2 && count <= 4) {
+                count += 2;
+            }
+            if (count < 2) {
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                count += 3;
+            }
+        }
+        if (i == 4 && j == 3 && int[i][j]==Colour.WHITE){
+            if (count > 2 && count <= 4) {
+                count += 2;
+            }
+            if (count < 2) {
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                count += 3;
+            }
+        }
+        if (i == 2 && j == 4 && int[i][j]==Colour.CYAN){
+            if (count > 2 && count <= 4) {
+                count += 2;
+            }
+            if (count < 2) {
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                count += 3;
+            }
+        }
+        if (i == 4 && j == 4 && int[i][j]==Colour.PINK){
+            if (count > 2 && count <= 4) {
+                count += 2;
+            }
+            if (count < 2) {
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                count += 3;
+            }
+        }
+        if (i == 0 && j == 5 && int[i][j]==Colour.BLUE){
+            if (count > 2 && count <= 4) {
+                count += 2;
+            }
+            if (count < 2) {
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                count += 3;
+            }
+        }
+        return count;
+    }
+    public boolean Personal_goal_10 (int[][] MyShelf) {
+        int count = 0;
+        if (i == 4 && j == 0 && int[i][j]==Colour.CYAN){
+            if (count > 2 && count <= 4) {
+                count += 2;
+            }
+            if (count < 2) {
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                count += 3;
+            }
+        }
+        if (i == 1 && j == 1 && int[i][j]==Colour.YELLOW){
+            if (count > 2 && count <= 4) {
+                count += 2;
+            }
+            if (count < 2) {
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                count += 3;
+            }
+        }
+        if (i == 0 && j == 2 && int[i][j]==Colour.WHITE){
+            if (count > 2 && count <= 4) {
+                count += 2;
+            }
+            if (count < 2) {
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                count += 3;
+            }
+        }
+        if (i == 3 && j == 3 && int[i][j]==Colour.GREEN){
+            if (count > 2 && count <= 4) {
+                count += 2;
+            }
+            if (count < 2) {
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                count += 3;
+            }
+        }
+        if (i == 1 && j == 4 && int[i][j]==Colour.BLUE){
+            if (count > 2 && count <= 4) {
+                count += 2;
+            }
+            if (count < 2) {
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                count += 3;
+            }
+        }
+        if (i == 3 && j == 5 && int[i][j]==Colour.PINK){
+            if (count > 2 && count <= 4) {
+                count += 2;
+            }
+            if (count < 2) {
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                count += 3;
+            }
+        }
+        return count;
+    }
+    public boolean Personal_goal_11 (int[][] MyShelf){
+        int count=0;
+        if (i == 2 && j == 0 && int[i][j]==Colour.PINK){
+            if (count > 2 && count <= 4) {
+                count += 2;
+            }
+            if (count < 2) {
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                count += 3;
+            }
+        }
+        if (i == 1 && j == 1 && int[i][j]==Colour.WHITE){
+            if (count > 2 && count <= 4) {
+                count += 2;
+            }
+            if (count < 2) {
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                count += 3;
+            }
+        }
+        if (i == 0 && j == 2 && int[i][j]==Colour.YELLOW){
+            if (count > 2 && count <= 4) {
+                count += 2;
+            }
+            if (count < 2) {
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                count += 3;
+            }
+        }
+        if (i == 2 && j == 3 && int[i][j]==Colour.BLUE){
+            if (count > 2 && count <= 4) {
+                count += 2;
+            }
+            if (count < 2) {
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                count += 3;
+            }
+        }
+        if (i == 4 && j == 4 && int[i][j]==Colour.GREEN){
+            if (count > 2 && count <= 4) {
+                count += 2;
+            }
+            if (count < 2) {
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                count += 3;
+            }
+        }
+        if (i == 3 && j == 5 && int[i][j]==Colour.CYAN){
+            if (count > 2 && count <= 4) {
+                count += 2;
+            }
+            if (count < 2) {
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                count += 3;
+            }
+        }
+        return count;
+    }
+    public boolean Personal_goal_12 (int[][] MyShelf){
+        if (i == 2 && j == 0 && int[i][j]==Colour.WHITE){
+            if (count > 2 && count <= 4) {
+                count += 2;
+            }
+            if (count < 2) {
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                count += 3;
+            }
+        }
+        if (i == 1 && j == 1 && int[i][j]==Colour.PINK){
+            if (count > 2 && count <= 4) {
+                count += 2;
+            }
+            if (count < 2) {
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                count += 3;
+            }
+        }
+        if (i == 2 && j == 2 && int[i][j]==Colour.BLUE){
+            if (count > 2 && count <= 4) {
+                count += 2;
+            }
+            if (count < 2) {
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                count += 3;
+            }
+        }
+        if (i == 3 && j == 3 && int[i][j]==Colour.CYAN){
+            if (count > 2 && count <= 4) {
+                count += 2;
+            }
+            if (count < 2) {
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                count += 3;
+            }
+        }
+        if (i == 4 && j == 4 && int[i][j]==Colour.YELLOW){
+            if (count > 2 && count <= 4) {
+                count += 2;
+            }
+            if (count < 2) {
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                count += 3;
+            }
+        }
+        if (i == 0 && j == 5 && int[i][j]==Colour.GREEN){
+            if (count > 2 && count <= 4) {
+                count += 2;
+            }
+            if (count < 2) {
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                count += 3;
+            }
+        }
+        return count;
+    }
     public boolean checkFourCard(int[][] MyShelf){
     }
     public boolean checkFiveCard(int[][] MyShelf){
@@ -856,6 +1697,9 @@ public class PersonalGoal(){
                 }
             }
         }
+
+
+    }
         public boolean checkPersonalGoal(){
             if(personalGoalType.PERSONALGOAL1){
                 if(rulePersonalGoal.checkThreeCard()){
