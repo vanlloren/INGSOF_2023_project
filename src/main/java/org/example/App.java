@@ -90,15 +90,15 @@ public class Player {
     private boolean hasPersonalGoal;
 
     // questi tre metodi vengono chiamati dal controller quando il player ha soddisfatto gli obbiettivi carte
-    public void sethasCommonGoal1(){
+    public void setStatusCommonGoal1(){
         this.hasCommonGoal1 = true;
     }
 
-    public void sethasCommonGoal2(){
+    public void setStatusCommonGoal2(){
         this.hasCommonGoal2 = true;
     }
 
-    public void setHasPersonalGoal(){
+    public void setStatusPersonalGoal(){
         this.hasPersonalGoal = true;
     }
 
@@ -108,10 +108,6 @@ public class Player {
 
 
 
-    }
-
-    public LivingRoom getLivingRoom(){ //metodo chiamato dal controller per ottenere il riferimento della living room del player e chiamerà poi set per assegnare la living room che lo stesso controller crea
-        return this.livingRoom
     }
 
     public Shelf getPersonalShelf(){ // metodo che verrà chiamato dal controller per poter accedere alla libreria
@@ -128,24 +124,27 @@ public class Player {
     }
 
 
-// va nel controller
-    public void calculatePoint(){
-        if(!hasCommonGoal1&&commonGoal1.checkGoal()){
+// va nel controller STRUCTURE VA PASSATO DA CONTROLLER
+    public void calculatePoint(ItemTile[][] structure){ // con hascommongoal controllo che il giocatore non abbia gia raggiunto l'obiettivo
+        if(!hasCommonGoal1&&commonGoal1.checkGoal(structure)){
 
             this.points=this.points+commonGoal1.getPoint();
             hasCommonGoal1=true;
 
         }
-        if(!hasCommonGoal2&&commonGoal2.checkGoal()) {
+
+        if(!hasCommonGoal2&&commonGoal2.checkGoal(structure)) {
             this.points = this.points + commonGoal2.getPoint();
             hasCommonGoal2 = true;
             }
-            if(personalGoal){
-                this.points=this.points+personalGoal.getPoint();
+
+        if(personalGoal.checkgoal()){
+            this.points=this.points+personalGoal.getPoint();
 
 
-            }}
-    //
+            }
+    }
+
     public void setPersonalGoal(){ // questo viene propriamente inizializzato dal player mentre i commongoal appartengono alla living room
         personalGoal = new PersonalGoal();
         //funzione che assegna personalgoal//
@@ -180,9 +179,7 @@ public class Shelf {
     public ItemTile getShelfTile(int x ,int y){
         return this.structure[x][y];
     }
-    public ItemTile[][] getShelf(){
-        return structure;
-    }
+
     public void isColumnAvailableInGame(int y){
         if(structure[0][y]!=null){
             System.out.println("The column is full");
@@ -371,7 +368,7 @@ public class GameBoard {
 
     //MODEL
     public void getToPlayerAnotherTile(int x, int y) throws UnavailableTileException{ //prende tessera 2/3 dalla LivingRoom
-
+        toPlayerTiles = new ArrayList<PlayableItemTile>();
         boolean isAvailable = livingRoom.isTileAvailable(x, y);
         //questo check si focalizza sulla disponibilità della tessera che l'utente vuole
         if(isAvailable) {
@@ -431,15 +428,16 @@ public class LivingRoom {
     }
 
 
-    public void setCommonGoal(){
-        //usare un metodo random che sceglie che commongoaltype  da assegnare a commongoal1 e poi tenendo conto che non ho piu un commongoaltype richiamo il metodo
-        // random e assegno a commongoal2
+    public void setCommonGoal1(CommonGoal commonGoal1){ // delego al controller come scegliere random i commongoal e poi uso qusti due metodi per settare alla living room quali sono i commongoal
+     this.commonGoal1 = commonGoal1;
+    }
+    public void setCommonGoal2(CommonGoal commonGoal2){
+        this.commonGoal2 = commonGoal2;
     }
 
-    public CommonGoal getCommonGoal1() {  // questi due metodi verranno chiamati da tutti i player cosicchè vadano a ottenre i common goal della living room e internamente gestire i check dal controller
+    public CommonGoal getCommonGoal1() { //
         return commonGoal1;
     }
-
 
     public CommonGoal getCommonGoal2() {
         return commonGoal2;
@@ -883,6 +881,9 @@ public class PersonalGoal(){
 
     // codice diletta
 
+    public void setPersonalGoalType(CommonGoalType commonGoalType){ // chiamato e passato dal controller quando decide random che tipo di carta viene estratta
+        this.commonGoalType = commonGoalType;
+    }
 
 
 }
@@ -890,110 +891,89 @@ public class PersonalGoal(){
 
 public class CommonGoal {
     CommonGoalType commonGoalType;
-    private ArrayList<ScoringTokensType> token_list = new ArrayList<ScoringTokensType>();
+    private ArrayList<Integer> token_list = new ArrayList<Integer>();
 
 
-    public void setTokens(int playersNumber){
+    public void setTokens(int playersNumber){ //parametro dato dal controller
         if(playersNumber==2){
-            token_list.add('TOKEN4');
-            token_list.add('TOKEN8');
+            token_list.add(4);
+            token_list.add(8);
         }
         if(playersNumber==3){
-            token_list.add('TOKEN4');
-            token_list.add('TOKEN6')
-            token_list.add('TOKEN8');
+            token_list.add(4);
+            token_list.add(6);
+            token_list.add(8);
         }
         if(playersNumber==4) {
-            token_list.add('TOKEN2')
-            token_list.add('TOKEN4');
-            token_list.add('TOKEN6')
-            token_list.add('TOKEN8');
-
+            token_list.add(2);
+            token_list.add(4);
+            token_list.add(6);
+            token_list.add(8);
         }
     }
 
 //questo va messo nel controller
-    public boolean checkGoal() {
+    public boolean checkGoal(ItemTile[][] structure) { //il parametro è gia passato quando chiamo calculatepoints
+        boolean checker = false;
         switch (commonGoalType) {
             case COMMONGOAL02:
-                return ruleCommonGoal.checkCorner();
+                checker = Algorithm.checkCorner(structure);
                 break;
             case COMMONGOAL01:
-                return ruleCommonGoal.checkSixCouples();
+                checker = Algorithm.checkSixCouples(structure);
                 break;
             case CommonGOAL03:
-                return ruleCommonGoal.checkFourGroups();
+                checker = Algorithm.checkFourGroups(structure);
                 break;
             case COMMONGOAL04:
-                return ruleCommonGoal.checkSquare();
+                checker = Algorithm.checkSquare(structure);
                 break;
             case COMMONGOAL05:
-                return ruleCommonGoal.CheckColumn1();
+                checker = Algorithm.CheckColumn1(structure);
                 break;
             case COMMONGOAL06:
-                return ruleCommonGoal.checkEight();
+                checker = Algorithm.checkEight(structure);
                 break;
                 case COMMONGOAL07:
-                return ruleCommonGoal.checkDiagonal();
+                checker = Algorithm.checkDiagonal(structure);
             break;
             case COMMONGOAL08:
-                return ruleCommonGoal.CheckLine1();
+                checker = Algorithm.CheckLine1(structure);
             break;
             case COMMONGOAL09:
-                return ruleCommonGoal.CheckColumn2();
+                checker = Algorithm.CheckColumn2(structure);
             break;
             case COMMONGOAL10:
-                return ruleCommonGoal.CheckLine2();
+                checker = Algorithm.CheckLine2(structure);
             break;
             case COMMONGOAL11:
-                return ruleCommonGoal.checkCrux();
+                checker = Algorithm.checkCrux(structure);
             break;
             case COMMONGOAL12:
-                return ruleCommonGoal.checkStair();
+                checker = Algorithm.checkStair(structure);
             break;
         }
+        return checker;
         }
 
-        public void algorithmCommonGoal(){
-        //metodo che ho messo per vedere se lasciare la classe rule common goal o semplicemente nel controller usare direttamente un metodo
-
-
-
-        }
 
 //anche questo va nel controller
     public int getPoint(){
-
-        public final int i=0;
-        if() // metodo che gestisce lista dei punti token sopra
-            // le common goal e quando uno ottiene per primo il token prende i punti e si toglie token dalla lisa
-
-
-
-            if(token_card.is){
-
-
-
-            }
-    }}
+        int i=0; // se ho finite le carte punteggio si assegnano zero punti
+        if(0 < token_list.size()) {
+            i = token_list.get(token_list.size());
+            token_list.remove(token_list.size() - 1);
+        }
+        return i;
+    }
+}
 
 //questo va inserito nel controller ma devo valutare se usare classe o direttamnete un metodo con tutti gli algoritmi devo capie meglio
 //lista di tutti gli algoritmi che implementano le regole delle common goal avendo a disposizione la matrice della libreria del rispettivo giocatore
-public class RuleCommonGoal {
-    private Shelf myShelf;
-    private ItemTile[][] structure;
 
-    public void setMyShelf(Shelf myShelf){
-        this.myShelf = myShelf;
-
-    }
-    public ItemTile[][] setStructure(){
-        structure= myShelf.getStructure();
-
-    }
-
-
-    public boolean checkCorner(){
+// classe di supporto che ha metodi statici quindi non va instanziata per funzionare
+public class Algorithm{
+    public static boolean checkCorner(ItemTile[][] structure){
         boolean checker = false;
         if( structure[0][0] != null && structure[0][0].getColour()==structure[0][4].getColour()
             && structure[0][0].getColour()==structure[5][0].getColour() && structure[0][0].getColour()==structure[5][4].getColour())
@@ -1002,7 +982,7 @@ public class RuleCommonGoal {
 
     }
 
-    public boolean checkSixCouples(){
+    public static boolean checkSixCouples(ItemTile[][] structure){
         Colour[][] matrix = new Colour[][];
         int count = 0;
 
@@ -1044,7 +1024,7 @@ public class RuleCommonGoal {
 
 
 
-    public boolean checkFourGroups(){
+    public static boolean checkFourGroups(ItemTile[][] structure){
         Colour[][] matrix = new Colour[][];
         int count = 0;
         for(int i=0;i<6;i++) {
@@ -1082,7 +1062,8 @@ public class RuleCommonGoal {
             return true ;
         else return false;
     }
-    public boolean checkSquare(){                          //per scrivere codice che controlla le 6 coppie sfrutta questo algoritmo modificando alcuni parametri
+
+    public static boolean checkSquare(ItemTile[][] structure){                          //per scrivere codice che controlla le 6 coppie sfrutta questo algoritmo modificando alcuni parametri
         boolean checker = false;
     for(int i=0;i<=4;i++) {
         for (int j = 0; j <= 3; j++) {
@@ -1120,7 +1101,7 @@ public class RuleCommonGoal {
     }
     }return checker;
     }
-    public boolean checkDiagonal(){
+    public static boolean checkDiagonal(ItemTile[][] structure){
         int x=1;
         for(int i=0;i<=3;i++){
             if(structure[i][i]!=null&&structure[i+1][i+1]!=null&&
@@ -1139,7 +1120,8 @@ public class RuleCommonGoal {
     if(x==1) {return true;}
     else return false;
     }
-    public boolean checkCrux(){
+
+    public static boolean checkCrux(ItemTile[][] structure){
         for (int i = 1; i <= 4; i++){
             for (int j = 1; j <= 3; j++) {
                 if (structure[i][j]!=null&&structure[i-1][j-1]!=null&&
@@ -1155,7 +1137,7 @@ public class RuleCommonGoal {
         return false;
     }
 
-    public boolean checkStair(){
+    public static boolean checkStair(ItemTile[][] structure){
         boolean checker = true;
             int k=4;
             for(int i=5;i>=0;i--){
@@ -1192,7 +1174,7 @@ public class RuleCommonGoal {
     }
 
 
-    public boolean CheckColumn1(){//scorro colonne e uso algoritmo che controlla un max di 3 tipi diversi tramite un counter
+    public static boolean CheckColumn1(ItemTile[][] structure){//scorro colonne e uso algoritmo che controlla un max di 3 tipi diversi tramite un counter
         int columnCount = 0;
         boolean checker = false;
 
@@ -1225,7 +1207,7 @@ public class RuleCommonGoal {
             checker = true;
     return checker;
     }
-    public boolean CheckColumn2(){//due colonne di 6 tipi diversi una cazzata basta fare controllo delle colonne con due per considerarer le 6 righe e scorro avanti di colonne quindi usa un while con dentro un for e usa un counter
+    public static boolean CheckColumn2(ItemTile[][] structure){//due colonne di 6 tipi diversi una cazzata basta fare controllo delle colonne con due per considerarer le 6 righe e scorro avanti di colonne quindi usa un while con dentro un for e usa un counter
         int columnCount = 0;
         boolean checker = false;
 
@@ -1259,7 +1241,7 @@ public class RuleCommonGoal {
         return checker;
 
     }
-    public boolean CheckLine1() { //uguale a column 1 ma sviluppato per righe
+    public static boolean CheckLine1(ItemTile[][] structure) { //uguale a column 1 ma sviluppato per righe
         int lineCount = 0;
         boolean checker = false;
         for (int i = 5; i >= 0; i--) {
@@ -1300,7 +1282,7 @@ public class RuleCommonGoal {
 
     }
 
-    public boolean CheckLine2(){ //uguale a column 2 ma sviluppato per le righe
+    public static boolean CheckLine2(ItemTile[][] structure){ //uguale a column 2 ma sviluppato per le righe
         int lineCount = 0;
         boolean checker = false;
         for (int i = 5; i >= 0; i--) {
@@ -1346,7 +1328,7 @@ public class RuleCommonGoal {
 
 
 
-    public boolean checkEight(){
+    public static boolean checkEight(ItemTile[][] structure){
         for(int i=0;i< structure.length;i++) {
             for (int j = 0; j < structure.length; j++) {
                 int count = 0;
@@ -1591,15 +1573,6 @@ public class PlayableItemTile extends ItemTile {
             this.idCode = id;
         }
     }
-}
-
-
-
-enum ScoringTokensType {
-    Token_2,
-    Token_4,
-    Token_6,
-    Token_8
 }
 
 
