@@ -765,7 +765,7 @@ public class LivingRoom {
         return false;
     }
 }
-public class rulePersonalGoal() {
+public class adjacentsTilesRule() {
     public boolean checkFourCard(int[][] MyShelf) {
     }
 
@@ -860,12 +860,28 @@ public class rulePersonalGoal() {
 }
 
 public class PersonalGoal() {
-    public int Personal_goal_1(int[][] MyShelf) {
+    PersonalGoalType personalGoalType;
+
+    public boolean Personal_goal_1(ItemTile[][] structure) {
         int i, j;
         int count = 0;
-        if (i == 0 && j == 0) {
-            if ( int[i][j]==Colour.PINK){
+        int point=0;
+            if (structure[0][0].getColour()==Colour.PINK){
 
+                if (count > 2 && count <= 3) {
+                    count ++;
+                    point+=2;
+                }
+                if (count <= 2) {
+                    count++;
+                    point++;
+                }
+                if (count > 3 && count <= ) {
+                    count++;
+                    point += 3;
+                }
+            }
+            if ( structure[2][0].getColour()==Colour.BLUE){
                 if (count > 2 && count <= 4) {
                     count += 2;
                 }
@@ -876,20 +892,6 @@ public class PersonalGoal() {
                     count += 3;
                 }
             }
-        }
-        if (i == 2 && j == 0) {
-            if ( int[i][j]==Colour.BLUE){
-                if (count > 2 && count <= 4) {
-                    count += 2;
-                }
-                if (count < 2) {
-                    count++;
-                }
-                if (count > 3 && count <= 5) {
-                    count += 3;
-                }
-            }
-        }
         if (i == 4 && j == 1) {
             if ( int[i][j]==Colour.GREEN){
                 if (count > 2 && count <= 4) {
@@ -945,7 +947,7 @@ public class PersonalGoal() {
         return count;
     }
 
-    public int Personal_goal_2(int[][] MyShelf) {
+    public boolean Personal_goal_2(ItemTile[][] structure) {
         int count = 0;
         int i, j;
         if (i == 1 && j == 1) {
@@ -1029,7 +1031,7 @@ public class PersonalGoal() {
         return count;
     }
 
-    public int Personal_goal_3(int[][] MyShelf) {
+    public boolean Personal_goal_3(ItemTile[][] structure) {
         int count = 0;
         int i, j;
         if (i == 0 && j == 1) {
@@ -1115,7 +1117,7 @@ public class PersonalGoal() {
         return count;
     }
 
-    public int Personal_goal_4(int[][] MyShelf) {
+    public boolean Personal_goal_4(ItemTile[][] structure) {
         int count = 0;
         int i, j;
         if (i == 4 && j == 0) {
@@ -1199,7 +1201,7 @@ public class PersonalGoal() {
         return count;
     }
 
-    public int Personal_goal_5(int[][] MyShelf) {
+    public boolean Personal_goal_5(ItemTile[][] structure) {
         int count = 0;
         int i, j;
         if (i == 1 && j == 1) {
@@ -1283,7 +1285,7 @@ public class PersonalGoal() {
         return count;
     }
 
-    public int Personal_goal_6(int[][] MyShelf) {
+    public boolean Personal_goal_6(ItemTile[][] structure) {
         int count = 0;
         int i, j;
         if (i == 2 && j == 0) {
@@ -1367,7 +1369,7 @@ public class PersonalGoal() {
         return count;
     }
 
-    public int Persoal_goal_7(int[][] MyShelf) {
+    public boolean Persoal_goal_7(ItemTile[][] structure) {
         int count = 0;
         int i, j;
         if (i == 0 && j == 0) {
@@ -1452,7 +1454,7 @@ public class PersonalGoal() {
     }
 
 
-    public int Personal_goal_8(int[][] MyShelf) {
+    public boolean Personal_goal_8(ItemTile[][] structure) {
         int count = 0;
         int i, j;
         if (i == 4 && j == 0) {
@@ -1536,7 +1538,7 @@ public class PersonalGoal() {
         return count;
     }
 
-    public int Personal_goal_9(int[][] MyShelf) {
+    public boolean Personal_goal_9(ItemTile[][] structure) {
         int count = 0;
         int i, j;
         if (i == 2 && j == 0) {
@@ -1620,7 +1622,7 @@ public class PersonalGoal() {
         return count;
     }
 
-    public int Personal_goal_10(int[][] MyShelf) {
+    public boolean Personal_goal_10(ItemTile[][] structure) {
         int count = 0;
         int i, j;
         if (i == 4 && j == 0) {
@@ -1704,7 +1706,7 @@ public class PersonalGoal() {
         return count;
     }
 
-    public int Personal_goal_11(int[][] MyShelf) {
+    public boolean Personal_goal_11(ItemTile[][] structure) {
         int count = 0;
         int i, j;
         if (i == 2 && j == 0) {
@@ -1788,7 +1790,7 @@ public class PersonalGoal() {
         return count;
     }
 
-    public int Personal_goal_12(int[][] MyShelf) {
+    public boolean Personal_goal_12(ItemTile[][] structure) {
         int i, j;
         int count = 0;
         if (i == 2 && j == 0) {
@@ -1877,7 +1879,7 @@ public class PersonalGoal() {
     }
 
 
-    enum personalGoalType {PERSONALGOAL1, PERSONALGOAL2, PERSONALGOAL3, PERSONALGOAL4}
+
 
     public int checkPersonalGoal() {
         int n = 0;
@@ -2791,6 +2793,7 @@ public class CommonGoal {
         }
 
         enum Colour {GREEN, WHITE, YELLOW, BLUE, CYAN, PINK, VOID}
+enum personalGoalType {PERSONALGOAL1, PERSONALGOAL2, PERSONALGOAL3, PERSONALGOAL4}
 
 
         public class App {
