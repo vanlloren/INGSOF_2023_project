@@ -3,35 +3,40 @@ package Model;
 import org.example.ItemBag;
 import org.example.LivingRoom;
 import org.example.PlayableItemTile;
+import org.example.Player;
 import org.example.UnavailableTileException;
 
-import java.util.List;
+import java.util.ArrayList;
+
 
 
 public class GameBoard {
     private ItemBag bag;
     private LivingRoom livingRoom;
-
     private PlayableItemTile nextInGameTile;//é la tessera "da mettere in gioco" ovvero quella che dalla bag sta venendo piazzata sulla plancia
 
     //servono per regolare correttamente le adiacenze
     private int firstX;
     private int firstY;
 
-    private List<PlayableItemTile> toPlayerTiles;//sono le tessere che il giocatore ha raccolto dalla plancia, forse si può fare meglio
+    private ArrayList<PlayableItemTile> toPlayerTiles;//sono le tessere che il giocatore ha raccolto dalla plancia, forse si può fare meglio
 
-    public void setItemBag(){ //genera la ItemBag a ogni inizio partita
+    //MODEL
+    public void setItemBag(){ //genera la ItemBag a ogni inizio partita ; chiamato dal controller
         ItemBag helperBag = new ItemBag();
         helperBag.putTiles();
         this.bag = helperBag;
     }
 
-    public void setLivingRoom(int playerNum){
+    //MODEL
+    public void setLivingRoom(int playerNum){ // il parametro viene passato dal controller
         LivingRoom helperLivingRoom = new LivingRoom();
         helperLivingRoom.createGameTable(playerNum);
         this.livingRoom = helperLivingRoom;
     }
 
+    //MODEL
+    // metodo che va messo nel controller perchè è un metodo che agisce
     public void fillLivingRoom(){//riempie la LivingRoom di tessere usando getNextInGameTile e putNextInGameTile
         boolean isVoid;
 
@@ -45,11 +50,12 @@ public class GameBoard {
             }
         }
     }
-
+    //va messo nel controller
     public void getNextInGameTile(){
         this.nextInGameTile = bag.randPickTile();
     }
 
+    //CONTROLLER
     public boolean pickedTilesNum() {//tiene conto del numero d' ItemTiles pescate ogni turno
         return toPlayerTiles.size() < 3;
     }
@@ -58,8 +64,11 @@ public class GameBoard {
     //per TRE volte che la tessera che l'utente vuole sia disponibile.
     //getToPlayerTile riceverà dal GameBoard (e in principio quindi dal Player) le coordinate
     //della tessera da raccogliere dalla LivingRoom
-    public void getToPlayerFirstTile(int x, int y) throws UnavailableTileException { //prende tessera 1 dalla LivingRoom
 
+    //MODEL
+    public void getToPlayerFirstTile(int x, int y) throws UnavailableTileException{ //prende tessera 1 dalla LivingRoom
+
+        toPlayerTiles = new ArrayList<PlayableItemTile>();
         boolean isAvailable = livingRoom.isTileAvailable(x, y);
         //questo check si focalizza sulla disponibilità della tessera che l'utente vuole
         if(isAvailable) {
@@ -71,8 +80,10 @@ public class GameBoard {
             throw new UnavailableTileException();
         }
     }
-    public void getToPlayerAnotherTile(int x, int y) throws UnavailableTileException{ //prende tessera 2/3 dalla LivingRoom
 
+    //MODEL
+    public void getToPlayerAnotherTile(int x, int y) throws UnavailableTileException{ //prende tessera 2/3 dalla LivingRoom
+        toPlayerTiles = new ArrayList<PlayableItemTile>();
         boolean isAvailable = livingRoom.isTileAvailable(x, y);
         //questo check si focalizza sulla disponibilità della tessera che l'utente vuole
         if(isAvailable) {
@@ -109,25 +120,3 @@ public class GameBoard {
 //-fineTurno
 //-updateAvailability
 //----turno player succ----
-
-
-
-
-
-
-
-
-
-<<<<<<< HEAD
-
-
-
-
-
-
-
-
-<<<<<<< HEAD
-
-
-

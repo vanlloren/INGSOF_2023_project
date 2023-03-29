@@ -1,42 +1,17 @@
 package Model;
 
-import org.example.CommonGoal;
-import org.example.*;
 
 
-//SEQUENZA CORRETTA GAMEBOARD<-->LIVINGROOM:
-//-creazione
-//-fillLivingRoom (al suo interno avrà multiple chiamate di getNextInGameTile e putNextInGameTile)
-//-updateAvailability
-//----1° turno----
-//-hasAdjacentTiles--->fillLivingRoom--->updateAvailability
-//-getToPlayerFirstTile
-//-checkAdjAvailability
-//-pickedTilesNum
-//-fineTurno/getToPlayerAnotherTile
-//-checkAdjAvailability
-//-pickedTilesNum
-//-fineTurno/getToPlayerAnotherTile
-//-fineTurno
-//-updateAvailability
-//----turno player succ----
-//-hasAdjacentTiles--->fillLivingRoom--->updateAvailability
-//-getToPlayerFirstTile
-//-checkAdjAvailability
-//-fineTurno/getToPlayerAnotherTile
-//-checkAdjAvailability
-//-fineTurno/getToPlayerAnotherTile
-//-fineTurno
-//-updateAvailability
-//----turno player succ----
+
 
 public class LivingRoom {
 
     private ItemTile[][] gameTable;
-    private org.example.CommonGoal commonGoal1 = new org.example.CommonGoal();
-    private org.example.CommonGoal commonGoal2 = new org.example.CommonGoal();
+    private CommonGoal commonGoal1 = new CommonGoal();
+    private CommonGoal commonGoal2 = new CommonGoal();
 
 
+    //MODEL
     public void createGameTable(int playerNum) { //nell'inserimento di playernum chiamo metodo di gamemodel getnumplayer e lo metto come argomento
         if (playerNum == 2) {
             LivingRoomFactory factory = new TwoLivingRoomFactory();
@@ -51,12 +26,15 @@ public class LivingRoom {
     }
 
 
-    public void setCommonGoal(){
-        //usare un metodo random che sceglie che commongoaltype  da assegnare a commongoal1 e poi tenendo conto che non ho piu un commongoaltype richiamo il metodo
-        // random e assegno a commongoal2
+    public void setCommonGoal1(CommonGoal commonGoal1) { // delego al controller come scegliere random i commongoal e poi uso qusti due metodi per settare alla living room quali sono i commongoal
+        this.commonGoal1 = commonGoal1;
     }
 
-    public org.example.CommonGoal getCommonGoal1() {  // questi due metodi verranno chiamati da tutti i player cosicchè vadano a ottenre i common goal della living room e internamente gestire i check dal controller
+    public void setCommonGoal2(CommonGoal commonGoal2) {
+        this.commonGoal2 = commonGoal2;
+    }
+
+    public CommonGoal getCommonGoal1() { //
         return commonGoal1;
     }
 
@@ -64,6 +42,7 @@ public class LivingRoom {
         return commonGoal2;
     }
 
+    //MODEL
     public PlayableItemTile pickTile(int x, int y) {//questo metodo permette alla LivingRoom di passare una sua tessera alla GameBoard
         PlayableItemTile helperTile;
         helperTile = (PlayableItemTile) gameTable[x][y];
@@ -73,138 +52,20 @@ public class LivingRoom {
         return helperTile;
     }
 
-    public boolean searchVoid(int x, int y){
-        if(gameTable[x][y] != null){
+    //MODEL
+    public boolean searchVoid(int x, int y) {
+        if (gameTable[x][y] != null) {
             return false;
         }
         return true;
     }
 
-    public void fillVoid(int x, int y, PlayableItemTile tile){
+    //MODEL
+    public void fillVoid(int x, int y, PlayableItemTile tile) {
         gameTable[x][y] = tile;
     }
 
-    public boolean isTileAvailable(int x, int y) {//verifica se la singola Tile nella LivingRoom alle
-        // coordinate x e y è disponibile per essere presa dal player
-
-        return gameTable[x][y].isAvailable();
-    }
-
-    public boolean hasAdjacentTiles() {//check a inizio round su tessere adiacenti
-        //ritorna true se almeno una PlayableItemTile ha una tessera adiacente != null e
-        //la cui funzione nullDetection restituisce false
-        int adjCounter = 0;
-
-        for(int i=0; i<9 && adjCounter==0; i++){
-            for(int j = 0; j < 9 && adjCounter == 0; j++){
-                if (!gameTable[i][j].nullDetection() && gameTable[i][j]!=null){
-                    //controllo corner cases
-                    //1° tessere [0][3] e [0][4]
-                    if(i == 0){
-                        if (j==3) {
-                            if(gameTable[1][3] != null && !gameTable[1][3].nullDetection()){
-                                adjCounter++;
-                            }
-                            if (gameTable[0][4] != null && !gameTable[0][4].nullDetection()){
-                                adjCounter++;
-                            }
-                        } else if (j==4){
-                            if (gameTable[0][3] != null && !gameTable[0][3].nullDetection()){
-                                adjCounter++;
-                            }
-                            if (gameTable[1][4] != null && !gameTable[1][4].nullDetection()){
-                                adjCounter++;
-                            }
-
-                        }
-                    }
-                    //2° tessere  [4][0] e [5][0]
-                    else if(j==0){
-                        if(i==4){
-                            if (gameTable[4][1] != null && !gameTable[4][1].nullDetection()){
-                                adjCounter++;
-                            }
-                            if (gameTable[5][0] != null && !gameTable[5][0].nullDetection()){
-                                adjCounter++;
-                            }
-                        }
-                        if(i==5){
-                            if (gameTable[4][0] != null && !gameTable[4][0].nullDetection()){
-                                adjCounter++;
-                            }
-                            if (gameTable[5][1] != null && !gameTable[5][1].nullDetection()){
-                                adjCounter++;
-                            }
-                        }
-                    }
-                    //3° tessere [8][4] e [8][5]
-                    else if(i==8){
-                        if(j==4){
-                            if (gameTable[7][4] != null && !gameTable[7][4].nullDetection()){
-                                adjCounter++;
-                            }
-                            if (gameTable[8][5] != null && !gameTable[8][5].nullDetection()){
-                                adjCounter++;
-                            }
-                        }
-                        if(j==5){
-                            if (gameTable[7][5] != null && !gameTable[7][5].nullDetection()){
-                                adjCounter++;
-                            }
-                            if (gameTable[8][4] != null && !gameTable[8][4].nullDetection()){
-                                adjCounter++;
-                            }
-                        }
-                    }
-                    //4° tessere [3][8] e [4][8]
-                    else if(j==8){
-                        if(i==3){
-                            if (gameTable[4][8] != null && !gameTable[4][8].nullDetection()){
-                                adjCounter++;
-                            }
-                            if (gameTable[3][7] != null && !gameTable[3][7].nullDetection()){
-                                adjCounter++;
-                            }
-                        }
-                        if(i==4){
-                            if (gameTable[3][8] != null && !gameTable[3][8].nullDetection()){
-                                adjCounter++;
-                            }
-                            if (gameTable[4][7] != null && !gameTable[4][7].nullDetection()){
-                                adjCounter++;
-                            }
-                        }
-                    }
-                    //ora guardo il caso generale
-                    else{
-                        //controllo la tile della riga sopra
-                        if(gameTable[i-1][j] != null && !gameTable[i-1][j].nullDetection()){
-                            adjCounter++;
-                        }
-                        //controllo la tile della riga sotto
-                        if (gameTable[i+1][j] != null && !gameTable[i+1][j].nullDetection()){
-                            adjCounter++;
-                        }
-                        //controllo la tile a sx
-                        if (gameTable[i][j-1] != null && !gameTable[i][j-1].nullDetection()){
-                            adjCounter++;
-                        }
-                        //controllo la tile a dx
-                        if (gameTable[i][j+1] != null && !gameTable[i][j+1].nullDetection()){
-                            adjCounter++;
-                        }
-                    }
-                }
-            }
-        }
-
-        if(adjCounter!=0) {
-            return true;
-        }
-        return false;
-
-    }
-
+    //MODEL
     public void updateAvailability() {//determina per ogni tile sulla LivingRoom se essa é disponibile o meno
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
@@ -278,6 +139,7 @@ public class LivingRoom {
         }
     }
 
+    //MODEL
     public void updateAdjacentAvailabilityV1(int x, int y) {
         //Setta la variabile adjacency delle ItemTiles adiacenti
 
@@ -300,6 +162,8 @@ public class LivingRoom {
             gameTable[x][y+1].setAdjacency();
         }
     }
+
+    //MODEL
     public void resetAdjacentAvailability(){
         for(int i=0; i<9; i++){
             for(int j=0; j<9 ; j++){
@@ -309,6 +173,7 @@ public class LivingRoom {
         }
     }
 
+    //MODEL
     public void updateAdjacentAvailabilityV2(int x, int y, int firstX, int firstY) {
         //Setta la variabile adjacency delle ItemTiles adiacenti
 
@@ -358,40 +223,13 @@ public class LivingRoom {
         }
     }
 
-    public boolean checkAdjacentAvailability() {//controlla se almeno una delle tessere adiacenti è
-        // disponibile
 
-        for(int i =0; i<9; i++){
-            for(int j=0; j<9; j++) {
-                if (gameTable[i][j] != null && !gameTable[i][j].nullDetection()){
-                    if (gameTable[i][j].getAdjacency() && gameTable[i][j].isAvailable()) {
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
-    }
 }
 
 
 
 
 
-
-
-
-
-<<<<<<< HEAD
-
-
-
-
-
-
-
-
-<<<<<<< HEAD
 
 
 

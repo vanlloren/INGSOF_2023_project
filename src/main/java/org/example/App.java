@@ -860,7 +860,7 @@ public class adjacentsTilesRule() {
         }
     }
 }
-
+/*
 public class PersonalGoal() {
     PersonalGoalType personalGoalType;
 
@@ -1910,7 +1910,7 @@ public class PersonalGoal() {
     }
 }
 
-
+*/
 
 public class CommonGoal {
             CommonGoalType commonGoalType;
@@ -2548,7 +2548,7 @@ public class CommonGoal {
         }
 
 
-        enum CommonGoalType {
+        public enum CommonGoalType {
             COMMONGOAL01,
             COMMONGOAL02,
             CommonGOAL03,
@@ -2566,7 +2566,7 @@ public class CommonGoal {
 <<<<<<<HEAD
 
 
-        abstract class LivingRoomFactory {
+        public abstract class LivingRoomFactory {
             abstract public ItemTile[][] create();
         }
 

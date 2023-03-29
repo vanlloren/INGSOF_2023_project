@@ -1,13 +1,12 @@
 package Model;
 
-import org.example.GameBoard;
-import org.example.Player;
+
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class GameModel {
-    private String chairOwner;
+    private Player chairOwner;
     private int playersNumber;
     private String currPlayer;
     private String matchWinner;
@@ -34,9 +33,8 @@ public class GameModel {
 
     }
 
-    public void setChairOwner(Player) {
-        // ipotizzo di determinare/ricevere il nome utente di chi effettua il primo turno di gioco e di
-        // inserirlo in chairOwner
+    public void setChairOwner(Player player) {
+      this.chairOwner = player;
     }
 
     public ArrayList<Player> getPlayersInGame() {
@@ -64,11 +62,10 @@ public class GameModel {
     public void nextTurn() {
     }
     public boolean haslaunchTerminate() {
-        points++;
         return true;
 
     }
-    public List<Player> getTurnOrder(){
+    public ArrayList<Player> getTurnOrder(){
 
     }
 
