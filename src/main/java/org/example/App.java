@@ -3,7 +3,7 @@ package org.example;
 
 import java.awt.*;
 import java.util.*;
-import java.util.List;
+
 
 public class GameModel {
     private String chairOwner;
@@ -2198,33 +2198,20 @@ public class CommonGoal {
 
                 for (int j = 0; j < 5; j++) {
                     if (structure[0][j] != null) {
-                        ArrayList<Colour> list = new ArrayList<Colour>();
+                        HashSet<Colour> list = new HashSet<Colour>();
                         for (int i = 0; i < 6; i++) {
                             list.add(structure[i][j].getColour());
                         }
-                        int distinctCount = 0;
-                        for (int l = 0; l < list.size(); l++) {
-                            boolean isDistinct = true;
-                            for (int k = 0; k < l; k++) {
-                                if (list.get(l).equals(list.get(k))) {
-                                    isDistinct = false;
-                                    break;
-                                }
-                            }
-                            if (isDistinct) {
-                                distinctCount++;
-                            }
-                        }
-                        if (distinctCount <= 3) {
+                        if (list.size() <= 3)
                             columnCount++;
-                        }
                     }
-
                 }
-                if (columnCount >= 3)
-                    checker = true;
-                return checker;
+                    if (columnCount >= 3)
+                        checker = true;
+                    return checker;
+
             }
+
 
             public static boolean CheckColumn2(ItemTile[][] structure) {//due colonne di 6 tipi diversi una cazzata basta fare controllo delle colonne con due per considerarer le 6 righe e scorro avanti di colonne quindi usa un while con dentro un for e usa un counter
                 int columnCount = 0;
@@ -2232,28 +2219,13 @@ public class CommonGoal {
 
                 for (int j = 0; j < 5; j++) {
                     if (structure[0][j] != null) {
-                        ArrayList<Colour> list = new ArrayList<Colour>();
+                        HashSet<Colour> list = new HashSet<Colour>();
                         for (int i = 0; i < 6; i++) {
                             list.add(structure[i][j].getColour());
                         }
-                        int distinctCount = 0;
-                        for (int l = 0; l < list.size(); l++) {
-                            boolean isDistinct = true;
-                            for (int k = 0; k < l; k++) {
-                                if (list.get(l).equals(list.get(k))) {
-                                    isDistinct = false;
-                                    break;
-                                }
-                            }
-                            if (isDistinct) {
-                                distinctCount++;
-                            }
-                        }
-                        if (distinctCount == 6) {
+                        if (list.size() == 6)
                             columnCount++;
-                        }
                     }
-
                 }
                 if (columnCount >= 2)
                     checker = true;
@@ -2267,30 +2239,17 @@ public class CommonGoal {
                 for (int i = 5; i >= 0; i--) {
                     int val = 1;
                     for (int j = 0; j < 5; j++) {
-                        if (structure[i][j] == null) {
+                        if (structure[i][j] == null) {    //partendo dal basso controllo che la riga sia piena senno non ha senso
                             val = 0;
                             break;
                         }
                     }
                     if (val == 1) {
-                        ArrayList<Colour> list = new ArrayList<Colour>();
+                        HashSet<Colour> list = new HashSet<Colour>();
                         for (int k = 0; k < 5; k++) {
                             list.add(structure[i][k].getColour());
                         }
-                        int distinctCount = 0;
-                        for (int l = 0; l < list.size(); l++) {
-                            boolean isDistinct = true;
-                            for (int z = 0; z < l; z++) {
-                                if (list.get(l).equals(list.get(z))) {
-                                    isDistinct = false;
-                                    break;
-                                }
-                            }
-                            if (isDistinct) {
-                                distinctCount++;
-                            }
-                        }
-                        if (distinctCount <= 3) {
+                        if (list.size() <= 3) {
                             lineCount++;
                         }
                     } else
@@ -2298,9 +2257,9 @@ public class CommonGoal {
                 }
                 if (lineCount >= 4)
                     checker = true;
-                return checker;
+                return checker;}
 
-            }
+
 
             public static boolean CheckLine2(ItemTile[][] structure) { //uguale a column 2 ma sviluppato per le righe
                 int lineCount = 0;
@@ -2308,36 +2267,23 @@ public class CommonGoal {
                 for (int i = 5; i >= 0; i--) {
                     int val = 1;
                     for (int j = 0; j < 5; j++) {
-                        if (structure[i][j] == null) {
+                        if (structure[i][j] == null) {    //partendo dal basso controllo che la riga sia piena senno non ha senso
                             val = 0;
                             break;
                         }
                     }
                     if (val == 1) {
-                        ArrayList<Colour> list = new ArrayList<Colour>();
+                        HashSet<Colour> list = new HashSet<Colour>();
                         for (int k = 0; k < 5; k++) {
                             list.add(structure[i][k].getColour());
                         }
-                        int distinctCount = 0;
-                        for (int l = 0; l < list.size(); l++) {
-                            boolean isDistinct = true;
-                            for (int z = 0; z < l; z++) {
-                                if (list.get(l).equals(list.get(z))) {
-                                    isDistinct = false;
-                                    break;
-                                }
-                            }
-                            if (isDistinct) {
-                                distinctCount++;
-                            }
-                        }
-                        if (distinctCount == 5) {
+                        if (list.size() == 5) {
                             lineCount++;
                         }
                     } else
                         break; //se la riga inferiore rispetto a quella controllata non è completa non ha senso continuare il for perchè l'obiettivo non è raggiungibile per come è composto l'inserimento delle carte dal basso verso l'alto
                 }
-                if (lineCount >= 2)
+                if (lineCount == 2)
                     checker = true;
                 return checker;
 
