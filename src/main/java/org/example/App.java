@@ -1,12 +1,13 @@
 package org.example;
-package org.example;
+
 
 import java.awt.*;
 import java.util.*;
 
 
+
 public class GameModel {
-    private String chairOwner;
+    private Player chairOwner;
     private int playersNumber;
     private String currPlayer;
     private String matchWinner;
@@ -65,12 +66,14 @@ public class GameModel {
         //in questo momento
 
     }
+    /*
     public boolean haslaunchTerminate() { //verra chiamato dal controller per poi dire che da qui comincia l'ultimo turno di gioco
         points++;
         return true;
+      */
 
-    }
-    public List<Player> getTurnOrder(){  // metodo chiamato dal controller
+
+    public ArrayList<Player> getTurnOrder(){  // metodo chiamato dal controller
         // per ottenere la lista dei giocatori attuale e modificarla chiamando poi il set
      return this.playersInGame;  /// RIGUARDARE ASSIEME QUESTI METODI PER CAPIRE COME IMPOSTARE I TURNI E CHI HA LA SEDIA
     }
@@ -149,7 +152,6 @@ public class Player {
     public void setPersonalGoal(){ // questo viene propriamente inizializzato dal player mentre i commongoal appartengono alla living room
         personalGoal = new PersonalGoal();
         //funzione che assegna personalgoal//
-        return personalGoal;
     }
 
     public void setCommonGoals(){ //chiamato da controller a cascata quando chiamo il generatore di common goal dalla living room
@@ -160,7 +162,7 @@ public class Player {
 
     //controller
     public void insertTile(int x,int y,ItemTile tile) throws NotValidCoordinate,Notavailable{ //parametri passati dal controller;chiamato dal controller quando il player da le istruzioni in cui dice dove mettere l item sulla shelf
-       this.personalShelf.putTile(x,y,tile,..) //chiedi alfi come funziona questo metodo
+       this.personalShelf.putTile(x,y,tile,); //chiedi alfi come funziona questo metodo
         //metodo che gestisce inserimento in libreria
     }
 }
@@ -187,7 +189,7 @@ public class Shelf {
         }else{
             int count = 0;
             for (int i = 0; i < 5; i++) {
-                if (structure[i][Y] == null) {
+                if (structure[i][y] == null) {
                     count++;
                 }
             }
@@ -284,7 +286,7 @@ public class Shelf {
     public boolean isFull(ItemTile[][] structure) {
         for (int j = 0; j < 4; j++) {
             if (structure[0][j] == null) {
-                System.out.println("You enough space to put tiles in the shelf")
+                System.out.println("You enough space to put tiles in the shelf");
                 return false;
             }
         }
@@ -305,7 +307,7 @@ public class GameBoard {
     private int firstX;
     private int firstY;
 
-    private List<PlayableItemTile> toPlayerTiles;//sono le tessere che il giocatore ha raccolto dalla plancia, forse si può fare meglio
+    private ArrayList<PlayableItemTile> toPlayerTiles;//sono le tessere che il giocatore ha raccolto dalla plancia, forse si può fare meglio
 
     //MODEL
     public void setItemBag(){ //genera la ItemBag a ogni inizio partita ; chiamato dal controller
@@ -2739,7 +2741,8 @@ public class CommonGoal {
         }
 
         enum Colour {GREEN, WHITE, YELLOW, BLUE, CYAN, PINK, VOID}
-enum personalGoalType {PERSONALGOAL1, PERSONALGOAL2, PERSONALGOAL3, PERSONALGOAL4}
+
+enum PersonalGoalType {PERSONALGOAL1, PERSONALGOAL2, PERSONALGOAL3, PERSONALGOAL4}
 
 
         public class App {
@@ -2747,10 +2750,7 @@ enum personalGoalType {PERSONALGOAL1, PERSONALGOAL2, PERSONALGOAL3, PERSONALGOAL
                 System.out.println("Hello World!");
             }
 
-            // codice diletta
-            public void setPersonalGoalType(CommonGoalType commonGoalType) { // chiamato e passato dal controller quando decide random che tipo di carta viene estratta
-                this.commonGoalType = commonGoalType;
-            }
+
         }
 
         public class PlayableItemTileInsertionException extends Exception {
