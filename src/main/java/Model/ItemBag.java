@@ -9,11 +9,11 @@ import java.util.Random;
 public class ItemBag(){
 
 
-    private List<org.example.PlayableItemTile> bag;
+    private List<PlayableItemTile> bag;
 
 
     public void putTiles() {
-        bag = new ArrayList<org.example.PlayableItemTile>();
+        bag = new ArrayList<PlayableItemTile>();
         PlayableItemTileFactory factory = new PlayableItemTileFactory();
 
         for (int i = 0; i < 132; i++) {
