@@ -1,4 +1,5 @@
-package Model;
+package server.Model;
+import Util.PersonalGoalType;
 
 //SEQUENZA CORRETTA GAMEBOARD<-->LIVINGROOM:
 //-creazione
@@ -35,23 +36,6 @@ public class PersonalGoal(){
 }
 
 
-
-
-
-
-
-
-
-<<<<<<< HEAD
-
-
-
-
-
-
-
-
-<<<<<<< HEAD
 
 
 

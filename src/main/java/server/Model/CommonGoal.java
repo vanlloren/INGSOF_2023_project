@@ -1,6 +1,6 @@
-package Model;
+package server.Model;
 
-import org.example.CommonGoalType;
+import Util.CommonGoalType;
 
 import java.util.ArrayList;
 
@@ -9,6 +9,10 @@ import java.util.ArrayList;
 public class CommonGoal {
     CommonGoalType commonGoalType;
     private ArrayList<Integer> token_list = new ArrayList<Integer>();
+
+    public ArrayList<Integer> getToken_list(){
+        return this.token_list;
+    }
 
     public void setTokens(int playersNumber) { //parametro dato dal controller
         if (playersNumber == 2) {

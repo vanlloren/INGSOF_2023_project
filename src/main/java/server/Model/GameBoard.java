@@ -1,10 +1,4 @@
-package Model;
-
-import org.example.ItemBag;
-import org.example.LivingRoom;
-import org.example.PlayableItemTile;
-import org.example.Player;
-import org.example.UnavailableTileException;
+package server.Model;
 
 import java.util.ArrayList;
 

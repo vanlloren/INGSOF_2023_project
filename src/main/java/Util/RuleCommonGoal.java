@@ -1,6 +1,6 @@
 package Util;
 
-import Model.ItemTile;
+import server.Model.ItemTile;
 import java.util.HashSet;
 
 public class RuleCommonGoal {

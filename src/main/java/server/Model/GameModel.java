@@ -1,9 +1,8 @@
-package Model;
+package server.Model;
 
 
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class GameModel {
     private Player chairOwner;
