@@ -860,1028 +860,815 @@ public class adjacentsTilesRule() {
         }
     }
 }
-/*
+
 public class PersonalGoal() {
     PersonalGoalType personalGoalType;
 
     public boolean Personal_goal_1(ItemTile[][] structure) {
-        int i, j;
         int count = 0;
-        int point=0;
-            if (structure[0][0].getColour()==Colour.PINK){
-
-                if (count > 2 && count <= 3) {
-                    count ++;
-                    point+=2;
-                }
-                if (count <= 2) {
-                    count++;
-                    point++;
-                }
-                if (count > 3 && count <= ) {
-                    count++;
-                    point += 3;
-                }
+        int point = 0;
+        if (structure[0][0].getColour() == Colour.PINK) {
+            point++;
+            count++;
+        }
+        if (structure[2][0].getColour() == Colour.BLUE) {
+            point++;
+            count++;
+        }
+        if (structure[4][1].getColour() == Colour.GREEN) {
+            if (count > 2 && count <= 4) {
+                point += 2;
+                count++;
             }
-            if ( structure[2][0].getColour()==Colour.BLUE){
-                if (count > 2 && count <= 4) {
-                    count += 2;
-                }
-                if (count < 2) {
-                    count++;
-                }
-                if (count > 3 && count <= 5) {
-                    count += 3;
-                }
-            }
-        if (i == 4 && j == 1) {
-            if ( int[i][j]==Colour.GREEN){
-                if (count > 2 && count <= 4) {
-                    count += 2;
-                }
-                if (count < 2) {
-                    count++;
-                }
-                if (count > 3 && count <= 5) {
-                    count += 3;
-                }
+            if (count < 2) {
+                point++;
+                count++;
             }
         }
-        if (i == 3 && j == 2) {
-            if ( int[i][j]==Colour.WHITE){
-                if (count > 2 && count <= 4) {
-                    count += 2;
-                }
-                if (count < 2) {
-                    count++;
-                }
-                if (count > 3 && count <= 5) {
-                    count += 3;
-                }
+        if (structure[3][2].getColour() == Colour.WHITE) {
+            if (count > 2 && count <= 4) {
+                point += 2;
+                count++;
+            }
+            if (count < 2) {
+                point++;
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                point += 3;
+                count++;
             }
         }
-        if (i == 1 && j == 3) {
-            if ( int[i][j]==Colour.YELLOW){
-                if (count > 2 && count <= 4) {
-                    count += 2;
-                }
-                if (count < 2) {
-                    count++;
-                }
-                if (count > 3 && count <= 5) {
-                    count += 3;
-                }
+        if (structure[1][3].getColour() == Colour.YELLOW) {
+            if (count > 2 && count <= 4) {
+                point += 2;
+                count++;
+            }
+            if (count < 2) {
+                point++;
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                point += 3;
+                count++;
             }
         }
-        if (i == 2 && j == 5) {
-            if ( int[i][j]==Colour.CYAN){
-                if (count > 2 && count <= 4) {
-                    count += 2;
-                }
-                if (count < 2) {
-                    count++;
-                }
-                if (count > 3 && count <= 5) {
-                    count += 3;
-                }
+        if (structure[2][5].getColour() == Colour.CYAN) {
+            if (count > 2 && count <= 4) {
+                point += 2;
+                count++;
+            }
+            if (count < 2) {
+                point++;
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                point += 3;
+                count++;
             }
         }
-        return count;
+        return point;
     }
 
     public boolean Personal_goal_2(ItemTile[][] structure) {
         int count = 0;
-        int i, j;
-        if (i == 1 && j == 1) {
-            if ( int[i][j]==Colour.PINK){
-                if (count > 2 && count <= 4) {
-                    count += 2;
-                }
-                if (count < 2) {
-                    count++;
-                }
-                if (count > 3 && count <= 5) {
-                    count += 3;
-                }
+        int point = 0;
+        if (structure[1][1].getColour() == Colour.PINK) {
+            point++;
+            count++;
+        }
+        if (structure[0][2].getColour() == Colour.GREEN) {
+            point++;
+            count++;
+        }
+        if (structure[2][2].getColour() == Colour.YELLOW) {
+            if (count > 2 && count <= 4) {
+                point += 2;
+                count++;
+            }
+            if (count < 2) {
+                point++;
+                count++;
             }
         }
-        if (i == 0 && j == 2) {
-            if ( int[i][j]==Colour.GREEN){
-                if (count > 2 && count <= 4) {
-                    count += 2;
-                }
-                if (count < 2) {
-                    count++;
-                }
-                if (count > 3 && count <= 5) {
-                    count += 3;
-                }
+        if (structure[4][3].getColour() == Colour.WHITE) {
+            if (count > 2 && count <= 4) {
+                point += 2;
+                count++;
+            }
+            if (count < 2) {
+                point++;
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                point += 3;
+                count++;
             }
         }
-        if (i == 2 && j == 2) {
-            if ( int[i][j]==Colour.YELLOW){
-                if (count > 2 && count <= 4) {
-                    count += 2;
-                }
-                if (count < 2) {
-                    count++;
-                }
-                if (count > 3 && count <= 5) {
-                    count += 3;
-                }
+        if (structure[3][4].getColour() == Colour.CYAN) {
+            if (count > 2 && count <= 4) {
+                point += 2;
+                count++;
+            }
+            if (count < 2) {
+                point++;
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                point += 3;
+                count++;
             }
         }
-        if (i == 4 && j == 3) {
-            if ( int[i][j]==Colour.WHITE){
-                if (count > 2 && count <= 4) {
-                    count += 2;
-                }
-                if (count < 2) {
-                    count++;
-                }
-                if (count > 3 && count <= 5) {
-                    count += 3;
-                }
+        if (structure[4][5].getColour() == Colour.BLUE) {
+            if (count > 2 && count <= 4) {
+                point += 2;
+                count++;
+            }
+            if (count < 2) {
+                point++;
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                point += 3;
+                count++;
             }
         }
-        if (i == 3 && j == 4) {
-            if ( int[i][j]==Colour.CYAN){
-                if (count > 2 && count <= 4) {
-                    count += 2;
-                }
-                if (count < 2) {
-                    count++;
-                }
-                if (count > 3 && count <= 5) {
-                    count += 3;
-                }
-            }
-        }
-        if (i == 4 && j == 5) {
-            if ( int[i][j]==Colour.BLUE){
-                if (count > 2 && count <= 4) {
-                    count += 2;
-                }
-                if (count < 2) {
-                    count++;
-                }
-                if (count > 3 && count <= 5) {
-                    count += 3;
-                }
-            }
-        }
-        return count;
+        return point;
     }
 
     public boolean Personal_goal_3(ItemTile[][] structure) {
         int count = 0;
-        int i, j;
-        if (i == 0 && j == 1) {
-            if ( int[i][j]==Colour.BLUE){
-                if (count > 2 && count <= 4) {
-                    count += 2;
-                }
-                if (count < 2) {
-                    count++;
-                }
-                if (count > 3 && count <= 5) {
-                    count += 3;
-                }
+        int point = 0;
+        if (structure[0][1].getColour() == Colour.BLUE) {
+            point++;
+            count++;
+        }
+        if (structure[3][1].getColour() == Colour.YELLOW) {
+            point++;
+            count++;
+        }
+        if (structure[2][2].getColour() == Colour.PINK) {
+            if (count > 2 && count <= 4) {
+                point += 2;
+                count++;
+            }
+            if (count < 2) {
+                point++;
+                count++;
             }
         }
-        if (i == 3 && j == 1) {
-            if ( int[i][j]==Colour.YELLOW){
-                if (count > 2 && count <= 4) {
-                    count += 2;
-                }
-                if (count < 2) {
-                    count++;
-                }
-                if (count > 3 && count <= 5) {
-                    count += 3;
-                }
+        if (structure[1][3].getColour() == Colour.GREEN) {
+            if (count > 2 && count <= 4) {
+                point += 2;
+                count++;
+            }
+            if (count < 2) {
+                point++;
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                point += 3;
+                count++;
             }
         }
-
-        if (i == 2 && j == 2) {
-            if ( int[i][j]==Colour.PINK){
-                if (count > 2 && count <= 4) {
-                    count += 2;
-                }
-                if (count < 2) {
-                    count++;
-                }
-                if (count > 3 && count <= 5) {
-                    count += 3;
-                }
+        if (structure[4][3].getColour() == Colour.CYAN) {
+            if (count > 2 && count <= 4) {
+                point += 2;
+                count++;
+            }
+            if (count < 2) {
+                point++;
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                point += 3;
+                count++;
             }
         }
-        if (i == 1 && j == 3) {
-            if ( int[i][j]==Colour.GREEN){
-                if (count > 2 && count <= 4) {
-                    count += 2;
-                }
-                if (count < 2) {
-                    count++;
-                }
-                if (count > 3 && count <= 5) {
-                    count += 3;
-                }
+        if (structure[0][5].getColour() == Colour.WHITE) {
+            if (count > 2 && count <= 4) {
+                point += 2;
+                count++;
+            }
+            if (count < 2) {
+                point++;
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                point += 3;
+                count++;
             }
         }
-
-        if (i == 4 && j == 3) {
-            if ( int[i][j]==Colour.CYAN){
-                if (count > 2 && count <= 4) {
-                    count += 2;
-                }
-                if (count < 2) {
-                    count++;
-                }
-                if (count > 3 && count <= 5) {
-                    count += 3;
-                }
-            }
-        }
-        if (i == 0 && j == 5) {
-            if ( int[i][j]==Colour.WHITE){
-                if (count > 2 && count <= 4) {
-                    count += 2;
-                }
-                if (count < 2) {
-                    count++;
-                }
-                if (count > 3 && count <= 5) {
-                    count += 3;
-                }
-            }
-        }
-        return count;
+        return point;
     }
 
     public boolean Personal_goal_4(ItemTile[][] structure) {
         int count = 0;
-        int i, j;
-        if (i == 4 && j == 0) {
-            if ( int[i][j]==Colour.YELLOW){
-                if (count > 2 && count <= 4) {
-                    count += 2;
-                }
-                if (count < 2) {
-                    count++;
-                }
-                if (count > 3 && count <= 5) {
-                    count += 3;
-                }
+        int point = 0;
+        if (structure[4][0].getColour() == Colour.YELLOW) {
+            point++;
+            count++;
+        }
+        if (structure[0][2].getColour() == Colour.CYAN) {
+            point++;
+            count++;
+        }
+        if (structure[2][2].getColour() == Colour.BLUE) {
+            if (count > 2 && count <= 4) {
+                point += 2;
+                count++;
+            }
+            if (count < 2) {
+                point++;
+                count++;
             }
         }
-        if (i == 0 && j == 2) {
-            if ( int[i][j]==Colour.CYAN){
-                if (count > 2 && count <= 4) {
-                    count += 2;
-                }
-                if (count < 2) {
-                    count++;
-                }
-                if (count > 3 && count <= 5) {
-                    count += 3;
-                }
+        if (structure[3][3].getColour() == Colour.PINK) {
+            if (count > 2 && count <= 4) {
+                point += 2;
+                count++;
+            }
+            if (count < 2) {
+                point++;
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                point += 3;
+                count++;
             }
         }
-        if (i == 2 && j == 2) {
-            if ( int[i][j]==Colour.BLUE){
-                if (count > 2 && count <= 4) {
-                    count += 2;
-                }
-                if (count < 2) {
-                    count++;
-                }
-                if (count > 3 && count <= 5) {
-                    count += 3;
-                }
+        if (structure[1][4].getColour() == Colour.WHITE) {
+            if (count > 2 && count <= 4) {
+                point += 2;
+                count++;
+            }
+            if (count < 2) {
+                point++;
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                point += 3;
+                count++;
             }
         }
-        if (i == 3 && j == 3) {
-            if ( int[i][j]==Colour.PINK){
-                if (count > 2 && count <= 4) {
-                    count += 2;
-                }
-                if (count < 2) {
-                    count++;
-                }
-                if (count > 3 && count <= 5) {
-                    count += 3;
-                }
+        if (structure[2][4].getColour() == Colour.GREEN) {
+            if (count > 2 && count <= 4) {
+                point += 2;
+                count++;
+            }
+            if (count < 2) {
+                point++;
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                point += 3;
+                count++;
             }
         }
-        if (i == 1 && j == 4) {
-            if ( int[i][j]==Colour.WHITE){
-                if (count > 2 && count <= 4) {
-                    count += 2;
-                }
-                if (count < 2) {
-                    count++;
-                }
-                if (count > 3 && count <= 5) {
-                    count += 3;
-                }
-            }
-        }
-        if (i == 2 && j == 4) {
-            if ( int[i][j]==Colour.GREEN){
-                if (count > 2 && count <= 4) {
-                    count += 2;
-                }
-                if (count < 2) {
-                    count++;
-                }
-                if (count > 3 && count <= 5) {
-                    count += 3;
-                }
-            }
-        }
-        return count;
+        return point;
     }
 
     public boolean Personal_goal_5(ItemTile[][] structure) {
         int count = 0;
-        int i, j;
-        if (i == 1 && j == 1) {
-            if ( int[i][j]==Colour.CYAN){
-                if (count > 2 && count <= 4) {
-                    count += 2;
-                }
-                if (count < 2) {
-                    count++;
-                }
-                if (count > 3 && count <= 5) {
-                    count += 3;
-                }
+        int point = 0;
+        if (structure[1][1].getColour() == Colour.CYAN) {
+            point++;
+            count++;
+        }
+        if (structure[1][3].getColour() == Colour.BLUE) {
+            point++;
+            count++;
+        }
+        if (structure[2][3].getColour() == Colour.WHITE) {
+            if (count > 2 && count <= 4) {
+                point += 2;
+                count++;
+            }
+            if (count < 2) {
+                point++;
+                count++;
             }
         }
-        if (i == 1 && j == 3) {
-            if ( int[i][j]==Colour.BLUE){
-                if (count > 2 && count <= 4) {
-                    count += 2;
-                }
-                if (count < 2) {
-                    count++;
-                }
-                if (count > 3 && count <= 5) {
-                    count += 3;
-                }
+        if (structure[4][4].getColour() == Colour.PINK) {
+            if (count > 2 && count <= 4) {
+                point += 2;
+                count++;
+            }
+            if (count < 2) {
+                point++;
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                point += 3;
+                count++;
             }
         }
-        if (i == 2 && j == 3) {
-            if ( int[i][j]==Colour.WHITE){
-                if (count > 2 && count <= 4) {
-                    count += 2;
-                }
-                if (count < 2) {
-                    count++;
-                }
-                if (count > 3 && count <= 5) {
-                    count += 3;
-                }
+        if (structure[0][5].getColour() == Colour.YELLOW) {
+            if (count > 2 && count <= 4) {
+                point += 2;
+                count++;
+            }
+            if (count < 2) {
+                point++;
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                point += 3;
+                count++;
             }
         }
-        if (i == 4 && j == 4) {
-            if ( int[i][j]==Colour.PINK){
-                if (count > 2 && count <= 4) {
-                    count += 2;
-                }
-                if (count < 2) {
-                    count++;
-                }
-                if (count > 3 && count <= 5) {
-                    count += 3;
-                }
+        if (structure[3][5].getColour() == Colour.GREEN) {
+            if (count > 2 && count <= 4) {
+                point += 2;
+                count++;
+            }
+            if (count < 2) {
+                point++;
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                point += 3;
+                count++;
             }
         }
-        if (i == 0 && j == 5) {
-            if ( int[i][j]==Colour.YELLOW){
-                if (count > 2 && count <= 4) {
-                    count += 2;
-                }
-                if (count < 2) {
-                    count++;
-                }
-                if (count > 3 && count <= 5) {
-                    count += 3;
-                }
-            }
-        }
-        if (i == 3 && j == 5) {
-            if ( int[i][j]==Colour.GREEN){
-                if (count > 2 && count <= 4) {
-                    count += 2;
-                }
-                if (count < 2) {
-                    count++;
-                }
-                if (count > 3 && count <= 5) {
-                    count += 3;
-                }
-            }
-        }
-        return count;
+        return point;
     }
 
     public boolean Personal_goal_6(ItemTile[][] structure) {
         int count = 0;
-        int i, j;
-        if (i == 2 && j == 0) {
-            if ( int[i][j]==Colour.CYAN){
-                if (count > 2 && count <= 4) {
-                    count += 2;
-                }
-                if (count < 2) {
-                    count++;
-                }
-                if (count > 3 && count <= 5) {
-                    count += 3;
-                }
+        int point = 0;
+        if (structure[2][0].getColour() == Colour.CYAN) {
+            point++;
+            count++;
+        }
+        if (structure[4][0].getColour() == Colour.GREEN) {
+            point++;
+            count++;
+        }
+        if (structure[3][2].getColour() == Colour.WHITE) {
+            if (count > 2 && count <= 4) {
+                point += 2;
+                count++;
+            }
+            if (count < 2) {
+                point++;
+                count++;
             }
         }
-        if (i == 4 && j == 0) {
-            if ( int[i][j]==Colour.GREEN){
-                if (count > 2 && count <= 4) {
-                    count += 2;
-                }
-                if (count < 2) {
-                    count++;
-                }
-                if (count > 3 && count <= 5) {
-                    count += 3;
-                }
+        if (structure[1][4].getColour() == Colour.YELLOW) {
+            if (count > 2 && count <= 4) {
+                point += 2;
+                count++;
+            }
+            if (count < 2) {
+                point++;
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                point += 3;
+                count++;
             }
         }
-        if (i == 3 && j == 2) {
-            if ( int[i][j]==Colour.WHITE){
-                if (count > 2 && count <= 4) {
-                    count += 2;
-                }
-                if (count < 2) {
-                    count++;
-                }
-                if (count > 3 && count <= 5) {
-                    count += 3;
-                }
+        if (structure[3][4].getColour() == Colour.BLUE) {
+            if (count > 2 && count <= 4) {
+                point += 2;
+                count++;
+            }
+            if (count < 2) {
+                point++;
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                point += 3;
+                count++;
             }
         }
-        if (i == 2 && j == 4) {
-            if ( int[i][j]==Colour.YELLOW){
-                if (count > 2 && count <= 4) {
-                    count += 2;
-                }
-                if (count < 2) {
-                    count++;
-                }
-                if (count > 3 && count <= 5) {
-                    count += 3;
-                }
+        if (structure[0][5].getColour() == Colour.PINK) {
+            if (count > 2 && count <= 4) {
+                point += 2;
+                count++;
+            }
+            if (count < 2) {
+                point++;
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                point += 3;
+                count++;
             }
         }
-        if (i == 3 && j == 4) {
-            if ( int[i][j]==Colour.BLUE){
-                if (count > 2 && count <= 4) {
-                    count += 2;
-                }
-                if (count < 2) {
-                    count++;
-                }
-                if (count > 3 && count <= 5) {
-                    count += 3;
-                }
-            }
-        }
-        if (i == 0 && j == 5) {
-            if ( int[i][j]==Colour.PINK){
-                if (count > 2 && count <= 4) {
-                    count += 2;
-                }
-                if (count < 2) {
-                    count++;
-                }
-                if (count > 3 && count <= 5) {
-                    count += 3;
-                }
-            }
-        }
-        return count;
+        return point;
     }
 
-    public boolean Persoal_goal_7(ItemTile[][] structure) {
+    public boolean Personal_goal_7(ItemTile[][] structure) {
         int count = 0;
-        int i, j;
-        if (i == 0 && j == 0) {
-            if ( int[i][j]==Color.GREEN){
-                if (count > 2 && count <= 4) {
-                    count += 2;
-                }
-                if (count < 2) {
-                    count++;
-                }
-                if (count > 3 && count <= 5) {
-                    count += 3;
-                }
+        int point = 0;
+        if (structure[0][0].getColour() == Colour.GREEN) {
+            point++;
+            count++;
+        }
+        if (structure[3][1].getColour() == Colour.BLUE) {
+            point++;
+            count++;
+        }
+        if (structure[0][2].getColour() == Colour.PINK) {
+            if (count > 2 && count <= 4) {
+                point += 2;
+                count++;
+            }
+            if (count < 2) {
+                point++;
+                count++;
             }
         }
-        if (i == 3 && j == 1) {
-            if ( int[i][j]==Colour.BLUE){
-                if (count > 2 && count <= 4) {
-                    count += 2;
-                }
-                if (count < 2) {
-                    count++;
-                }
-                if (count > 3 && count <= 5) {
-                    count += 3;
-                }
+        if (structure[0][3].getColour() == Colour.CYAN) {
+            if (count > 2 && count <= 4) {
+                point += 2;
+                count++;
+            }
+            if (count < 2) {
+                point++;
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                point += 3;
+                count++;
             }
         }
-        if (i == 1 && j == 2) {
-            if ( int[i][j]==Colour.PINK){
-                if (count > 2 && count <= 4) {
-                    count += 2;
-                }
-                if (count < 2) {
-                    count++;
-                }
-                if (count > 3 && count <= 5) {
-                    count += 3;
-                }
+        if (structure[4][4].getColour() == Colour.YELLOW) {
+            if (count > 2 && count <= 4) {
+                point += 2;
+                count++;
+            }
+            if (count < 2) {
+                point++;
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                point += 3;
+                count++;
             }
         }
-        if (i == 0 && j == 3) {
-            if ( int[i][j]==Colour.CYAN){
-                if (count > 2 && count <= 4) {
-                    count += 2;
-                }
-                if (count < 2) {
-                    count++;
-                }
-                if (count > 3 && count <= 5) {
-                    count += 3;
-                }
+        if (structure[2][5].getColour() == Colour.WHITE) {
+            if (count > 2 && count <= 4) {
+                point += 2;
+                count++;
+            }
+            if (count < 2) {
+                point++;
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                point += 3;
+                count++;
             }
         }
-        if (i == 4 && j == 4) {
-            if ( int[i][j]==Colour.YELLOW){
-                if (count > 2 && count <= 4) {
-                    count += 2;
-                }
-                if (count < 2) {
-                    count++;
-                }
-                if (count > 3 && count <= 5) {
-                    count += 3;
-                }
-            }
-        }
-        if (i == 2 && j == 5) {
-            if ( int[i][j]==Colour.WHITE){
-                if (count > 2 && count <= 4) {
-                    count += 2;
-                }
-                if (count < 2) {
-                    count++;
-                }
-                if (count > 3 && count <= 5) {
-                    count += 3;
-                }
-            }
-        }
-        return count;
+        return point;
     }
 
 
     public boolean Personal_goal_8(ItemTile[][] structure) {
         int count = 0;
-        int i, j;
-        if (i == 4 && j == 0) {
-            if ( int[i][j]==Colour.BLUE){
-                if (count > 2 && count <= 4) {
-                    count += 2;
-                }
-                if (count < 2) {
-                    count++;
-                }
-                if (count > 3 && count <= 5) {
-                    count += 3;
-                }
+        int point = 0;
+        if (structure[4][0].getColour() == Colour.BLUE) {
+            point++;
+            count++;
+        }
+        if (structure[1][1].getColour() == Colour.GREEN) {
+            point++;
+            count++;
+        }
+        if (structure[2][2].getColour() == Colour.CYAN) {
+            if (count > 2 && count <= 4) {
+                point += 2;
+                count++;
+            }
+            if (count < 2) {
+                point++;
+                count++;
             }
         }
-        if (i == 1 && j == 1) {
-            if ( int[i][j]==Colour.GREEN){
-                if (count > 2 && count <= 4) {
-                    count += 2;
-                }
-                if (count < 2) {
-                    count++;
-                }
-                if (count > 3 && count <= 5) {
-                    count += 3;
-                }
+        if (structure[0][3].getColour() == Colour.PINK) {
+            if (count > 2 && count <= 4) {
+                point += 2;
+                count++;
+            }
+            if (count < 2) {
+                point++;
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                point += 3;
+                count++;
             }
         }
-        if (i == 2 && j == 2) {
-            if ( int[i][j]==Colour.CYAN){
-                if (count > 2 && count <= 4) {
-                    count += 2;
-                }
-                if (count < 2) {
-                    count++;
-                }
-                if (count > 3 && count <= 5) {
-                    count += 3;
-                }
+        if (structure[3][4].getColour() == Colour.WHITE) {
+            if (count > 2 && count <= 4) {
+                point += 2;
+                count++;
+            }
+            if (count < 2) {
+                point++;
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                point += 3;
+                count++;
             }
         }
-        if (i == 0 && j == 3) {
-            if ( int[i][j]==Colour.PINK){
-                if (count > 2 && count <= 4) {
-                    count += 2;
-                }
-                if (count < 2) {
-                    count++;
-                }
-                if (count > 3 && count <= 5) {
-                    count += 3;
-                }
+        if (structure[3][5].getColour() == Colour.YELLOW) {
+            if (count > 2 && count <= 4) {
+                point += 2;
+                count++;
+            }
+            if (count < 2) {
+                point++;
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                point += 3;
+                count++;
             }
         }
-        if (i == 3 && j == 4) {
-            if ( int[i][j]==Colour.WHITE){
-                if (count > 2 && count <= 4) {
-                    count += 2;
-                }
-                if (count < 2) {
-                    count++;
-                }
-                if (count > 3 && count <= 5) {
-                    count += 3;
-                }
-            }
-        }
-        if (i == 3 && j == 5) {
-            if ( int[i][j]==Colour.YELLOW){
-                if (count > 2 && count <= 4) {
-                    count += 2;
-                }
-                if (count < 2) {
-                    count++;
-                }
-                if (count > 3 && count <= 5) {
-                    count += 3;
-                }
-            }
-        }
-        return count;
+        return point;
     }
 
-    public boolean Personal_goal_9(ItemTile[][] structure) {
+    public boolean Personal_goal_1(ItemTile[][] structure) {
         int count = 0;
-        int i, j;
-        if (i == 2 && j == 0) {
-            if ( int[i][j]==Colour.YELLOW){
-                if (count > 2 && count <= 4) {
-                    count += 2;
-                }
-                if (count < 2) {
-                    count++;
-                }
-                if (count > 3 && count <= 5) {
-                    count += 3;
-                }
+        int point = 0;
+        if (structure[2][0].getColour() == Colour.YELLOW) {
+            point++;
+            count++;
+        }
+        if (structure[2][2].getColour() == Colour.GREEN) {
+            point++;
+            count++;
+        }
+        if (structure[4][3].getColour() == Colour.WHITE) {
+            if (count > 2 && count <= 4) {
+                point += 2;
+                count++;
+            }
+            if (count < 2) {
+                point++;
+                count++;
             }
         }
-        if (i == 2 && j == 2) {
-            if ( int[i][j]==Colour.GREEN){
-                if (count > 2 && count <= 4) {
-                    count += 2;
-                }
-                if (count < 2) {
-                    count++;
-                }
-                if (count > 3 && count <= 5) {
-                    count += 3;
-                }
+        if (structure[1][4].getColour() == Colour.CYAN) {
+            if (count > 2 && count <= 4) {
+                point += 2;
+                count++;
+            }
+            if (count < 2) {
+                point++;
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                point += 3;
+                count++;
             }
         }
-        if (i == 4 && j == 3) {
-            if ( int[i][j]==Colour.WHITE){
-                if (count > 2 && count <= 4) {
-                    count += 2;
-                }
-                if (count < 2) {
-                    count++;
-                }
-                if (count > 3 && count <= 5) {
-                    count += 3;
-                }
+        if (structure[4][4].getColour() == Colour.PINK) {
+            if (count > 2 && count <= 4) {
+                point += 2;
+                count++;
+            }
+            if (count < 2) {
+                point++;
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                point += 3;
+                count++;
             }
         }
-        if (i == 2 && j == 4) {
-            if ( int[i][j]==Colour.CYAN){
-                if (count > 2 && count <= 4) {
-                    count += 2;
-                }
-                if (count < 2) {
-                    count++;
-                }
-                if (count > 3 && count <= 5) {
-                    count += 3;
-                }
+        if (structure[0][5].getColour() == Colour.BLUE) {
+            if (count > 2 && count <= 4) {
+                point += 2;
+                count++;
+            }
+            if (count < 2) {
+                point++;
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                point += 3;
+                count++;
             }
         }
-        if (i == 4 && j == 4) {
-            if ( int[i][j]==Colour.PINK){
-                if (count > 2 && count <= 4) {
-                    count += 2;
-                }
-                if (count < 2) {
-                    count++;
-                }
-                if (count > 3 && count <= 5) {
-                    count += 3;
-                }
-            }
-        }
-        if (i == 0 && j == 5) {
-            if ( int[i][j]==Colour.BLUE){
-                if (count > 2 && count <= 4) {
-                    count += 2;
-                }
-                if (count < 2) {
-                    count++;
-                }
-                if (count > 3 && count <= 5) {
-                    count += 3;
-                }
-            }
-        }
-        return count;
+        return point;
     }
 
     public boolean Personal_goal_10(ItemTile[][] structure) {
         int count = 0;
-        int i, j;
-        if (i == 4 && j == 0) {
-            if ( int[i][j]==Colour.CYAN){
-                if (count > 2 && count <= 4) {
-                    count += 2;
-                }
-                if (count < 2) {
-                    count++;
-                }
-                if (count > 3 && count <= 5) {
-                    count += 3;
-                }
+        int point = 0;
+        if (structure[4][0].getColour() == Colour.CYAN) {
+            point++;
+            count++;
+        }
+        if (structure[1][1].getColour() == Colour.YELLOW) {
+            point++;
+            count++;
+        }
+        if (structure[0][2].getColour() == Colour.WHITE) {
+            if (count > 2 && count <= 4) {
+                point += 2;
+                count++;
+            }
+            if (count < 2) {
+                point++;
+                count++;
             }
         }
-        if (i == 1 && j == 1) {
-            if ( int[i][j]==Colour.YELLOW){
-                if (count > 2 && count <= 4) {
-                    count += 2;
-                }
-                if (count < 2) {
-                    count++;
-                }
-                if (count > 3 && count <= 5) {
-                    count += 3;
-                }
+        if (structure[3][3].getColour() == Colour.GREEN) {
+            if (count > 2 && count <= 4) {
+                point += 2;
+                count++;
+            }
+            if (count < 2) {
+                point++;
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                point += 3;
+                count++;
             }
         }
-        if (i == 0 && j == 2) {
-            if ( int[i][j]==Colour.WHITE){
-                if (count > 2 && count <= 4) {
-                    count += 2;
-                }
-                if (count < 2) {
-                    count++;
-                }
-                if (count > 3 && count <= 5) {
-                    count += 3;
-                }
+        if (structure[1][4].getColour() == Colour.BLUE) {
+            if (count > 2 && count <= 4) {
+                point += 2;
+                count++;
+            }
+            if (count < 2) {
+                point++;
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                point += 3;
+                count++;
             }
         }
-        if (i == 3 && j == 3) {
-            if ( int[i][j]==Colour.GREEN){
-                if (count > 2 && count <= 4) {
-                    count += 2;
-                }
-                if (count < 2) {
-                    count++;
-                }
-                if (count > 3 && count <= 5) {
-                    count += 3;
-                }
+        if (structure[3][5].getColour() == Colour.PINK) {
+            if (count > 2 && count <= 4) {
+                point += 2;
+                count++;
+            }
+            if (count < 2) {
+                point++;
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                point += 3;
+                count++;
             }
         }
-        if (i == 1 && j == 4) {
-            if ( int[i][j]==Colour.BLUE){
-                if (count > 2 && count <= 4) {
-                    count += 2;
-                }
-                if (count < 2) {
-                    count++;
-                }
-                if (count > 3 && count <= 5) {
-                    count += 3;
-                }
-            }
-        }
-        if (i == 3 && j == 5) {
-            int([i][j] == Colour.PINK){
-                if (count > 2 && count <= 4) {
-                    count += 2;
-                }
-                if (count < 2) {
-                    count++;
-                }
-                if (count > 3 && count <= 5) {
-                    count += 3;
-                }
-            }
-        }
-        return count;
+        return point;
     }
 
     public boolean Personal_goal_11(ItemTile[][] structure) {
         int count = 0;
-        int i, j;
-        if (i == 2 && j == 0) {
-            if ( int[i][j]==Colour.PINK){
-                if (count > 2 && count <= 4) {
-                    count += 2;
-                }
-                if (count < 2) {
-                    count++;
-                }
-                if (count > 3 && count <= 5) {
-                    count += 3;
-                }
+        int point = 0;
+        if (structure[2][0].getColour() == Colour.PINK) {
+            point++;
+            count++;
+        }
+        if (structure[1][1].getColour() == Colour.WHITE) {
+            point++;
+            count++;
+        }
+        if (structure[0][2].getColour() == Colour.YELLOW) {
+            if (count > 2 && count <= 4) {
+                point += 2;
+                count++;
+            }
+            if (count < 2) {
+                point++;
+                count++;
             }
         }
-        if (i == 1 && j == 1) {
-            if ( int[i][j]==Colour.WHITE){
-                if (count > 2 && count <= 4) {
-                    count += 2;
-                }
-                if (count < 2) {
-                    count++;
-                }
-                if (count > 3 && count <= 5) {
-                    count += 3;
-                }
+        if (structure[2][3].getColour() == Colour.BLUE) {
+            if (count > 2 && count <= 4) {
+                point += 2;
+                count++;
+            }
+            if (count < 2) {
+                point++;
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                point += 3;
+                count++;
             }
         }
-        if (i == 0 && j == 2) {
-            if ( int[i][j]==Colour.YELLOW){
-                if (count > 2 && count <= 4) {
-                    count += 2;
-                }
-                if (count < 2) {
-                    count++;
-                }
-                if (count > 3 && count <= 5) {
-                    count += 3;
-                }
+        if (structure[4][4].getColour() == Colour.GREEN) {
+            if (count > 2 && count <= 4) {
+                point += 2;
+                count++;
+            }
+            if (count < 2) {
+                point++;
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                point += 3;
+                count++;
             }
         }
-        if (i == 2 && j == 3) {
-            if ( int[i][j]==Colour.BLUE){
-                if (count > 2 && count <= 4) {
-                    count += 2;
-                }
-                if (count < 2) {
-                    count++;
-                }
-                if (count > 3 && count <= 5) {
-                    count += 3;
-                }
+        if (structure[3][5].getColour() == Colour.CYAN) {
+            if (count > 2 && count <= 4) {
+                point += 2;
+                count++;
+            }
+            if (count < 2) {
+                point++;
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                point += 3;
+                count++;
             }
         }
-        if (i == 4 && j == 4) {
-            if ( int[i][j]==Color.GREEN){
-                if (count > 2 && count <= 4) {
-                    count += 2;
-                }
-                if (count < 2) {
-                    count++;
-                }
-                if (count > 3 && count <= 5) {
-                    count += 3;
-                }
-            }
-        }
-        if (i == 3 && j == 5) {
-            if ( int[i][j]==Colour.CYAN){
-                if (count > 2 && count <= 4) {
-                    count += 2;
-                }
-                if (count < 2) {
-                    count++;
-                }
-                if (count > 3 && count <= 5) {
-                    count += 3;
-                }
-            }
-        }
-        return count;
+        return point;
     }
 
     public boolean Personal_goal_12(ItemTile[][] structure) {
-        int i, j;
         int count = 0;
-        if (i == 2 && j == 0) {
-            if ( int[i][j]==Colour.WHITE){
-                if (count > 2 && count <= 4) {
-                    count += 2;
-                }
-                if (count < 2) {
-                    count++;
-                }
-                if (count > 3 && count <= 5) {
-                    count += 3;
-                }
+        int point = 0;
+        if (structure[2][0].getColour() == Colour.WHITE) {
+            point++;
+            count++;
+        }
+        if (structure[1][1].getColour() == Colour.PINK) {
+            point++;
+            count++;
+        }
+        if (structure[2][2].getColour() == Colour.BLUE) {
+            if (count > 2 && count <= 4) {
+                point += 2;
+                count++;
+            }
+            if (count < 2) {
+                point++;
+                count++;
             }
         }
-        if (i == 1 && j == 1) {
-            if ( int[i][j]==Colour.PINK){
-                if (count > 2 && count <= 4) {
-                    count += 2;
-                }
-                if (count < 2) {
-                    count++;
-                }
-                if (count > 3 && count <= 5) {
-                    count += 3;
-                }
+        if (structure[3][3].getColour() == Colour.CYAN) {
+            if (count > 2 && count <= 4) {
+                point += 2;
+                count++;
+            }
+            if (count < 2) {
+                point++;
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                point += 3;
+                count++;
             }
         }
-        if (i == 2 && j == 2) {
-            if ( int[i][j]==Colour.BLUE){
-                if (count > 2 && count <= 4) {
-                    count += 2;
-                }
-                if (count < 2) {
-                    count++;
-                }
-                if (count > 3 && count <= 5) {
-                    count += 3;
-                }
+        if (structure[4][4].getColour() == Colour.YELLOW) {
+            if (count > 2 && count <= 4) {
+                point += 2;
+                count++;
+            }
+            if (count < 2) {
+                point++;
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                point += 3;
+                count++;
             }
         }
-        if (i == 3 && j == 3) {
-            if ( int[i][j]==Colour.CYAN){
-                if (count > 2 && count <= 4) {
-                    count += 2;
-                }
-                if (count < 2) {
-                    count++;
-                }
-                if (count > 3 && count <= 5) {
-                    count += 3;
-                }
+        if (structure[0][5].getColour() == Colour.GREEN) {
+            if (count > 2 && count <= 4) {
+                point += 2;
+                count++;
+            }
+            if (count < 2) {
+                point++;
+                count++;
+            }
+            if (count > 3 && count <= 5) {
+                point += 3;
+                count++;
             }
         }
-        if (i == 4 && j == 4) {
-            if ( int[i][j]==Colour.YELLOW){
-                if (count > 2 && count <= 4) {
-                    count += 2;
-                }
-                if (count < 2) {
-                    count++;
-                }
-                if (count > 3 && count <= 5) {
-                    count += 3;
-                }
-            }
-        }
-        if (i == 0 && j == 5) {
-            if ( int[i][j]==Colour.GREEN){
-                if (count > 2 && count <= 4) {
-                    count += 2;
-                }
-                if (count < 2) {
-                    count++;
-                }
-                if (count > 3 && count <= 5) {
-                    count += 3;
-                }
-            }
-        }
-        return count;
-    }
-
-    public void addPoint(int num, int add) {
-        num = num + add;
+        return point;
     }
 
 
+        public void addPoint ( int num, int add){
+            num = num + add;
+        }
 
+    }
+
+    public int calculatePoint() {
+        int point = 0;
+        if ()
+    }
+/*
 
     public int checkPersonalGoal() {
         int n = 0;
@@ -1909,8 +1696,8 @@ public class PersonalGoal() {
        return n;
     }
 }
-
 */
+}
 
 public class CommonGoal {
             CommonGoalType commonGoalType;
