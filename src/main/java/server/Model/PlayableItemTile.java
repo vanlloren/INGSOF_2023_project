@@ -9,7 +9,7 @@ public class PlayableItemTile extends ItemTile {
     private boolean adjacency = false;
 
     @java.lang.Override
-    public org.example.Colour getColour() {
+    public Colour getColour() {
         return colour;
     }
 
