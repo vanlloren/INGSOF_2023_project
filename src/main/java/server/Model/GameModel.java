@@ -97,25 +97,3 @@ public class GameModel {
 //-fineTurno
 //-updateAvailability
 //----turno player succ----
-
-
-
-
-
-
-
-
-
-<<<<<<< HEAD
-
-
-
-
-
-
-
-
-<<<<<<< HEAD
-
-
-

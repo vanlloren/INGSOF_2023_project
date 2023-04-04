@@ -1,5 +1,4 @@
 package server.Model;
-import Util.PersonalGoalType;
 
 //SEQUENZA CORRETTA GAMEBOARD<-->LIVINGROOM:
 //-creazione
@@ -27,14 +26,14 @@ import Util.PersonalGoalType;
 //-updateAvailability
 //----turno player succ----
 
-import org.example.Colour;
-import org.example.ItemTile;
-import org.example.PersonalGoalType;
+import Util.Colour;
+import Util.PersonalGoalType;
 
-public class PersonalGoal(){
+public class PersonalGoal {
+
     PersonalGoalType personalGoalType;
 
-    public boolean Personal_goal_1(org.example.ItemTile[][] structure) {
+    public int Personal_goal_1(PlayableItemTile[][] structure) {
         int count = 0;
         int point = 0;
         if (structure[0][0].getColour() == Colour.PINK) {
@@ -100,7 +99,7 @@ public class PersonalGoal(){
         return point;
     }
 
-    public boolean Personal_goal_2(org.example.ItemTile[][] structure) {
+    public int Personal_goal_2(PlayableItemTile[][] structure) {
         int count = 0;
         int point = 0;
         if (structure[1][1].getColour() == Colour.PINK) {
@@ -166,7 +165,7 @@ public class PersonalGoal(){
         return point;
     }
 
-    public boolean Personal_goal_3(org.example.ItemTile[][] structure) {
+    public int Personal_goal_3(PlayableItemTile[][] structure) {
         int count = 0;
         int point = 0;
         if (structure[0][1].getColour() == Colour.BLUE) {
@@ -232,7 +231,7 @@ public class PersonalGoal(){
         return point;
     }
 
-    public boolean Personal_goal_4(org.example.ItemTile[][] structure) {
+    public int Personal_goal_4(PlayableItemTile[][] structure) {
         int count = 0;
         int point = 0;
         if (structure[4][0].getColour() == Colour.YELLOW) {
@@ -298,7 +297,7 @@ public class PersonalGoal(){
         return point;
     }
 
-    public boolean Personal_goal_5(org.example.ItemTile[][] structure) {
+    public int Personal_goal_5(PlayableItemTile[][] structure) {
         int count = 0;
         int point = 0;
         if (structure[1][1].getColour() == Colour.CYAN) {
@@ -364,7 +363,7 @@ public class PersonalGoal(){
         return point;
     }
 
-    public boolean Personal_goal_6(org.example.ItemTile[][] structure) {
+    public int Personal_goal_6(PlayableItemTile[][] structure) {
         int count = 0;
         int point = 0;
         if (structure[2][0].getColour() == Colour.CYAN) {
@@ -430,7 +429,7 @@ public class PersonalGoal(){
         return point;
     }
 
-    public boolean Personal_goal_7(org.example.ItemTile[][] structure) {
+    public int Personal_goal_7(PlayableItemTile[][] structure) {
         int count = 0;
         int point = 0;
         if (structure[0][0].getColour() == Colour.GREEN) {
@@ -497,7 +496,7 @@ public class PersonalGoal(){
     }
 
 
-    public boolean Personal_goal_8(org.example.ItemTile[][] structure) {
+    public int Personal_goal_8(PlayableItemTile[][] structure) {
         int count = 0;
         int point = 0;
         if (structure[4][0].getColour() == Colour.BLUE) {
@@ -563,7 +562,7 @@ public class PersonalGoal(){
         return point;
     }
 
-    public boolean Personal_goal_1(org.example.ItemTile[][] structure) {
+    public int Personal_goal_9(PlayableItemTile[][] structure) {
         int count = 0;
         int point = 0;
         if (structure[2][0].getColour() == Colour.YELLOW) {
@@ -629,7 +628,7 @@ public class PersonalGoal(){
         return point;
     }
 
-    public boolean Personal_goal_10(org.example.ItemTile[][] structure) {
+    public int Personal_goal_10(PlayableItemTile[][] structure) {
         int count = 0;
         int point = 0;
         if (structure[4][0].getColour() == Colour.CYAN) {
@@ -695,7 +694,7 @@ public class PersonalGoal(){
         return point;
     }
 
-    public boolean Personal_goal_11(org.example.ItemTile[][] structure) {
+    public int Personal_goal_11(PlayableItemTile[][] structure) {
         int count = 0;
         int point = 0;
         if (structure[2][0].getColour() == Colour.PINK) {
@@ -761,7 +760,7 @@ public class PersonalGoal(){
         return point;
     }
 
-    public boolean Personal_goal_12(ItemTile[][] structure) {
+    public int Personal_goal_12(PlayableItemTile[][] structure) {
         int count = 0;
         int point = 0;
         if (structure[2][0].getColour() == Colour.WHITE) {
@@ -825,13 +824,13 @@ public class PersonalGoal(){
             }
         }
         return point;
-
-
-        // codice diletta
-
-
-
+    }
 }
+
+
+
+
+
 
 
 

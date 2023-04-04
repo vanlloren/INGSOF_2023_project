@@ -864,7 +864,7 @@ public class adjacentsTilesRule() {
 public class PersonalGoal() {
     PersonalGoalType personalGoalType;
 
-    public boolean Personal_goal_1(ItemTile[][] structure) {
+    public int Personal_goal_1(ItemTile[][] structure) {
         int count = 0;
         int point = 0;
         if (structure[0][0].getColour() == Colour.PINK) {
@@ -930,7 +930,7 @@ public class PersonalGoal() {
         return point;
     }
 
-    public boolean Personal_goal_2(ItemTile[][] structure) {
+    public int Personal_goal_2(ItemTile[][] structure) {
         int count = 0;
         int point = 0;
         if (structure[1][1].getColour() == Colour.PINK) {
@@ -996,7 +996,7 @@ public class PersonalGoal() {
         return point;
     }
 
-    public boolean Personal_goal_3(ItemTile[][] structure) {
+    public int Personal_goal_3(ItemTile[][] structure) {
         int count = 0;
         int point = 0;
         if (structure[0][1].getColour() == Colour.BLUE) {
@@ -1062,7 +1062,7 @@ public class PersonalGoal() {
         return point;
     }
 
-    public boolean Personal_goal_4(ItemTile[][] structure) {
+    public int Personal_goal_4(ItemTile[][] structure) {
         int count = 0;
         int point = 0;
         if (structure[4][0].getColour() == Colour.YELLOW) {
@@ -1128,7 +1128,7 @@ public class PersonalGoal() {
         return point;
     }
 
-    public boolean Personal_goal_5(ItemTile[][] structure) {
+    public int Personal_goal_5(ItemTile[][] structure) {
         int count = 0;
         int point = 0;
         if (structure[1][1].getColour() == Colour.CYAN) {
@@ -1194,7 +1194,7 @@ public class PersonalGoal() {
         return point;
     }
 
-    public boolean Personal_goal_6(ItemTile[][] structure) {
+    public int Personal_goal_6(ItemTile[][] structure) {
         int count = 0;
         int point = 0;
         if (structure[2][0].getColour() == Colour.CYAN) {
@@ -1260,7 +1260,7 @@ public class PersonalGoal() {
         return point;
     }
 
-    public boolean Personal_goal_7(ItemTile[][] structure) {
+    public int Personal_goal_7(ItemTile[][] structure) {
         int count = 0;
         int point = 0;
         if (structure[0][0].getColour() == Colour.GREEN) {
@@ -1327,7 +1327,7 @@ public class PersonalGoal() {
     }
 
 
-    public boolean Personal_goal_8(ItemTile[][] structure) {
+    public int Personal_goal_8(ItemTile[][] structure) {
         int count = 0;
         int point = 0;
         if (structure[4][0].getColour() == Colour.BLUE) {
@@ -1393,7 +1393,7 @@ public class PersonalGoal() {
         return point;
     }
 
-    public boolean Personal_goal_1(ItemTile[][] structure) {
+    public int Personal_goal_9(ItemTile[][] structure) {
         int count = 0;
         int point = 0;
         if (structure[2][0].getColour() == Colour.YELLOW) {
@@ -1459,7 +1459,7 @@ public class PersonalGoal() {
         return point;
     }
 
-    public boolean Personal_goal_10(ItemTile[][] structure) {
+    public int Personal_goal_10(ItemTile[][] structure) {
         int count = 0;
         int point = 0;
         if (structure[4][0].getColour() == Colour.CYAN) {
@@ -1525,7 +1525,7 @@ public class PersonalGoal() {
         return point;
     }
 
-    public boolean Personal_goal_11(ItemTile[][] structure) {
+    public int Personal_goal_11(ItemTile[][] structure) {
         int count = 0;
         int point = 0;
         if (structure[2][0].getColour() == Colour.PINK) {
@@ -1591,7 +1591,7 @@ public class PersonalGoal() {
         return point;
     }
 
-    public boolean Personal_goal_12(ItemTile[][] structure) {
+    public int Personal_goal_12(ItemTile[][] structure) {
         int count = 0;
         int point = 0;
         if (structure[2][0].getColour() == Colour.WHITE) {
@@ -1657,11 +1657,8 @@ public class PersonalGoal() {
         return point;
     }
 
-
-        public void addPoint ( int num, int add){
-            num = num + add;
-        }
-
+    public void addPoint ( int num, int add){
+        num = num + add;
     }
 
     public int calculatePoint() {
@@ -2527,9 +2524,9 @@ public class CommonGoal {
             }
         }
 
-        enum Colour {GREEN, WHITE, YELLOW, BLUE, CYAN, PINK, VOID}
+        public enum Colour {GREEN, WHITE, YELLOW, BLUE, CYAN, PINK, VOID}
 
-enum PersonalGoalType {PERSONALGOAL1, PERSONALGOAL2, PERSONALGOAL3, PERSONALGOAL4}
+public enum PersonalGoalType {PERSONALGOAL1, PERSONALGOAL2, PERSONALGOAL3, PERSONALGOAL4}
 
 
         public class App {
