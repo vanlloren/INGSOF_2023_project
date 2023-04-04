@@ -74,8 +74,12 @@ public class PlayableItemTile extends ItemTile {
             Colour helperColour = Colour.CYAN;
             this.colour = helperColour;
             this.idCode = id;
-        } else {
+        } else if (colour.equals("PINK")){
             Colour helperColour = Colour.PINK;
+            this.colour = helperColour;
+            this.idCode = id;
+        }else{
+            Colour helperColour = Colour.VOID;
             this.colour = helperColour;
             this.idCode = id;
         }
