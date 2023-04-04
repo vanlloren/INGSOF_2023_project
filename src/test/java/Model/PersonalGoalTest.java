@@ -51,7 +51,7 @@ public class PersonalGoalTest {
 
 
     public void testPersonal_goal_3() {
-        assert(12, personalGoal.Personal_goal_3(structure));
+        Assert.assertEquals(12, personalGoal.Personal_goal_3(structure));
     }
     @Before
     public void inizialize4(){
@@ -64,7 +64,7 @@ public class PersonalGoalTest {
     }
 
     public void testPersonal_goal_4() {
-        assert(12, personalGoal.Personal_goal_4(structure));
+        Assert.assertEquals(12, personalGoal.Personal_goal_4(structure));
     }
     @Before
     public void inizialize5(){
@@ -78,7 +78,7 @@ public class PersonalGoalTest {
 
 
     public void testPersonal_goal_5() {
-        assert(12, personalGoal.Personal_goal_5(structure));
+        Assert.assertEquals(12, personalGoal.Personal_goal_5(structure));
     }
     @Before
     public void inizialize6(){
@@ -92,7 +92,7 @@ public class PersonalGoalTest {
 
 
     public void testPersonal_goal_6() {
-        assert(12, personalGoal.Personal_goal_6(structure));
+        Assert.assertEquals(12, personalGoal.Personal_goal_6(structure));
     }
     @Before
     public void inizialize7(){
@@ -107,7 +107,7 @@ public class PersonalGoalTest {
 
 
     public void testPersonal_goal_7() {
-        assert(12, personalGoal.Personal_goal_7(structure));
+        Assert.assertEquals(12, personalGoal.Personal_goal_7(structure));
     }
     @Before
     public void inizialize8(){
@@ -120,7 +120,7 @@ public class PersonalGoalTest {
     }
 
     public void testPersonal_goal_8() {
-        assert(12, personalGoal.Personal_goal_8(structure));
+        Assert.assertEquals(12, personalGoal.Personal_goal_8(structure));
     }
     @Before
     public void inizialize9(){
@@ -135,7 +135,7 @@ public class PersonalGoalTest {
 
 
     public void testTestPersonal_goal_9() {
-        assert(12, personalGoal.Personal_goal_9(structure));
+        Assert.assertEquals(12, personalGoal.Personal_goal_9(structure));
     }
     @Before
     public void inizialize10(){
@@ -149,7 +149,7 @@ public class PersonalGoalTest {
 
 
     public void testPersonal_goal_10() {
-        assert(12, personalGoal.Personal_goal_10(structure));
+        Assert.assertEquals(12, personalGoal.Personal_goal_10(structure));
     }
     @Before
     public void inizialize11(){
@@ -164,7 +164,7 @@ public class PersonalGoalTest {
 
 
     public void testPersonal_goal_11() {
-        assert(12, personalGoal.Personal_goal_11(structure));
+        Assert.assertEquals(12, personalGoal.Personal_goal_11(structure));
     }
     @Before
     public void inizialize12 (){
@@ -177,6 +177,6 @@ public class PersonalGoalTest {
     }
 
     public void testPersonal_goal_12() {
-        assert(12, personalGoal.Personal_goal_12(structure));
+        Assert.assertEquals(12, personalGoal.Personal_goal_12(structure));
     }
 }
