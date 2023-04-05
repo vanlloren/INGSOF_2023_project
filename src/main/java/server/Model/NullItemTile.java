@@ -32,7 +32,7 @@ public class NullItemTile extends ItemTile {
     }
 
     @Override
-    public boolean isAvailable() {
+    public boolean getAvailability() {
         return false;
     }
 

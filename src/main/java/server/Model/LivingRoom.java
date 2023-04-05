@@ -44,6 +44,25 @@ public class LivingRoom {
         return commonGoal2;
     }
 
+    public boolean nullDetection(int x, int y){
+        if(gameTable[x][y] == null){
+            return true;
+        }
+        return false;
+    }
+
+    public boolean nullTileDetection(int x, int y){
+        return gameTable[x][y].nullDetection();
+    }
+    public boolean getTileAvailability(int x, int y){
+        return gameTable[x][y].getAvailability();
+    }
+
+    public boolean getTileAdjacency(int x, int y){
+        return gameTable[x][y].getAdjacency();
+    }
+
+
     //MODEL
     public PlayableItemTile pickTile(int x, int y) {//questo metodo permette alla LivingRoom di passare una sua tessera alla GameBoard
         PlayableItemTile helperTile;
@@ -65,12 +84,6 @@ public class LivingRoom {
     //MODEL
     public void fillVoid(int x, int y, PlayableItemTile tile) {
         gameTable[x][y] = tile;
-    }
-
-    public boolean isTileAvailable(int x, int y) {//verifica se la singola Tile nella LivingRoom alle
-        // coordinate x e y è disponibile per essere presa dal player
-
-        return gameTable[x][y].isAvailable();
     }
 
     //CONTROLLER
@@ -188,6 +201,8 @@ public class LivingRoom {
         return false;
 
     }
+
+
     //MODEL
     public void updateAvailability() {//determina per ogni tile sulla LivingRoom se essa é disponibile o meno
         for (int i = 0; i < 9; i++) {

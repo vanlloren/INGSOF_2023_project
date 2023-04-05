@@ -24,7 +24,7 @@ public class PlayableItemTile extends ItemTile {
     }
 
     @Override
-    public boolean isAvailable() {
+    public boolean getAvailability() {
         return availability;
     }
 
@@ -81,7 +81,7 @@ public class PlayableItemTile extends ItemTile {
         }else{
             Colour helperColour = Colour.VOID;
             this.colour = helperColour;
-            this.idCode = id;
+            this.idCode = 0;
         }
     }
 }

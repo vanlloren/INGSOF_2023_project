@@ -15,7 +15,7 @@ public abstract class ItemTile {
 
         public abstract boolean nullDetection();
 
-        public abstract boolean isAvailable();
+        public abstract boolean getAvailability();
 
         public abstract void makeAvailable();
 

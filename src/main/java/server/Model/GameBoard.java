@@ -51,9 +51,7 @@ public class GameBoard {
     }
 
     //CONTROLLER
-    public boolean pickedTilesNum() {//tiene conto del numero d' ItemTiles pescate ogni turno
-        return toPlayerTiles.size() < 3;
-    }
+    public int getPickedTilesNum(){return toPlayerTiles.size();}
 
     //Check sulle tessere adiacenti già fatto, getToPlayerTile deve controllare al massimo
     //per TRE volte che la tessera che l'utente vuole sia disponibile.
@@ -61,32 +59,22 @@ public class GameBoard {
     //della tessera da raccogliere dalla LivingRoom
 
     //MODEL
-    public void getToPlayerFirstTile(int x, int y) throws UnavailableTileException{ //prende tessera 1 dalla LivingRoom
+    public void getToPlayerFirstTile(int x, int y){ //prende tessera 1 dalla LivingRoom
 
         toPlayerTiles = new ArrayList<PlayableItemTile>();
-        boolean isAvailable = livingRoom.isTileAvailable(x, y);
-        //questo check si focalizza sulla disponibilità della tessera che l'utente vuole
-        if(isAvailable) {
-            toPlayerTiles.add(livingRoom.pickTile(x, y));
-            livingRoom.updateAdjacentAvailabilityV1(x, y);
-            firstX = x;
-            firstY = y;
-        }else{
-            throw new UnavailableTileException();
-        }
+
+        toPlayerTiles.add(livingRoom.pickTile(x, y));
+        livingRoom.updateAdjacentAvailabilityV1(x, y);
+        firstX = x;
+        firstY = y;
+
     }
 
     //MODEL
-    public void getToPlayerAnotherTile(int x, int y) throws UnavailableTileException{ //prende tessera 2/3 dalla LivingRoom
-        toPlayerTiles = new ArrayList<PlayableItemTile>();
-        boolean isAvailable = livingRoom.isTileAvailable(x, y);
-        //questo check si focalizza sulla disponibilità della tessera che l'utente vuole
-        if(isAvailable) {
-            toPlayerTiles.add(livingRoom.pickTile(x, y));
-            livingRoom.updateAdjacentAvailabilityV2(x, y, this.firstX, this.firstY);
-        }else{
-            throw new UnavailableTileException();
-        }
+    public void getToPlayerAnotherTile(int x, int y){ //prende tessera 2/3 dalla LivingRoom
+
+        toPlayerTiles.add(livingRoom.pickTile(x, y));
+        livingRoom.updateAdjacentAvailabilityV2(x, y, this.firstX, this.firstY);
     }
 }
 
@@ -95,22 +83,28 @@ public class GameBoard {
 //-fillLivingRoom (al suo interno avrà multiple chiamate di getNextInGameTile e putNextInGameTile)
 //-updateAvailability
 //----1° turno----
-//-hasAdjacentTiles--->fillLivingRoom--->updateAvailability
+//-checkIfAdjacentTiles--->fillLivingRoom--->updateAvailability
+//-checkTileAvailability
 //-getToPlayerFirstTile
 //-checkAdjAvailability
 //-pickedTilesNum
+//-checkTileAvailability
 //-fineTurno/getToPlayerAnotherTile
 //-checkAdjAvailability
 //-pickedTilesNum
+//-checkTileAvailability
 //-fineTurno/getToPlayerAnotherTile
 //-fineTurno
 //-updateAvailability
 //----turno player succ----
-//-hasAdjacentTiles--->fillLivingRoom--->updateAvailability
+//-checkIfAdjacentTiles--->fillLivingRoom--->updateAvailability
+//-checkTileAvailability
 //-getToPlayerFirstTile
 //-checkAdjAvailability
+//-checkTileAvailability
 //-fineTurno/getToPlayerAnotherTile
 //-checkAdjAvailability
+//-checkTileAvailability
 //-fineTurno/getToPlayerAnotherTile
 //-fineTurno
 //-updateAvailability
