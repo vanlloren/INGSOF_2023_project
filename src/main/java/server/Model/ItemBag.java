@@ -2,7 +2,6 @@ package server.Model;
 
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 import Util.*;
 import Exceptions.*;
@@ -13,6 +12,10 @@ public class ItemBag {
 
     private ArrayList<PlayableItemTile> bag;
 
+
+    public ArrayList<PlayableItemTile> getBag(){
+        return bag;
+    }
 
     public void putTiles() {
         bag = new ArrayList<PlayableItemTile>();
@@ -60,11 +63,16 @@ public class ItemBag {
     }
 
     //dovrebbe effettuare pick random di ItemTile da ItemBag
-    public PlayableItemTile randPickTile() {
+    public PlayableItemTile randPickTile(){
+        PlayableItemTile helperTile;
         final Random RAND = new Random();
         int index = RAND.nextInt(bag.size());
-        PlayableItemTile helperTile = bag.get(index);
-        bag.remove(index);
+        if(bag.size() == 0){
+            helperTile = new PlayableItemTile("VOID", 0);
+        }else {
+            helperTile = bag.get(index);
+            bag.remove(index);
+        }
         return helperTile;
     }
 }

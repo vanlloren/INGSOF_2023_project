@@ -2,7 +2,7 @@ package server.Model;
 
 import java.util.ArrayList;
 import Exceptions.*;
-
+import Util.Colour;
 
 
 public class GameBoard {
@@ -40,7 +40,10 @@ public class GameBoard {
                 isVoid = livingRoom.searchVoid(i,j);
                 if(isVoid){
                     getNextInGameTile();
-                    livingRoom.fillVoid(i, j, nextInGameTile);
+                    if(nextInGameTile.getColour() != Colour.VOID){
+                        livingRoom.fillVoid(i, j, nextInGameTile);
+                    }
+                    //se la borsa è vuota forse serve mandare messaggio che avvisi tutti
                 }
             }
         }

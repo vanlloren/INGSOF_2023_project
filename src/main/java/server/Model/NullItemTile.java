@@ -44,13 +44,11 @@ public class NullItemTile extends ItemTile {
     public void setAdjacency() {
     }
 
-    ;
-
     public boolean getAdjacency() {
         return adjacency;
     }
 
-    ;
+
 
     @Override
     public void resetAdjacency() {

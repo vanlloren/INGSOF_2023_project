@@ -8,6 +8,38 @@ public class PlayableItemTile extends ItemTile {
     private boolean availability;
     private boolean adjacency = false;
 
+    public PlayableItemTile(String colour, int id) {
+        if (colour.equals("GREEN")) {
+            Colour helperColour = Colour.GREEN;
+            this.colour = helperColour;
+            this.idCode = id;
+        } else if (colour.equals("WHITE")) {
+            Colour helperColour = Colour.WHITE;
+            this.colour = helperColour;
+            this.idCode = id;
+        } else if (colour.equals("YELLOW")) {
+            Colour helperColour = Colour.YELLOW;
+            this.colour = helperColour;
+            this.idCode = id;
+        } else if (colour.equals("BLUE")) {
+            Colour helperColour = Colour.BLUE;
+            this.colour = helperColour;
+            this.idCode = id;
+        } else if (colour.equals("CYAN")) {
+            Colour helperColour = Colour.CYAN;
+            this.colour = helperColour;
+            this.idCode = id;
+        } else if (colour.equals("PINK")){
+            Colour helperColour = Colour.PINK;
+            this.colour = helperColour;
+            this.idCode = id;
+        }else{
+            Colour helperColour = Colour.VOID;
+            this.colour = helperColour;
+            this.idCode = 0;
+        }
+    }
+
     @java.lang.Override
     public Colour getColour() {
         return colour;
@@ -53,35 +85,4 @@ public class PlayableItemTile extends ItemTile {
         adjacency = false;
     }
 
-    public PlayableItemTile(String colour, int id) {
-        if (colour.equals("GREEN")) {
-            Colour helperColour = Colour.GREEN;
-            this.colour = helperColour;
-            this.idCode = id;
-        } else if (colour.equals("WHITE")) {
-            Colour helperColour = Colour.WHITE;
-            this.colour = helperColour;
-            this.idCode = id;
-        } else if (colour.equals("YELLOW")) {
-            Colour helperColour = Colour.YELLOW;
-            this.colour = helperColour;
-            this.idCode = id;
-        } else if (colour.equals("BLUE")) {
-            Colour helperColour = Colour.BLUE;
-            this.colour = helperColour;
-            this.idCode = id;
-        } else if (colour.equals("CYAN")) {
-            Colour helperColour = Colour.CYAN;
-            this.colour = helperColour;
-            this.idCode = id;
-        } else if (colour.equals("PINK")){
-            Colour helperColour = Colour.PINK;
-            this.colour = helperColour;
-            this.idCode = id;
-        }else{
-            Colour helperColour = Colour.VOID;
-            this.colour = helperColour;
-            this.idCode = 0;
-        }
-    }
 }
