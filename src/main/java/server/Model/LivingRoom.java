@@ -27,6 +27,10 @@ public class LivingRoom {
         }
     }
 
+    public ItemTile[][] getGameTable(){
+        return this.gameTable;
+    }
+
 
     public void setCommonGoal1(CommonGoal commonGoal1) { // delego al controller come scegliere random i commongoal e poi uso qusti due metodi per settare alla living room quali sono i commongoal
         this.commonGoal1 = commonGoal1;

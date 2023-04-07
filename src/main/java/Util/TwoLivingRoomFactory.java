@@ -2,6 +2,7 @@ package Util;
 
 import server.Model.ItemTile;
 import server.Model.NullItemTile;
+import server.Model.PlayableItemTile;
 
 public class TwoLivingRoomFactory extends LivingRoomFactory {
     @Override

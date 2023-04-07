@@ -1,9 +1,8 @@
 package server.Model;
 
-import java.util.ArrayList;
-import Exceptions.*;
 import Util.Colour;
 
+import java.util.ArrayList;
 
 public class GameBoard {
     private ItemBag bag;
@@ -17,40 +16,54 @@ public class GameBoard {
     private ArrayList<PlayableItemTile> toPlayerTiles;//sono le tessere che il giocatore ha raccolto dalla plancia, forse si può fare meglio
 
     //MODEL
-    public void setItemBag(){ //genera la ItemBag a ogni inizio partita ; chiamato dal controller
+    public void setItemBag(){ //genera la ItemBag a ogni inizio partita chiamato dal controller
         ItemBag helperBag = new ItemBag();
         helperBag.putTiles();
         this.bag = helperBag;
+    }
+
+    public ItemBag getBag(){
+        return this.bag;
     }
 
     //MODEL
     public void setLivingRoom(int playerNum){ // il parametro viene passato dal controller
         LivingRoom helperLivingRoom = new LivingRoom();
         helperLivingRoom.createGameTable(playerNum);
+        firstFilling(helperLivingRoom);
         this.livingRoom = helperLivingRoom;
     }
 
-    //MODEL
-    // metodo che va messo nel controller perchè è un metodo che agisce
-    public void fillLivingRoom(){//riempie la LivingRoom di tessere usando getNextInGameTile e putNextInGameTile
+    public void firstFilling(LivingRoom livingRoom) {
         boolean isVoid;
+        PlayableItemTile helperTile;
 
-        for(int i=0; i<9; i++){
-            for(int j=0; j<9; j++){
-                isVoid = livingRoom.searchVoid(i,j);
-                if(isVoid){
-                    getNextInGameTile();
-                    if(nextInGameTile.getColour() != Colour.VOID){
-                        livingRoom.fillVoid(i, j, nextInGameTile);
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                isVoid = livingRoom.searchVoid(i, j);
+                if (isVoid) {
+                    helperTile = bag.randPickTile();
+                    if (helperTile.getColour() != Colour.VOID) {
+                        livingRoom.fillVoid(i, j, helperTile);
                     }
-                    //se la borsa è vuota forse serve mandare messaggio che avvisi tutti
                 }
             }
         }
     }
+
+    public LivingRoom getLivingRoom(){
+        return this.livingRoom;
+    }
+
+
     //va messo nel controller
-    public void getNextInGameTile(){
+    public void setNextInGameTile() {
         this.nextInGameTile = bag.randPickTile();
+    }
+
+    public PlayableItemTile getNextInGameTile(){
+        setNextInGameTile();
+        return nextInGameTile;
     }
 
     //CONTROLLER
@@ -62,7 +75,7 @@ public class GameBoard {
     //della tessera da raccogliere dalla LivingRoom
 
     //MODEL
-    public void getToPlayerFirstTile(int x, int y){ //prende tessera 1 dalla LivingRoom
+    public void setToPlayerFirstTile(int x, int y){ //prende tessera 1 dalla LivingRoom
 
         toPlayerTiles = new ArrayList<PlayableItemTile>();
 
@@ -74,10 +87,14 @@ public class GameBoard {
     }
 
     //MODEL
-    public void getToPlayerAnotherTile(int x, int y){ //prende tessera 2/3 dalla LivingRoom
+    public void setToPlayerAnotherTile(int x, int y){ //prende tessera 2/3 dalla LivingRoom
 
         toPlayerTiles.add(livingRoom.pickTile(x, y));
         livingRoom.updateAdjacentAvailabilityV2(x, y, this.firstX, this.firstY);
+    }
+
+    public ArrayList<PlayableItemTile> getToPlayerTiles(){
+        return toPlayerTiles;
     }
 }
 
