@@ -1,10 +1,12 @@
-package Util;
+package server.Controller;
 
-import server.Model.Shelf;
+
+import Util.CommonGoalType;
+import server.Model.*;
 
 
 public class CheckCommonGoal {
-    public static boolean checkGoal(Shelf myshelfy,CommonGoalType commonGoalType) { //il parametro è gia passato quando chiamo calculatepoints
+    public static boolean checkGoal(Shelf myshelfy, CommonGoalType commonGoalType) { //il parametro è gia passato quando chiamo calculatepoints
     boolean checker = false;
     switch (commonGoalType) {
         case COMMONGOAL02:

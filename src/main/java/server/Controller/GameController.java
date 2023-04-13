@@ -1,8 +1,6 @@
 package server.Controller;
+import server.Model.*;
 
-import org.example.ItemTile;
-import server.Model.CommonGoal;
-import server.Model.GameModel;
 
 import java.util.ArrayList;
 
@@ -17,12 +15,14 @@ public class GameController {
     public GameModel getGame(){
         return this.game;
     }
+
     //metodo per avviare sessione gioco
     public void initGame(){
 
     }
     //metodo per preparare l'inizio della partita: aggiunta giocatori e inizializzazione shelf personali etc..
     public void setUp(String nickName){
+
 
     }
     /*metodo che gestische l'evoluzione del turno durante le mosse del giocatore con i rispettivi
@@ -40,26 +40,32 @@ public class GameController {
     public void launchTerminator(){
 
     }
-    public void calculatePoint(ItemTile[][] structure){ // con hascommongoal controllo che il giocatore non abbia gia raggiunto l'obiettivo
-        if(!hasCommonGoal1&&commonGoal1.checkGoal(structure)){
+    public void calculatePoint(Player player,ItemTile[][] structure,LivingRoom livingRoom) { // con hascommongoal controllo che il giocatore non abbia gia raggiunto l'obiettivo
+        if (!player.getHasCommonGoal1() && CheckCommonGoal.checkGoal(player.getPersonalShelf(), livingRoom.getCommonGoal1().getCommonGoalType())){
+            Integer i;
+            i = player.getPoints();
+            i = i + addPoint(livingRoom.getCommonGoal1());
+            player.setStatusCommonGoal1();
+        }
 
-            this.points=this.points+commonGoal1.getPoint();
-            hasCommonGoal1=true;
+        if(!player.getHasCommonGoal2()&& CheckCommonGoal.checkGoal(player.getPersonalShelf(),livingRoom.getCommonGoal2().getCommonGoalType())) {
+            Integer i;
+            i = player.getPoints();
+            i = i + addPoint(livingRoom.getCommonGoal2());
+            player.setStatusCommonGoal2();
+        }
+
+        if(//controllo personal goal e assegna punti){
+        /*
+        Codice Diletta
+         */
+
+
 
         }
 
-        if(!hasCommonGoal2&&commonGoal2.checkGoal(structure)) {
-            this.points = this.points + commonGoal2.getPoint();
-            hasCommonGoal2 = true;
-        }
 
-        if(personalGoal.checkgoal()){
-            this.points=this.points+personalGoal.getPoint();
-
-
-        }
-    }
-    public int getPoint(CommonGoal commonGoal){
+    public int addPoint(CommonGoal commonGoal){
         ArrayList<Integer> token_list = new ArrayList<Integer>();
         token_list = commonGoal.getToken_list();
         int i = 0; // se ho finite le carte punteggio si assegnano zero punti

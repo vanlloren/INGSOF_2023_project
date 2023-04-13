@@ -1,19 +1,31 @@
 package server.Model;
 
 
+import Util.CommonGoalType;
 public class Player {
     private String nickname;
-    private int points;
-    private Shelf personalShelf = new Shelf();
+    private Integer points;
+    private Shelf personalShelf;
     private PersonalGoal personalGoal;
-    private CommonGoal commonGoal1 = new CommonGoal();
-    private CommonGoal commonGoal2 = new CommonGoal();
+    private CommonGoal commonGoal1;
+    private CommonGoal commonGoal2;
     private LivingRoom livingRoom;
     private boolean hasCommonGoal1;
     private boolean hasCommonGoal2;
     private boolean hasPersonalGoal;
 
+    // costruttore player in cui passo i parametri principali passati dal controller che chiamerà dopo la ricezione di tutti i nickname da lato client
+    public Player (String nickname, CommonGoal commonGoal1, CommonGoal commonGoal2, PersonalGoal personalGoal){
+        this.nickname = nickname;
+        this.commonGoal1 = commonGoal1;
+        this.commonGoal2 = commonGoal2;
+        this.personalGoal = personalGoal;
+    }
+
+
+
     // questi tre metodi vengono chiamati dal controller quando il player ha soddisfatto gli obbiettivi carte
+
     public void setStatusCommonGoal1(){
         this.hasCommonGoal1 = true;
     }
@@ -21,6 +33,7 @@ public class Player {
     public void setStatusCommonGoal2(){
         this.hasCommonGoal2 = true;
     }
+
 
     public void setStatusPersonalGoal(){
         this.hasPersonalGoal = true;
@@ -47,6 +60,10 @@ public class Player {
 
     }
 
+    public Integer getPoints(){
+        return this.points;
+    }
+
 
 
 
@@ -55,11 +72,17 @@ public class Player {
         //funzione che assegna personalgoal//
     }
 
-    public void setCommonGoals(){ //chiamato da controller a cascata quando chiamo il generatore di common goal dalla living room
-        this.commonGoal1 = livingRoom.getCommonGoal1();
-        this.commonGoal2 = livingRoom.getCommonGoal2();
-    }
 
+    public void setCommonGoals(){ //chiamato da controller a cascata quando chiamo il generatore di common goal dalla living room
+        this.commonGoal1 = this.livingRoom.getCommonGoal1();
+        this.commonGoal2 = this.livingRoom.getCommonGoal2();
+    }
+    public boolean getHasCommonGoal1(){
+        return this.hasCommonGoal1;
+    }
+    public boolean getHasCommonGoal2(){
+        return this.hasCommonGoal2;
+    }
     public void insertTile(int x, int y, ItemTile tile) throws NotValidCoordinate,Notavailable{ //parametri passati dal controller;chiamato dal controller quando il player da le istruzioni in cui dice dove mettere l item sulla shelf
         this.personalShelf.putTile(x,y,tile,); //chiedi alfi come funziona questo metodo
         //metodo che gestisce inserimento in libreria

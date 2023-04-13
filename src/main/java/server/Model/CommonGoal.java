@@ -14,6 +14,10 @@ public class CommonGoal {
         return this.token_list;
     }
 
+    public CommonGoalType getCommonGoalType() {
+        return commonGoalType;
+    }
+
     public void setTokens(int playersNumber) { //parametro dato dal controller
         if (playersNumber == 2) {
             token_list.add(4);

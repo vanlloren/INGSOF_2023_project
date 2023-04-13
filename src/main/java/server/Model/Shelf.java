@@ -10,9 +10,7 @@ public class Shelf {
     public ItemTile[][] getStructure(){
         return this.structure;
     }
-    public void setStructure(ItemTile[][] structure) {
-        this.structure = structure;
-    }
+
     public ItemTile getShelfTile(int x ,int y){
         return this.structure[x][y];
     }

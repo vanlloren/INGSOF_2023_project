@@ -1,5 +1,6 @@
-package Util;
+package server.Controller;
 
+import Util.Colour;
 import server.Model.ItemTile;
 import java.util.HashSet;
 
@@ -24,8 +25,7 @@ public class RuleCommonGoal {
                     }
                 }
             }
-            //inizio a controllare quante coppie ci sono e appena ne trovo una la rendo null per evitare sovrapposizione(caso particolare forma ad L di 4 tessere uguali devo valutare la disposizione della coppia
-            //in maniera tale da contare 2 coppie e non una coppia sbagliata con due caselle non adiacenti che se avessi scelto meglio avrei ottenuto due coppie
+
             for (int i = 5; i > 0; i--) {
                 for (int j = 0; j < 4; j++) {
                     if (matrix[i][j] != null && matrix[i][j + 1] != null &&
@@ -89,34 +89,36 @@ public class RuleCommonGoal {
             else return false;
         }
 
-        public static boolean checkSquare(ItemTile[][] structure) {                          //per scrivere codice che controlla le 6 coppie sfrutta questo algoritmo modificando alcuni parametri
-            boolean checker = false;
+        public static boolean checkSquare(ItemTile[][] structure) {
             int k = 0;
             for (int i = 0; i <= 4; i++) {
                 for (int j = 0; j <= 3; j++) {
                     if (structure[i][j] != null) {
                         Colour value = structure[i][j].getColour();
                         if (structure[i][j + 1] != null && structure[i + 1][j] != null && structure[i + 1][j + 1] != null && structure[i][j + 1].getColour() == value &&
-                                structure[i + 1][j].getColour() == value && structure[i +1][j + 1].getColour() == value) {
+                                structure[i + 1][j].getColour() == value && structure[i + 1][j + 1].getColour() == value) {
                             k = i;
-                            while (k < i+2) {
+                            while (k < i + 2) {
                                 int l = j + 2;
+                                Colour val = structure[k][l].getColour();
                                 while (l < 4) {
-                                    //scrivi controlla quadrato//
-                                    if (//qui scrivi condizioni quadrati) {
-                                        checker = true;
-                                        l++;
+                                    if (structure[k][l + 1] != null && structure[k + 1][l] != null && structure[k + 1][l + 1] != null && structure[k][l + 1].getColour() == val &&
+                                            structure[k + 1][l].getColour() == val && structure[k + 1][l + 1].getColour() == val) {
+                                        return true;
                                     }
-                                k++;
+                                    l++;
                                 }
+                                k++;
+                            }
 
                             k = i + 2;
                             while (k < 5) {
                                 int l = j;
                                 while (l < 5) {
-                                    //uguale a commento sopra//
+                                    Colour val = structure[k][j].getColour();
 
-                                    if (//trovato un altro quadrato con stesso colore) {
+                                    if (structure[k][l + 1] != null && structure[k + 1][l] != null && structure[k + 1][l + 1] != null && structure[k][l + 1].getColour() == val &&
+                                            structure[k + 1][l].getColour() == val && structure[k + 1][l + 1].getColour() == val) {
                                         return true;
                                     }
                                     l++;
@@ -129,6 +131,8 @@ public class RuleCommonGoal {
 
                 }
             }
+            return false;
+        }
 
 
         public static boolean checkDiagonal(ItemTile[][] structure) {
@@ -147,25 +151,6 @@ public class RuleCommonGoal {
                     if (structure[i][i].getColour() != value)
                         checker = false;
                     break;
-                }
-            }
-            // per antidiagonale chiedo al prof
-            if () {
-                Colour value = structure[0][0].getColour();
-
-                for (int i = 0; i <= 4; i++) {
-                    if (structure[i][i].getColour() != value)
-                        checker = false;
-                    break;
-                }
-            }
-            if () {
-                Colour value = structure[0][0].getColour();
-                for (int i = 0; i <= 4; i++) {
-                    if (structure[i][i].getColour() != value)
-                        checker = false;
-                    break;
-
                 }
             }
             return checker;
@@ -245,7 +230,7 @@ public class RuleCommonGoal {
         }
 
 
-        public static boolean CheckColumn2(ItemTile[][] structure) {//due colonne di 6 tipi diversi una cazzata basta fare controllo delle colonne con due per considerarer le 6 righe e scorro avanti di colonne quindi usa un while con dentro un for e usa un counter
+        public static boolean CheckColumn2(ItemTile[][] structure) {//due colonne di 6 tipi diversi una cazzata basta fare controllo delle colonne con due per considerare le 6 righe e scorro avanti di colonne quindi usa un while con dentro un for e usa un counter
             int columnCount = 0;
             boolean checker = false;
 

@@ -1,9 +1,6 @@
 package server.Model;
 
-import Util.LivingRoomFactory;
-import Util.TwoLivingRoomFactory;
-import Util.ThreeLivingRoomFactory;
-import Util.FourLivingRoomFactory;
+import Util.*;
 
 
 public class LivingRoom {
@@ -47,11 +44,11 @@ public class LivingRoom {
     }
 
     public CommonGoal getCommonGoal1() { //
-        return commonGoal1;
+        return commonGoal1.getCommonGoal();
     }
 
     public CommonGoal getCommonGoal2() {
-        return commonGoal2;
+        return commonGoal2.getCommonGoal();
     }
 
     public boolean nullDetection(int x, int y){
