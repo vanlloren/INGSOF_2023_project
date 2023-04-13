@@ -1,0 +1,577 @@
+package Model;
+
+import org.junit.Assert;
+import org.junit.Test;
+import org.junit.jupiter.api.*;
+
+import server.Model.ItemBag;
+import server.Model.ItemTile;
+import server.Model.LivingRoom;
+import server.Model.PlayableItemTile;
+
+public class LivingRoomTest {
+    private LivingRoom livingRoom;
+
+    @BeforeEach
+    public void setup() {
+        livingRoom = new LivingRoom();
+    }
+
+    @Test
+    public void testCreateGameTable(){
+        livingRoom.createGameTable(2);
+
+        //elenco di verifiche per 2 player
+        for (int i = 0; i < 9; i++) {
+            //metto null Tiles da [0][0] a [0][8]
+            for (int j = 0; j < 9 && i == 0; j++) {
+                Assert.assertTrue(livingRoom.nullTileDetection(i,j));
+            }
+            //metto null Tiles da [1][0] a [1][2] e da [1][5] a [1][8]
+            for (int j = 0; j < 9 && i == 1; j++) {
+                if (j < 3 || j > 4) {
+                    Assert.assertTrue(livingRoom.nullTileDetection(i,j));
+                }else{
+                    Assert.assertTrue(livingRoom.nullDetection(i,j));
+                }
+            }
+
+            //metto null Tiles da [7][0] a [7][3] e da [7][6] a [7][8]
+            for (int j = 0; j < 9 && i == 7; j++) {
+                if (j < 4 || j > 5) {
+                    Assert.assertTrue(livingRoom.nullTileDetection(i,j));
+                }else{
+                    Assert.assertTrue(livingRoom.nullDetection(i,j));
+                }
+            }
+            //metto null Tiles da [2][0] a [2][2] e da [2][6] a [2][8]
+            //metto null Tiles da [6][0] a [6][2] e da [6][6] a [6][8]
+            for (int j = 0; j < 9 && (i == 2 || i == 6); j++) {
+                if (j < 3 || j > 5) {
+                    Assert.assertTrue(livingRoom.nullTileDetection(i,j));
+                }else{
+                    Assert.assertTrue(livingRoom.nullDetection(i,j));
+                }
+            }
+            //metto null Tile in [3][0] e [3][1] e [3][8]
+            if(i==3) {
+                for(int j=0; j<9; j++){
+                    if(j==0 || j==1 || j==8){
+                        Assert.assertTrue(livingRoom.nullTileDetection(i,j));
+                    }else{
+                        Assert.assertTrue(livingRoom.nullDetection(i,j));
+                    }
+                }
+            }
+
+            //metto null Tile in [4][0] e [4][8]
+            if(i==4) {
+                for(int j=0; j<9; j++){
+                    if(j==0 || j==8){
+                        Assert.assertTrue(livingRoom.nullTileDetection(i,j));
+                    }else{
+                        Assert.assertTrue(livingRoom.nullDetection(i,j));
+                    }
+                }
+            }
+            //metto null Tiles in [5][1] e [5][8] e [5][7]
+            if(i==5) {
+                for(int j=0; j<9; j++){
+                    if(j==7 || j==1 || j==8){
+                        Assert.assertTrue(livingRoom.nullTileDetection(i,j));
+                    }else{
+                        Assert.assertTrue(livingRoom.nullDetection(i,j));
+                    }
+                }
+            }
+
+            //metto null Tiles da [8][0] a [8][8]
+            for (int j = 0; j < 9 && i == 8; j++) {
+                Assert.assertTrue(livingRoom.nullTileDetection(i,j));
+            }
+        }
+
+
+        livingRoom.createGameTable(3);
+
+        //elenco di verifiche per 3 player
+        for (int i = 0; i < 9; i++) {
+            //metto null Tiles da [0][0] a [0][2] e da [0][4] a [0][8]
+            for (int j = 0; j < 9 && i == 0; j++) {
+                if (j != 3) {
+                    Assert.assertTrue(livingRoom.nullTileDetection(i,j));
+                }else{
+                    Assert.assertTrue(livingRoom.nullDetection(i,j));
+                }
+            }
+            //metto null Tiles da [1][0] a [1][2] e da [1][5] a [1][8]
+            for (int j = 0; j < 9 && i == 1; j++) {
+                if (j < 3 || j > 4) {
+                    Assert.assertTrue(livingRoom.nullTileDetection(i,j));
+                }else{
+                    Assert.assertTrue(livingRoom.nullDetection(i,j));
+                }
+            }
+
+            //metto null Tiles da [7][0] a [7][3] e da [7][6] a [7][8]
+            for (int j = 0; j < 9 && i == 7; j++) {
+                if (j < 4 || j > 5) {
+                    Assert.assertTrue(livingRoom.nullTileDetection(i,j));
+                }else{
+                    Assert.assertTrue(livingRoom.nullDetection(i,j));
+                }
+            }
+            //metto null Tiles da [2][0] a [2][1] e da [2][7] a [2][8]
+            //metto null Tiles da [6][0] a [6][1] e da [6][7] a [6][8]
+            for (int j = 0; j < 9 && (i == 2 || i == 6); j++) {
+                if (j < 2 || j > 6) {
+                    Assert.assertTrue(livingRoom.nullTileDetection(i,j));
+                }else{
+                    Assert.assertTrue(livingRoom.nullDetection(i,j));
+                }
+            }
+            //metto null Tile in [3][0] e [3][1]
+            if(i==3) {
+                for(int j=0; j<9; j++){
+                    if(j==0 || j==1){
+                        Assert.assertTrue(livingRoom.nullTileDetection(i,j));
+                    }else{
+                        Assert.assertTrue(livingRoom.nullDetection(i,j));
+                    }
+                }
+            }
+
+            //metto null Tile in [4][0] e [4][8]
+            if(i==4) {
+                for(int j=0; j<9; j++){
+                    if(j==0 || j==8){
+                        Assert.assertTrue(livingRoom.nullTileDetection(i,j));
+                    }else{
+                        Assert.assertTrue(livingRoom.nullDetection(i,j));
+                    }
+                }
+            }
+            //metto null Tiles da [5][8] e [5][7]
+            if(i==5) {
+                for(int j=0; j<9; j++){
+                    if(j==7 || j==8){
+                        Assert.assertTrue(livingRoom.nullTileDetection(i,j));
+                    }else{
+                        Assert.assertTrue(livingRoom.nullDetection(i,j));
+                    }
+                }
+            }
+
+
+            //metto null Tiles da [8][0] a [8][4] e da [8][6] a [8][8]
+            for (int j = 0; j < 9 && i == 8; j++) {
+                if (j != 5) {
+                    Assert.assertTrue(livingRoom.nullTileDetection(i,j));
+                }else{
+                    Assert.assertTrue(livingRoom.nullDetection(i,j));
+                }
+            }
+        }
+
+
+        livingRoom.createGameTable(4);
+
+        //elenco di verifiche per 4 player
+        for (int i = 0; i < 9; i++) {
+            //metto null Tiles da [0][0] a [0][2] e da [0][5] a [0][8]
+            for (int j = 0; j < 9 && i == 0; j++) {
+                if (j < 3 || j > 4) {
+                    Assert.assertTrue(livingRoom.nullTileDetection(i,j));
+                }else{
+                    Assert.assertTrue(livingRoom.nullDetection(i,j));
+                }
+            }
+            //metto null Tiles da [1][0] a [1][2] e da [1][6] a [1][8]
+            //metto null Tiles da [7][0] a [7][2] e da [7][6] a [7][8]
+            for (int j = 0; j < 9 && (i == 1 || i == 7); j++) {
+                if (j < 3 || j > 5) {
+                    Assert.assertTrue(livingRoom.nullTileDetection(i,j));
+                }else{
+                    Assert.assertTrue(livingRoom.nullDetection(i,j));
+                }
+            }
+            //metto null Tiles da [2][0] a [2][1] e da [2][7] a [2][8]
+            //metto null Tiles da [6][0] a [6][1] e da [6][7] a [6][8]
+            for (int j = 0; j < 9 && (i == 2 || i == 6); j++) {
+                if (j < 2 || j > 6) {
+                    Assert.assertTrue(livingRoom.nullTileDetection(i,j));
+                }else{
+                    Assert.assertTrue(livingRoom.nullDetection(i,j));
+                }
+            }
+            //metto null Tile in [3][0]
+            if(i==3) {
+                for(int j=0; j<9; j++){
+                    if(j==0){
+                        Assert.assertTrue(livingRoom.nullTileDetection(i,j));
+                    }else{
+                        Assert.assertTrue(livingRoom.nullDetection(i,j));
+                    }
+                }
+            }
+
+
+            if(i==4) {
+                for(int j=0; j<9; j++){
+                    Assert.assertTrue(livingRoom.nullDetection(i,j));
+                }
+            }
+            //metto null Tiles da [5][8]
+            if(i==5) {
+                for(int j=0; j<9; j++){
+                    if(j==8){
+                        Assert.assertTrue(livingRoom.nullTileDetection(i,j));
+                    }else{
+                        Assert.assertTrue(livingRoom.nullDetection(i,j));
+                    }
+                }
+            }
+
+            //metto null Tiles da [8][0] a [8][3] e da [8][6] a [8][8]
+            for (int j = 0; j < 9 && i == 8; j++) {
+                if (j < 4 || j > 5) {
+                    Assert.assertTrue(livingRoom.nullTileDetection(i,j));
+                }else{
+                    Assert.assertTrue(livingRoom.nullDetection(i,j));
+                }
+            }
+        }
+    }
+
+    @Test
+    public void testSearchVoid(){
+        ItemTile[][] gameTable;
+        livingRoom.createGameTable(2);
+        gameTable = livingRoom.getGameTable();
+
+        ItemBag bag = new ItemBag();
+        bag.putTiles();
+        gameTable[4][3] = bag.randPickTile();
+        livingRoom.setGameTable(gameTable);
+
+
+
+        Assert.assertFalse(livingRoom.searchVoid(4,3));
+        Assert.assertTrue(livingRoom.searchVoid(3,3));
+    }
+
+    @Test
+    public void testFillVoid(){
+        ItemBag bag = new ItemBag();
+        bag.putTiles();
+        PlayableItemTile helperTile = bag.randPickTile();
+        livingRoom.createGameTable(2);
+        livingRoom.fillVoid(4,3,helperTile);
+
+        Assert.assertFalse(livingRoom.nullDetection(4,3));
+        Assert.assertFalse(livingRoom.searchVoid(4,3));
+    }
+
+    @Test
+    public void testNullDetection() {
+        livingRoom.createGameTable(2);
+        ItemBag bag = new ItemBag();
+        bag.putTiles();
+        PlayableItemTile helperTile = bag.randPickTile();
+        livingRoom.fillVoid(4,3, helperTile);
+
+        Assert.assertTrue(livingRoom.nullDetection(3,3));
+        Assert.assertFalse(livingRoom.nullDetection(4,3));
+
+    }
+
+    @Test
+    public void testPickTile() {
+        livingRoom.createGameTable(2);
+        ItemBag bag = new ItemBag();
+        bag.putTiles();
+        PlayableItemTile testTile = bag.randPickTile();
+        livingRoom.fillVoid(4, 3, testTile);
+
+        PlayableItemTile helperTile = livingRoom.pickTile(4, 3);
+        Assert.assertEquals(testTile, helperTile);
+        Assert.assertTrue(livingRoom.nullDetection(4, 3));
+
+    }
+
+    @Test
+    public void testUpdateAvailability(){
+        ItemTile[][] gameTable;
+        livingRoom.createGameTable(2);
+        gameTable = livingRoom.getGameTable();
+
+        ItemBag bag = new ItemBag();
+        bag.putTiles();
+        gameTable[4][3] = bag.randPickTile();
+        gameTable[4][2] = bag.randPickTile();
+        gameTable[4][4] = bag.randPickTile();
+        gameTable[5][3] = bag.randPickTile();
+        gameTable[3][3] = bag.randPickTile();
+        gameTable[5][4] = bag.randPickTile();
+        gameTable[4][5] = bag.randPickTile();
+        gameTable[5][2] = bag.randPickTile();
+        gameTable[6][3] = bag.randPickTile();
+
+
+        livingRoom.setGameTable(gameTable);
+
+        livingRoom.updateAvailability();
+
+
+
+
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                if (!livingRoom.nullTileDetection(i,j) && !livingRoom.nullDetection(i,j)) {
+                    //metto available tutti i corner cases
+                    //1° tessere [0][3] e [0][4]
+                    if (i == 0) {
+                        if (j == 3) {
+                            Assert.assertTrue(livingRoom.getTileAvailability(i,j));
+                        }else if (j == 4) {
+                            Assert.assertTrue(livingRoom.getTileAvailability(i,j));
+                        }
+                    }
+                    //2° tessere  [4][0] e [5][0]
+                    else if (j == 0) {
+                        if (i == 4) {
+                            Assert.assertTrue(livingRoom.getTileAvailability(i,j));
+                        }
+                        if (i == 5) {
+                            Assert.assertTrue(livingRoom.getTileAvailability(i,j));
+                        }
+                    }
+                    //3° tessere [8][4] e [8][5]
+                    else if (i == 8) {
+                        if (j == 4) {
+                            Assert.assertTrue(livingRoom.getTileAvailability(i,j));
+                        }
+                        if (j == 5) {
+                            Assert.assertTrue(livingRoom.getTileAvailability(i,j));
+                        }
+                    }
+                    //4° tessere [3][8] e [4][8]
+                    else if (j == 8) {
+                        if (i == 3) {
+                            Assert.assertTrue(livingRoom.getTileAvailability(i,j));
+                        }
+                        if (i == 4) {
+                            Assert.assertTrue(livingRoom.getTileAvailability(i,j));
+                        }
+                    }
+                    //guardo il caso generale
+                    Assert.assertFalse(livingRoom.getTileAvailability(4,3));
+                    Assert.assertTrue(livingRoom.getTileAvailability(3, 3));
+                    Assert.assertTrue(livingRoom.getTileAvailability(4,2));
+                    Assert.assertTrue(livingRoom.getTileAvailability(4,4));
+                    Assert.assertFalse(livingRoom.getTileAvailability(5,3));
+
+                }
+            }
+        }
+    }
+
+    @Test
+    public void testUpdateAdjacentAvailabilityV1(){
+        ItemTile[][] gameTable;
+        livingRoom.createGameTable(2);
+        gameTable = livingRoom.getGameTable();
+
+        ItemBag bag = new ItemBag();
+        bag.putTiles();
+        gameTable[4][3] = bag.randPickTile();
+        gameTable[4][2] = bag.randPickTile();
+        gameTable[4][4] = bag.randPickTile();
+        gameTable[5][3] = bag.randPickTile();
+        gameTable[3][3] = bag.randPickTile();
+        gameTable[4][6] = bag.randPickTile();
+        livingRoom.setGameTable(gameTable);
+
+        livingRoom.updateAdjacentAvailabilityV1(4,3);
+
+        Assert.assertTrue(livingRoom.getTileAdjacency(4,2));
+        Assert.assertTrue(livingRoom.getTileAdjacency(4,4));
+        Assert.assertTrue(livingRoom.getTileAdjacency(5,3));
+        Assert.assertTrue(livingRoom.getTileAdjacency(3,3));
+        Assert.assertFalse(livingRoom.getTileAdjacency(4,6));
+    }
+
+    @Test
+    public void testResetAdjacentAvailability(){
+        ItemTile[][] gameTable;
+        livingRoom.createGameTable(2);
+        gameTable = livingRoom.getGameTable();
+
+        ItemBag bag = new ItemBag();
+        bag.putTiles();
+        gameTable[4][3] = bag.randPickTile();
+        gameTable[4][2] = bag.randPickTile();
+        gameTable[4][4] = bag.randPickTile();
+        gameTable[5][3] = bag.randPickTile();
+        gameTable[3][3] = bag.randPickTile();
+        livingRoom.setGameTable(gameTable);
+
+        livingRoom.updateAdjacentAvailabilityV1(4,3);
+        livingRoom.resetAdjacentAvailability();
+
+        for(int i=0;i<9;i++){
+            for(int j=0;j<9;j++){
+                if (!livingRoom.nullTileDetection(i,j) && !livingRoom.nullDetection(i,j)) {
+                    Assert.assertFalse(livingRoom.getTileAdjacency(i, j));
+                }
+            }
+        }
+
+    }
+
+    @Test
+    public void testUpdateAdjacentAvailabilityV2(){
+        //vado sopra
+        ItemTile[][] gameTable;
+        livingRoom.createGameTable(2);
+        gameTable = livingRoom.getGameTable();
+
+        ItemBag bag = new ItemBag();
+        bag.putTiles();
+        gameTable[4][3] = bag.randPickTile();
+        gameTable[4][2] = bag.randPickTile();
+        gameTable[4][4] = bag.randPickTile();
+        gameTable[5][3] = bag.randPickTile();
+        gameTable[3][3] = bag.randPickTile();
+        livingRoom.setGameTable(gameTable);
+
+        livingRoom.updateAdjacentAvailabilityV1(4,3);
+        gameTable = livingRoom.getGameTable();
+        gameTable[4][3] = null;
+        gameTable[3][4] = bag.randPickTile();
+        gameTable[3][2] = bag.randPickTile();
+        gameTable[2][3] = bag.randPickTile();
+        gameTable[2][5] = bag.randPickTile();
+
+
+
+        livingRoom.setGameTable(gameTable);
+
+        livingRoom.updateAdjacentAvailabilityV2(3,3,4,3);
+
+        Assert.assertTrue(livingRoom.getTileAdjacency(3,4));
+        Assert.assertTrue(livingRoom.getTileAdjacency(3,2));
+        Assert.assertTrue(livingRoom.getTileAdjacency(2,3));
+        Assert.assertFalse(livingRoom.getTileAdjacency(4,2));
+        Assert.assertFalse(livingRoom.getTileAdjacency(4,4));
+        Assert.assertFalse(livingRoom.getTileAdjacency(2,5));
+
+        //vado sotto
+        livingRoom.createGameTable(2);
+        gameTable = livingRoom.getGameTable();
+
+        bag = new ItemBag();
+        bag.putTiles();
+        gameTable[4][3] = bag.randPickTile();
+        gameTable[4][2] = bag.randPickTile();
+        gameTable[4][4] = bag.randPickTile();
+        gameTable[5][3] = bag.randPickTile();
+        gameTable[3][3] = bag.randPickTile();
+        livingRoom.setGameTable(gameTable);
+
+        livingRoom.updateAdjacentAvailabilityV1(4,3);
+        gameTable = livingRoom.getGameTable();
+        gameTable[4][3] = null;
+        gameTable[5][4] = bag.randPickTile();
+        gameTable[6][3] = bag.randPickTile();
+        gameTable[2][5] = bag.randPickTile();
+        gameTable[5][2] = bag.randPickTile();
+
+
+
+        livingRoom.setGameTable(gameTable);
+
+        livingRoom.updateAdjacentAvailabilityV2(5,3,4,3);
+
+        Assert.assertTrue(livingRoom.getTileAdjacency(5,4));
+        Assert.assertTrue(livingRoom.getTileAdjacency(5,2));
+        Assert.assertTrue(livingRoom.getTileAdjacency(6,3));
+        Assert.assertFalse(livingRoom.getTileAdjacency(4,2));
+        Assert.assertFalse(livingRoom.getTileAdjacency(4,4));
+        Assert.assertFalse(livingRoom.getTileAdjacency(2,5));
+
+
+        //vado a sx
+        livingRoom.createGameTable(2);
+        gameTable = livingRoom.getGameTable();
+
+        bag = new ItemBag();
+        bag.putTiles();
+        gameTable[4][3] = bag.randPickTile();
+        gameTable[4][2] = bag.randPickTile();
+        gameTable[4][4] = bag.randPickTile();
+        gameTable[5][3] = bag.randPickTile();
+        gameTable[3][3] = bag.randPickTile();
+        livingRoom.setGameTable(gameTable);
+
+        livingRoom.updateAdjacentAvailabilityV1(4,3);
+        gameTable = livingRoom.getGameTable();
+        gameTable[4][3] = null;
+        gameTable[5][2] = bag.randPickTile();
+        gameTable[4][1] = bag.randPickTile();
+        gameTable[2][5] = bag.randPickTile();
+        gameTable[3][2] = bag.randPickTile();
+
+
+
+        livingRoom.setGameTable(gameTable);
+
+        livingRoom.updateAdjacentAvailabilityV2(4,2,4,3);
+
+        Assert.assertTrue(livingRoom.getTileAdjacency(5,2));
+        Assert.assertTrue(livingRoom.getTileAdjacency(3,2));
+        Assert.assertTrue(livingRoom.getTileAdjacency(4,1));
+        Assert.assertFalse(livingRoom.getTileAdjacency(3,3));
+        Assert.assertFalse(livingRoom.getTileAdjacency(5,3));
+        Assert.assertFalse(livingRoom.getTileAdjacency(2,5));
+
+        //vado a dx
+        livingRoom.createGameTable(2);
+        gameTable = livingRoom.getGameTable();
+
+        bag = new ItemBag();
+        bag.putTiles();
+        gameTable[4][3] = bag.randPickTile();
+        gameTable[4][2] = bag.randPickTile();
+        gameTable[4][4] = bag.randPickTile();
+        gameTable[5][3] = bag.randPickTile();
+        gameTable[3][3] = bag.randPickTile();
+        livingRoom.setGameTable(gameTable);
+
+        livingRoom.updateAdjacentAvailabilityV1(4,3);
+        gameTable = livingRoom.getGameTable();
+        gameTable[4][3] = null;
+        gameTable[5][4] = bag.randPickTile();
+        gameTable[4][5] = bag.randPickTile();
+        gameTable[2][5] = bag.randPickTile();
+        gameTable[3][4] = bag.randPickTile();
+
+
+
+        livingRoom.setGameTable(gameTable);
+
+        livingRoom.updateAdjacentAvailabilityV2(4,4,4,3);
+
+        Assert.assertTrue(livingRoom.getTileAdjacency(5,4));
+        Assert.assertTrue(livingRoom.getTileAdjacency(3,4));
+        Assert.assertTrue(livingRoom.getTileAdjacency(4,5));
+        Assert.assertFalse(livingRoom.getTileAdjacency(3,3));
+        Assert.assertFalse(livingRoom.getTileAdjacency(5,3));
+        Assert.assertFalse(livingRoom.getTileAdjacency(2,5));
+
+
+    }
+
+
+
+}

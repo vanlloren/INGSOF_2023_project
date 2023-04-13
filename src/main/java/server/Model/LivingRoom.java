@@ -27,6 +27,12 @@ public class LivingRoom {
         }
     }
 
+    public void setGameTable(ItemTile[][] gameTable){
+        //!!ATTENZIONE!!
+        // da usare solo nel test di unità della LivingRoom
+        this.gameTable = gameTable;
+    }
+
     public ItemTile[][] getGameTable(){
         return this.gameTable;
     }
@@ -168,7 +174,6 @@ public class LivingRoom {
     public void updateAdjacentAvailabilityV1(int x, int y) {
         //Setta la variabile adjacency delle ItemTiles adiacenti
 
-        gameTable[x][y].resetAdjacency();
 
         //adiacenza sopra
         if(gameTable[x-1][y] != null && !gameTable[x-1][y].getAdjacency()&& !gameTable[x-1][y].nullDetection()){
@@ -202,8 +207,6 @@ public class LivingRoom {
     public void updateAdjacentAvailabilityV2(int x, int y, int firstX, int firstY) {
         //Setta la variabile adjacency delle ItemTiles adiacenti
 
-        gameTable[x][y].resetAdjacency();
-
         //capisco dove mi sono spostato
         if (x == firstX - 1) { //sono andato sopra
             if (gameTable[x - 1][y] != null && !gameTable[x - 1][y].nullDetection()) {
@@ -212,7 +215,7 @@ public class LivingRoom {
             if (gameTable[firstX][firstY - 1] != null && !gameTable[firstX][firstY - 1].nullDetection()) {
                 gameTable[firstX][firstY - 1].resetAdjacency();
             }
-            if (gameTable[firstX][firstY - 1] != null && !gameTable[firstX][firstY - 1].nullDetection()) {
+            if (gameTable[firstX][firstY + 1] != null && !gameTable[firstX][firstY + 1].nullDetection()) {
                 gameTable[firstX][firstY + 1].resetAdjacency();
             }
         } else if (x == firstX + 1) { //sono andato sotto
