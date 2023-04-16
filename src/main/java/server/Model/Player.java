@@ -83,8 +83,9 @@ public class Player {
     public boolean getHasCommonGoal2(){
         return this.hasCommonGoal2;
     }
-    public void insertTile(int x, int y, ItemTile tile) throws NotValidCoordinate,Notavailable{ //parametri passati dal controller;chiamato dal controller quando il player da le istruzioni in cui dice dove mettere l item sulla shelf
-        this.personalShelf.putTile(x,y,tile,); //chiedi alfi come funziona questo metodo
+    public void insertTile(int x, int y, PlayableItemTile tile) { //parametri passati dal controller;chiamato dal controller quando il player da le istruzioni in cui dice dove mettere l item sulla shelf
+        int i = 0;
+        this.personalShelf.putTile(x,y,tile,i); //chiedi alfi come funziona questo metodo
         //metodo che gestisce inserimento in libreria
     }
 }

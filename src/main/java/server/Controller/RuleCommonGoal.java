@@ -2,10 +2,12 @@ package server.Controller;
 
 import Util.Colour;
 import server.Model.ItemTile;
+import server.Model.PlayableItemTile;
+
 import java.util.HashSet;
 
 public class RuleCommonGoal {
-        public static boolean checkCorner(ItemTile[][] structure) {
+        public static boolean checkCorner(PlayableItemTile[][] structure) {
             boolean checker = false;
             if (structure[0][0] != null && structure[0][0].getColour() == structure[0][4].getColour()
                     && structure[0][0].getColour() == structure[5][0].getColour() && structure[0][0].getColour() == structure[5][4].getColour())
@@ -14,7 +16,7 @@ public class RuleCommonGoal {
 
         }
 
-        public static boolean checkSixCouples(ItemTile[][] structure) {
+        public static boolean checkSixCouples(PlayableItemTile[][] structure) {
             Colour[][] matrix=null;
             int count = 0;
 
@@ -50,7 +52,7 @@ public class RuleCommonGoal {
         }
 
 
-        public static boolean checkFourGroups(ItemTile[][] structure) {
+        public static boolean checkFourGroups(PlayableItemTile[][] structure) {
             Colour[][] matrix=null;
             int count = 0;
             for (int i = 0; i < 6; i++) {
@@ -89,7 +91,7 @@ public class RuleCommonGoal {
             else return false;
         }
 
-        public static boolean checkSquare(ItemTile[][] structure) {
+        public static boolean checkSquare(PlayableItemTile[][] structure) {
             int k = 0;
             for (int i = 0; i <= 4; i++) {
                 for (int j = 0; j <= 3; j++) {
@@ -135,28 +137,31 @@ public class RuleCommonGoal {
         }
 
 
-        public static boolean checkDiagonal(ItemTile[][] structure) {
+        public static boolean checkDiagonal(PlayableItemTile[][] structure) {
             boolean checker = true;
-            if (structure[0][0] != null) {
+            if (structure[0][0]==null&&structure[1][0]==null){
+                return false;
+            }
+            else if (structure[0][0] != null) {
                 Colour value = structure[0][0].getColour();
                 for (int i = 1; i <= 4; i++) {
-                    if (structure[i][i].getColour() != value)
+                    if ((structure[i][i]!=null&&structure[i][i].getColour() != value)||structure[i][i]==null)
                         checker = false;
                     break;
                 }
             }
-            if (structure[1][0] != null) {
-                Colour value = structure[0][0].getColour();
+            else if (structure[1][0] != null) {
+                Colour value = structure[1][0].getColour();
                 for (int i = 2; i <= 5; i++) {
-                    if (structure[i][i].getColour() != value)
+                    if ((structure[i][i-1]!=null&&structure[i][i-1].getColour() != value)||structure[i][i-1]==null)
                         checker = false;
                     break;
                 }
             }
-            return checker;
+        return checker;
         }
 
-        public static boolean checkCrux(ItemTile[][] structure) {
+        public static boolean checkCrux(PlayableItemTile[][] structure) {
             for (int i = 1; i <= 4; i++) {
                 for (int j = 1; j <= 3; j++) {
                     if (structure[i][j] != null && structure[i - 1][j - 1] != null &&
@@ -172,44 +177,26 @@ public class RuleCommonGoal {
             return false;
         }
 
-        public static boolean checkStair(ItemTile[][] structure) {
-            boolean checker = true;
-            int k = 4;
-            for (int i = 5; i >= 0; i--) {
-                for (int j = k; j >= 0; j--) {
-                    if (structure[i][j] == null) {
-                        checker = false;
-                    }
-                }
-                int z = 4;
-                while (z > k) {
-                    if (structure[i][z] != null)
-                        checker = false;
-                    z--;
-                }
-                k--;
-            }
-            k = 0;
-            for (int i = 5; i >= 0; i--) {
-                for (int j = k; j <= 4; j++) {
-                    if (structure[i][j] == null) {
-                        checker = false;
-                    }
-                    int z = 0;
-                    while (z < k) {
-                        if (structure[i][z] != null)
-                            checker = false;
-                        z++;
-                    }
-                    k++;
-                }
-            }
+        public static boolean checkStair(PlayableItemTile[][] structure) {
 
-            return checker;
+          if(structure[0][0]==null&&structure[1][0]!=null&&
+             structure[1][1]==null&&structure[2][1]!=null&&
+             structure[2][2]==null&&structure[3][2]!=null&&
+             structure[3][3]==null&&structure[4][3]!=null&&
+             structure[4][4]==null&&structure[5][4]!=null)
+            return true;
+          else if(structure[0][4]==null&&structure[1][4]!=null&&
+                  structure[1][3]==null&&structure[2][3]!=null&&
+                  structure[2][2]==null&&structure[3][2]!=null&&
+                  structure[3][1]==null&&structure[4][1]!=null&&
+                  structure[4][0]==null&&structure[5][0]!=null)
+              return true;
+
+          return false;
         }
 
 
-        public static boolean CheckColumn1(ItemTile[][] structure) {//scorro colonne e uso algoritmo che controlla un max di 3 tipi diversi tramite un counter
+        public static boolean CheckColumn1(PlayableItemTile[][] structure) {//scorro colonne e uso algoritmo che controlla un max di 3 tipi diversi tramite un counter
             int columnCount = 0;
             boolean checker = false;
 
@@ -230,7 +217,7 @@ public class RuleCommonGoal {
         }
 
 
-        public static boolean CheckColumn2(ItemTile[][] structure) {//due colonne di 6 tipi diversi una cazzata basta fare controllo delle colonne con due per considerare le 6 righe e scorro avanti di colonne quindi usa un while con dentro un for e usa un counter
+        public static boolean CheckColumn2(PlayableItemTile[][] structure) {//due colonne di 6 tipi diversi una cazzata basta fare controllo delle colonne con due per considerare le 6 righe e scorro avanti di colonne quindi usa un while con dentro un for e usa un counter
             int columnCount = 0;
             boolean checker = false;
 
@@ -250,7 +237,7 @@ public class RuleCommonGoal {
 
         }
 
-        public static boolean CheckLine1(ItemTile[][] structure) { //uguale a column 1 ma sviluppato per righe
+        public static boolean CheckLine1(PlayableItemTile[][] structure) { //uguale a column 1 ma sviluppato per righe
             int lineCount = 0;
             boolean checker = false;
             for (int i = 5; i >= 0; i--) {
@@ -278,7 +265,7 @@ public class RuleCommonGoal {
 
 
 
-        public static boolean CheckLine2(ItemTile[][] structure) { //uguale a column 2 ma sviluppato per le righe
+        public static boolean CheckLine2(PlayableItemTile[][] structure) { //uguale a column 2 ma sviluppato per le righe
             int lineCount = 0;
             boolean checker = false;
             for (int i = 5; i >= 0; i--) {
@@ -308,7 +295,7 @@ public class RuleCommonGoal {
         }
 
 
-        public static boolean checkEight(ItemTile[][] structure) {
+        public static boolean checkEight(PlayableItemTile[][] structure) {
             for (int i = 0; i < structure.length; i++) {
                 for (int j = 0; j < structure.length; j++) {
                     int count = 0;

@@ -44,11 +44,11 @@ public class LivingRoom {
     }
 
     public CommonGoal getCommonGoal1() { //
-        return commonGoal1.getCommonGoal();
+        return commonGoal1;
     }
 
     public CommonGoal getCommonGoal2() {
-        return commonGoal2.getCommonGoal();
+        return commonGoal2;
     }
 
     public boolean nullDetection(int x, int y){

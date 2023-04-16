@@ -55,14 +55,8 @@ public class GameController {
             player.setStatusCommonGoal2();
         }
 
-        if(//controllo personal goal e assegna punti){
-        /*
-        Codice Diletta
-         */
 
-
-
-        }
+    }
 
 
     public int addPoint(CommonGoal commonGoal){

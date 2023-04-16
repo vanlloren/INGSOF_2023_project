@@ -5,9 +5,9 @@ import java.util.Vector;
 
 
 public class Shelf {
-    private ItemTile[][] structure = new ItemTile[5][4];
+    private PlayableItemTile[][] structure = new PlayableItemTile[5][4];
 
-    public ItemTile[][] getStructure(){
+    public PlayableItemTile[][] getStructure(){
         return this.structure;
     }
 
@@ -28,7 +28,7 @@ public class Shelf {
             System.out.println("The column is available and the number of cells free are: " + count);
         }
     }
-    public Vector<Integer> putTile (int x , int y , ItemTile Tile , int numberOfTilesPicked){
+    public Vector<Integer> putTile (int x , int y , PlayableItemTile Tile , int numberOfTilesPicked){
 
         Object CellsAvailable;
         Vector<Integer> position = new Vector<Integer>();// The Vector class implements a growable array of objects. Like an array, it contains components that can be accessed using an integer index.

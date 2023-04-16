@@ -64,10 +64,10 @@ public class GameModel {
         return true;
 
     }
-    public ArrayList<Player> getTurnOrder(){
+    /*public ArrayList<Player> getTurnOrder(){
 
     }
-
+*/
 
 }
 
