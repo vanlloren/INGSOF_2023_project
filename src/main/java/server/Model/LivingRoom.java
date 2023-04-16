@@ -59,6 +59,9 @@ public class LivingRoom {
     }
 
     public boolean nullTileDetection(int x, int y){
+        if (gameTable[x][y]==null) {
+            return false;
+        }
         return gameTable[x][y].nullDetection();
     }
     public boolean getTileAvailability(int x, int y){
