@@ -5,8 +5,8 @@ import Util.Colour;
 import java.util.ArrayList;
 
 public class GameBoard {
-    private ItemBag bag;
-    private LivingRoom livingRoom;
+    private ItemBag bag = new ItemBag();
+    private LivingRoom livingRoom = new LivingRoom();
     private PlayableItemTile nextInGameTile;//é la tessera "da mettere in gioco" ovvero quella che dalla bag sta venendo piazzata sulla plancia
 
     //servono per regolare correttamente le adiacenze
