@@ -5,8 +5,8 @@ import Util.CommonGoalType;
 public class Player {
     private String nickname;
     private Integer points;
-    private Shelf personalShelf;
-    private PersonalGoal personalGoal;
+    private Shelf personalShelf = new Shelf();
+    private PersonalGoal personalGoal = new PersonalGoal();
     private CommonGoal commonGoal1;
     private CommonGoal commonGoal2;
     private LivingRoom livingRoom;
@@ -15,11 +15,8 @@ public class Player {
     private boolean hasPersonalGoal;
 
     // costruttore player in cui passo i parametri principali passati dal controller che chiamerà dopo la ricezione di tutti i nickname da lato client
-    public Player (String nickname, CommonGoal commonGoal1, CommonGoal commonGoal2, PersonalGoal personalGoal){
+    public Player (String nickname){
         this.nickname = nickname;
-        this.commonGoal1 = commonGoal1;
-        this.commonGoal2 = commonGoal2;
-        this.personalGoal = personalGoal;
     }
 
 

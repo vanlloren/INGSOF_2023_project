@@ -5,68 +5,124 @@ import server.Model.*;
 import java.util.ArrayList;
 
 public class GameController {
-    GameModel game;
+    private GameModel game;
+    private ArrayList<Player> playersInGame = new ArrayList<Player>();
+    private boolean timeOut;
 
-    public  GameController(GameModel game){
+
+
+    public GameController(GameModel game) {
         this.game = game;
     }
 
 
-    public GameModel getGame(){
+    public GameModel getGame() {
         return this.game;
     }
 
     //metodo per avviare sessione gioco
-    public void initGame(){
+    public void initGame() {
 
     }
+
     //metodo per preparare l'inizio della partita: aggiunta giocatori e inizializzazione shelf personali etc..
-    public void setUp(String nickName){
-
-
+    public void setUp(String nickName) {
+        Player newPlayer = new Player(nickName);
+        playersInGame.add(newPlayer);
     }
     /*metodo che gestische l'evoluzione del turno durante le mosse del giocatore con i rispettivi
      aggiornamenti nei campi del model per quanto riguarda i punteggi e pescaggio e inserimento tiles
 
      */
-    public void GameManager(){
+    public void initLivingRoom(int numOfPlayers){
+        LivingRoom livingRoom = new LivingRoom();
+        livingRoom = game.getMyShelfie().getLivingRoom();
+        game.getMyShelfie().getLivingRoom().createGameTable(numOfPlayers);
+
+        // lore aggiungi metodo che filla la gametable nella maniera giusta
+        livingRoom.setCommonGoal1();
+        livingRoom.setCommonGoal2();
+        /*
+        ricordati metodo random commongoal
+         */
+
 
     }
+        public PlayableItemTile pickTile () {
+        PlayableItemTile tile = new PlayableItemTile();
 
-    public void nextTurn(){
+        /*LORENZO METTI TU I METODI CHE GESTISCONO ETSRAZIONE DELLA TILE
+        tile = metodi estrazione etc etc
 
-    }
-    // metodo che determina l'inizio dell'ultimo turno di gioco
-    public void launchTerminator(){
+         */
 
-    }
-    public void calculatePoint(Player player,ItemTile[][] structure,LivingRoom livingRoom) { // con hascommongoal controllo che il giocatore non abbia gia raggiunto l'obiettivo
-        if (!player.getHasCommonGoal1() && CheckCommonGoal.checkGoal(player.getPersonalShelf(), livingRoom.getCommonGoal1().getCommonGoalType())){
-            Integer i;
-            i = player.getPoints();
-            i = i + addPoint(livingRoom.getCommonGoal1());
-            player.setStatusCommonGoal1();
+
+            return tile;
+
+
+
+
         }
 
-        if(!player.getHasCommonGoal2()&& CheckCommonGoal.checkGoal(player.getPersonalShelf(),livingRoom.getCommonGoal2().getCommonGoalType())) {
-            Integer i;
-            i = player.getPoints();
-            i = i + addPoint(livingRoom.getCommonGoal2());
-            player.setStatusCommonGoal2();
+        public void InsertTileShelf(Player player,PlayableItemTile tile,int x, int y,int num){
+        Shelf shelf = new Shelf();
+        shelf = player.getPersonalShelf();
+        shelf.putTile() //alf sistema
+
+        }
+
+        public void nextTurn (Player player) {
+
+        ArrayList<Player> listPLayer = game.getPlayersInGame();
+
+        int index= listPLayer.indexOf(game.getCurrPlayer());
+        if(index !=listPLayer.size())
+            game.setCurrPlayer(listPLayer.get(index+1));
+        else {
+            if(getEndGame()==false ) {
+                game.setCurrPlayer(listPLayer.get(0));
+            }
+            else //METODO CHE BLOCCA TUTTO E ANNUNCIA VINCITORE
         }
 
 
-    }
+        // metodo che determina l'inizio dell'ultimo turno di gioco
+        public void launchEndGame (Player player) {
+            if(game.getChairOwner().equals(game.getCurrPlayer()))
+                //METODO CHE BLOCCA TUTTO E LACNIA WINNER
+            }
+            else game.setEndGame();
+
+        }
+        /*public void calculatePoint (Player player, ItemTile[][]structure, LivingRoom livingRoom)
+        { // con hascommongoal controllo che il giocatore non abbia gia raggiunto l'obiettivo
+            if (!player.getHasCommonGoal1() && CheckCommonGoal.checkGoal(player.getPersonalShelf(), livingRoom.getCommonGoal1().getCommonGoalType())) {
+                Integer i;
+                i = player.getPoints();
+                i = i + addPoint(livingRoom.getCommonGoal1());
+                player.setStatusCommonGoal1();
+            }
+
+            if (!player.getHasCommonGoal2() && CheckCommonGoal.checkGoal(player.getPersonalShelf(), livingRoom.getCommonGoal2().getCommonGoalType())) {
+                Integer i;
+                i = player.getPoints();
+                i = i + addPoint(livingRoom.getCommonGoal2());
+                player.setStatusCommonGoal2();
+            }
 
 
-    public int addPoint(CommonGoal commonGoal){
-        ArrayList<Integer> token_list = new ArrayList<Integer>();
-        token_list = commonGoal.getToken_list();
-        int i = 0; // se ho finite le carte punteggio si assegnano zero punti
+        }
+
+
+        public int addPoint (CommonGoal commonGoal){
+            ArrayList<Integer> token_list = new ArrayList<Integer>();
+            token_list = commonGoal.getToken_list();
+            int i = 0; // se ho finite le carte punteggio si assegnano zero punti
             if (0 < token_list.size()) {
                 i = token_list.get(token_list.size());
                 token_list.remove(token_list.size() - 1);
             }
             return i;
-    }
+        }
+    }*/
 }

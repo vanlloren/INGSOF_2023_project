@@ -7,12 +7,29 @@ import java.util.ArrayList;
 public class GameModel {
     private Player chairOwner;
     private int playersNumber;
-    private String currPlayer;
+    private Player currPlayer;
     private String matchWinner;
-    private GameBoard myShelfie;
+    private GameBoard myShelfie = new GameBoard();
     private ArrayList<Player> playersInGame = new ArrayList<Player>();
     private Player[] turnOrder;
     private Player[] has;
+    private boolean endGame=false;
+
+    public void setEndGame(){
+        this.endGame = true;
+    }
+
+    public Player getChairOwner() {
+        return chairOwner;
+    }
+
+    public Player getCurrPlayer(){
+        return this.currPlayer;
+    }
+
+    public void setCurrPlayer(Player player){
+        this.currPlayer = player;
+    }
 
     public void launchGame_Myshelfie(){
         // va scritta tutta la partita con lo svolgimento//
@@ -40,7 +57,8 @@ public class GameModel {
         return playersInGame;
     }
     public void setPlayersInGame(){
-        //metodo che inserisce i giocatori quando si collegano va implementato
+
+
 
 
     }
