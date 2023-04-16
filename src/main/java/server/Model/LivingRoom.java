@@ -154,19 +154,19 @@ public class LivingRoom {
                         //per ogni casella controllo se su almeno uno dei 4 lati c'è una NullItemTile
                         //oppure null
                         //controllo la tile della riga sopra
-                        if(gameTable[i-1][j] == null || !nullTileDetection(i-1,j)){
+                        if(gameTable[i-1][j] == null || nullTileDetection(i-1,j)){
                             gameTable[i][j].makeAvailable();
                         }
                         //controllo la tile della riga sotto
-                        if (gameTable[i+1][j] == null || !nullTileDetection(i+1,j)){
+                        if (gameTable[i+1][j] == null || nullTileDetection(i+1,j)){
                             gameTable[i][j].makeAvailable();
                         }
                         //controllo la tile a sx
-                        if (gameTable[i][j-1] != null || !nullTileDetection(i,j-1)){
+                        if (gameTable[i][j-1] == null || nullTileDetection(i,j-1)){
                             gameTable[i][j].makeAvailable();
                         }
                         //controllo la tile a dx
-                        if (gameTable[i][j+1] != null || !nullTileDetection(i,j+1)){
+                        if (gameTable[i][j+1] == null || nullTileDetection(i,j+1)){
                             gameTable[i][j].makeAvailable();
                         }
                     }
@@ -181,19 +181,19 @@ public class LivingRoom {
 
 
         //adiacenza sopra
-        if(gameTable[x-1][y] != null && !gameTable[x-1][y].getAdjacency()&& !nullTileDetection(x-1,y)){
+        if(gameTable[x-1][y] != null && !getTileAdjacency(x-1,y)&& !nullTileDetection(x-1,y)){
             gameTable[x-1][y].setAdjacency();
         }
         //adiacenza sotto
-        if(gameTable[x+1][y] != null && !gameTable[x+1][y].getAdjacency()&& !nullTileDetection(x+1,y)){
+        if(gameTable[x+1][y] != null && !getTileAdjacency(x+1,y)&& !nullTileDetection(x+1,y)){
             gameTable[x+1][y].setAdjacency();
         }
         //adiacenza a sx
-        if(gameTable[x][y-1] != null && !gameTable[x][y-1].getAdjacency()&& !nullTileDetection(x,y-1)){
+        if(gameTable[x][y-1] != null && !getTileAdjacency(x,y-1)&& !nullTileDetection(x,y-1)){
             gameTable[x][y-1].setAdjacency();
         }
         //adiacenza a dx
-        if(gameTable[x][y+1] != null && !gameTable[x][y+1].getAdjacency() && !nullTileDetection(x,y+1)){
+        if(gameTable[x][y+1] != null && !getTileAdjacency(x,y+1) && !nullTileDetection(x,y+1)){
             gameTable[x][y+1].setAdjacency();
         }
     }

@@ -4,8 +4,10 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 
 import org.junit.Assert;
-import org.junit.Test;
 import org.junit.jupiter.api.*;
+
+import org.junit.jupiter.api.Test;
+
 
 import server.Model.GameBoard;
 import server.Model.LivingRoom;

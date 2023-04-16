@@ -42,6 +42,7 @@ public class GameBoard {
             for (int j = 0; j < 9; j++) {
                 isVoid = livingRoom.searchVoid(i, j);
                 if (isVoid) {
+                    bag.putTiles();
                     helperTile = bag.randPickTile();
                     if (helperTile.getColour() != Colour.VOID) {
                         livingRoom.fillVoid(i, j, helperTile);
