@@ -49,14 +49,23 @@ public class GameController {
 
 
     }
-        public ArrayList<PlayableItemTile> pickTilesArray () {  //restituisce le 1/2/3 tiles prese dalla livingRoom dal player nel suo turno
+    public ArrayList<PlayableItemTile> pickTilesArray () {  //restituisce le 1/2/3 tiles prese dalla livingRoom dal player nel suo turno
+            boolean finish=false;
+            ArrayList<PlayableItemTile> tileArray = new ArrayList<PlayableItemTile>();
 
-            if (gameBoardController.checkPickedTilesNum()) {
-                return gameBoardController.PickManager(x, y);
-            }else{
-                return gameBoardController.giveTileToPlayer();
+            while(!finish) {
+                if (gameBoardController.checkPickedTilesNum()) {
+                    tileArray=gameBoardController.PickManager(x, y, finish);
+                } else {
+                    //messaggio che informi che sono già state prese tre tessere
+                    finish = true;
+                    tileArray=gameBoardController.giveTileToPlayer();
+                }
             }
-        }
+
+            gameBoardController.toPlayerTilesResetter();
+            return tileArray;
+    }
 
         public void InsertTileShelf(Player player,PlayableItemTile tile,int x, int y,int num){
         Shelf shelf = new Shelf();

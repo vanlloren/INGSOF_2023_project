@@ -97,6 +97,9 @@ public class GameBoard {
     public ArrayList<PlayableItemTile> getToPlayerTiles(){
         return toPlayerTiles;
     }
+    public void resetToPlayerTiles(ArrayList<PlayableItemTile> list){
+        toPlayerTiles = list;
+    }
 }
 
 //SEQUENZA CORRETTA GAMEBOARD<-->LIVINGROOM:
