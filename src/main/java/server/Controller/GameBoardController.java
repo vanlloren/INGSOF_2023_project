@@ -19,6 +19,10 @@ public class GameBoardController {
         this.playerNum = playerNum;
     }
 
+    public GameBoard getControlledGameBoard(){
+        return this.controlledGameBoard;
+    }
+
     public void gameBoardInit(){
         controlledGameBoard = new GameBoard();
         controlledGameBoard.setItemBag();

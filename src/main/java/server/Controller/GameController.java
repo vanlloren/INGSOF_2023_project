@@ -39,6 +39,7 @@ public class GameController {
     public void initGameBoard(int numOfPlayers){
         gameBoardController.setPlayerNum(numOfPlayers);
         gameBoardController.gameBoardInit();  //inizializza itemBag e livingRoom riempiendola di tessere
+        game.setMyShelfie(gameBoardController.getControlledGameBoard());
 
 
         livingRoom.setCommonGoal1(); //queste due chiamate vanno modificate in modo da passare tramite GameBoardController
