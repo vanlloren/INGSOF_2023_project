@@ -14,6 +14,7 @@ public class CommonGoal {
         return this.token_list;
     }
 
+
     public CommonGoalType getCommonGoalType() {
         return commonGoalType;
     }

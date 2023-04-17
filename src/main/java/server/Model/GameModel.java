@@ -18,6 +18,9 @@ public class GameModel {
     public void setEndGame(){
         this.endGame = true;
     }
+    public boolean getEndGame(){
+        return this.endGame;
+    }
 
     public Player getChairOwner() {
         return chairOwner;

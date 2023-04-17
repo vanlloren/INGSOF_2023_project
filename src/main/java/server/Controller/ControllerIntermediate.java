@@ -4,20 +4,20 @@ import server.Model.GameModel;
 
 
 public class ControllerIntermediate {
-    GameController game = new GameController();
+    GameController game;
     private boolean timeOut = false;
     /* classe che gestisce la ricezione di messaggi e gestisce le chiamate verso i metodi di controller
     per la gestione del turno del giocatore e di tutte gli eventi che accadono in un turno con gli aggiornamenti
     dei dati nel modello
      */
-    ControllerIntermediate (GameController gameController//devi passare anche la view)
+    /*
+    ControllerIntermediate (GameController gameController;//devi passare anche la view)
     public void loginHandler(){
-       /* -ricevuto messaggio da client di primo login avvia timer e inizializza gamemodel e game e inizia ad aggiungere giocatori tramite metodo setup purchè nel limite
+        -ricevuto messaggio da client di primo login avvia timer e inizializza gamemodel e game e inizia ad aggiungere giocatori tramite metodo setup purchè nel limite
         di numero e di tempo timeout e inizializza valori come la shelf personale.. -> se no giocatori sufficiente entro timeout avvia endgame che restarta lobby, se giocatori sufficienti entro i limiti di numero sia che timeout finito o no avvia initgame che determina l'inizio della vera e propria partita
 
 */
 
-    }
 public void initGame(){
     /*
 
@@ -48,9 +48,6 @@ public void initGame(){
 
 
 
-    public void setGameController(GameModel game){
-    this.game = game;
 
-    }
 
 }

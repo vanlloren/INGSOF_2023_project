@@ -4,6 +4,7 @@ import Util.Colour;
 import server.Model.ItemTile;
 import server.Model.PlayableItemTile;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 
 public class RuleCommonGoal {
@@ -238,60 +239,47 @@ public class RuleCommonGoal {
         }
 
         public static boolean CheckLine1(PlayableItemTile[][] structure) { //uguale a column 1 ma sviluppato per righe
-            int lineCount = 0;
-            boolean checker = false;
-            for (int i = 5; i >= 0; i--) {
-                int val = 1;
-                for (int j = 0; j < 5; j++) {
-                    if (structure[i][j] == null) {    //partendo dal basso controllo che la riga sia piena senno non ha senso
-                        val = 0;
-                        break;
+        int count = 0;
+            for(int i=0;i<6;i++){
+                HashSet<Colour> distinctColour = new HashSet<Colour>();
+                ArrayList<Colour> colourArrayList = new ArrayList<Colour>();
+                for(int j=0;j<5;j++){
+                    if(structure[i][j]!=null){
+                        colourArrayList.add(structure[i][j].getColour());
                     }
                 }
-                if (val == 1) {
-                    HashSet<Colour> list = new HashSet<Colour>();
-                    for (int k = 0; k < 5; k++) {
-                        list.add(structure[i][k].getColour());
-                    }
-                    if (list.size() <= 3) {
-                        lineCount++;
-                    }
-                } else
-                    break; //se la riga inferiore rispetto a quella controllata non è completa non ha senso continuare il for perchè l'obiettivo non è raggiungibile per come è composto l'inserimento delle carte dal basso verso l'alto
+                if(colourArrayList.size()==5){
+                    distinctColour.addAll(colourArrayList);
+                    if(distinctColour.size()<=3)
+                        count++;
+                }
             }
-            if (lineCount >= 4)
-                checker = true;
-            return checker;}
+        if(count>=4)
+            return true;
+        else return false;
+        }
 
 
 
         public static boolean CheckLine2(PlayableItemTile[][] structure) { //uguale a column 2 ma sviluppato per le righe
-            int lineCount = 0;
-            boolean checker = false;
-            for (int i = 5; i >= 0; i--) {
-                int val = 1;
-                for (int j = 0; j < 5; j++) {
-                    if (structure[i][j] == null) {    //partendo dal basso controllo che la riga sia piena senno non ha senso
-                        val = 0;
-                        break;
+            int count = 0;
+            for(int i=0;i<6;i++){
+                HashSet<Colour> distinctColour = new HashSet<Colour>();
+                ArrayList<Colour> colourArrayList = new ArrayList<Colour>();
+                for(int j=0;j<5;j++){
+                    if(structure[i][j]!=null){
+                        colourArrayList.add(structure[i][j].getColour());
                     }
                 }
-                if (val == 1) {
-                    HashSet<Colour> list = new HashSet<Colour>();
-                    for (int k = 0; k < 5; k++) {
-                        list.add(structure[i][k].getColour());
-                    }
-                    if (list.size() == 5) {
-                        lineCount++;
-                    }
-                } else
-                    break; //se la riga inferiore rispetto a quella controllata non è completa non ha senso continuare il for perchè l'obiettivo non è raggiungibile per come è composto l'inserimento delle carte dal basso verso l'alto
+                if(colourArrayList.size()==5){
+                    distinctColour.addAll(colourArrayList);
+                    if(distinctColour.size()==5)
+                        count++;
+                }
             }
-            if (lineCount == 2)
-                checker = true;
-            return checker;
-
-
+            if(count>=2)
+                return true;
+            else return false;
         }
 
 

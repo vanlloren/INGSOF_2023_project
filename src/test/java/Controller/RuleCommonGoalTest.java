@@ -180,25 +180,61 @@ public void setUp(){
     }
     @Test
     public void TestCheckColumn1(){
+    structure = new PlayableItemTile[6][5];
+    for(int i=0;i<6;i++){
+        structure[i][0] = new PlayableItemTile("RED",0);
+    }
+    structure[1][0] = new PlayableItemTile("BLUE",0);
+        structure[2][0] = new PlayableItemTile("GREEN",0);
 
+    assertNotEquals(true,RuleCommonGoal.CheckColumn1(structure));
+
+        for(int i=0;i<6;i++){
+            structure[i][3] = new PlayableItemTile("BLUE",0);
+        }
+        structure[1][0] = new PlayableItemTile("BLUE",0);
+        structure[2][0] = new PlayableItemTile("GREEN",0);
+        structure[3][0] = new PlayableItemTile("PINK",0);
+        structure[4][0] = new PlayableItemTile("RED",0);
+        assertNotEquals(true,RuleCommonGoal.CheckColumn1(structure));
+
+        for(int i=0;i<6;i++){
+            structure[i][4] = new PlayableItemTile("GREEN",0);
+        }
+        structure[1][0] = new PlayableItemTile("BLUE",0);
+        structure[2][0] = new PlayableItemTile("GREEN",0);
+        assertNotEquals(true,RuleCommonGoal.CheckColumn1(structure));
+
+        structure[2][0] = new PlayableItemTile("BLUE",0);
         assertEquals(true,RuleCommonGoal.CheckColumn1(structure));
+
+
+        structure[0][4]= null;
+        assertNotEquals(true,RuleCommonGoal.CheckColumn1(structure));
+
+        structure[1][4] = new PlayableItemTile("RED",0);
+        structure[2][4] = new PlayableItemTile("BLUE",0);
+        structure[3][4] = new PlayableItemTile("WHITE",0);
+        assertNotEquals(true,RuleCommonGoal.CheckColumn1(structure));
+
     }
 
     @Test
     public void TestCheckLine1(){
+        //easy
 
         assertEquals(true,RuleCommonGoal.CheckLine1(structure));
     }
 
     @Test
     public void TestCheckColumn2(){
-
+//easy
         assertEquals(true,RuleCommonGoal.CheckColumn2(structure));
     }
 
     @Test
     public void TestCheckLine2(){
-
+//easy
         assertEquals(true,RuleCommonGoal.CheckLine2(structure));
     }
 
@@ -286,14 +322,5 @@ public void setUp(){
         structure[4][0] = new PlayableItemTile("RED",0);
         assertNotEquals(true,RuleCommonGoal.checkStair(structure));
     }
-
-
-
-
-
-
-
-
-
 
 }

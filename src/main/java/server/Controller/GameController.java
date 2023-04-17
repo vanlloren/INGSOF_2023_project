@@ -28,7 +28,7 @@ public class GameController {
     //metodo per preparare l'inizio della partita: aggiunta giocatori e inizializzazione shelf personali etc..
     public void setUp(String nickName) {
         Player newPlayer = new Player(nickName);
-        playersInGame.add(newPlayer);
+        game.getPlayersInGame().add(newPlayer);
     }
     /*metodo che gestische l'evoluzione del turno durante le mosse del giocatore con i rispettivi
      aggiornamenti nei campi del model per quanto riguarda i punteggi e pescaggio e inserimento tiles
@@ -40,61 +40,72 @@ public class GameController {
         game.getMyShelfie().getLivingRoom().createGameTable(numOfPlayers);
 
         // lore aggiungi metodo che filla la gametable nella maniera giusta
-        livingRoom.setCommonGoal1();
-        livingRoom.setCommonGoal2();
-        /*
-        ricordati metodo random commongoal
-         */
+
+        CommonGoal commonGoal1 = new CommonGoal();
+        CommonGoal commonGoal2 = new CommonGoal();
+        //metodo random che sceglie i type delle commongoal
+        livingRoom.setCommonGoal1(commonGoal1);
+        livingRoom.setCommonGoal2(commonGoal2);
+
+        //creation of the tokenlist above each commongoal according to the number of players
+        livingRoom.getCommonGoal1().setTokens(game.getPlayersNumber());
+        livingRoom.getCommonGoal2().setTokens(game.getPlayersNumber());
+
+
 
 
     }
-        public PlayableItemTile pickTile () {
-        PlayableItemTile tile = new PlayableItemTile();
+       /*public PlayableItemTile pickTile () {
 
-        /*LORENZO METTI TU I METODI CHE GESTISCONO ETSRAZIONE DELLA TILE
+        //PlayableItemTile tile = new PlayableItemTile();
+
+        LORENZO METTI TU I METODI CHE GESTISCONO ETSRAZIONE DELLA TILE
         tile = metodi estrazione etc etc
 
-         */
-
-
-            return tile;
 
 
 
+         //   return tile;
 
-        }
+
+
+
+        }*/
 
         public void InsertTileShelf(Player player,PlayableItemTile tile,int x, int y,int num){
         Shelf shelf = new Shelf();
         shelf = player.getPersonalShelf();
-        shelf.putTile() //alf sistema
+        //shelf.putTile(); //alf sistema
 
         }
 
         public void nextTurn (Player player) {
 
-        ArrayList<Player> listPLayer = game.getPlayersInGame();
+            ArrayList<Player> listPLayer = game.getPlayersInGame();
 
-        int index= listPLayer.indexOf(game.getCurrPlayer());
-        if(index !=listPLayer.size())
-            game.setCurrPlayer(listPLayer.get(index+1));
-        else {
-            if(getEndGame()==false ) {
-                game.setCurrPlayer(listPLayer.get(0));
+            int index = listPLayer.indexOf(game.getCurrPlayer());
+            if (index != listPLayer.size())
+                game.setCurrPlayer(listPLayer.get(index + 1));
+            else {
+                if (game.getEndGame() == false) {
+                    game.setCurrPlayer(listPLayer.get(0));
+                }
+                //else //METODO CHE BLOCCA TUTTO E ANNUNCIA VINCITORE
             }
-            else //METODO CHE BLOCCA TUTTO E ANNUNCIA VINCITORE
         }
 
 
-        // metodo che determina l'inizio dell'ultimo turno di gioco
-        public void launchEndGame (Player player) {
-            if(game.getChairOwner().equals(game.getCurrPlayer()))
+            // metodo che determina l'inizio dell'ultimo turno di gioco
+            public void launchEndGame () {
+                //if (game.getChairOwner().equals(game.getCurrPlayer()))
                 //METODO CHE BLOCCA TUTTO E LACNIA WINNER
-            }
-            else game.setEndGame();
 
-        }
-        /*public void calculatePoint (Player player, ItemTile[][]structure, LivingRoom livingRoom)
+
+            // else game.setEndGame();
+
+            }
+
+        public void calculatePoint (Player player, ItemTile[][]structure, LivingRoom livingRoom)
         { // con hascommongoal controllo che il giocatore non abbia gia raggiunto l'obiettivo
             if (!player.getHasCommonGoal1() && CheckCommonGoal.checkGoal(player.getPersonalShelf(), livingRoom.getCommonGoal1().getCommonGoalType())) {
                 Integer i;
@@ -124,5 +135,5 @@ public class GameController {
             }
             return i;
         }
-    }*/
-}
+    }
+
