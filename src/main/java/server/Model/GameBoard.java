@@ -104,7 +104,7 @@ public class GameBoard {
 //-fillLivingRoom (al suo interno avrà multiple chiamate di getNextInGameTile e putNextInGameTile)
 //-updateAvailability
 //----1° turno----
-//-checkIfAdjacentTiles--->fillLivingRoom--->updateAvailability
+//-updateAvailability
 //-checkTileAvailability
 //-getToPlayerFirstTile
 //-checkAdjAvailability
@@ -117,6 +117,7 @@ public class GameBoard {
 //-fineTurno/getToPlayerAnotherTile
 //-fineTurno
 //-updateAvailability
+//-checkIfAdjacentTiles--->fillLivingRoom--->updateAvailability
 //----turno player succ----
 //-checkIfAdjacentTiles--->fillLivingRoom--->updateAvailability
 //-checkTileAvailability

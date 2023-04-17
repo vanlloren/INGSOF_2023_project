@@ -9,6 +9,8 @@ public class GameController {
     private ArrayList<Player> playersInGame = new ArrayList<Player>();
     private boolean timeOut;
 
+    private GameBoardController gameBoardController = new GameBoardController(); // gameBoardController è il tramite tra GameController e le classi GameBoard, LivingRoom e ItemBag
+
 
 
     public GameController(GameModel game) {
@@ -34,13 +36,12 @@ public class GameController {
      aggiornamenti nei campi del model per quanto riguarda i punteggi e pescaggio e inserimento tiles
 
      */
-    public void initLivingRoom(int numOfPlayers){
-        LivingRoom livingRoom = new LivingRoom();
-        livingRoom = game.getMyShelfie().getLivingRoom();
-        game.getMyShelfie().getLivingRoom().createGameTable(numOfPlayers);
+    public void initGameBoard(int numOfPlayers){
+        gameBoardController.setPlayerNum(numOfPlayers);
+        gameBoardController.gameBoardInit();  //inizializza itemBag e livingRoom riempiendola di tessere
 
-        // lore aggiungi metodo che filla la gametable nella maniera giusta
-        livingRoom.setCommonGoal1();
+
+        livingRoom.setCommonGoal1(); //queste due chiamate vanno modificate in modo da passare tramite GameBoardController
         livingRoom.setCommonGoal2();
         /*
         ricordati metodo random commongoal
@@ -48,20 +49,13 @@ public class GameController {
 
 
     }
-        public PlayableItemTile pickTile () {
-        PlayableItemTile tile = new PlayableItemTile();
+        public ArrayList<PlayableItemTile> pickTilesArray () {  //restituisce le 1/2/3 tiles prese dalla livingRoom dal player nel suo turno
 
-        /*LORENZO METTI TU I METODI CHE GESTISCONO ETSRAZIONE DELLA TILE
-        tile = metodi estrazione etc etc
-
-         */
-
-
-            return tile;
-
-
-
-
+            if (gameBoardController.checkPickedTilesNum()) {
+                return gameBoardController.PickManager(x, y);
+            }else{
+                return gameBoardController.giveTileToPlayer();
+            }
         }
 
         public void InsertTileShelf(Player player,PlayableItemTile tile,int x, int y,int num){

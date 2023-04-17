@@ -4,6 +4,9 @@ import Util.Colour;
 import server.Model.GameBoard;
 import server.Model.LivingRoom;
 import server.Model.PlayableItemTile;
+import server.Model.Player;
+
+import java.util.ArrayList;
 
 public class GameBoardController {
     private GameBoard controlledGameBoard;
@@ -18,11 +21,33 @@ public class GameBoardController {
 
     public void gameBoardInit(){
         controlledGameBoard = new GameBoard();
+        controlledGameBoard.setItemBag();
         controlledGameBoard.setLivingRoom(playerNum);
         controlledLivingRoom = controlledGameBoard.getLivingRoom();
-        controlledGameBoard.setItemBag();
+        controlledLivingRoom.updateAvailability();
     }
 
+    public ArrayList<PlayableItemTile> PickManager(int x, int y){
+        controlledLivingRoom.updateAvailability();
+
+        if(controlledGameBoard.getPickedTilesNum()==0){
+            if(checkTileAvailability(x,y)){
+                controlledGameBoard.setToPlayerFirstTile(x,y);
+            }else{
+                //messaggio/eccezione che indichi che la tessera scelta non è disponibile e ne va scelta un'altra
+            }
+        }else if(controlledGameBoard.getPickedTilesNum()==1){
+            if(checkAdjacentAvailability()){
+                //messaggio/eccezione che indichi che non posso più scegliere altre tessere
+            }
+        }else{
+
+
+        }
+
+
+        return controlledGameBoard.getToPlayerTiles();
+    }
     //----->LIVING ROOM
     public boolean checkTileAvailability(int x, int y){
         //determina se una tessera sulla LivingRoom è available o no
@@ -31,7 +56,7 @@ public class GameBoardController {
     }
 
     public boolean checkPickedTilesNum() {//tiene conto del numero d' ItemTiles pescate ogni turno
-        return controlledGameBoard.getPickedTilesNum() < 3;
+        return controlledGameBoard.getPickedTilesNum() <3;
     }
 
     public void livingRoomFiller(){
@@ -191,7 +216,8 @@ public class GameBoardController {
 
 
 
-    public void giveTileToPlayer(){
+    public ArrayList<PlayableItemTile> giveTileToPlayer(){
+        return controlledGameBoard.getToPlayerTiles();
         //invoco metodo di playerController che assegna le tessere al player
     }
 
