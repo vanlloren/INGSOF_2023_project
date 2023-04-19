@@ -98,7 +98,9 @@ public class LivingRoom {
 
     //MODEL
     public void fillVoid(int x, int y, PlayableItemTile tile) {
+        tile.setPosition(x,y);
         gameTable[x][y] = tile;
+
     }
 
     //MODEL
