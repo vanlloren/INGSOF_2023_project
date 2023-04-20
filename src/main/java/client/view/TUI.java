@@ -22,7 +22,7 @@ public class TUI implements view{
     }
 
     public void askServerInfo(){
-        out.println("Perfavore, inserisci alcune informazioni:");
+        out.println("Per favore, inserisci alcune informazioni:");
 
         do {
             out.println("Inserisci l'indirizzo del Server [default = localhost]:");
@@ -52,12 +52,30 @@ public class TUI implements view{
     }
     @Override
     public void askNickname() {
+        out.println("Inserisci il Nickname che vuoi utilizzare:");
+        String nickName = in.nextLine();
 
+        //dovrò fornire nickName al server in qualche modo per il controllo dell'univocità
+
+        out.println("Il nickname scelto è: " + nickName);
     }
 
     @Override
     public void askPlayersNumber() {
 
+        out.println("Sei il primo giocatore della partita! Per favore, inserisci il numero di giocatori totali [min=2, max=4]:");
+
+        int playersNum;
+        playersNum = in.nextInt();
+        while(playersNum<2 || playersNum>4){
+            out.println("Numero giocatori non valido!");
+            out.println("Inserisci il numero di giocatori totali [min=2, max=4]:");
+            playersNum = in.nextInt();
+        }
+
+        //dovrò fornire playersNum al server in qualche modo
+
+        out.println("Il numero di giocatori scelto è: " + playersNum);
     }
 
     @Override
