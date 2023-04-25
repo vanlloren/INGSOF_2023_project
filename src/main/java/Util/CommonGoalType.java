@@ -3,7 +3,7 @@ package Util;
 public enum CommonGoalType {
     COMMONGOAL01,
     COMMONGOAL02,
-    CommonGOAL03,
+    COMMONGOAL03,
     COMMONGOAL04,
     COMMONGOAL05,
     COMMONGOAL06,

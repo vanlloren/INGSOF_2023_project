@@ -24,11 +24,11 @@ public class GameBoardController {
     }
 
     public void gameBoardInit(){
-        controlledGameBoard = new GameBoard();
-        controlledGameBoard.setItemBag();
-        controlledGameBoard.setLivingRoom(playerNum);
-        controlledLivingRoom = controlledGameBoard.getLivingRoom();
-        controlledLivingRoom.updateAvailability();
+        this.controlledGameBoard = new GameBoard();
+        this.controlledGameBoard.setItemBag();
+        this.controlledGameBoard.setLivingRoom(playerNum);
+        this.controlledLivingRoom = controlledGameBoard.getLivingRoom();
+        this.controlledLivingRoom.updateAvailability();
     }
 
     public ArrayList<PlayableItemTile> PickManager(int x, int y, boolean finish){

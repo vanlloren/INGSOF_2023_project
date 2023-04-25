@@ -15,7 +15,7 @@ public class CheckCommonGoal {
         case COMMONGOAL01:
             checker = RuleCommonGoal.checkSixCouples(myshelfy.getStructure());
             break;
-        case CommonGOAL03:
+        case COMMONGOAL03:
             checker = RuleCommonGoal.checkFourGroups(myshelfy.getStructure());
             break;
         case COMMONGOAL04:

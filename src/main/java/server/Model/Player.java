@@ -7,8 +7,6 @@ public class Player {
     private Integer points;
     private Shelf personalShelf = new Shelf();
     private PersonalGoal personalGoal = new PersonalGoal();
-    private CommonGoal commonGoal1;
-    private CommonGoal commonGoal2;
     private LivingRoom livingRoom;
     private boolean hasCommonGoal1;
     private boolean hasCommonGoal2;
@@ -69,11 +67,6 @@ public class Player {
         //funzione che assegna personalgoal//
     }
 
-
-    public void setCommonGoals(){ //chiamato da controller a cascata quando chiamo il generatore di common goal dalla living room
-        this.commonGoal1 = this.livingRoom.getCommonGoal1();
-        this.commonGoal2 = this.livingRoom.getCommonGoal2();
-    }
     public boolean getHasCommonGoal1(){
         return this.hasCommonGoal1;
     }

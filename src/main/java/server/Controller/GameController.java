@@ -1,4 +1,5 @@
 package server.Controller;
+import Util.RandCommonGoal;
 import server.Model.*;
 
 
@@ -6,17 +7,14 @@ import java.util.ArrayList;
 
 public class GameController {
     private GameModel game;
-    private ArrayList<Player> playersInGame = new ArrayList<Player>();
+    private View view
     private boolean timeOut;
+    private final GameBoardController gameBoardController = new GameBoardController(); // gameBoardController è il tramite tra GameController e le classi GameBoard, LivingRoom e ItemBag
 
-    private GameBoardController gameBoardController = new GameBoardController(); // gameBoardController è il tramite tra GameController e le classi GameBoard, LivingRoom e ItemBag
-
-
-
-    public GameController(GameModel game) {
+    public GameController(GameModel game,View view) {
         this.game = game;
+        this.view = view;
     }
-
 
     public GameModel getGame() {
         return this.game;
@@ -30,24 +28,18 @@ public class GameController {
     //metodo per preparare l'inizio della partita: aggiunta giocatori e inizializzazione shelf personali etc..
     public void setUp(String nickName) {
         Player newPlayer = new Player(nickName);
-        playersInGame.add(newPlayer);
+        game.getPlayersInGame().add(newPlayer);
+        game.setPlayersNumber();
     }
-    /*metodo che gestische l'evoluzione del turno durante le mosse del giocatore con i rispettivi
-     aggiornamenti nei campi del model per quanto riguarda i punteggi e pescaggio e inserimento tiles
 
-     */
-    public void initGameBoard(int numOfPlayers){
-        gameBoardController.setPlayerNum(numOfPlayers);
+    public void initGameBoard(){
+        RandCommonGoal randCommonGoal = new RandCommonGoal();
+        gameBoardController.setPlayerNum(game.getPlayersNumber());
         gameBoardController.gameBoardInit();  //inizializza itemBag e livingRoom riempiendola di tessere
         game.setMyShelfie(gameBoardController.getControlledGameBoard());
-
-
-        livingRoom.setCommonGoal1(); //queste due chiamate vanno modificate in modo da passare tramite GameBoardController
-        livingRoom.setCommonGoal2();
-        /*
-        ricordati metodo random commongoal
-         */
-
+        randCommonGoal.setType(game.getMyShelfie().getLivingRoom().getCommonGoal1(), game.getMyShelfie().getLivingRoom().getCommonGoal2());
+        game.getMyShelfie().getLivingRoom().getCommonGoal1().setTokens(game.getPlayersNumber());
+        game.getMyShelfie().getLivingRoom().getCommonGoal2().setTokens(game.getPlayersNumber());
 
     }
     public ArrayList<PlayableItemTile> pickTilesArray () {  //restituisce le 1/2/3 tiles prese dalla livingRoom dal player nel suo turno
@@ -71,8 +63,9 @@ public class GameController {
         public void InsertTileShelf(Player player,PlayableItemTile tile,int x, int y,int num){
         Shelf shelf = new Shelf();
         shelf = player.getPersonalShelf();
-        shelf.putTile() //alf sistema
+        shelf.putTile(x,y,num); //alf sistema
 
+        calculatePoint(player,player.getPersonalShelf().getStructure(),game.getMyShelfie().getLivingRoom());
         }
 
         public void nextTurn (Player player) {
@@ -83,23 +76,25 @@ public class GameController {
         if(index !=listPLayer.size())
             game.setCurrPlayer(listPLayer.get(index+1));
         else {
-            if(getEndGame()==false ) {
+            if(!game.getEndGame()) {
                 game.setCurrPlayer(listPLayer.get(0));
             }
-            else //METODO CHE BLOCCA TUTTO E ANNUNCIA VINCITORE
+             //else ->METODO CHE BLOCCA TUTTO E ANNUNCIA VINCITORE
         }
+    }
 
 
         // metodo che determina l'inizio dell'ultimo turno di gioco
         public void launchEndGame (Player player) {
-            if(game.getChairOwner().equals(game.getCurrPlayer()))
-                //METODO CHE BLOCCA TUTTO E LACNIA WINNER
+            if (game.getChairOwner().equals(game.getCurrPlayer())) {
+                //METODO CHE BLOCCA TUTTO E ANNUNCIA WINNER
             }
-            else game.setEndGame();
-
+            else{
+                game.setEndGame();
+            }
         }
-        /*public void calculatePoint (Player player, ItemTile[][]structure, LivingRoom livingRoom)
-        { // con hascommongoal controllo che il giocatore non abbia gia raggiunto l'obiettivo
+
+        public void calculatePoint (Player player, ItemTile[][]structure, LivingRoom livingRoom) {
             if (!player.getHasCommonGoal1() && CheckCommonGoal.checkGoal(player.getPersonalShelf(), livingRoom.getCommonGoal1().getCommonGoalType())) {
                 Integer i;
                 i = player.getPoints();
@@ -113,20 +108,18 @@ public class GameController {
                 i = i + addPoint(livingRoom.getCommonGoal2());
                 player.setStatusCommonGoal2();
             }
-
-
+            // DILETTA AGGIUNGI METODO CHE AGGIUNGE PUNTI PER LE TUE CARTE  if(!player.)
         }
 
 
-        public int addPoint (CommonGoal commonGoal){
-            ArrayList<Integer> token_list = new ArrayList<Integer>();
-            token_list = commonGoal.getToken_list();
-            int i = 0; // se ho finite le carte punteggio si assegnano zero punti
+        public Integer addPoint (CommonGoal commonGoal){
+            ArrayList<Integer> token_list = commonGoal.getToken_list();
+            Integer i = 0;
             if (0 < token_list.size()) {
                 i = token_list.get(token_list.size());
                 token_list.remove(token_list.size() - 1);
             }
             return i;
         }
-    }*/
-}
+    }
+

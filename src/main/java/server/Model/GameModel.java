@@ -6,13 +6,11 @@ import java.util.ArrayList;
 
 public class GameModel {
     private Player chairOwner;
-    private int playersNumber;
+    private Integer playersNumber;
     private Player currPlayer;
     private String matchWinner;
     private GameBoard myShelfie = new GameBoard();
     private ArrayList<Player> playersInGame = new ArrayList<Player>();
-    private Player[] turnOrder;
-    private Player[] has;
     private boolean endGame=false;
 
     public void setEndGame(){
@@ -38,22 +36,13 @@ public class GameModel {
         this.myShelfie = gameBoard;
     }
 
-    public void launchGame_Myshelfie(){
-        // va scritta tutta la partita con lo svolgimento//
 
-
-
-
-
-
-
-    }
-    public int getPlayersNumber(){
+    public int getPlayersNumber() {
         return this.playersNumber;
     }
+
     public void setPlayersNumber(){
         this.playersNumber = playersInGame.size();
-
     }
 
     public void setChairOwner(Player player) {
@@ -61,20 +50,8 @@ public class GameModel {
     }
 
     public ArrayList<Player> getPlayersInGame() {
-        return playersInGame;
+        return this.playersInGame;
     }
-    public void setPlayersInGame(){
-
-
-
-
-    }
-
-
-
-
-
-
 
     public void setGameBoard() {
         myShelfie = new GameBoard();

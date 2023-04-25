@@ -3,7 +3,7 @@ package server.Model;
 import Util.CommonGoalType;
 
 import java.util.ArrayList;
-
+import java.util.Random;
 
 
 public class CommonGoal {
@@ -15,6 +15,9 @@ public class CommonGoal {
     }
 
 
+    public void setCommonGoalType(CommonGoalType commonGoalType){
+        this.commonGoalType = commonGoalType;
+    }
     public CommonGoalType getCommonGoalType() {
         return commonGoalType;
     }
@@ -36,4 +39,5 @@ public class CommonGoal {
             token_list.add(8);
         }
     }
+
 }
