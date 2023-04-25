@@ -9,6 +9,8 @@ public class GameController {
     private ArrayList<Player> playersInGame = new ArrayList<Player>();
     private boolean timeOut;
 
+    private GameBoardController gameBoardController = new GameBoardController(); // gameBoardController è il tramite tra GameController e le classi GameBoard, LivingRoom e ItemBag
+
 
 
     public GameController(GameModel game) {
@@ -28,84 +30,75 @@ public class GameController {
     //metodo per preparare l'inizio della partita: aggiunta giocatori e inizializzazione shelf personali etc..
     public void setUp(String nickName) {
         Player newPlayer = new Player(nickName);
-        game.getPlayersInGame().add(newPlayer);
+        playersInGame.add(newPlayer);
     }
     /*metodo che gestische l'evoluzione del turno durante le mosse del giocatore con i rispettivi
      aggiornamenti nei campi del model per quanto riguarda i punteggi e pescaggio e inserimento tiles
 
      */
-    public void initLivingRoom(int numOfPlayers){
-        LivingRoom livingRoom = new LivingRoom();
-        livingRoom = game.getMyShelfie().getLivingRoom();
-        game.getMyShelfie().getLivingRoom().createGameTable(numOfPlayers);
-
-        // lore aggiungi metodo che filla la gametable nella maniera giusta
-
-        CommonGoal commonGoal1 = new CommonGoal();
-        CommonGoal commonGoal2 = new CommonGoal();
-        //metodo random che sceglie i type delle commongoal
-        livingRoom.setCommonGoal1(commonGoal1);
-        livingRoom.setCommonGoal2(commonGoal2);
-
-        //creation of the tokenlist above each commongoal according to the number of players
-        livingRoom.getCommonGoal1().setTokens(game.getPlayersNumber());
-        livingRoom.getCommonGoal2().setTokens(game.getPlayersNumber());
+    public void initGameBoard(int numOfPlayers){
+        gameBoardController.setPlayerNum(numOfPlayers);
+        gameBoardController.gameBoardInit();  //inizializza itemBag e livingRoom riempiendola di tessere
+        game.setMyShelfie(gameBoardController.getControlledGameBoard());
 
 
+        livingRoom.setCommonGoal1(); //queste due chiamate vanno modificate in modo da passare tramite GameBoardController
+        livingRoom.setCommonGoal2();
+        /*
+        ricordati metodo random commongoal
+         */
 
 
     }
-       /*public PlayableItemTile pickTile () {
+    public ArrayList<PlayableItemTile> pickTilesArray () {  //restituisce le 1/2/3 tiles prese dalla livingRoom dal player nel suo turno
+            boolean finish=false;
+            ArrayList<PlayableItemTile> tileArray = new ArrayList<PlayableItemTile>();
 
-        //PlayableItemTile tile = new PlayableItemTile();
+            while(!finish) {
+                if (gameBoardController.checkPickedTilesNum()) {
+                    tileArray=gameBoardController.PickManager(x, y, finish);
+                } else {
+                    //messaggio che informi che sono già state prese tre tessere
+                    finish = true;
+                    tileArray=gameBoardController.giveTileToPlayer();
+                }
+            }
 
-        LORENZO METTI TU I METODI CHE GESTISCONO ETSRAZIONE DELLA TILE
-        tile = metodi estrazione etc etc
-
-
-
-
-         //   return tile;
-
-
-
-
-        }*/
+            gameBoardController.toPlayerTilesResetter();
+            return tileArray;
+    }
 
         public void InsertTileShelf(Player player,PlayableItemTile tile,int x, int y,int num){
         Shelf shelf = new Shelf();
         shelf = player.getPersonalShelf();
-        //shelf.putTile(); //alf sistema
+        shelf.putTile() //alf sistema
 
         }
 
         public void nextTurn (Player player) {
 
-            ArrayList<Player> listPLayer = game.getPlayersInGame();
+        ArrayList<Player> listPLayer = game.getPlayersInGame();
 
-            int index = listPLayer.indexOf(game.getCurrPlayer());
-            if (index != listPLayer.size())
-                game.setCurrPlayer(listPLayer.get(index + 1));
-            else {
-                if (game.getEndGame() == false) {
-                    game.setCurrPlayer(listPLayer.get(0));
-                }
-                //else //METODO CHE BLOCCA TUTTO E ANNUNCIA VINCITORE
+        int index= listPLayer.indexOf(game.getCurrPlayer());
+        if(index !=listPLayer.size())
+            game.setCurrPlayer(listPLayer.get(index+1));
+        else {
+            if(getEndGame()==false ) {
+                game.setCurrPlayer(listPLayer.get(0));
             }
+            else //METODO CHE BLOCCA TUTTO E ANNUNCIA VINCITORE
         }
 
 
-            // metodo che determina l'inizio dell'ultimo turno di gioco
-            public void launchEndGame () {
-                //if (game.getChairOwner().equals(game.getCurrPlayer()))
+        // metodo che determina l'inizio dell'ultimo turno di gioco
+        public void launchEndGame (Player player) {
+            if(game.getChairOwner().equals(game.getCurrPlayer()))
                 //METODO CHE BLOCCA TUTTO E LACNIA WINNER
-
-
-            // else game.setEndGame();
-
             }
+            else game.setEndGame();
 
-        public void calculatePoint (Player player, ItemTile[][]structure, LivingRoom livingRoom)
+        }
+        /*public void calculatePoint (Player player, ItemTile[][]structure, LivingRoom livingRoom)
         { // con hascommongoal controllo che il giocatore non abbia gia raggiunto l'obiettivo
             if (!player.getHasCommonGoal1() && CheckCommonGoal.checkGoal(player.getPersonalShelf(), livingRoom.getCommonGoal1().getCommonGoalType())) {
                 Integer i;
@@ -135,5 +128,5 @@ public class GameController {
             }
             return i;
         }
-    }
-
+    }*/
+}

@@ -1,11 +1,12 @@
 package Model;
 
 import org.junit.Assert;
-import org.junit.Test;
 
 import org.junit.jupiter.api.BeforeEach;
 import server.Model.NullItemTile;
 import Util.*;
+
+import org.junit.jupiter.api.Test;
 
 
 public class NullItemTileTest {

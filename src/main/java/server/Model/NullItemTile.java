@@ -2,11 +2,17 @@ package server.Model;
 
 import Util.Colour;
 
+import java.util.ArrayList;
+
 public class NullItemTile extends ItemTile {
     private Colour colour;
     private int idCode;
     private boolean availability;
     private boolean adjacency;
+
+    private int xPos;
+
+    private int yPos;
 
     public NullItemTile() {
         colour = Colour.VOID;
@@ -53,5 +59,17 @@ public class NullItemTile extends ItemTile {
     @Override
     public void resetAdjacency() {
         adjacency = false;
+    }
+
+    @Override
+    public void setPosition(int x, int y) {
+
+    }
+
+    @Override
+    public ArrayList<Integer> getPosition(){
+        ArrayList<Integer> noPos = new ArrayList<Integer>();
+
+        return noPos;
     }
 }

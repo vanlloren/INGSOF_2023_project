@@ -1,7 +1,7 @@
 package Model;
 
 import Util.Colour;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import static org.junit.Assert.*;
 import java.util.*;
 import org.junit.jupiter.api.*;
@@ -16,11 +16,11 @@ public class ItemBagTest {
 
     @BeforeEach
     public void setUp() {
-        itemBag = new ItemBag();
+        this.itemBag = new ItemBag();
     }
 
     @Test
-    public void testPutTiles1() { //testo riempiemento con 132 PlayableItemTiles
+    public void testPutTiles1() { //testo riempimento con 132 PlayableItemTiles
         itemBag.putTiles();
         ArrayList<PlayableItemTile> bag = itemBag.getBag();
         Assertions.assertEquals(132, bag.size());
@@ -37,14 +37,14 @@ public class ItemBagTest {
 
     @Test
     public void testRandPickTileEmptyBag() {
-        ArrayList<PlayableItemTile> bag = itemBag.getBag();
+        ArrayList<PlayableItemTile> bag = itemBag.getBagForTest();
         Assertions.assertTrue(bag.isEmpty());
         PlayableItemTile tile = itemBag.randPickTile();
         Assertions.assertEquals(Colour.VOID, tile.getColour());
     }
 
     @Test
-    public void testPutTiles2() { //testo che le 132 tiles siano 22 per ognuno dei 6 tipi
+    public void testPutTiles2() { //testo che le 132 tiles siano 22 per ognuno dei sei tipi
         itemBag.putTiles();
 
         Map<String, Integer> expectedCounts = new HashMap<>();

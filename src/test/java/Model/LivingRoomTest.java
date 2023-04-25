@@ -1,8 +1,8 @@
 package Model;
 
 import org.junit.Assert;
-import org.junit.Test;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Test;
 
 import server.Model.ItemBag;
 import server.Model.ItemTile;
@@ -394,11 +394,16 @@ public class LivingRoomTest {
 
         livingRoom.updateAdjacentAvailabilityV1(4,3);
 
-        Assert.assertTrue(livingRoom.getTileAdjacency(4,2));
-        Assert.assertTrue(livingRoom.getTileAdjacency(4,4));
-        Assert.assertTrue(livingRoom.getTileAdjacency(5,3));
-        Assert.assertTrue(livingRoom.getTileAdjacency(3,3));
-        Assert.assertFalse(livingRoom.getTileAdjacency(4,6));
+        for(int i=0;i<9;i++){
+            for(int j=0;j<9;j++){
+                if((i==5 && j==3) || (i==3 && j==3) || (i==4 && j==4) || (i==4 && j==2)){
+                    Assert.assertTrue(livingRoom.getTileAdjacency(i,j));
+                }else {
+                    Assert.assertFalse(livingRoom.getTileAdjacency(i, j));
+                }
+            }
+        }
+
     }
 
     @Test
@@ -459,13 +464,15 @@ public class LivingRoomTest {
 
         livingRoom.updateAdjacentAvailabilityV2(3,3,4,3);
 
-        Assert.assertTrue(livingRoom.getTileAdjacency(3,4));
-        Assert.assertTrue(livingRoom.getTileAdjacency(3,2));
-        Assert.assertTrue(livingRoom.getTileAdjacency(2,3));
-        Assert.assertFalse(livingRoom.getTileAdjacency(4,2));
-        Assert.assertFalse(livingRoom.getTileAdjacency(4,4));
-        Assert.assertFalse(livingRoom.getTileAdjacency(2,5));
-
+        for(int i=0;i<9;i++){
+            for(int j=0;j<9;j++){
+                if((i==5 && j==3) || (i==2 && j==3) || (i==3 && j==3)){
+                    Assert.assertTrue(livingRoom.getTileAdjacency(i,j));
+                }else {
+                    Assert.assertFalse(livingRoom.getTileAdjacency(i, j));
+                }
+            }
+        }
         //vado sotto
         livingRoom.createGameTable(2);
         gameTable = livingRoom.getGameTable();
@@ -493,13 +500,16 @@ public class LivingRoomTest {
 
         livingRoom.updateAdjacentAvailabilityV2(5,3,4,3);
 
-        Assert.assertTrue(livingRoom.getTileAdjacency(5,4));
-        Assert.assertTrue(livingRoom.getTileAdjacency(5,2));
-        Assert.assertTrue(livingRoom.getTileAdjacency(6,3));
-        Assert.assertFalse(livingRoom.getTileAdjacency(4,2));
-        Assert.assertFalse(livingRoom.getTileAdjacency(4,4));
-        Assert.assertFalse(livingRoom.getTileAdjacency(2,5));
 
+        for(int i=0;i<9;i++){
+            for(int j=0;j<9;j++){
+                if((i==6 && j==3) || (i==3 && j==3) || (i==5 && j==3)){
+                    Assert.assertTrue(livingRoom.getTileAdjacency(i,j));
+                }else {
+                    Assert.assertFalse(livingRoom.getTileAdjacency(i, j));
+                }
+            }
+        }
 
         //vado a sx
         livingRoom.createGameTable(2);
@@ -528,12 +538,15 @@ public class LivingRoomTest {
 
         livingRoom.updateAdjacentAvailabilityV2(4,2,4,3);
 
-        Assert.assertTrue(livingRoom.getTileAdjacency(5,2));
-        Assert.assertTrue(livingRoom.getTileAdjacency(3,2));
-        Assert.assertTrue(livingRoom.getTileAdjacency(4,1));
-        Assert.assertFalse(livingRoom.getTileAdjacency(3,3));
-        Assert.assertFalse(livingRoom.getTileAdjacency(5,3));
-        Assert.assertFalse(livingRoom.getTileAdjacency(2,5));
+        for(int i=0;i<9;i++){
+            for(int j=0;j<9;j++){
+                if((i==4 && j==1) || (i==4 && j==4) || (i==4 && j==2)){
+                    Assert.assertTrue(livingRoom.getTileAdjacency(i,j));
+                }else {
+                    Assert.assertFalse(livingRoom.getTileAdjacency(i, j));
+                }
+            }
+        }
 
         //vado a dx
         livingRoom.createGameTable(2);
@@ -562,12 +575,15 @@ public class LivingRoomTest {
 
         livingRoom.updateAdjacentAvailabilityV2(4,4,4,3);
 
-        Assert.assertTrue(livingRoom.getTileAdjacency(5,4));
-        Assert.assertTrue(livingRoom.getTileAdjacency(3,4));
-        Assert.assertTrue(livingRoom.getTileAdjacency(4,5));
-        Assert.assertFalse(livingRoom.getTileAdjacency(3,3));
-        Assert.assertFalse(livingRoom.getTileAdjacency(5,3));
-        Assert.assertFalse(livingRoom.getTileAdjacency(2,5));
+        for(int i=0;i<9;i++){
+            for(int j=0;j<9;j++){
+                if((i==4 && j==2) || (i==4 && j==5) || (i==4 && j==4)){
+                    Assert.assertTrue(livingRoom.getTileAdjacency(i,j));
+                }else {
+                    Assert.assertFalse(livingRoom.getTileAdjacency(i, j));
+                }
+            }
+        }
 
 
     }

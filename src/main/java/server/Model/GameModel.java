@@ -34,6 +34,10 @@ public class GameModel {
         this.currPlayer = player;
     }
 
+    public void setMyShelfie(GameBoard gameBoard){
+        this.myShelfie = gameBoard;
+    }
+
     public void launchGame_Myshelfie(){
         // va scritta tutta la partita con lo svolgimento//
 

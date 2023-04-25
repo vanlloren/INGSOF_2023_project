@@ -42,6 +42,7 @@ public class GameBoard {
             for (int j = 0; j < 9; j++) {
                 isVoid = livingRoom.searchVoid(i, j);
                 if (isVoid) {
+                    bag.putTiles();
                     helperTile = bag.randPickTile();
                     if (helperTile.getColour() != Colour.VOID) {
                         livingRoom.fillVoid(i, j, helperTile);
@@ -96,6 +97,9 @@ public class GameBoard {
     public ArrayList<PlayableItemTile> getToPlayerTiles(){
         return toPlayerTiles;
     }
+    public void resetToPlayerTiles(ArrayList<PlayableItemTile> list){
+        toPlayerTiles = list;
+    }
 }
 
 //SEQUENZA CORRETTA GAMEBOARD<-->LIVINGROOM:
@@ -103,7 +107,7 @@ public class GameBoard {
 //-fillLivingRoom (al suo interno avrà multiple chiamate di getNextInGameTile e putNextInGameTile)
 //-updateAvailability
 //----1° turno----
-//-checkIfAdjacentTiles--->fillLivingRoom--->updateAvailability
+//-updateAvailability
 //-checkTileAvailability
 //-getToPlayerFirstTile
 //-checkAdjAvailability
@@ -116,6 +120,7 @@ public class GameBoard {
 //-fineTurno/getToPlayerAnotherTile
 //-fineTurno
 //-updateAvailability
+//-checkIfAdjacentTiles--->fillLivingRoom--->updateAvailability
 //----turno player succ----
 //-checkIfAdjacentTiles--->fillLivingRoom--->updateAvailability
 //-checkTileAvailability

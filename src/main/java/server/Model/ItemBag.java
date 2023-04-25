@@ -17,6 +17,11 @@ public class ItemBag {
         return bag;
     }
 
+    public ArrayList<PlayableItemTile> getBagForTest(){
+        bag = new ArrayList<PlayableItemTile>();
+        return bag;
+    }
+
     public void putTiles() {
         bag = new ArrayList<PlayableItemTile>();
         PlayableItemTileFactory factory = new PlayableItemTileFactory();
@@ -66,10 +71,10 @@ public class ItemBag {
     public PlayableItemTile randPickTile(){
         PlayableItemTile helperTile;
         final Random RAND = new Random();
-        int index = RAND.nextInt(bag.size());
         if(bag.size() == 0){
             helperTile = new PlayableItemTile("VOID", 0);
         }else {
+            int index = RAND.nextInt(bag.size());
             helperTile = bag.get(index);
             bag.remove(index);
         }

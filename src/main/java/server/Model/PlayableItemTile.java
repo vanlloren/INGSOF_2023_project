@@ -2,11 +2,17 @@ package server.Model;
 
 import Util.Colour;
 
+import java.lang.reflect.Array;
+import java.util.*;
+
 public class PlayableItemTile extends ItemTile {
     private Colour colour;
     private int idCode;
     private boolean availability;
     private boolean adjacency = false;
+    private int xPos;
+
+    private int yPos;
 
     public PlayableItemTile(String colour, int id) {
         if (colour.equals("GREEN")) {
@@ -85,4 +91,18 @@ public class PlayableItemTile extends ItemTile {
         adjacency = false;
     }
 
+    @Override
+    public ArrayList<Integer> getPosition() {
+        ArrayList<Integer> tilePosition = new ArrayList<Integer>();
+        tilePosition.add(xPos);
+        tilePosition.add(yPos);
+
+        return tilePosition;
+    }
+
+    @Override
+    public void setPosition(int x, int y) {
+        xPos = x;
+        yPos = y;
+    }
 }
