@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class TUI implements view{
+public class TUI implements view{  //dovrà diventare observable dal client
     private final PrintStream out;
     private final Scanner in = new Scanner(System.in);
 
@@ -18,16 +18,21 @@ public class TUI implements view{
     public void init(){
         out.println("Benvenuto nel gioco MyShelfie!");
 
-        askServerInfo();
+        int portNum = 0;
+        String serverAddress = askServerInfo(portNum);
+        String nickname = askNickname();
+        connectToServerFromTUI(serverAddress, portNum, nickname, this);
     }
 
-    public void askServerInfo(){
+    @Override
+    public String askServerInfo(int portNum){
         out.println("Per favore, inserisci alcune informazioni:");
+        String serverAddress;
 
         do {
             out.println("Inserisci l'indirizzo del Server [default = localhost]:");
             // effettuo check di validità su in.nextLine();
-            String serverAddress = in.nextLine();
+            serverAddress = in.nextLine();
             if(checkAddressValidity(serverAddress){
                 checker = true;
             }else{
@@ -39,8 +44,8 @@ public class TUI implements view{
         do {
             out.println("Inserisci la porta del Server [default = ??]:");
             //effettuo check validità su in.nextLine();
-            String serverPort = in.nextLine();
-            if(checkPortValidity(serverPort)){
+            portNum = in.nextInt();
+            if(checkPortValidity(portNum)){
                 checker = true;
             }else{
                 out.println("Porta del server non valida!");
@@ -48,16 +53,18 @@ public class TUI implements view{
             }
         }while(!checker);
 
+        return serverAddress;
         //dovrò fornire a qualcuno serverAddress e serverPort per effettuare il collegamento
     }
     @Override
-    public void askNickname() {
+    public String askNickname() {
         out.println("Inserisci il Nickname che vuoi utilizzare:");
         String nickName = in.nextLine();
 
         //dovrò fornire nickName al server in qualche modo per il controllo dell'univocità
 
         out.println("Il nickname scelto è: " + nickName);
+        return nickName;
     }
 
     @Override
@@ -140,6 +147,10 @@ public class TUI implements view{
 
     @Override
     public void showErrorMessage(String errorMessage) {
+
+    }
+
+    public void connectToServerFromTUI(String address, int port, String nickname, TUI textualInterface){  //se implementiamo socket si deve anche definire tipo di connessione
 
     }
 }
