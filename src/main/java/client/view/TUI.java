@@ -1,5 +1,6 @@
 package client.view;
 
+import Network.ClientSide.IOManager;
 import server.Model.PlayableItemTile;
 
 import java.io.PrintStream;
@@ -10,6 +11,8 @@ import java.util.Scanner;
 public class TUI implements view{  //dovrà diventare observable dal client
     private final PrintStream out;
     private final Scanner in = new Scanner(System.in);
+
+    private IOManager viewManager = new IOManager();
 
     private boolean checker = false;
     public TUI(){
@@ -150,7 +153,19 @@ public class TUI implements view{  //dovrà diventare observable dal client
 
     }
 
-    public void connectToServerFromTUI(String address, int port, String nickname, TUI textualInterface){  //se implementiamo socket si deve anche definire tipo di connessione
+    public void connectToServerFromTUI(String address, int port, String nickname, TUI textualInterface){
+        //se implementiamo socket si deve anche definire tipo di connessione
 
+        out.println("Per favore, indica il tipo di connessione desiderata [0=RMI, 1=Socket]: ");
+        int connectionType = in.nextInt();
+        try {
+            if (connectionType == 0) {
+                viewManager.connectRMI(address, port, nickname, textualInterface);
+            } else {
+                viewManager.connectSocket(address, port, nickname, textualInterface);
+            }
+        }catch (Exception e){
+
+        }
     }
 }
