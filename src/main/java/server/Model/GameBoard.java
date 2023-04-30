@@ -1,19 +1,20 @@
 package server.Model;
 
 import Util.Colour;
+import Observer.Observable;
 
 import java.util.ArrayList;
 
-public class GameBoard {
+public class GameBoard extends Observable {
     private ItemBag bag = new ItemBag();
     private LivingRoom livingRoom = new LivingRoom();
     private PlayableItemTile nextInGameTile;//é la tessera "da mettere in gioco" ovvero quella che dalla bag sta venendo piazzata sulla plancia
 
+    private ArrayList<PlayableItemTile> toPlayerTiles;//sono le tessere che il giocatore ha raccolto dalla plancia, forse si può fare meglio
+
     //servono per regolare correttamente le adiacenze
     private int firstX;
     private int firstY;
-
-    private ArrayList<PlayableItemTile> toPlayerTiles;//sono le tessere che il giocatore ha raccolto dalla plancia, forse si può fare meglio
 
     //MODEL
     public void setItemBag(){ //genera la ItemBag a ogni inizio partita chiamato dal controller
@@ -55,13 +56,9 @@ public class GameBoard {
     public LivingRoom getLivingRoom(){
         return this.livingRoom;
     }
-
-
-    //va messo nel controller
     public void setNextInGameTile() {
         this.nextInGameTile = bag.randPickTile();
     }
-
     public PlayableItemTile getNextInGameTile(){
         setNextInGameTile();
         return nextInGameTile;
@@ -84,6 +81,8 @@ public class GameBoard {
         livingRoom.updateAdjacentAvailabilityV1(x, y);
         firstX = x;
         firstY = y;
+        setChanged();
+        notifyObservers(new int[]{x, y});
 
     }
 

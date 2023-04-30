@@ -1,35 +1,50 @@
 package server.Controller;
 import Util.RandCommonGoal;
 import server.Model.*;
+import Network.ClientSide.*;
 
 
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 
-public class GameController {
-    private GameModel game;
-    private View view
-    private boolean timeOut;
+//All'interno di questa classe vi deve essere contenuta tutta la logica che sta dietro al gioco effettivo
+//escluso il settaggio della lobby e la costruzione del gioco quindi solo il pescaggio, l'inserimento ed il conteggio sono le azioni da seguire e tenere sott'occhio
+public class GameController implements Observer {
+
+    enum GameState {
+        AddingPlayers,
+        GameFlow,
+        LastTurn,
+        WinnerRevealed
+    }
+    private final GameModel game;
+    private final Client client;
+  //  private boolean timeOut;
     private final GameBoardController gameBoardController = new GameBoardController(); // gameBoardController è il tramite tra GameController e le classi GameBoard, LivingRoom e ItemBag
 
-    public GameController(GameModel game,View view) {
+    public GameController(GameModel game,Client client) {
         this.game = game;
-        this.view = view;
-    }
+        this.client = client;
 
+        game.addObserver(this);
+    }
+/*
     public GameModel getGame() {
         return this.game;
     }
-
+*/
     //metodo per avviare sessione gioco
     public void initGame() {
 
     }
 
     //metodo per preparare l'inizio della partita: aggiunta giocatori e inizializzazione shelf personali etc..
-    public void setUp(String nickName) {
-        Player newPlayer = new Player(nickName);
+    public void setUp() {
+        /*Set del giocatore e del nickname*/
+        Player newPlayer = new Player(client.getNickname());
         game.getPlayersInGame().add(newPlayer);
-        game.setPlayersNumber();
+        game.setPlayersNumber(game.getPlayersNumber());
     }
 
     public void initGameBoard(){
@@ -121,5 +136,16 @@ public class GameController {
             }
             return i;
         }
+
+    public void update(Client o, GameModel.Event arg) {
+        if (!o.equals(client)) {
+            System.err.println("Discarding notification from " + o);
+            return;
+        }
+        arg.equals(GameModel.Event.PLAYERS_IN_GAME);
+        game.setPlayersInGame(arg)
+        initGame();
     }
+//Sono interessato a ricevere notifiche solo dalla TextualUI/GraphicalUI
+}
 
