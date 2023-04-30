@@ -1,14 +1,21 @@
 package client.view;
-
+import Observer.ViewObservable;
 import Network.ClientSide.IOManager;
 import server.Controller.GameController;
 import server.Model.GameModel;
 import server.Model.PlayableItemTile;
 import server.Model.Shelf;
+
+import javax.swing.text.View;
 import java.io.PrintStream;
 import java.util.Scanner;
+import java.io.PrintStream;
+import java.util.*;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.FutureTask;
+import java.util.stream.Collectors;
 
-public class TUI{  //dovrà diventare observable dal client
+public class TUI extends ViewObservable implements View {  //dovrà diventare observable dal client
     private final PrintStream out;
     private final Scanner scanner = new Scanner(System.in);
 
@@ -85,7 +92,7 @@ public class TUI{  //dovrà diventare observable dal client
         do {
             out.println("Inserisci l'indirizzo del Server [default = localhost]:");
             // effettuo check di validità su in.nextLine();
-            serverAddress = in.nextLine();
+            serverAddress = scanner.nextLine();
             if(checkAddressValidity(serverAddress){
                 checker = true;
             }else{
@@ -110,19 +117,17 @@ public class TUI{  //dovrà diventare observable dal client
         //dovrò fornire a qualcuno serverAddress e serverPort per effettuare il collegamento
     }
     @Override
-    public String askNickname() {
+    public void askNickname() {
         out.println("Enter nickname please: ");
         String nickName = scanner.nextLine();
+        notifyObserver(obs -> obs.onUpdateNickname(nickName));
         //dovrò fornire nickName al server in qualche modo per il controllo dell'univocità
-        try {
-            out.println("Il nickname scelto è: " + nickName);
-        }
         out.println("Il nickname scelto è: " + nickName);
-        return nickName;
+
     }
 
     @Override
-    public int askPlayersNumber() {
+    public void askPlayersNumber() {
         int playersNum;
         playersNum = scanner.nextInt();
         while(playersNum<2 || playersNum>4){
@@ -130,10 +135,10 @@ public class TUI{  //dovrà diventare observable dal client
             out.println("Insert the number of total players [min=2, max=4]:");
             playersNum = scanner.nextInt();
         }
-
+            int finalPlayersNum = playersNum;
+            notifyObserver(obs -> obs.onUpdatePlayersNumber(finalPlayersNum));
         //dovrò fornire playersNum al server in qualche modo
         out.println("The number of players for the game will be: " + playersNum);
-        return playersNum;
     }
 
     @Override
@@ -221,49 +226,6 @@ public class TUI{  //dovrà diventare observable dal client
         }
     }
 
-    @Override
-    public void update(java.util.Observable o, Object arg) {
-        if ((o instanceof GameModel) == false){
-            System.err.println("Ignoring updates from "+ o);
-            return;
-        }
 
-        if (arg instanceof putTile) {
-            /* PutTile available*/
-            showPlayerShelf(model);
-        }else if ( arg instanceof pickTile) {
-            /* NextTurn */
-            showLivingRoom(model);
-        }else {
-            System.err.println("Ignoring updates from "+ o);
-            return;
-        }
-
-
-
-
-
-
-
-
-
-
-        public boolean isNicknameUnique(String nickname, List<Player> playerList) {
-            boolean isUnique = true;
-            for (Player player : playerList) {
-                try {
-                    if (player.getNickname().equals(nickname)) {
-                        isUnique = false;
-                        break;
-                    }
-                } catch (NullPointerException e) {
-                    // Nel caso in cui un giocatore non abbia un nickname, si passa al successivo
-                    continue;
-                }
-            }
-            return isUnique;
-        }
-
-    }
 }
 

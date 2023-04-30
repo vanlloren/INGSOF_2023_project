@@ -2,9 +2,12 @@ package server.Controller;
 import Util.RandCommonGoal;
 import server.Model.*;
 import Network.ClientSide.*;
+import server.enumerations.GameState;
+import Network.message.*;
 
 
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -12,22 +15,27 @@ import java.util.Observer;
 //escluso il settaggio della lobby e la costruzione del gioco quindi solo il pescaggio, l'inserimento ed il conteggio sono le azioni da seguire e tenere sott'occhio
 public class GameController implements Observer {
 
-    enum GameState {
-        AddingPlayers,
-        GameFlow,
-        LastTurn,
-        WinnerRevealed
-    }
-    private final GameModel game;
+    private  GameModel game;
     private final Client client;
   //  private boolean timeOut;
     private final GameBoardController gameBoardController = new GameBoardController(); // gameBoardController è il tramite tra GameController e le classi GameBoard, LivingRoom e ItemBag
+    private transient Map<String ,VirtualView> virtualViewMap;
+    /*
+    Il comando dichiara un campo della classe come transient,
+    il che significa che il campo non sarà incluso nella serializzazione
+    dell'oggetto.
+    In questo caso, il campo virtualViewMap è una mappa che associa un nickname a una vista virtuale (VirtualView)
+    e viene utilizzato dal controller per comunicare con le viste dei singoli giocatori.
+    Poiché le viste devono essere ricreate ad
+    ogni avvio del gioco e non devono essere incluse nella serializzazione,
+     il campo viene dichiarato come transient.
+     */
+    private GameState gameState;
+    private TurnController turnController;
 
     public GameController(GameModel game,Client client) {
         this.game = game;
         this.client = client;
-
-        game.addObserver(this);
     }
 /*
     public GameModel getGame() {
@@ -35,10 +43,36 @@ public class GameController implements Observer {
     }
 */
     //metodo per avviare sessione gioco
-    public void initGame() {
-
+    public void initGameController() {
+        this.game = GameModel.getInstance();
+        setGameState(GameState.LOGIN);
     }
 
+    public void onMessageReceived(Message receivedMessage) {
+
+        VirtualView virtualView = virtualViewMap.get(receivedMessage.getNickname());
+        switch (gameState) {
+            case LOGIN:
+                loginState(receivedMessage);
+                break;
+            case INIT:
+                if (inputController.checkUser(receivedMessage)) {
+                    initState(receivedMessage, virtualView);
+                }
+                break;
+            case IN_GAME:
+                if (inputController.checkUser(receivedMessage)) {
+                    inGameState(receivedMessage);
+                }
+                break;
+            default: // Should never reach this condition
+                Server.LOGGER.warning(STR_INVALID_STATE);
+                break;
+        }
+    }
+    private void setGameState(GameState gameState) {
+        this.gameState = gameState;
+    }
     //metodo per preparare l'inizio della partita: aggiunta giocatori e inizializzazione shelf personali etc..
     public void setUp() {
         /*Set del giocatore e del nickname*/

@@ -1,32 +1,39 @@
 package server.Model;
 import Observer.Observable;
 
+import java.io.Serializable;
 import java.util.ArrayList;
-//Rappresenta il turn del gioco sasso carta forbice lizard spock
-public class GameModel extends Observable{
+import java.util.List;
 
-    public enum Event {
-        ENDGAME, CURR_PLAYER, GAMEBOARD,
-        PLAYERS_IN_GAME,CHAIR_OWNER, NICKNAME, PLAYERS_NUMBER,
-        GAME_BOARD
-    }
-    public enum EVENT{
-        PUT_TILE, PICK_TILE, FINISH_TURN
-    }
-    private Player chairOwner;
-    private Integer playersNumber;
-    private Player currPlayer;
+//Rappresenta il turn del gioco sasso carta forbice lizard spock
+public class GameModel extends Observable implements Serializable {
+    private static final long serialVersionUID = 44051L;
+
+    private static GameModel instance;
+    private Player chosenChairOwner;
+    private Integer chosenPlayersNumber;
+
+    public static final int maximumNumberPlayers = 4;
+    //private Player currPlayer;
     //private String matchWinner; possiamo individuarlo attraverso un assaggio logico del giocatore con più punti e poi stabilire
     //Player matchWinner = playerInGame.equals(nickname)
-    private GameBoard myShelfie ;
-    private ArrayList<Player> playersInGame = new ArrayList<>();
-    private boolean endGame=false;
+    private final GameBoard myShelfie ;
+    private List<Player> playersInGame;
+    //private boolean endGame=false; Implementando l'enum GameState è possibile verificare lo stato della partita e quindi dell'ultimo turno di gioco
 
     private PlayableItemTile pickTile;
 
     private PlayableItemTile putTile;
 
-    private boolean finishTurn;
+    private GameModel(){
+        this.myShelfie = new GameBoard();
+        this.playersInGame = new ArrayList<>();
+    }
+    public static  GameModel getInstance(){
+        if(instance == null)
+            instance = new GameModel();
+        return instance;
+    }
 
     public PlayableItemTile getPickTile() {
         return pickTile;
@@ -133,15 +140,6 @@ public class GameModel extends Observable{
    /* public boolean haslaunchTerminate() {
         return true;
     }*/
-    private void setChangedAndNotifyObservers(Event arg) {
-        setChanged();
-        notifyObservers(arg);
-    }
-
-    private void setChangedAndNotifyObservers(EVENT arg) {
-        setChanged();
-        notifyObservers(arg);
-    }
 }
 
     /*public ArrayList<Player> getTurnOrder(){

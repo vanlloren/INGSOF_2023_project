@@ -31,8 +31,9 @@ public interface view {
     void askPlacingTileInShelfPosition();
 
     //mostra il risultato della richiesta di login, con il nome scelto dal player
-    void showLoginResults(boolean nickAccepted, boolean connectionOn, String chosenNickname);
+    void showLoginResults(boolean nicknameAccepted, boolean connectionOn, String chosenNickname);
 
+    void showLobby(List<String> nicknameList, int numPlayers);
     //mostra lista dei player
     void showPlayersList(List<String> playersList);
 
