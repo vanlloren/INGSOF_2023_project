@@ -825,6 +825,46 @@ public class PersonalGoal {
         }
         return point;
     }
+    public int calculatePoint(PersonalGoal personalGoal, PlayableItemTile[][] structure){
+        PersonalGoalType helperType;
+        helperType=personalGoal.getPersonalGoalType();
+        if(helperType==PersonalGoalType.PERSONALGOAL1){
+            this.Personal_goal_1(structure);
+        }
+        if(helperType==PersonalGoalType.PERSONALGOAL2){
+            this.Personal_goal_2(structure);
+        }
+        if(helperType==PersonalGoalType.PERSONALGOAL3){
+            this.Personal_goal_3(structure);
+        }
+        if(helperType==PersonalGoalType.PERSONALGOAL4){
+            this.Personal_goal_4(structure);
+        }
+        if(helperType==PersonalGoalType.PERSONALGOAL5){
+            this.Personal_goal_5(structure);
+        }
+        if(helperType==PersonalGoalType.PERSONALGOAL6){
+            this.Personal_goal_6(structure);
+        }
+        if(helperType==PersonalGoalType.PERSONALGOAL7){
+            this.Personal_goal_7(structure);
+        }
+        if(helperType==PersonalGoalType.PERSONALGOAL8){
+            this.Personal_goal_8(structure);
+        }
+        if(helperType==PersonalGoalType.PERSONALGOAL9){
+            this.Personal_goal_9(structure);
+        }
+        if(helperType==PersonalGoalType.PERSONALGOAL10){
+            this.Personal_goal_10(structure);
+        }
+        if(helperType==PersonalGoalType.PERSONALGOAL11){
+            this.Personal_goal_11(structure);
+        }
+        if(helperType==PersonalGoalType.PERSONALGOAL12){
+            this.Personal_goal_12(structure);
+        }
+    }
 }
 
 

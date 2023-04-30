@@ -11,18 +11,7 @@ public class Player {
     private boolean hasCommonGoal1;
     private boolean hasCommonGoal2;
     private boolean hasPersonalGoal;
-    private boolean hasPersonalGoal1;
-    private boolean hasPersonalGoal2;
-    private boolean hasPersonalGoal3;
-    private boolean hasPersonalGoal4;
-    private boolean hasPersonalGoal5;
-    private boolean hasPersonalGoal6;
-    private boolean hasPersonalGoal7;
-    private boolean hasPersonalGoal8;
-    private boolean hasPersonalGoal9;
-    private boolean hasPersonalGoal10;
-    private boolean hasPersonalGoal11;
-    private boolean hasPersonalGoal12;
+
 
     // costruttore player in cui passo i parametri principali passati dal controller che chiamerà dopo la ricezione di tutti i nickname da lato client
     public Player (String nickname){
@@ -90,42 +79,7 @@ public class Player {
         this.personalShelf.putTile(x,y,tile,i); //chiedi alfi come funziona questo metodo
         //metodo che gestisce inserimento in libreria
     }
-    public boolean getHasPersonalGoal1(){
-        return this.hasPersonalGoal1;
-    }
-    public boolean getHasPersonalGoal2(){
-        return this.hasPersonalGoal2;
-    }
-    public boolean getHasPersonalGoal3(){
-        return this.hasPersonalGoal3;
-    }
-    public boolean getHasPersonalGoal4(){
-        return this.hasPersonalGoal4;
-    }
-    public boolean getHasPersonalGoal5(){
-        return this.hasPersonalGoal5;
-    }
-    public boolean getHasPersonalGoal6(){
-        return this.hasPersonalGoal6;
-    }
-    public boolean getHasPersonalGoal7(){
-        return this.hasPersonalGoal7;
-    }
-    public boolean getHasPersonalGoal8(){
-        return this.hasPersonalGoal8;
-    }
-    public boolean getHasPersonalGoal9(){
-        return this.hasPersonalGoal9;
-    }
-    public boolean getHasPersonalGoal10(){
-        return this.hasPersonalGoal10;
-    }
-    public boolean getHasPersonalGoal11(){
-        return this.hasPersonalGoal11;
-    }
-    public boolean getHasPersonalGoal12(){
-        return this.hasPersonalGoal12;
-    }
+
 }
 
 

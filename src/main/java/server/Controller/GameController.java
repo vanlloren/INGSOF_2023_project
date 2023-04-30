@@ -108,9 +108,6 @@ public class GameController {
                 i = i + addPoint(livingRoom.getCommonGoal2());
                 player.setStatusCommonGoal2();
             }
-            if(!player.getHasPersonalGoal1())
-
-
         }
 
 
