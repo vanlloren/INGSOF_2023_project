@@ -825,7 +825,7 @@ public class PersonalGoal {
         }
         return point;
     }
-    public int calculatePoint(PersonalGoal personalGoal, PlayableItemTile[][] structure){
+    public int calculatePoints(PersonalGoal personalGoal, PlayableItemTile[][] structure){
         PersonalGoalType helperType;
         helperType=personalGoal.getPersonalGoalType();
         if(helperType==PersonalGoalType.PERSONALGOAL1){
