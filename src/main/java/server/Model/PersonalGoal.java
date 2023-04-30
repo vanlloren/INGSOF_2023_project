@@ -33,6 +33,9 @@ public class PersonalGoal {
 
     PersonalGoalType personalGoalType;
 
+    public PersonalGoalType getPersonalGoalType(){
+        return this.personalGoalType;
+    }
     public int Personal_goal_1(PlayableItemTile[][] structure) {
         int count = 0;
         int point = 0;
@@ -824,6 +827,50 @@ public class PersonalGoal {
             }
         }
         return point;
+    }
+    public int calculatePoints(PersonalGoal personalGoal, PlayableItemTile[][] structure){
+        PersonalGoalType helperType;
+        helperType=personalGoal.getPersonalGoalType();
+        int points = 0;
+
+        if(helperType==PersonalGoalType.PERSONALGOAL1){
+            points = this.Personal_goal_1(structure);
+        }
+        if(helperType==PersonalGoalType.PERSONALGOAL2){
+            points = this.Personal_goal_2(structure);
+        }
+        if(helperType==PersonalGoalType.PERSONALGOAL3){
+            points = this.Personal_goal_3(structure);
+        }
+        if(helperType==PersonalGoalType.PERSONALGOAL4){
+            points = this.Personal_goal_4(structure);
+        }
+        if(helperType==PersonalGoalType.PERSONALGOAL5){
+            points = this.Personal_goal_5(structure);
+        }
+        if(helperType==PersonalGoalType.PERSONALGOAL6){
+            points = this.Personal_goal_6(structure);
+        }
+        if(helperType==PersonalGoalType.PERSONALGOAL7){
+            points = this.Personal_goal_7(structure);
+        }
+        if(helperType==PersonalGoalType.PERSONALGOAL8){
+            points = this.Personal_goal_8(structure);
+        }
+        if(helperType==PersonalGoalType.PERSONALGOAL9){
+            points = this.Personal_goal_9(structure);
+        }
+        if(helperType==PersonalGoalType.PERSONALGOAL10){
+            points = this.Personal_goal_10(structure);
+        }
+        if(helperType==PersonalGoalType.PERSONALGOAL11){
+            points = this.Personal_goal_11(structure);
+        }
+        if(helperType==PersonalGoalType.PERSONALGOAL12){
+            points = this.Personal_goal_12(structure);
+        }
+
+        return points;
     }
 }
 
