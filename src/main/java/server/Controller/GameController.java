@@ -108,7 +108,9 @@ public class GameController {
                 i = i + addPoint(livingRoom.getCommonGoal2());
                 player.setStatusCommonGoal2();
             }
-            // DILETTA AGGIUNGI METODO CHE AGGIUNGE PUNTI PER LE TUE CARTE  if(!player.)
+            if(!player.getHasPersonalGoal1())
+
+
         }
 
 
