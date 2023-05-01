@@ -2,13 +2,10 @@ package server.Model;
 
 import Util.*;
 
-
 public class LivingRoom {
-
     private ItemTile[][] gameTable;
     private CommonGoal commonGoal1 = new CommonGoal();
     private CommonGoal commonGoal2 = new CommonGoal();
-
 
     //MODEL
     public void createGameTable(int playerNum) { //nell'inserimento di playernum chiamo metodo di gamemodel getnumplayer e lo metto come argomento
@@ -33,7 +30,6 @@ public class LivingRoom {
     public ItemTile[][] getGameTable(){
         return this.gameTable;
     }
-
 
     public void setCommonGoal1(CommonGoal commonGoal1) { // delego al controller come scegliere random i commongoal e poi uso qusti due metodi per settare alla living room quali sono i commongoal
         this.commonGoal1 = commonGoal1;
@@ -82,9 +78,7 @@ public class LivingRoom {
     public PlayableItemTile pickTile(int x, int y) {//questo metodo permette alla LivingRoom di passare una sua tessera alla GameBoard
         PlayableItemTile helperTile;
         helperTile = (PlayableItemTile) gameTable[x][y];
-
         gameTable[x][y] = null;
-
         return helperTile;
     }
 
@@ -100,7 +94,6 @@ public class LivingRoom {
     public void fillVoid(int x, int y, PlayableItemTile tile) {
         tile.setPosition(x,y);
         gameTable[x][y] = tile;
-
     }
 
     //MODEL

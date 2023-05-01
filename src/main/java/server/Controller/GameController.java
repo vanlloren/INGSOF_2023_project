@@ -1,40 +1,84 @@
 package server.Controller;
 import Util.RandCommonGoal;
 import server.Model.*;
-
+import Network.ClientSide.*;
+import server.enumerations.GameState;
+import Network.message.*;
 
 
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.Observable;
+import java.util.Observer;
 
-public class GameController {
-    private GameModel game;
-    private boolean timeOut;
+//All'interno di questa classe vi deve essere contenuta tutta la logica che sta dietro al gioco effettivo
+//escluso il settaggio della lobby e la costruzione del gioco quindi solo il pescaggio, l'inserimento ed il conteggio sono le azioni da seguire e tenere sott'occhio
+public class GameController implements Observer {
+
+    private  GameModel game;
+    private final Client client;
+  //  private boolean timeOut;
     private final GameBoardController gameBoardController = new GameBoardController(); // gameBoardController è il tramite tra GameController e le classi GameBoard, LivingRoom e ItemBag
+    private transient Map<String ,VirtualView> virtualViewMap;
+    /*
+    Il comando dichiara un campo della classe come transient,
+    il che significa che il campo non sarà incluso nella serializzazione
+    dell'oggetto.
+    In questo caso, il campo virtualViewMap è una mappa che associa un nickname a una vista virtuale (VirtualView)
+    e viene utilizzato dal controller per comunicare con le viste dei singoli giocatori.
+    Poiché le viste devono essere ricreate ad
+    ogni avvio del gioco e non devono essere incluse nella serializzazione,
+     il campo viene dichiarato come transient.
+     */
+    private GameState gameState;
+    private TurnController turnController;
 
-    public GameController(GameModel game,View view) {
+    public GameController(GameModel game,Client client) {
         this.game = game;
-        this.view = view;
+        this.client = client;
     }
-
+/*
     public GameModel getGame() {
         return this.game;
     }
-
+*/
     //metodo per avviare sessione gioco
-    public void initGame() {
-
+    public void initGameController() {
+        this.game = GameModel.getInstance();
+        setGameState(GameState.LOGIN);
     }
 
-    //metodo per preparare l'inizio della partita: aggiunta giocatori e inizializzazione shelf personali etc..
-    public void setUp(String nickName) {
-        if (game.getPlayersInGame().size() < game.getPlayersNumber()) {
-            Player newPlayer = new Player(nickName);
-            game.getPlayersInGame().add(newPlayer);
+    public void onMessageReceived(Message receivedMessage) {
+
+        VirtualView virtualView = virtualViewMap.get(receivedMessage.getNickname());
+        switch (gameState) {
+            case LOGIN:
+                loginState(receivedMessage);
+                break;
+            case INIT:
+                if (inputController.checkUser(receivedMessage)) {
+                    initState(receivedMessage, virtualView);
+                }
+                break;
+            case IN_GAME:
+                if (inputController.checkUser(receivedMessage)) {
+                    inGameState(receivedMessage);
+                }
+                break;
+            default: // Should never reach this condition
+                Server.LOGGER.warning(STR_INVALID_STATE);
+                break;
         }
     }
-    public void setNumOfplayers(int numOfplayers){
-        game.setPlayersNumber(numOfplayers);
-
+    private void setGameState(GameState gameState) {
+        this.gameState = gameState;
+    }
+    //metodo per preparare l'inizio della partita: aggiunta giocatori e inizializzazione shelf personali etc..
+    public void setUp() {
+        /*Set del giocatore e del nickname*/
+        Player newPlayer = new Player(client.getNickname());
+        game.getPlayersInGame().add(newPlayer);
+        game.setPlayersNumber(game.getPlayersNumber());
     }
 
     public void initGameBoard(){
@@ -113,7 +157,6 @@ public class GameController {
                 i = i + addPoint(livingRoom.getCommonGoal2());
                 player.setStatusCommonGoal2();
             }
-            // DILETTA AGGIUNGI METODO CHE AGGIUNGE PUNTI PER LE TUE CARTE  if(!player.)
         }
 
 
@@ -126,5 +169,16 @@ public class GameController {
             }
             return i;
         }
+
+    public void update(Client o, GameModel.Event arg) {
+        if (!o.equals(client)) {
+            System.err.println("Discarding notification from " + o);
+            return;
+        }
+        arg.equals(GameModel.Event.PLAYERS_IN_GAME);
+        game.setPlayersInGame(arg)
+        initGame();
     }
+//Sono interessato a ricevere notifiche solo dalla TextualUI/GraphicalUI
+}
 

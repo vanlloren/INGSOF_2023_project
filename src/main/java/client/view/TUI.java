@@ -1,33 +1,98 @@
 package client.view;
-
+import Observer.ViewObservable;
+import Network.ClientSide.IOManager;
+import server.Controller.GameController;
+import server.Model.GameModel;
 import server.Model.PlayableItemTile;
+import server.Model.Shelf;
 
+import javax.swing.text.View;
 import java.io.PrintStream;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
+import java.io.PrintStream;
+import java.util.*;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.FutureTask;
+import java.util.stream.Collectors;
 
-public class TUI implements view{
+public class TUI extends ViewObservable implements View {  //dovrà diventare observable dal client
     private final PrintStream out;
-    private final Scanner in = new Scanner(System.in);
+    private final Scanner scanner = new Scanner(System.in);
 
+    private IOManager viewManager = new IOManager();
+
+    private GameController controller;
+
+    public TUI(GameController controller){
+        this.controller = controller;
+    }
     private boolean checker = false;
     public TUI(){
         this.out = System.out;
     }
-    public void init(){
-        out.println("Benvenuto nel gioco MyShelfie!");
+    //Implementando il metodo Runnable ereditiamo tutte le sue classi e oggetti
+    //Run è un costruttore basilare costruito direttamente dal metodo Runnable al posto di init
+    @Override
+    public void run() {
+        while(true){
+            out.println("Welcome to the game MyShelfie!");
+            int portNum = 0;
+            String serverAddress = askServerInfo(portNum);
+            String nickname = askNickname();
+            out.println("You are the first player of the game! Please, insert the number of total player for the match [min=2, max=4]:");
+            int numOfPlayers = askPlayersNumber();
+            scanner.nextLine(); // consume the newline charcater
+            controller.setnumberOfPlayers(numOfPlayers);
+            connectToServerFromTUI(serverAddress, portNum, nickname, this);
+            gameState.addPlayers;
+            while(controller.gameState.equals(addPlayers)){
+                for (int i = 1; i <= numOfPlayers; i++) {
+                    out.print("Enter nickname for player " + i + ": ");
+                    String nickname = askNickname();
+                    controller.addPlayer(nickname);
+            }
+                out.println("Game starting...");
 
-        askServerInfo();
+                while (controller.gameState.equals(GameState.FlowGame)) {
+                    out.println(controller.getGameBoard().getLivingRoom().toString());
+                    out.println("Next tile: " + controller.getGameBoard().getNextInGameTile());
+                    out.print("Enter row to pick tile from: ");
+                    int row = scanner.nextInt();
+                    System.out.print("Enter column to pick tile from: ");
+                    int column = scanner.nextInt();
+                    nextLine(); // consume the newline character
+                    controller.pickTile(row, column);
+
+                    for (Player player : controller.getPlayers()) {
+                        System.out.println(player.getNickname() + "'s tiles:");
+                        for (PlayableItemTile tile : player.getTiles()) {
+                            out.print(tile.toString() + " ");
+                        }
+                        System.out.println();
+                    }
+
+                    out.print("Enter row to place tile on: ");
+                    int placeRow = scanner.nextInt();
+                    System.out.print("Enter column to place tile on: ");
+                    int placeColumn = scanner.nextInt();
+                    scanner.nextLine(); // consume the newline character
+                    controller.putTile(placeRow, placeColumn);
+
+                    System.out.println();
+                }
+
+                out.println("Game over!");
+        }
     }
 
-    public void askServerInfo(){
+    @Override
+    public String askServerInfo(int portNum){
         out.println("Per favore, inserisci alcune informazioni:");
-
+        String serverAddress;
         do {
             out.println("Inserisci l'indirizzo del Server [default = localhost]:");
             // effettuo check di validità su in.nextLine();
-            String serverAddress = in.nextLine();
+            serverAddress = scanner.nextLine();
             if(checkAddressValidity(serverAddress){
                 checker = true;
             }else{
@@ -39,8 +104,8 @@ public class TUI implements view{
         do {
             out.println("Inserisci la porta del Server [default = ??]:");
             //effettuo check validità su in.nextLine();
-            String serverPort = in.nextLine();
-            if(checkPortValidity(serverPort)){
+            portNum = in.nextInt();
+            if(checkPortValidity(portNum)){
                 checker = true;
             }else{
                 out.println("Porta del server non valida!");
@@ -48,34 +113,32 @@ public class TUI implements view{
             }
         }while(!checker);
 
+        return serverAddress;
         //dovrò fornire a qualcuno serverAddress e serverPort per effettuare il collegamento
     }
     @Override
     public void askNickname() {
-        out.println("Inserisci il Nickname che vuoi utilizzare:");
-        String nickName = in.nextLine();
-
+        out.println("Enter nickname please: ");
+        String nickName = scanner.nextLine();
+        notifyObserver(obs -> obs.onUpdateNickname(nickName));
         //dovrò fornire nickName al server in qualche modo per il controllo dell'univocità
-
         out.println("Il nickname scelto è: " + nickName);
+
     }
 
     @Override
     public void askPlayersNumber() {
-
-        out.println("Sei il primo giocatore della partita! Per favore, inserisci il numero di giocatori totali [min=2, max=4]:");
-
         int playersNum;
-        playersNum = in.nextInt();
+        playersNum = scanner.nextInt();
         while(playersNum<2 || playersNum>4){
-            out.println("Numero giocatori non valido!");
-            out.println("Inserisci il numero di giocatori totali [min=2, max=4]:");
-            playersNum = in.nextInt();
+            out.println("The number of player is not valid!\n");
+            out.println("Insert the number of total players [min=2, max=4]:");
+            playersNum = scanner.nextInt();
         }
-
+            int finalPlayersNum = playersNum;
+            notifyObserver(obs -> obs.onUpdatePlayersNumber(finalPlayersNum));
         //dovrò fornire playersNum al server in qualche modo
-
-        out.println("Il numero di giocatori scelto è: " + playersNum);
+        out.println("The number of players for the game will be: " + playersNum);
     }
 
     @Override
@@ -120,7 +183,11 @@ public class TUI implements view{
 
     @Override
     public void showPlayerShelf(ArrayList<PlayableItemTile> playerShelf) {
-
+        Shelf o = model.getplayerShelf();
+        if (o == null) {
+            return;
+        }
+        System.out.println(o);
     }
 
     @Override
@@ -142,4 +209,23 @@ public class TUI implements view{
     public void showErrorMessage(String errorMessage) {
 
     }
+
+    public void connectToServerFromTUI(String address, int port, String nickname, TUI textualInterface){
+        //se implementiamo socket si deve anche definire tipo di connessione
+
+        out.println("Per favore, indica il tipo di connessione desiderata [0=RMI, 1=Socket]: ");
+        int connectionType = scanner.nextInt();
+        try {
+            if (connectionType == 0) {
+                viewManager.connectRMI(address, port, nickname, textualInterface);
+            } else {
+                viewManager.connectSocket(address, port, nickname, textualInterface);
+            }
+        }catch (Exception e){
+
+        }
+    }
+
+
 }
+

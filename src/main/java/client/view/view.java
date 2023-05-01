@@ -8,9 +8,10 @@ import java.util.List;
 
 public interface view {
 
+    String askServerInfo(int portNum);
     //richiede al giocatore d'indicare il nickName
     //è il server che poi si occupa di verificare che sia univoco
-    void askNickname();
+    String askNickname();
 
     //se il player è il primo a collegarsi al server, è lui che crea la partita
     //il server dunque gli chiede quanti giocatori far partecipare
@@ -30,8 +31,9 @@ public interface view {
     void askPlacingTileInShelfPosition();
 
     //mostra il risultato della richiesta di login, con il nome scelto dal player
-    void showLoginResults(boolean nickAccepted, boolean connectionOn, String chosenNickname);
+    void showLoginResults(boolean nicknameAccepted, boolean connectionOn, String chosenNickname);
 
+    void showLobby(List<String> nicknameList, int numPlayers);
     //mostra lista dei player
     void showPlayersList(List<String> playersList);
 

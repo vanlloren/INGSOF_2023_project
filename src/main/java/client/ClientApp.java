@@ -19,6 +19,8 @@ public class ClientApp {
             // ClientController clientcontroller = new ClientController(view);
             // view.addObserver(clientcontroller);
             view.init();
+            model.addObserver(view);
+            view.addObserver(controller);
         } else {
             //eventuale gestione apertura GUI
         }
