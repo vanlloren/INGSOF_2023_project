@@ -41,8 +41,8 @@ public class GameModel {
         return this.playersNumber;
     }
 
-    public void setPlayersNumber(){
-        this.playersNumber = playersInGame.size();
+    public void setPlayersNumber(int playersNumber){
+        this.playersNumber = playersNumber;
     }
 
     public void setChairOwner(Player player) {

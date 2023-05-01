@@ -3,11 +3,11 @@ import Util.RandCommonGoal;
 import server.Model.*;
 
 
+
 import java.util.ArrayList;
 
 public class GameController {
     private GameModel game;
-    private View view
     private boolean timeOut;
     private final GameBoardController gameBoardController = new GameBoardController(); // gameBoardController è il tramite tra GameController e le classi GameBoard, LivingRoom e ItemBag
 
@@ -27,9 +27,14 @@ public class GameController {
 
     //metodo per preparare l'inizio della partita: aggiunta giocatori e inizializzazione shelf personali etc..
     public void setUp(String nickName) {
-        Player newPlayer = new Player(nickName);
-        game.getPlayersInGame().add(newPlayer);
-        game.setPlayersNumber();
+        if (game.getPlayersInGame().size() < game.getPlayersNumber()) {
+            Player newPlayer = new Player(nickName);
+            game.getPlayersInGame().add(newPlayer);
+        }
+    }
+    public void setNumOfplayers(int numOfplayers){
+        game.setPlayersNumber(numOfplayers);
+
     }
 
     public void initGameBoard(){
