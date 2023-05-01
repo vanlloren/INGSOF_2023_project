@@ -37,14 +37,14 @@ public class Player {
     //metodo che verra chiamato dal controller il quale preventivamente crea una living room per i giocatori che si sono collegati e assegna a tutti la STESSA LIVING ROOM
     public void setLivingRoom(LivingRoom livingRoom){ // metodo importante che serve ad assegnare ai giocatori la stessa plancia di gioco nel caso ci siano partite multiple da gestire
         this.livingRoom= livingRoom;
-
-
-
     }
 
     public Shelf getPersonalShelf(){ // metodo che verrà chiamato dal controller per poter accedere alla libreria
         //personale del giocatore e avviare tutti i check che controllano se gli obbiettivi sono stati soddisfatti
         return this.personalShelf;
+    }
+    public PersonalGoal getPersonalGoal(){
+        return this.personalGoal;
     }
 
     public String getNickname(){
@@ -72,6 +72,9 @@ public class Player {
     }
     public boolean getHasCommonGoal2(){
         return this.hasCommonGoal2;
+    }
+    public boolean getHasPersonalGoal(){
+        return this.hasPersonalGoal;
     }
     public void insertTile(int x, int y, PlayableItemTile tile) { //parametri passati dal controller;chiamato dal controller quando il player da le istruzioni in cui dice dove mettere l item sulla shelf
         int i = 0;

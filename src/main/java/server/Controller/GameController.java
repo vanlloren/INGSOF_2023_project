@@ -1,5 +1,6 @@
 package server.Controller;
 import Util.RandCommonGoal;
+import Util.RandPersonalGoal;
 import server.Model.*;
 import Network.ClientSide.*;
 import server.enumerations.GameState;
@@ -75,11 +76,17 @@ public class GameController implements Observer {
     }
     //metodo per preparare l'inizio della partita: aggiunta giocatori e inizializzazione shelf personali etc..
     public void setUp() {
-        /*Set del giocatore e del nickname*/
+        if(game.getPlayersInGame().size()< game.getPlayersNumber())
         Player newPlayer = new Player(client.getNickname());
         game.getPlayersInGame().add(newPlayer);
-        game.setPlayersNumber(game.getPlayersNumber());
+
+
+
     }
+
+   public void setNumofPlayers(int numofPlayers){
+        game.setPlayersNumber(numofPlayers);
+   }
 
     public void initGameBoard(){
         RandCommonGoal randCommonGoal = new RandCommonGoal();
@@ -143,7 +150,7 @@ public class GameController implements Observer {
             }
         }
 
-        public void calculatePoint (Player player, ItemTile[][]structure, LivingRoom livingRoom) {
+        public void calculatePoint (Player player, PlayableItemTile[][] structure, LivingRoom livingRoom) {
             if (!player.getHasCommonGoal1() && CheckCommonGoal.checkGoal(player.getPersonalShelf(), livingRoom.getCommonGoal1().getCommonGoalType())) {
                 Integer i;
                 i = player.getPoints();
@@ -156,6 +163,13 @@ public class GameController implements Observer {
                 i = player.getPoints();
                 i = i + addPoint(livingRoom.getCommonGoal2());
                 player.setStatusCommonGoal2();
+            }
+            if(player.getPersonalGoal().getPoint()<CheckPersonalGoal.calculatePoints(player.getPersonalGoal(),structure)){
+               Integer i;
+                player.getPersonalGoal().setPoint(CheckPersonalGoal.calculatePoints(player.getPersonalGoal(),structure));
+                i = player.getPoints();
+                i = i + CheckPersonalGoal.calculatePoints(player.getPersonalGoal(),structure) - player.getPersonalGoal().getPoint();
+                //mostra al player tramite evento che si aggiungono la differenza del nuovo col vecchio
             }
         }
 
