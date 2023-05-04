@@ -1,5 +1,5 @@
 package server.Controller;
-import Network.clientInterface;
+import Network.ClientAbstractInterface;
 import Network.message.*;
 import Observer.Observer;
 import Observer.ViewObserver;
@@ -22,7 +22,7 @@ public class ClientServerController implements ViewObserver, Observer {
 
     private final View view;
 
-    private clientInterface client;
+    private ClientAbstractInterface client;
     private String nickname;
 
     private final ExecutorService taskQueue;
