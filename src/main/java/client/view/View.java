@@ -1,11 +1,14 @@
 package client.view;
 
+import Network.message.MessageEnumeration;
+import server.Model.ItemTile;
 import server.Model.PlayableItemTile;
+import server.Model.Shelf;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public interface View {
+public interface view {
 
     String askServerInfo(int portNum);
     //richiede al giocatore d'indicare il nickName
@@ -14,7 +17,7 @@ public interface View {
 
     //se il player è il primo a collegarsi al server, è lui che crea la partita
     //il server dunque gli chiede quanti giocatori far partecipare
-    int askPlayersNumber();
+    void askPlayersNumber();
 
     //chiede al player la posizione nella livingRoom della tessera da spostare
     void askMovingTilePosition(ArrayList<PlayableItemTile> availableTiles);
@@ -55,4 +58,8 @@ public interface View {
     void showDisconnectionMessage(String disconnectedPlayerNickname, String disconnectionMessage);
 
     void showErrorMessage(String errorMessage);
+
+    void showDefaultMessage( String defaultMessage);
+
+    void showMatchSituation(List<String> actualPlayers, List<Shelf> actualShelf, String actualPlayerNickname);
 }

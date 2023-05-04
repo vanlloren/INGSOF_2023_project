@@ -8,7 +8,7 @@ public abstract class ViewObserver {
      *
      * @param serverInfo a map of server address and server port.
      */
-    public void onUpdateServerInfo(Map<String, String> serverInfo);
+    void onUpdateServerInfo(Map<String, String> serverInfo);
 
     /**
      * Sends a message to the server with the updated nickname.
@@ -17,8 +17,12 @@ public abstract class ViewObserver {
      */
      void onUpdateNickname(String nickname);
 
-    public abstract void onUpdateNickname(String nickname);
-
+    /**
+     * Sends a message to the server with the updated choice of keep picking tiles.
+     *
+     * @param choice the choice to be sent.
+     */
+     void onUpdateAskKeepPicking( String choice);
     /**
      * Sends a message to the server with the player number chosen by the user.
      *
@@ -31,11 +35,11 @@ public abstract class ViewObserver {
      *
      * @param nickname the nickname of the first player.
      */
-    public void onUpdateFirstPlayer(String nickname);
+    void onUpdateFirstPlayer(String nickname);
 
     /**
      * Handles a disconnection wanted by the user.
      * (e.g. a click on the back button into the GUI).
      */
-    public void onDisconnection();
+    void onDisconnection();
 }

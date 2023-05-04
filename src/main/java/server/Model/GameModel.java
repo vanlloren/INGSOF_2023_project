@@ -1,4 +1,5 @@
 package server.Model;
+import Network.message.LobbyMessage;
 import Observer.Observable;
 
 import java.io.Serializable;
@@ -12,7 +13,7 @@ public class GameModel extends Observable implements Serializable {
     private static GameModel instance;
     private Player chosenChairOwner;
     private Integer chosenPlayersNumber;
-
+    public static final String Server_Nick = "Server";//C'è un collegamento al server per ogni giocatore.
     public static final int maximumNumberPlayers = 4;
     //private Player currPlayer;
     //private String matchWinner; possiamo individuarlo attraverso un assaggio logico del giocatore con più punti e poi stabilire
@@ -39,26 +40,8 @@ public class GameModel extends Observable implements Serializable {
         return pickTile;
     }
 
-    public void setPickTile(PlayableItemTile pickTile) {
-        this.pickTile = pickTile;
-    }
-
     public PlayableItemTile getPutTile() {
         return putTile;
-    }
-
-    public void setPutTile(PlayableItemTile putTile) {
-        this.putTile = putTile;
-        setChangedAndNotifyObservers(EVENT.PUT_TILE);
-    }
-
-    public boolean isFinishTurn() {
-        return finishTurn;
-        setChangedAndNotifyObservers(Event.ENDGAME);
-    }
-
-    public void setFinishTurn(boolean finishTurn) {
-        this.finishTurn = finishTurn;
     }
 
     public boolean getEndGame(){
@@ -77,25 +60,19 @@ public class GameModel extends Observable implements Serializable {
         return this.currPlayer;
     }
 
-    public void setCurrPlayer(Player player){
-        //Servirà a stabilire il next turn: stabilendo e settando il prossimo giocatore
-        //passeremo automaticamente al prossimo turno
-        this.currPlayer = player;
-        setChangedAndNotifyObservers(Event.CURR_PLAYER);
-    }
-
     public void setMyShelfie(GameBoard gameBoard){
         this.myShelfie = gameBoard;
         setChangedAndNotifyObservers(Event.GAMEBOARD);
     }
 
     public int getPlayersNumber() {
-        return this.playersNumber;
+        return this.chosenPlayersNumber;
     }
 
     public void setPlayersNumber(int playersNumber){
-        this.playersNumber = playersNumber;
-        setChangedAndNotifyObservers(Event.PLAYERS_IN_GAME);
+        if (playersNumber >0 && playersNumber <=maximumNumberPlayers)
+        this.chosenPlayersNumber = playersNumber;
+        notifyObservers(new LobbyMessage((getPlayersNicknames()), this.chosenPlayersNumber));
     }
 
     public void setChairOwner(Player player) {
@@ -129,12 +106,24 @@ public class GameModel extends Observable implements Serializable {
     public void askPlayersNumber() {
 
     }
+
+
+    public List<String> getPlayersNicknames() {
+        List<String> nicknames = new ArrayList<>();
+        for (Player p : playersInGame) {
+            nicknames.add(p.getNickname());
+        }
+        return nicknames;
+    }
     public void reset() {
         chairOwner = null;
         currPlayer= null;
         playersInGame = null;
         myShelfie = null;
         endGame= false;
+    }
+
+    public boolean isNicknameNoTAvailable(String nickname) {
     }
 
    /* public boolean haslaunchTerminate() {

@@ -1,12 +1,12 @@
 package client.view;
-import Network.ClientSide.Client;
-import Observer.*;
+import Observer.ViewObservable;
 import Network.ClientSide.IOManager;
 import server.Controller.GameController;
 import server.Model.GameModel;
 import server.Model.PlayableItemTile;
 import server.Model.Shelf;
 
+import javax.swing.text.View;
 import java.io.PrintStream;
 import java.util.Scanner;
 import java.io.PrintStream;
@@ -15,39 +15,39 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 import java.util.stream.Collectors;
 
-
 public class TUI extends ViewObservable implements View {  //dovrà diventare observable dal client
-    private final PrintStream out = System.out;
+    private final PrintStream out;
     private final Scanner scanner = new Scanner(System.in);
 
     private IOManager viewManager = new IOManager();
 
-    protected final List<ViewObserver> observers = new ArrayList<>();
+    private GameController controller;
 
     private boolean checker = false;
-
+    public TUI(){
+        this.out = System.out;
+    }
     //Implementando il metodo Runnable ereditiamo tutte le sue classi e oggetti
     //Run è un costruttore basilare costruito direttamente dal metodo Runnable al posto di init
-    public void run() {
-        while (true) {
+    @Override
+    public void init() {
+        while(true){
             out.println("Welcome to the game MyShelfie!");
             int portNum = 0;
             String serverAddress = askServerInfo(portNum);
-
-
-            connectToServerFromTUI(serverAddress, portNum);
             String nickname = askNickname();
             out.println("You are the first player of the game! Please, insert the number of total player for the match [min=2, max=4]:");
             int numOfPlayers = askPlayersNumber();
-            scanner.nextLine(); // consume the newline character
+            scanner.nextLine(); // consume the newline charcater
             controller.setnumberOfPlayers(numOfPlayers);
+            connectToServerFromTUI(serverAddress, portNum, nickname, this);
             gameState.addPlayers;
-            while (controller.gameState.equals(addPlayers)) {
+            while(controller.gameState.equals(addPlayers)){
                 for (int i = 1; i <= numOfPlayers; i++) {
                     out.print("Enter nickname for player " + i + ": ");
                     String nickname = askNickname();
                     controller.addPlayer(nickname);
-                }
+            }
                 out.println("Game starting...");
 
                 while (controller.gameState.equals(GameState.FlowGame)) {
@@ -79,7 +79,6 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
                 }
 
                 out.println("Game over!");
-            }
         }
     }
 
@@ -115,7 +114,7 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
         //dovrò fornire a qualcuno serverAddress e serverPort per effettuare il collegamento
     }
     @Override
-    public String askNickname() {
+    public void askNickname() {
         out.println("Enter nickname please: ");
         String nickName = scanner.nextLine();
         notifyObserver(obs -> obs.onUpdateNickname(nickName));
@@ -125,7 +124,7 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
     }
 
     @Override
-    public int askPlayersNumber() {
+    public void askPlayersNumber() {
         int playersNum;
         playersNum = scanner.nextInt();
         while(playersNum<2 || playersNum>4){
@@ -146,6 +145,14 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
 
     @Override
     public void askStopPicking() {
+            out.println("Would you like to keep picking tiles?[Y/N]");
+            String picking = scanner.nextLine();
+            while(picking != "Y" || picking !="N"){
+                out.println("Symbol not recoignized, please try  again...");
+                picking= scanner.nextLine();
+            }
+            notifyObserver(obs-> obs.onUpdateAskKeepPicking(picking));
+        }
 
     }
 
@@ -161,11 +168,6 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
 
     @Override
     public void showLoginResults(boolean nickAccepted, boolean connectionOn, String chosenNickname) {
-
-    }
-
-    @Override
-    public void showLobby(List<String> nicknameList, int numPlayers) {
 
     }
 
@@ -213,22 +215,26 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
 
     }
 
-    public void connectToServerFromTUI(String address, int port){
+    public void resetTUI(){
+        out.println("Cleaning of the textual interface...");
+        out.flush();
+    }
+
+    public void connectToServerFromTUI(String address, int port, String nickname, TUI textualInterface){
         //se implementiamo socket si deve anche definire tipo di connessione
 
         out.println("Per favore, indica il tipo di connessione desiderata [0=RMI, 1=Socket]: ");
         int connectionType = scanner.nextInt();
         try {
             if (connectionType == 0) {
-                observers.add(viewManager.connectRMI(address, port, this));
+                viewManager.connectRMI(address, port, nickname, textualInterface);
             } else {
-                //client = viewManager.connectSocket(address, port, this);
+                viewManager.connectSocket(address, port, nickname, textualInterface);
             }
         }catch (Exception e){
 
         }
     }
-
 
 
 }
