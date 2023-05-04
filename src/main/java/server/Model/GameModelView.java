@@ -33,9 +33,11 @@ public class GameModelView extends Observable<GameModel.Event> implements Observ
 
     public ArrayList<Player> getPlayersInGame(){return this.model.getPlayersInGame();}
 
-    public GameBoard getMyShelfie(){return this.model.getMyShelfie();}
+    public GameBoard getMyShelfie(){
+        return this.model.getMyShelfie();}
 
-    public boolean getEndGame(){return this.model.getEndGame();}
+    public boolean getEndGame(){
+        return this.model.getEndGame();}
 
     @Override
     public void update(GameModel o, GameModel.Event arg) {

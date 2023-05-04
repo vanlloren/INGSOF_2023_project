@@ -18,7 +18,7 @@ import java.util.concurrent.Executors;
 /*
 è un interprete tra la parte di network ed una generica view: riceve i messaggi,definiti nel pacchetto messaggi, li codifica e li passa al network/server
  */
-public class ClientServerController implements ViewObserver, Observer {
+public class ClientServerController extends ViewObserver implements Observer {
 
     private final View view;
 
