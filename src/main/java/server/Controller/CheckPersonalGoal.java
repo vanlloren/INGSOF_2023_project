@@ -800,7 +800,7 @@ public class CheckPersonalGoal {
         return point;
     }
 
-    public static int calculatePoints(PersonalGoal personalGoal, PlayableItemTile[][] structure) {
+    public static Integer calculatePoints(PersonalGoal personalGoal, PlayableItemTile[][] structure) {
         int point = 0;
         switch (personalGoal.getPersonalGoalType()) {
             case PERSONALGOAL1:  point = Personal_goal_1(structure);

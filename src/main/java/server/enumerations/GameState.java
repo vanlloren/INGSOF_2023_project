@@ -7,6 +7,6 @@ public enum GameState {
     LOGIN,
     INIT,
     IN_GAME,
-    END
+    END,
 
 }

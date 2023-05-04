@@ -8,7 +8,7 @@ import java.util.Random;
 
 
 public class RandPersonalGoal {
-    public void setType(Player player,PersonalGoal personalGoal, ArrayList<Player> playersInGame) {
+    public static void setType(Player player,PersonalGoal personalGoal, ArrayList<Player> playersInGame) {
         int cursor = 0;
         do{ Random rand = new Random();
             int n = rand.nextInt(12);

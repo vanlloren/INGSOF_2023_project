@@ -15,11 +15,12 @@ public class GameModel extends Observable implements Serializable {
     private Integer chosenPlayersNumber;
     public static final String Server_Nick = "Server";//C'è un collegamento al server per ogni giocatore.
     public static final int maximumNumberPlayers = 4;
-    //private Player currPlayer;
+    private Player currPlayer;
     //private String matchWinner; possiamo individuarlo attraverso un assaggio logico del giocatore con più punti e poi stabilire
     //Player matchWinner = playerInGame.equals(nickname)
     private final GameBoard myShelfie ;
     private List<Player> playersInGame;
+    private boolean endGame;
     //private boolean endGame=false; Implementando l'enum GameState è possibile verificare lo stato della partita e quindi dell'ultimo turno di gioco
 
     private PlayableItemTile pickTile;
@@ -53,7 +54,7 @@ public class GameModel extends Observable implements Serializable {
     }
 
     public Player getChairOwner() {
-        return chairOwner;
+        return this.chosenChairOwner;
     }
 
     public Player getCurrPlayer(){
@@ -75,8 +76,13 @@ public class GameModel extends Observable implements Serializable {
         notifyObservers(new LobbyMessage((getPlayersNicknames()), this.chosenPlayersNumber));
     }
 
+    public void setCurrPlayer(Player currPlayer){
+        this.currPlayer = currPlayer;
+
+    }
+
     public void setChairOwner(Player player) {
-      this.chairOwner = player;
+      this.chosenChairOwner = player;
         setChangedAndNotifyObservers(Event.CHAIR_OWNER);
     }
 
@@ -84,7 +90,7 @@ public class GameModel extends Observable implements Serializable {
         return this.playersInGame;
     }
 
-    public void setPlayersInGame(java.util.ArrayList<Player> playersInGame) {
+    public void setPlayersInGame(ArrayList<Player> playersInGame) {
         this.playersInGame = playersInGame;
         setChangedAndNotifyObservers(Event.PLAYERS_IN_GAME);
     }
@@ -108,8 +114,8 @@ public class GameModel extends Observable implements Serializable {
     }
 
 
-    public List<String> getPlayersNicknames() {
-        List<String> nicknames = new ArrayList<>();
+    public ArrayList<String> getPlayersNicknames() {
+        ArrayList<String> nicknames = new ArrayList<String>();
         for (Player p : playersInGame) {
             nicknames.add(p.getNickname());
         }
@@ -126,41 +132,6 @@ public class GameModel extends Observable implements Serializable {
     public boolean isNicknameNoTAvailable(String nickname) {
     }
 
-   /* public boolean haslaunchTerminate() {
-        return true;
-    }*/
+
 }
 
-    /*public ArrayList<Player> getTurnOrder(){
-
-    }
-*/
-
-
-
-
-//SEQUENZA CORRETTA GAMEBOARD<-->LIVINGROOM:
-//-creazione
-//-fillLivingRoom (al suo interno avrà multiple chiamate di getNextInGameTile e putNextInGameTile)
-//-updateAvailability
-//----1° turno----
-//-hasAdjacentTiles--->fillLivingRoom--->updateAvailability
-//-getToPlayerFirstTile
-//-checkAdjAvailability
-//-pickedTilesNum
-//-fineTurno/getToPlayerAnotherTile
-//-checkAdjAvailability
-//-pickedTilesNum
-//-fineTurno/getToPlayerAnotherTile
-//-fineTurno
-//-updateAvailability
-//----turno player succ----
-//-hasAdjacentTiles--->fillLivingRoom--->updateAvailability
-//-getToPlayerFirstTile
-//-checkAdjAvailability
-//-fineTurno/getToPlayerAnotherTile
-//-checkAdjAvailability
-//-fineTurno/getToPlayerAnotherTile
-//-fineTurno
-//-updateAvailability
-//----turno player succ----

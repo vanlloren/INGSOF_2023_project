@@ -1,19 +1,17 @@
 package server.Controller;
 import Util.RandCommonGoal;
+import Util.RandPersonalGoal;
 import server.Model.*;
 import Network.ClientSide.*;
 import server.enumerations.GameState;
 import Network.message.*;
 
 
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.Observable;
-import java.util.Observer;
+import java.util.*;
 
 //All'interno di questa classe vi deve essere contenuta tutta la logica che sta dietro al gioco effettivo
 //escluso il settaggio della lobby e la costruzione del gioco quindi solo il pescaggio, l'inserimento ed il conteggio sono le azioni da seguire e tenere sott'occhio
-public class GameController implements Observer {
+public  class GameController implements Observer {
 
     private  GameModel game;
     private final Client client;
@@ -76,21 +74,31 @@ public class GameController implements Observer {
     //metodo per preparare l'inizio della partita: aggiunta giocatori e inizializzazione shelf personali etc..
     public void setUp() {
         /*Set del giocatore e del nickname*/
+
         Player newPlayer = new Player(client.getNickname());
+        RandPersonalGoal.setType(newPlayer, newPlayer.getPersonalGoal(),game.getPlayersInGame());    //Give unique PersonalGoal to player
         game.getPlayersInGame().add(newPlayer);
         game.setPlayersNumber(game.getPlayersNumber());
+
+
     }
 
+
+    /*
+    the following method is called when the number of player has reached the requested number
+    and as a consequence a game board with the right livingRoom (based on numOfPlayers) is created and the commonGoals are being set and prepared for the game
+     */
     public void initGameBoard(){
-        RandCommonGoal randCommonGoal = new RandCommonGoal();
         gameBoardController.setPlayerNum(game.getPlayersNumber());
-        gameBoardController.gameBoardInit();  //inizializza itemBag e livingRoom riempiendola di tessere
+        gameBoardController.gameBoardInit();  //inizializza itemBag e livingRoom
         game.setMyShelfie(gameBoardController.getControlledGameBoard());
-        randCommonGoal.setType(game.getMyShelfie().getLivingRoom().getCommonGoal1(), game.getMyShelfie().getLivingRoom().getCommonGoal2());
+        RandCommonGoal.setType(game.getMyShelfie().getLivingRoom().getCommonGoal1(), game.getMyShelfie().getLivingRoom().getCommonGoal2());
         game.getMyShelfie().getLivingRoom().getCommonGoal1().setTokens(game.getPlayersNumber());
         game.getMyShelfie().getLivingRoom().getCommonGoal2().setTokens(game.getPlayersNumber());
 
     }
+
+
     public ArrayList<PlayableItemTile> pickTilesArray () {  //restituisce le 1/2/3 tiles prese dalla livingRoom dal player nel suo turno
             boolean finish=false;
             ArrayList<PlayableItemTile> tileArray = new ArrayList<PlayableItemTile>();
@@ -157,15 +165,25 @@ public class GameController implements Observer {
                 i = i + addPoint(livingRoom.getCommonGoal2());
                 player.setStatusCommonGoal2();
             }
-            // DILETTA AGGIUNGI METODO CHE AGGIUNGE PUNTI PER LE TUE CARTE  if(!player.)
+            if(player.getPersonalGoal().getPoint()<CheckPersonalGoal.calculatePoints(player.getPersonalGoal(), player.getPersonalShelf().getStructure())){
+                Integer i;
+                Integer x;
+                Integer y;
+                i = player.getPoints();
+                x = CheckPersonalGoal.calculatePoints(player.getPersonalGoal(), player.getPersonalShelf().getStructure());
+                y = player.getPersonalGoal().getPoint();
+                player.getPersonalGoal().setPoint(x);
+                i = i + x - y;
+
+            }
         }
 
 
         public Integer addPoint (CommonGoal commonGoal){
             ArrayList<Integer> token_list = commonGoal.getToken_list();
             Integer i = 0;
-            if (0 < token_list.size()) {
-                i = token_list.get(token_list.size());
+            if (0 <= token_list.size()) {
+                i = token_list.get(token_list.size()-1);
                 token_list.remove(token_list.size() - 1);
             }
             return i;
