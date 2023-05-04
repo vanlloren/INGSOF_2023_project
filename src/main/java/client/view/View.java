@@ -1,14 +1,12 @@
 package client.view;
 
-import Network.message.MessageEnumeration;
-import server.Model.ItemTile;
 import server.Model.PlayableItemTile;
 import server.Model.Shelf;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public interface view {
+public interface View {
 
     String askServerInfo(int portNum);
     //richiede al giocatore d'indicare il nickName

@@ -18,9 +18,7 @@ public class ClientApp {
             TUI view = new TUI();
             // ClientController clientcontroller = new ClientController(view);
             // view.addObserver(clientcontroller);
-            view.run();
-            model.addObserver(view);
-            view.addObserver(controller);
+            view.init();
         } else {
             //eventuale gestione apertura GUI
         }

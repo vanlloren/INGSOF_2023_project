@@ -2,6 +2,7 @@ package Network.ClientSide;
 
 import Network.ServerSide.RemoteServerInterface;
 import Network.message.Message;
+import Observer.Observer;
 import Observer.ViewObserver;
 import client.view.TUI;
 import client.view.View;
@@ -11,7 +12,7 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
-public class RemoteClientImplementation extends Client, ViewObserver implements RemoteClientInterface{
+public class RemoteClientImplementation extends Client implements RemoteClientInterface, ViewObserver {
 
     private RemoteServerInterface server;
 
@@ -22,9 +23,7 @@ public class RemoteClientImplementation extends Client, ViewObserver implements 
     public void connectionInit() throws Exception {
         Registry registry = LocateRegistry.getRegistry(getServerAddress(), getPortNum());
         server = (RemoteServerInterface) registry.lookup("MyShelfieServer");
-
         server.handShake(this);
-
     }
 
     @Override
@@ -44,6 +43,11 @@ public class RemoteClientImplementation extends Client, ViewObserver implements 
 
     @Override
     public void disconnect() throws RemoteException {
+
+    }
+
+    @Override
+    public void update(Message message) {
 
     }
 }

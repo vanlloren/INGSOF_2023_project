@@ -10,6 +10,7 @@ import java.rmi.server.UnicastRemoteObject;
 public class RemoteServerImplementation extends UnicastRemoteObject implements RemoteServerInterface {
     private final RMIServer server;
     private RMIConnection rmiStream;
+    private RemoteClientInterface client;
 
     RemoteServerImplementation(RMIServer server) throws RemoteException {
         this.server = server;
@@ -31,6 +32,11 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
         rmiStream.disconnection();
     }
 
+    @Override
+    public boolean handShake(RemoteClientInterface client) {
+        this.client = client;
+        return true;
+    }
 
 
     //implementazione metodi di RemoteServerInterface

@@ -1,12 +1,12 @@
 package client.view;
-import Observer.ViewObservable;
+import Observer.*;
 import Network.ClientSide.IOManager;
 import server.Controller.GameController;
 import server.Model.GameModel;
 import server.Model.PlayableItemTile;
 import server.Model.Shelf;
 
-import javax.swing.text.View;
+
 import java.io.PrintStream;
 import java.util.Scanner;
 import java.io.PrintStream;
@@ -21,7 +21,7 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
 
     private IOManager viewManager = new IOManager();
 
-    private GameController controller;
+    protected final List<ViewObserver> observers = new ArrayList<>();
 
     private boolean checker = false;
     public TUI(){
@@ -29,25 +29,25 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
     }
     //Implementando il metodo Runnable ereditiamo tutte le sue classi e oggetti
     //Run è un costruttore basilare costruito direttamente dal metodo Runnable al posto di init
-    @Override
     public void init() {
-        while(true){
+        while (true) {
             out.println("Welcome to the game MyShelfie!");
             int portNum = 0;
             String serverAddress = askServerInfo(portNum);
+            connectToServerFromTUI(serverAddress, portNum);
+
             String nickname = askNickname();
             out.println("You are the first player of the game! Please, insert the number of total player for the match [min=2, max=4]:");
             int numOfPlayers = askPlayersNumber();
-            scanner.nextLine(); // consume the newline charcater
+            scanner.nextLine(); // consume the newline character
             controller.setnumberOfPlayers(numOfPlayers);
-            connectToServerFromTUI(serverAddress, portNum, nickname, this);
             gameState.addPlayers;
-            while(controller.gameState.equals(addPlayers)){
+            while (controller.gameState.equals(addPlayers)) {
                 for (int i = 1; i <= numOfPlayers; i++) {
                     out.print("Enter nickname for player " + i + ": ");
                     String nickname = askNickname();
                     controller.addPlayer(nickname);
-            }
+                }
                 out.println("Game starting...");
 
                 while (controller.gameState.equals(GameState.FlowGame)) {
@@ -79,6 +79,7 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
                 }
 
                 out.println("Game over!");
+            }
         }
     }
 
@@ -172,6 +173,11 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
     }
 
     @Override
+    public void showLobby(List<String> nicknameList, int numPlayers) {
+
+    }
+
+    @Override
     public void showPlayersList(List<String> playersList) {
 
     }
@@ -215,21 +221,32 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
 
     }
 
+    @Override
+    public void showDefaultMessage(String defaultMessage) {
+
+    }
+
+    @Override
+    public void showMatchSituation(List<String> actualPlayers, List<Shelf> actualShelf, String actualPlayerNickname) {
+
+    }
+
     public void resetTUI(){
         out.println("Cleaning of the textual interface...");
         out.flush();
     }
 
-    public void connectToServerFromTUI(String address, int port, String nickname, TUI textualInterface){
+    public void connectToServerFromTUI(String address, int port){
         //se implementiamo socket si deve anche definire tipo di connessione
 
         out.println("Per favore, indica il tipo di connessione desiderata [0=RMI, 1=Socket]: ");
         int connectionType = scanner.nextInt();
         try {
             if (connectionType == 0) {
-                viewManager.connectRMI(address, port, nickname, textualInterface);
+                observers.add(viewManager.connectRMI(address, port, this));
+                out.println("Connessione col Server riuscita!");
             } else {
-                viewManager.connectSocket(address, port, nickname, textualInterface);
+                //observers.add(viewManager.connectSocket(address, port, this));
             }
         }catch (Exception e){
 

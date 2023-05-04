@@ -1,6 +1,6 @@
 package server.Controller;
 
-import client.view.VirtualView;
+import client.view.View;
 import server.Model.GameModel;
 import server.enumerations.TypePhase;
 

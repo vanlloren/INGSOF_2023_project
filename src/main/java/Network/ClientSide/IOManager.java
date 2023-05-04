@@ -1,9 +1,10 @@
 package Network.ClientSide;
 
+import Observer.ViewObserver;
 import client.view.TUI;
 import client.view.View;
 
-public class IOManager {
+public class IOManager{
     private Client client;
 
 

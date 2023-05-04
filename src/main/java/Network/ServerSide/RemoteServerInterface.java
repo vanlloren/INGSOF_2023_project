@@ -1,5 +1,6 @@
 package Network.ServerSide;
 
+import Network.ClientSide.RemoteClientImplementation;
 import Network.ClientSide.RemoteClientInterface;
 import Network.message.Message;
 
@@ -18,4 +19,8 @@ public interface RemoteServerInterface extends Remote {
     public void onMessage(Message message) throws RemoteException;
 
     public void disconnect() throws RemoteException;
+
+    public boolean handShake(RemoteClientInterface client);
+
+
 }
