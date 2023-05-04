@@ -1,7 +1,9 @@
 package client.view;
 
+import Network.message.MessageEnumeration;
 import server.Model.ItemTile;
 import server.Model.PlayableItemTile;
+import server.Model.Shelf;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,4 +58,8 @@ public interface view {
     void showDisconnectionMessage(String disconnectedPlayerNickname, String disconnectionMessage);
 
     void showErrorMessage(String errorMessage);
+
+    void showDefaultMessage( String defaultMessage);
+
+    void showMatchSituation(List<String> actualPlayers, List<Shelf> actualShelf, String actualPlayerNickname);
 }
