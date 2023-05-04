@@ -7,6 +7,6 @@ public class LoginRequestMessage extends Message {
 
     @Override
     public String toString(){
-        return "LoginRequest{" + "nicknaem = " + getNickname() + '}';
+        return "LoginRequest{" + "nickname = " + getNickname() + '}';
     }
 }

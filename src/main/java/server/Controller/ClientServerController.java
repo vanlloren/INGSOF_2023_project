@@ -44,9 +44,7 @@ public class ClientServerController implements ViewObserver, Observer {
         client.sendMessage(new LoginRequestMessage(this.nickname));
 
     }
-    public void onUpdatePlayersNumber(int playersNumber) {
-        client.sendMessage(new PlayersNumberReplyMessage(this.nickname, playersNumber));
-    }
+
 
     @Override
     public void update(Message message) {

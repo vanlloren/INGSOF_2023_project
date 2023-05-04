@@ -26,7 +26,7 @@ public class GameModel extends Observable implements Serializable {
 
     private PlayableItemTile putTile;
 
-    private GameModel(){
+    public GameModel(){
         this.myShelfie = new GameBoard();
         this.playersInGame = new ArrayList<>();
     }

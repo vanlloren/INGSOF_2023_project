@@ -8,10 +8,12 @@ import java.util.List;
 
 public interface View {
 
-    String askServerInfo(int portNum);
+    String askServerInfo();
+
+    int askServerPort();
     //richiede al giocatore d'indicare il nickName
     //è il server che poi si occupa di verificare che sia univoco
-    String askNickname();
+    void askNickname();
 
     //se il player è il primo a collegarsi al server, è lui che crea la partita
     //il server dunque gli chiede quanti giocatori far partecipare

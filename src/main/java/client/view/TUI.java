@@ -8,6 +8,7 @@ import server.Model.Shelf;
 
 
 import java.io.PrintStream;
+import java.rmi.RemoteException;
 import java.util.Scanner;
 import java.io.PrintStream;
 import java.util.*;
@@ -19,7 +20,7 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
     private final PrintStream out;
     private final Scanner scanner = new Scanner(System.in);
 
-    private IOManager viewManager = new IOManager();
+    private final IOManager viewManager = new IOManager();
 
     protected final List<ViewObserver> observers = new ArrayList<>();
 
@@ -32,11 +33,13 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
     public void init() {
         while (true) {
             out.println("Welcome to the game MyShelfie!");
-            int portNum = 0;
-            String serverAddress = askServerInfo(portNum);
+
+            String serverAddress = askServerInfo();
+            int portNum = askServerPort();
+
             connectToServerFromTUI(serverAddress, portNum);
 
-            String nickname = askNickname();
+            askNickname();
             out.println("You are the first player of the game! Please, insert the number of total player for the match [min=2, max=4]:");
             int numOfPlayers = askPlayersNumber();
             scanner.nextLine(); // consume the newline character
@@ -84,7 +87,7 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
     }
 
     @Override
-    public String askServerInfo(int portNum){
+    public String askServerInfo(){
         out.println("Per favore, inserisci alcune informazioni:");
         String serverAddress;
         do {
@@ -99,27 +102,37 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
             }
         }while(!checker);
 
+        return serverAddress;
+        //dovrò fornire a qualcuno serverAddress e serverPort per effettuare il collegamento
+    }
+
+    public int askServerPort() {
         do {
             out.println("Inserisci la porta del Server [default = ??]:");
             //effettuo check validità su in.nextLine();
-            portNum = in.nextInt();
-            if(checkPortValidity(portNum)){
+            int portNum = scanner.nextInt();
+            if (checkPortValidity(portNum)) {
                 checker = true;
-            }else{
+            } else {
                 out.println("Porta del server non valida!");
                 checker = false;
             }
-        }while(!checker);
+        } while (!checker);
 
-        return serverAddress;
-        //dovrò fornire a qualcuno serverAddress e serverPort per effettuare il collegamento
+        return portNum;
     }
     @Override
     public void askNickname() {
         out.println("Enter nickname please: ");
         String nickName = scanner.nextLine();
-        notifyObserver(obs -> obs.onUpdateNickname(nickName));
-        //dovrò fornire nickName al server in qualche modo per il controllo dell'univocità
+        notifyObserver(obs -> {
+            try {
+                obs.onUpdateNickname(nickName);
+            } catch (RemoteException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
         out.println("Il nickname scelto è: " + nickName);
 
     }

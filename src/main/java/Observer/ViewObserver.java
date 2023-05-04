@@ -1,7 +1,8 @@
 package Observer;
+import java.rmi.RemoteException;
 import java.util.List;
 import java.util.Map;
-public abstract class ViewObserver {
+public interface ViewObserver {
 
     /**
      * Create a new connection to the server with the updated info.
@@ -15,7 +16,7 @@ public abstract class ViewObserver {
      *
      * @param nickname the nickname to be sent.
      */
-     void onUpdateNickname(String nickname);
+     void onUpdateNickname(String nickname) throws RemoteException;
 
     /**
      * Sends a message to the server with the updated choice of keep picking tiles.

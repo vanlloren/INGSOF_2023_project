@@ -1,5 +1,8 @@
 package Network.ServerSide;
 
+import server.Controller.GameController;
+import server.Model.GameModel;
+
 import java.io.PrintStream;
 import java.util.Scanner;
 
@@ -15,7 +18,9 @@ public class ServerApp {
         out.println("Welcome to MyShelfie, you're about to create a new Server which will run MyShelfie!");
         out.println("Please, decide on which port you would like to run the RMIServer:");
         int serverPort = scanner.nextInt();
-        RMIServer remoteServer = new RMIServer(serverPort);
+        GameModel gameModel = new GameModel();
+        GameController gameController = new GameController(gameModel);
+        RMIServer remoteServer = new RMIServer(serverPort, gameController);
         remoteServer.startRMIServer();
 
 

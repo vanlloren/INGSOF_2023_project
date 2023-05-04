@@ -2,6 +2,8 @@ package Network.ServerSide;
 
 import Network.ClientSide.RemoteClientInterface;
 import Network.message.*;
+import Observer.Observer;
+import server.Controller.GameController;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -12,8 +14,11 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
     private RMIConnection rmiStream;
     private RemoteClientInterface client;
 
-    RemoteServerImplementation(RMIServer server) throws RemoteException {
+    private GameController gameController;
+
+    RemoteServerImplementation(RMIServer server, GameController gameController) throws RemoteException {
         this.server = server;
+        this.gameController = gameController;
     }
 
     @Override
@@ -24,7 +29,12 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
 
     @Override
     public void onMessage(Message message) throws RemoteException {
-        server.onMessage(message);
+        //server.onMessage(message);
+        switch (message.getMessageEnumeration()){
+            case LOGIN_REQUEST -> {
+                gameController.
+            }
+        }
     }
 
     @Override

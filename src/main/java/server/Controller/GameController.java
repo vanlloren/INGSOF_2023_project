@@ -16,7 +16,6 @@ import java.util.Observer;
 public class GameController implements Observer {
 
     private  GameModel game;
-    private final Client client;
   //  private boolean timeOut;
     private final GameBoardController gameBoardController = new GameBoardController(); // gameBoardController è il tramite tra GameController e le classi GameBoard, LivingRoom e ItemBag
     private transient Map<String ,VirtualView> virtualViewMap;
@@ -33,9 +32,8 @@ public class GameController implements Observer {
     private GameState gameState;
     private TurnController turnController;
 
-    public GameController(GameModel game,Client client) {
+    public GameController(GameModel game) {
         this.game = game;
-        this.client = client;
     }
 /*
     public GameModel getGame() {

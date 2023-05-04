@@ -9,7 +9,7 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.*;
 
-public abstract class Client extends UnicastRemoteObject {
+public abstract class Client extends UnicastRemoteObject implements ViewObserver {
 
     private String nickname;
     private final String serverAddress;
