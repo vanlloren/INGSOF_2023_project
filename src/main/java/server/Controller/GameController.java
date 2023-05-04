@@ -1,15 +1,13 @@
 package server.Controller;
 import Util.RandCommonGoal;
+import client.view.VirtualView;
 import server.Model.*;
 import Network.ClientSide.*;
 import server.enumerations.GameState;
 import Network.message.*;
 
 
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.Observable;
-import java.util.Observer;
+import java.util.*;
 
 //All'interno di questa classe vi deve essere contenuta tutta la logica che sta dietro al gioco effettivo
 //escluso il settaggio della lobby e la costruzione del gioco quindi solo il pescaggio, l'inserimento ed il conteggio sono le azioni da seguire e tenere sott'occhio
@@ -19,7 +17,7 @@ public class GameController implements Observer {
     private final Client client;
   //  private boolean timeOut;
     private final GameBoardController gameBoardController = new GameBoardController(); // gameBoardController è il tramite tra GameController e le classi GameBoard, LivingRoom e ItemBag
-    private transient Map<String ,VirtualView> virtualViewMap;
+    private transient Map<String , VirtualView> virtualViewMap;
     /*
     Il comando dichiara un campo della classe come transient,
     il che significa che il campo non sarà incluso nella serializzazione
@@ -34,7 +32,7 @@ public class GameController implements Observer {
     private TurnController turnController;
 
     public GameController(GameModel game,Client client) {
-        this.game = game;
+        this.game = game.getInstance();
         this.client = client;
     }
 /*
@@ -44,8 +42,13 @@ public class GameController implements Observer {
 */
     //metodo per avviare sessione gioco
     public void initGameController() {
-        this.game = GameModel.getInstance();
+        this.game = game.getInstance();
         setGameState(GameState.LOGIN);
+        this.virtualViewMap = Collections.synchronizedMap(new HashMap<>());
+        setGameState(gameState.LOGIN);
+    }
+    private void setgameState(GameState gameState) {
+        this.gameState = gameState;
     }
 
     public void onMessageReceived(Message receivedMessage) {
@@ -53,20 +56,12 @@ public class GameController implements Observer {
         VirtualView virtualView = virtualViewMap.get(receivedMessage.getNickname());
         switch (gameState) {
             case LOGIN:
-                loginState(receivedMessage);
                 break;
             case INIT:
-                if (inputController.checkUser(receivedMessage)) {
-                    initState(receivedMessage, virtualView);
-                }
                 break;
             case IN_GAME:
-                if (inputController.checkUser(receivedMessage)) {
-                    inGameState(receivedMessage);
-                }
                 break;
-            default: // Should never reach this condition
-                Server.LOGGER.warning(STR_INVALID_STATE);
+            default: // Non si dovrebbe mai raggiungere questa situazione ma va inclusa nei possibili errori
                 break;
         }
     }
@@ -171,15 +166,12 @@ public class GameController implements Observer {
             return i;
         }
 
-    public void update(Client o, GameModel.Event arg) {
-        if (!o.equals(client)) {
-            System.err.println("Discarding notification from " + o);
-            return;
+    public void broadcastGenericMessage(String messageToNotify) {
+        for (VirtualView vv : virtualViewMap.values()) {
+            vv.showDefaultMessage(messageToNotify);
         }
-        arg.equals(GameModel.Event.PLAYERS_IN_GAME);
-        game.setPlayersInGame(arg)
-        initGame();
     }
+
 //Sono interessato a ricevere notifiche solo dalla TextualUI/GraphicalUI
 }
 

@@ -1,4 +1,6 @@
 package Network.message;
+import server.Model.GameModel;
+
 import java.util.List;
 public class LobbyMessage extends Message{
     private static final long serialVersionUID = -8L;
@@ -6,7 +8,7 @@ public class LobbyMessage extends Message{
     private final int maxPlayers;
 
     public LobbyMessage(List<String> nicknameList, int maxPlayers) {
-        super(Game.SERVER_NICKNAME, MessageEnumeration.LOBBY);
+        super(GameModel.Server_Nick, MessageEnumeration.LOBBY);
         this.nicknameList = nicknameList;
         this.maxPlayers = maxPlayers;
     }

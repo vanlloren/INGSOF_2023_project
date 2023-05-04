@@ -18,6 +18,7 @@ public enum MessageEnumeration {
 
         //utility:
         GAME_LOAD,
+        DEFAULT_MESSAGGE,
         MATCH_INFO,
         ERROR,
         PERSISTENCE

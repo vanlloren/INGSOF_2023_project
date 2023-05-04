@@ -23,9 +23,6 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
 
     private GameController controller;
 
-    public TUI(GameController controller){
-        this.controller = controller;
-    }
     private boolean checker = false;
     public TUI(){
         this.out = System.out;
@@ -33,7 +30,7 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
     //Implementando il metodo Runnable ereditiamo tutte le sue classi e oggetti
     //Run è un costruttore basilare costruito direttamente dal metodo Runnable al posto di init
     @Override
-    public void run() {
+    public void init() {
         while(true){
             out.println("Welcome to the game MyShelfie!");
             int portNum = 0;
@@ -148,6 +145,14 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
 
     @Override
     public void askStopPicking() {
+            out.println("Would you like to keep picking tiles?[Y/N]");
+            String picking = scanner.nextLine();
+            while(picking != "Y" || picking !="N"){
+                out.println("Symbol not recoignized, please try  again...");
+                picking= scanner.nextLine();
+            }
+            notifyObserver(obs-> obs.onUpdateAskKeepPicking(picking));
+        }
 
     }
 
@@ -208,6 +213,11 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
     @Override
     public void showErrorMessage(String errorMessage) {
 
+    }
+
+    public void resetTUI(){
+        out.println("Cleaning of the textual interface...");
+        out.flush();
     }
 
     public void connectToServerFromTUI(String address, int port, String nickname, TUI textualInterface){
