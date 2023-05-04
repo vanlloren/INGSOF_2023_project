@@ -1,30 +1,34 @@
 package Network.ClientSide;
 
 import Network.ServerSide.RemoteServerInterface;
+import Network.message.Message;
+import Observer.ViewObserver;
+import client.view.TUI;
+import client.view.View;
 
 import java.io.IOException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
-public class RemoteClientImplementation extends Client implements RemoteClientInterface{
+public class RemoteClientImplementation extends Client, ViewObserver implements RemoteClientInterface{
 
     private RemoteServerInterface server;
 
-    RemoteClientImplementation(String address, int port, String username) throws RemoteException {
-        super(username, address, port);
+    RemoteClientImplementation(String address, int port, View userInterface) throws RemoteException {
+        super(address, port, userInterface);
     }
     @Override
     public void connectionInit() throws Exception {
         Registry registry = LocateRegistry.getRegistry(getServerAddress(), getPortNum());
         server = (RemoteServerInterface) registry.lookup("MyShelfieServer");
 
-        server.login(getNickname(), this);
+        server.handShake(this);
 
     }
 
     @Override
-    public void sendGameMessage(GameMessage message) throws IOException {
+    public void sendMessage(Message message) throws IOException {
 
     }
 
@@ -34,7 +38,7 @@ public class RemoteClientImplementation extends Client implements RemoteClientIn
     }
 
     @Override
-    public void onMessage(GameMessage message) throws RemoteException {
+    public void onMessage(Message message) throws RemoteException {
 
     }
 

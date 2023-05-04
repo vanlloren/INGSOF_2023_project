@@ -1,16 +1,17 @@
 package Network.ServerSide;
 
 import Network.ClientSide.RemoteClientInterface;
+import Network.message.*;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
 
 public class RemoteServerImplementation extends UnicastRemoteObject implements RemoteServerInterface {
-    private final Server server;
+    private final RMIServer server;
     private RMIConnection rmiStream;
 
-    RemoteServerImplementation(Server server) throws RemoteException {
+    RemoteServerImplementation(RMIServer server) throws RemoteException {
         this.server = server;
     }
 
@@ -21,7 +22,7 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
     }
 
     @Override
-    public void onMessage(GameMessage message) throws RemoteException {
+    public void onMessage(Message message) throws RemoteException {
         server.onMessage(message);
     }
 

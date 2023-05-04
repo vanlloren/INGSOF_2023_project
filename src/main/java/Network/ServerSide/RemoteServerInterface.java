@@ -1,6 +1,7 @@
 package Network.ServerSide;
 
 import Network.ClientSide.RemoteClientInterface;
+import Network.message.Message;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
@@ -14,7 +15,7 @@ public interface RemoteServerInterface extends Remote {
 
     public void logIntoServer(String nickname, RemoteClientInterface client) throws RemoteException;
 
-    public void onMessage(GameMessage message) throws RemoteException;
+    public void onMessage(Message message) throws RemoteException;
 
     public void disconnect() throws RemoteException;
 }

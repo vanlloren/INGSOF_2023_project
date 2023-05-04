@@ -1,17 +1,19 @@
 package Network.ClientSide;
 
 import client.view.TUI;
+import client.view.View;
 
 public class IOManager {
     private Client client;
 
 
-    public void connectRMI(String address, int port, String nickname, TUI textualInterface) throws Exception{
-        client = new RemoteClientImplementation(address, port, nickname);
+    public Client connectRMI(String address, int port, View userInterface) throws Exception{
+        client = new RemoteClientImplementation(address, port, userInterface);
         client.connectionInit();
+        return client;
     }
 
-    public void connectSocket(String address, int port, String nickname, TUI textualInterface) throws Exception{
+   // public Client connectSocket(String address, int port, View userInterface) throws Exception{
         //// andrà gestita la connessione a un clientSocket
-    }
+    //}
 }

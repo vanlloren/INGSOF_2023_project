@@ -7,17 +7,15 @@ import java.rmi.registry.Registry;
 
 //
 public class RMIServer {
-    private final Server server;
     private final int serverRMIPort;
 
-    RMIServer(Server server, int port){
-        this.server = server;
+    RMIServer(int port){
         this.serverRMIPort = port;
     }
 
     public void startRMIServer(){
         try{
-            RemoteServerImplementation remoteServer = new RemoteServerImplementation(server);
+            RemoteServerImplementation remoteServer = new RemoteServerImplementation(this);
             Registry registry = LocateRegistry.createRegistry(serverRMIPort);
             registry.bind("MyShelfieServer", remoteServer);
         }catch (AlreadyBoundException e) {

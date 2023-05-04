@@ -1,16 +1,17 @@
 package Network.ServerSide;
 
 import Network.ClientSide.RemoteClientInterface;
+import Network.message.Message;
 
 import java.rmi.RemoteException;
 
 public class RMIConnection {
-    private Server server;
+    private ServerApp server;
     private RemoteClientInterface client;
 
     private boolean isConnected = true;
 
-    RMIConnection(Server server, RemoteClientInterface client){
+    RMIConnection(ServerApp server, RemoteClientInterface client){
         this.server = server;
         this.client = client;
     }
@@ -19,7 +20,7 @@ public class RMIConnection {
         return isConnected;
     }
 
-    public void sendMessage(GameMessage message) throws RemoteException {
+    public void sendMessage(Message message) throws RemoteException {
         client.onMessage(message);
     }
 

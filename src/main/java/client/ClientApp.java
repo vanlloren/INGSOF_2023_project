@@ -5,7 +5,7 @@ import client.view.TUI;
 public class ClientApp {
     public static void main(String[] args) {
 
-        boolean cliSelector = false; // defualt è false, se vogliamo usare anche gui si può cambiare
+        boolean cliSelector = true; // defualt è true, se vogliamo usare anche gui si può cambiare
 
         for (String arg : args) {
             if (arg.equals("--cli")) {
@@ -18,7 +18,7 @@ public class ClientApp {
             TUI view = new TUI();
             // ClientController clientcontroller = new ClientController(view);
             // view.addObserver(clientcontroller);
-            view.init();
+            view.run();
             model.addObserver(view);
             view.addObserver(controller);
         } else {

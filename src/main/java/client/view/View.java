@@ -1,12 +1,11 @@
 package client.view;
 
-import server.Model.ItemTile;
 import server.Model.PlayableItemTile;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public interface view {
+public interface View {
 
     String askServerInfo(int portNum);
     //richiede al giocatore d'indicare il nickName
@@ -15,7 +14,7 @@ public interface view {
 
     //se il player è il primo a collegarsi al server, è lui che crea la partita
     //il server dunque gli chiede quanti giocatori far partecipare
-    void askPlayersNumber();
+    int askPlayersNumber();
 
     //chiede al player la posizione nella livingRoom della tessera da spostare
     void askMovingTilePosition(ArrayList<PlayableItemTile> availableTiles);
