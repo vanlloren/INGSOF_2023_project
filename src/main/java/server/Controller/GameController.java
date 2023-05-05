@@ -33,15 +33,19 @@ public  class GameController implements Observer {
     public GameController(GameModel game) {
         this.game = game;
     }
-/*
+
     public GameModel getGame() {
         return this.game;
     }
-*/
+
     //metodo per avviare sessione gioco
     public void initGameController() {
         this.game = GameModel.getInstance();
         setGameState(GameState.LOGIN);
+    }
+
+    public GameBoardController getGameBoardController(){
+        return this.gameBoardController;
     }
 
     public void onMessageReceived(Message receivedMessage) {
@@ -87,7 +91,6 @@ public  class GameController implements Observer {
     and as a consequence a game board with the right livingRoom (based on numOfPlayers) is created and the commonGoals are being set and prepared for the game
      */
     public void initGameBoard(){
-        gameBoardController.setPlayerNum(game.getPlayersNumber());
         gameBoardController.gameBoardInit();  //inizializza itemBag e livingRoom
         game.setMyShelfie(gameBoardController.getControlledGameBoard());
         RandCommonGoal.setType(game.getMyShelfie().getLivingRoom().getCommonGoal1(), game.getMyShelfie().getLivingRoom().getCommonGoal2());

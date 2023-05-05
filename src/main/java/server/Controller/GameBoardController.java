@@ -14,6 +14,8 @@ public class GameBoardController {
     private LivingRoom controlledLivingRoom;
 
     private int playerNum;
+    boolean stopPicking = false;
+    boolean moveOn = false;
 
     public void setPlayerNum(int playerNum){
         this.playerNum = playerNum;
@@ -31,17 +33,25 @@ public class GameBoardController {
         this.controlledLivingRoom.updateAvailability();
     }
 
+    public void setStopPicking(){stopPicking = true;}
+
+    public void setMoveOn(){moveOn = true;}
+
     public ArrayList<PlayableItemTile> PickManager(int x, int y, boolean finish){
-        boolean stop=false;
-        controlledLivingRoom.updateAvailability();
+
+        controlledLivingRoom.updateAvailability(); //errore
 
         if(controlledGameBoard.getPickedTilesNum()==0){
             if(checkTileAvailability(x,y)){
                 controlledGameBoard.setToPlayerFirstTile(x,y);
 
                 //chiedo al player se vuole smettere di pescare
+                moveOn = false;
+                while(!moveOn){
+                }
+
                 //stop=decisione player
-                if(stop){
+                if(stopPicking){
                     finish=true;
                     controlledLivingRoom.updateAvailability();
                     if(!checkIfAdjacentTiles()){
@@ -59,7 +69,11 @@ public class GameBoardController {
 
                     //chiedo al player se vuole smettere di pescare
                     //stop=decisione player
-                    if(stop){
+                    moveOn = false;
+                    while(!moveOn){
+                    }
+
+                    if(stopPicking){
                         finish=true;
                         controlledLivingRoom.updateAvailability();
                         if(!checkIfAdjacentTiles()){
@@ -80,7 +94,11 @@ public class GameBoardController {
 
                     //chiedo al player se vuole smettere di pescare
                     //stop=decisione player
-                    if(stop){
+                    moveOn = false;
+                    while(!moveOn){
+                    }
+
+                    if(stopPicking){
                         controlledLivingRoom.updateAvailability();
                         if(!checkIfAdjacentTiles()){
                             livingRoomFiller();

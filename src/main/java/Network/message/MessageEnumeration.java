@@ -7,6 +7,8 @@ public enum MessageEnumeration {
         LOGIN_REQUEST, LOGIN_REPLY,
         PLAYERNUMBER_REQUEST, PLAYERNUMBER_REPLY,
         LOBBY,
+
+        KEEP_PICKING_REPLY,
         PICK_CHAI_OWNER,
         LIVINGROOM,
         PERSONAL_GOAL_LIST,

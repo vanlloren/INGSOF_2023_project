@@ -1,8 +1,6 @@
 package client.view;
 import Observer.*;
 import Network.ClientSide.IOManager;
-import server.Controller.GameController;
-import server.Model.GameModel;
 import server.Model.PlayableItemTile;
 import server.Model.Shelf;
 
@@ -10,11 +8,7 @@ import server.Model.Shelf;
 import java.io.PrintStream;
 import java.rmi.RemoteException;
 import java.util.Scanner;
-import java.io.PrintStream;
 import java.util.*;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.FutureTask;
-import java.util.stream.Collectors;
 
 public class TUI extends ViewObservable implements View {  //dovrà diventare observable dal client
     private final PrintStream out;
@@ -40,8 +34,7 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
             connectToServerFromTUI(serverAddress, portNum);
 
             askNickname();
-            out.println("You are the first player of the game! Please, insert the number of total player for the match [min=2, max=4]:");
-            int numOfPlayers = askPlayersNumber();
+
             scanner.nextLine(); // consume the newline character
             controller.setnumberOfPlayers(numOfPlayers);
             gameState.addPlayers;
@@ -140,6 +133,9 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
     @Override
     public void askPlayersNumber() {
         int playersNum;
+
+        out.println("Nickname accepted!");
+        out.println("You are the first player of the game! Please, insert the number of total player for the match [min=2, max=4]:");
         playersNum = scanner.nextInt();
         while(playersNum<2 || playersNum>4){
             out.println("The number of player is not valid!\n");
@@ -147,14 +143,19 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
             playersNum = scanner.nextInt();
         }
             int finalPlayersNum = playersNum;
-            notifyObserver(obs -> obs.onUpdatePlayersNumber(finalPlayersNum));
+            notifyObserver(obs -> {
+                try {
+                    obs.onUpdatePlayersNumber(finalPlayersNum);
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
+            });
         //dovrò fornire playersNum al server in qualche modo
         out.println("The number of players for the game will be: " + playersNum);
     }
 
     @Override
-    public void askMovingTilePosition(ArrayList<PlayableItemTile> availableTiles) {
-
+    public void askMovingTilePosition(ArrayList<PlayableItemTile> availableTiles){
     }
 
     @Override
@@ -165,10 +166,11 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
                 out.println("Symbol not recoignized, please try  again...");
                 picking= scanner.nextLine();
             }
-            notifyObserver(obs-> obs.onUpdateAskKeepPicking(picking));
-        }
-
+        String finalPicking = picking;
+        notifyObserver(obs-> obs.onUpdateAskKeepPicking(finalPicking));
     }
+
+
 
     @Override
     public void askTileToPut(ArrayList<PlayableItemTile> tilesInPlayerHand) {
@@ -181,7 +183,13 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
     }
 
     @Override
-    public void showLoginResults(boolean nickAccepted, boolean connectionOn, String chosenNickname) {
+    public void showLoginResults(boolean nickAccepted, String chosenNickname) {
+        if(nickAccepted){
+            out.println("Login successful, nickname accepted!");
+        }else{
+            out.println("Nickname already chosen, choose another nickname!");
+            askNickname();
+        }
 
     }
 

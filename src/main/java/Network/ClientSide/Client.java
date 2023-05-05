@@ -15,7 +15,7 @@ public abstract class Client extends UnicastRemoteObject implements ViewObserver
     private final String serverAddress;
     private final int portNum;
 
-    private final View userInterface;
+    protected final View userInterface;
     private final ArrayList<Message> messageQueue;
 
     public Client(String serverAddress, int portNum, View userInterface) throws RemoteException{

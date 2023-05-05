@@ -52,4 +52,6 @@ public abstract class ViewObservable {
             lambda.accept(observer);
         }
     }
+
+
 }

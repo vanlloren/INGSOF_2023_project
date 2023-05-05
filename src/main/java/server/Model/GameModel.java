@@ -90,8 +90,8 @@ public class GameModel extends Observable implements Serializable {
         return this.playersInGame;
     }
 
-    public void setPlayersInGame(ArrayList<Player> playersInGame) {
-        this.playersInGame = playersInGame;
+    public void setPlayersInGame(Player newPlayer) {
+        this.playersInGame.add(newPlayer);
         setChangedAndNotifyObservers(Event.PLAYERS_IN_GAME);
     }
 
@@ -129,7 +129,15 @@ public class GameModel extends Observable implements Serializable {
         endGame= false;
     }
 
-    public boolean isNicknameNoTAvailable(String nickname) {
+    public boolean isNicknameAvailable(String nickname) {
+        for (Player p: playersInGame
+             ) {
+            if(p.getNickname() == nickname){
+                return false;
+            }
+        }
+
+        return true;
     }
 
 

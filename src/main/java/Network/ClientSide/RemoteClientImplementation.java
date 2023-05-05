@@ -1,9 +1,7 @@
 package Network.ClientSide;
 
 import Network.ServerSide.RemoteServerInterface;
-import Network.message.LoginRequestMessage;
-import Network.message.Message;
-import Network.message.PlayersNumberReplyMessage;
+import Network.message.*;
 import Observer.Observer;
 import Observer.ViewObserver;
 import client.view.TUI;
@@ -18,6 +16,8 @@ import java.util.Map;
 public class RemoteClientImplementation extends Client implements RemoteClientInterface, ViewObserver {
 
     private RemoteServerInterface server;
+    private String nickname;
+
 
     RemoteClientImplementation(String address, int port, View userInterface) throws RemoteException {
         super(address, port, userInterface);
@@ -43,7 +43,15 @@ public class RemoteClientImplementation extends Client implements RemoteClientIn
     public void onMessage(Message message) throws RemoteException {
         switch (message.getMessageEnumeration()){
             case LOGIN_REPLY -> {
-
+                LoginReplyMessage newMessage = (LoginReplyMessage)message;
+                if(newMessage.isNicknameUniqueAccepted()) {
+                    this.nickname = newMessage.getNickname();
+                }
+                this.userInterface.showLoginResults(newMessage.isNicknameUniqueAccepted(), newMessage.getNickname());
+            }
+            case PLAYERNUMBER_REQUEST -> {
+                this.userInterface.askPlayersNumber();
+                this.nickname = message.getNickname();
             }
         }
     }
@@ -69,12 +77,12 @@ public class RemoteClientImplementation extends Client implements RemoteClientIn
     }
 
     @Override
-    public void onUpdateAskKeepPicking(String choice) {
-
+    public void onUpdateAskKeepPicking(String choice) throws RemoteException {
+        server.onMessage(new KeepPickingMessage(nickname, choice));
     }
 
     @Override
-    public void onUpdatePlayersNumber(int playersNumber) {
+    public void onUpdatePlayersNumber(int playersNumber) throws RemoteException {
         server.onMessage(new PlayersNumberReplyMessage(this.nickname, playersNumber));
     }
 
