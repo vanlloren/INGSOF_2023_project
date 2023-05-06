@@ -95,7 +95,8 @@ public class RemoteClientImplementation extends Client implements RemoteClientIn
 
     @Override
     public void onUpdatePlayersNumber(int playersNumber) throws RemoteException {
-        server.onMessage(new PlayersNumberReplyMessage(this.nickname, playersNumber));
+        server.setPlayerNum(playersNumber);
+        server.resetStop();
     }
 
     @Override

@@ -16,12 +16,24 @@ import java.util.ArrayList;
 public class RemoteServerImplementation extends UnicastRemoteObject implements RemoteServerInterface, Observer {
     private final RMIServer server;
 
+    private final Object lock = new Object();
+    private boolean stop = false;
+    private int playerNum;
+
     private RemoteClientInterface client;
     private GameController gameController;
 
     RemoteServerImplementation(RMIServer server, GameController gameController) throws RemoteException {
         this.server = server;
         this.gameController = gameController;
+    }
+
+    public void resetStop(){
+        stop = false;
+    }
+
+    public void setPlayerNum(int num){
+        this.playerNum=num;
     }
 
 
@@ -31,22 +43,23 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
 
         switch (message.getMessageEnumeration()){
             case LOGIN_REQUEST -> {
-                if(gameController.getGame().getPlayersInGame().size() < 1){
-                    Player newPlayer = new Player(message.getNickname());
-                    RandPersonalGoal.setType(newPlayer, newPlayer.getPersonalGoal(),gameController.getGame().getPlayersInGame());
-                    gameController.getGame().setPlayersInGame(newPlayer);
-                    Message newMessage = new PlayersNumberRequestMessage(message.getNickname());
-                    client.onMessage(newMessage);
-                } else if (gameController.getGame().getPlayersInGame().size() < gameController.getGame().getPlayersNumber()) {
-                    boolean approvedNick = gameController.getGame().isNicknameAvailable(message.getNickname());
-                    Message newMessage = new LoginReplyMessage(message.getNickname(), approvedNick);
-                    client.onMessage(newMessage);
+                synchronized (lock) {
+                    if (gameController.getGame().getPlayersInGame().size() < 1) {
+                        Player newPlayer = new Player(message.getNickname());
+                        RandPersonalGoal.setType(newPlayer, newPlayer.getPersonalGoal(), gameController.getGame().getPlayersInGame());
+                        gameController.getGame().setPlayersInGame(newPlayer);
+                        Message newMessage = new PlayersNumberRequestMessage(message.getNickname());
+                        client.onMessage(newMessage);
+                        stop = true;
+                        while(stop){}
+                        gameController.getGame().setPlayersNumber(this.playerNum);
+                        gameController.initGameBoard();
+                    } else if (gameController.getGame().getPlayersInGame().size() < gameController.getGame().getPlayersNumber()) {
+                        boolean approvedNick = gameController.getGame().isNicknameAvailable(message.getNickname());
+                        Message newMessage = new LoginReplyMessage(message.getNickname(), approvedNick);
+                        client.onMessage(newMessage);
+                    }
                 }
-            }
-            case PLAYERNUMBER_REPLY -> {
-                PlayersNumberReplyMessage newMessage = (PlayersNumberReplyMessage)message;
-                gameController.getGame().setPlayersNumber(newMessage.getPlayerNumber());
-                gameController.initGameBoard();
             }
             case KEEP_PICKING_REPLY -> {
                 KeepPickingReplyMessage newMessage = (KeepPickingReplyMessage)message;

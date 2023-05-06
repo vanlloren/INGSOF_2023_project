@@ -20,5 +20,9 @@ public interface RemoteServerInterface extends Remote {
 
     public boolean handShake(RemoteClientInterface client);
 
+    public void resetStop();
+
+    public void setPlayerNum(int num);
+
 
 }
