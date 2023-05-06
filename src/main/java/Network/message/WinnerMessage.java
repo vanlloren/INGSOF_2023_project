@@ -2,17 +2,19 @@ package Network.message;
 
 public class WinnerMessage extends Message {
     private static final long serialVersionUID = 4L;
-
-    public String getWinnerNickname() {
-        return winnerNickname;
-    }
-
     private final String winnerNickname;
 
-    public WinnerMessage(String winnerNickname) {
-        super(Game.SERVER_NICKNAME, MessageEnumeration.WIN_FX);
+    WinnerMessage(String nickname, String winnerNickname) {
+        super(nickname, MessageEnumeration.WINNER_MESSAGE);
         this.winnerNickname = winnerNickname;
     }
+
+    public String getWinnerNickname() {
+        return this.winnerNickname;
+    }
+
+
+
 
     @Override
     public String toString() {

@@ -78,7 +78,6 @@ public  class GameController implements Observer {
         /*Set del giocatore e del nickname*/
 
         Player newPlayer = new Player(client.getNickname());
-        RandPersonalGoal.setType(newPlayer, newPlayer.getPersonalGoal(),game.getPlayersInGame());    //Give unique PersonalGoal to player
         game.getPlayersInGame().add(newPlayer);
         game.setPlayersNumber(game.getPlayersNumber());
 

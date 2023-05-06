@@ -44,8 +44,14 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
                     Message newMessage = new LoginReplyMessage(message.getNickname(), approvedNick);
                     client.onMessage(newMessage);
                 }
-            }
-            case PLAYERNUMBER_REPLY -> {
+                    else if(gameController.getGame().getPlayersInGame().size() == gameController.getGame().getPlayersNumber()){
+
+                    }
+                }
+
+            case PICKTILE ->
+
+            case PLAYERNUMBER_REQUEST -> {
                 PlayersNumberReplyMessage newMessage = (PlayersNumberReplyMessage)message;
                 gameController.getGame().setPlayersNumber(newMessage.getPlayerNumber());
                 gameController.initGameBoard();

@@ -5,8 +5,4 @@ public class LoginRequestMessage extends Message {
 
     public LoginRequestMessage(String nickname) { super(nickname, MessageEnumeration.LOGIN_REQUEST)};
 
-    @Override
-    public String toString(){
-        return "LoginRequest{" + "nickname = " + getNickname() + '}';
-    }
 }

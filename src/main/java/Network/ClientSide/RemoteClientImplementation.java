@@ -53,6 +53,7 @@ public class RemoteClientImplementation extends Client implements RemoteClientIn
                 this.userInterface.askPlayersNumber();
                 this.nickname = message.getNickname();
             }
+
         }
     }
 

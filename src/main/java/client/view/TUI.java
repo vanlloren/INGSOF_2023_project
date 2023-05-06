@@ -2,13 +2,16 @@ package client.view;
 import Observer.*;
 import Network.ClientSide.IOManager;
 import server.Model.PlayableItemTile;
+import server.Model.Player;
 import server.Model.Shelf;
+import server.Model.GameModel
 
 
 import java.io.PrintStream;
 import java.rmi.RemoteException;
 import java.util.Scanner;
 import java.util.*;
+
 
 public class TUI extends ViewObservable implements View {  //dovrà diventare observable dal client
     private final PrintStream out;
@@ -150,8 +153,6 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
                     throw new RuntimeException(e);
                 }
             });
-        //dovrò fornire playersNum al server in qualche modo
-        out.println("The number of players for the game will be: " + playersNum);
     }
 
     @Override
@@ -199,7 +200,14 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
     }
 
     @Override
-    public void showPlayersList(List<String> playersList) {
+    public void showPlayersList(ArrayList<Player> playersList) {
+        int i=0;
+        String nickName = null;
+        String j = String.valueOf(playersList.size());
+        out.println("In the current Game we have "+j+"players:");
+        while(i<playersList.size())
+             nickName = playersList.get(i).getNickname();
+            out.println(nickName+", ");
 
     }
 
@@ -211,25 +219,24 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
     @Override
     public void showLivingRoom(ArrayList<PlayableItemTile> livingRoom) {
 
+
     }
 
     @Override
     public void showPlayerShelf(ArrayList<PlayableItemTile> playerShelf) {
-        Shelf o = model.getplayerShelf();
-        if (o == null) {
-            return;
-        }
-        System.out.println(o);
-    }
-
-    @Override
-    public void showPointMessage() {
 
     }
 
     @Override
-    public void showPointCounter(int pointCount) {
+    public void showPointMessage(int addingpoint) {
+        //passo punteggio derivato dal completamento di un obiettivo e lo mostro
 
+    }
+
+    @Override
+    public void showPointCounter(int  pointCount) {
+    String point = String.valueOf(pointCount);
+    out.println("Your total point so far is :"+point);
     }
 
     @Override

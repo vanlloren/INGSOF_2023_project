@@ -4,7 +4,7 @@ public class LoginReplyMessage extends  Message{
 
     private static final long serialVersionUID = -5L;
     private final boolean nicknameUniqueAccepted;
-    private final boolean connectionVerified;
+
 
     public LoginReplyMessage(String proposedNickname, boolean nicknameUniqueAccepted) {
         super(proposedNickname, MessageEnumeration.LOGIN_REPLY);
@@ -15,12 +15,5 @@ public class LoginReplyMessage extends  Message{
         return nicknameUniqueAccepted;
     }
 
-   @Override
-    public String toString() {
-        return "LoginReply{" +
-                "nickname=" + getNickname() +
-                ", nicknameUniqueAccepted=" + nicknameUniqueAccepted +
-                ", connectionVerified=" + connectionVerified +
-                '}';
-    }
+
 }
