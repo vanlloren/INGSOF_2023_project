@@ -1,8 +1,12 @@
 package Observer;
+import Network.message.Message;
+
 import java.rmi.RemoteException;
 import java.util.List;
 import java.util.Map;
 public interface ViewObserver {
+
+    void update(Message message);
 
     /**
      * Create a new connection to the server with the updated info.
@@ -43,4 +47,6 @@ public interface ViewObserver {
      * (e.g. a click on the back button into the GUI).
      */
     void onDisconnection();
+
+    void onUpdateToPickTile(int xPos, int yPos) throws RemoteException;
 }

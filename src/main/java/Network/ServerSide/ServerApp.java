@@ -11,6 +11,8 @@ public class ServerApp {
 
     private static final PrintStream out = System.out;
     private static final Scanner scanner = new Scanner(System.in);
+
+
     public static void main(String[] args){
         RMIServer RemoteServer;
         //qui ci sarà il SocketServer
@@ -20,8 +22,11 @@ public class ServerApp {
         int serverPort = scanner.nextInt();
         GameModel gameModel = new GameModel();
         GameController gameController = new GameController(gameModel);
-        RMIServer remoteServer = new RMIServer(serverPort, gameController);
-        remoteServer.startRMIServer();
+        RMIServer RMIServerCreator = new RMIServer(serverPort, gameController);
+        RemoteServerImplementation remoteServer = RMIServerCreator.startRMIServer();
+        gameController.setRemoteServer(remoteServer);
+        gameModel.addObserver(remoteServer);
+
 
 
         //stessa cosa per creare il SocketServer

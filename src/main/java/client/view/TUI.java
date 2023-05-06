@@ -156,6 +156,23 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
 
     @Override
     public void askMovingTilePosition(ArrayList<PlayableItemTile> availableTiles){
+        for (PlayableItemTile tile: availableTiles
+             ) {
+            out.println("La tessera in posizione x=" + tile.getPosition().toArray()[0] + " y=" + tile.getPosition().toArray()[1] + " é disponibile!");
+        }
+
+        out.println("Scegli la posizione x della tessera che vuoi pescare!");
+        int xPos = scanner.nextInt();
+        out.println("Scegli la posizione y della tessera che vuoi pescare!");
+        int yPos = scanner.nextInt();
+
+        notifyObserver(obs -> {
+            try {
+                obs.onUpdateToPickTile(xPos, yPos);
+            } catch (RemoteException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
     @Override
@@ -167,7 +184,13 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
                 picking= scanner.nextLine();
             }
         String finalPicking = picking;
-        notifyObserver(obs-> obs.onUpdateAskKeepPicking(finalPicking));
+        notifyObserver(obs-> {
+            try {
+                obs.onUpdateAskKeepPicking(finalPicking);
+            } catch (RemoteException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
 

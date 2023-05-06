@@ -14,9 +14,7 @@ public interface RemoteServerInterface extends Remote {
     //andranno inseriti tutti i metodi che il server mette
     //a disposizione del client perché li invochi
 
-    public void logIntoServer(String nickname, RemoteClientInterface client) throws RemoteException;
-
-    public void onMessage(Message message) throws RemoteException;
+       public void onMessage(Message message) throws RemoteException;
 
     public void disconnect() throws RemoteException;
 

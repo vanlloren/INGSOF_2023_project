@@ -5,15 +5,17 @@ import Network.message.*;
 import Observer.Observer;
 import Util.RandPersonalGoal;
 import server.Controller.GameController;
+import server.Model.PlayableItemTile;
 import server.Model.Player;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
 
 
-public class RemoteServerImplementation extends UnicastRemoteObject implements RemoteServerInterface {
+public class RemoteServerImplementation extends UnicastRemoteObject implements RemoteServerInterface, Observer {
     private final RMIServer server;
-    private RMIConnection rmiStream;
+
     private RemoteClientInterface client;
     private GameController gameController;
 
@@ -22,11 +24,7 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
         this.gameController = gameController;
     }
 
-    @Override
-    public void logIntoServer(String nickname, RemoteClientInterface client) throws RemoteException {
-        rmiStream = new RMIConnection(server, client);
-        server.login(nickname, rmiStream);
-    }
+
 
     @Override
     public void onMessage(Message message) throws RemoteException {
@@ -53,14 +51,24 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
             case KEEP_PICKING_REPLY -> {
                 KeepPickingReplyMessage newMessage = (KeepPickingReplyMessage)message;
                 if(!newMessage.getKeepPicking()) {
-                    gameController.getGameBoardController().setStopPicking();
-                    gameController.getGameBoardController().setMoveOn();
+                    gameController.setStopPicking();
+                    gameController.setMoveOn();
                 }
-                gameController.getGameBoardController().setMoveOn();
+                gameController.setMoveOn();
+            }
+            case TO_PICK_TILE_REPLY -> {
+                ToPickTileReplyMessage newMessage = (ToPickTileReplyMessage) message;
+                int x = newMessage.getXPos();
+                int y = newMessage.getYPos();
+                gameController.setPosCurrTile(x,y);
+                gameController.setMoveOn();
             }
         }
     }
 
+    public void onUpdateAskKeepPicking() throws RemoteException{
+        client.onMessage(new KeepPickingRequestMessage());
+    }
     @Override
     public void disconnect() throws RemoteException {
         rmiStream.disconnection();
@@ -70,6 +78,15 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
     public boolean handShake(RemoteClientInterface client) {
         this.client = client;
         return true;
+    }
+
+    @Override
+    public void update(Message message) {
+
+    }
+
+    public void onUpdateToPickTile(ArrayList<PlayableItemTile> availableTiles) throws RemoteException {
+        client.onMessage(new ToPickTileRequestMessage(availableTiles));
     }
 
 

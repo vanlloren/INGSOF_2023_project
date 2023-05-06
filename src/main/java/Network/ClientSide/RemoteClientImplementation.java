@@ -2,15 +2,15 @@ package Network.ClientSide;
 
 import Network.ServerSide.RemoteServerInterface;
 import Network.message.*;
-import Observer.Observer;
 import Observer.ViewObserver;
-import client.view.TUI;
 import client.view.View;
+import server.Model.PlayableItemTile;
 
 import java.io.IOException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.util.ArrayList;
 import java.util.Map;
 
 public class RemoteClientImplementation extends Client implements RemoteClientInterface, ViewObserver {
@@ -19,7 +19,7 @@ public class RemoteClientImplementation extends Client implements RemoteClientIn
     private String nickname;
 
 
-    RemoteClientImplementation(String address, int port, View userInterface) throws RemoteException {
+    public RemoteClientImplementation(String address, int port, View userInterface) throws RemoteException {
         super(address, port, userInterface);
     }
     @Override
@@ -53,6 +53,14 @@ public class RemoteClientImplementation extends Client implements RemoteClientIn
                 this.userInterface.askPlayersNumber();
                 this.nickname = message.getNickname();
             }
+            case KEEP_PICKING_REQUEST -> {
+                this.userInterface.askStopPicking();
+            }
+            case TO_PICK_TILE_REQUEST -> {
+                ToPickTileRequestMessage newMessage = (ToPickTileRequestMessage) message;
+                ArrayList<PlayableItemTile> availableTiles = newMessage.getAvailableTiles();
+                this.userInterface.askMovingTilePosition(availableTiles);
+            }
         }
     }
 
@@ -71,6 +79,10 @@ public class RemoteClientImplementation extends Client implements RemoteClientIn
 
     }
 
+    public void onUpdateToPickTile(int x, int y) throws RemoteException{
+        server.onMessage(new ToPickTileReplyMessage(nickname, x, y));
+    }
+
     @Override
     public void onUpdateNickname(String nickname) throws RemoteException {
         server.onMessage(new LoginRequestMessage(nickname));
@@ -78,7 +90,7 @@ public class RemoteClientImplementation extends Client implements RemoteClientIn
 
     @Override
     public void onUpdateAskKeepPicking(String choice) throws RemoteException {
-        server.onMessage(new KeepPickingMessage(nickname, choice));
+        server.onMessage(new KeepPickingReplyMessage(nickname, choice));
     }
 
     @Override
