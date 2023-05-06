@@ -61,6 +61,9 @@ public class RemoteClientImplementation extends Client implements RemoteClientIn
                 ArrayList<PlayableItemTile> availableTiles = newMessage.getAvailableTiles();
                 this.userInterface.askMovingTilePosition(availableTiles);
             }
+            case REPLY_INSERT_TILE -> {
+
+            }
         }
     }
 
@@ -95,14 +98,10 @@ public class RemoteClientImplementation extends Client implements RemoteClientIn
 
     @Override
     public void onUpdatePlayersNumber(int playersNumber) throws RemoteException {
-        server.setPlayerNum(playersNumber);
-        server.resetStop();
+        server.onMessage(new PlayersNumberReplyMessage(nickname,playersNumber) );
     }
 
-    @Override
-    public void onUpdateFirstPlayer(String nickname) {
 
-    }
 
     @Override
     public void onDisconnection() {

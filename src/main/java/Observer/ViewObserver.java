@@ -36,13 +36,6 @@ public interface ViewObserver {
    void onUpdatePlayersNumber(int playersNumber) throws RemoteException;
 
     /**
-     * Sends a message to the server with the nickname of the first player chosen by the user.
-     *
-     * @param nickname the nickname of the first player.
-     */
-    void onUpdateFirstPlayer(String nickname);
-
-    /**
      * Handles a disconnection wanted by the user.
      * (e.g. a click on the back button into the GUI).
      */

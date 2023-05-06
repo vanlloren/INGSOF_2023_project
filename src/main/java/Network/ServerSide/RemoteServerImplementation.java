@@ -51,7 +51,8 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
                         Message newMessage = new PlayersNumberRequestMessage(message.getNickname());
                         client.onMessage(newMessage);
                         stop = true;
-                        while(stop){}
+                        while(stop){
+                        }
                         gameController.getGame().setPlayersNumber(this.playerNum);
                         gameController.initGameBoard();
                     } else if (gameController.getGame().getPlayersInGame().size() < gameController.getGame().getPlayersNumber()) {
@@ -76,6 +77,15 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
                 gameController.setPosCurrTile(x,y);
                 gameController.setMoveOn();
             }
+            case REQUEST_INSERT_TILE ->{
+
+            }
+            case PLAYERNUMBER_REPLY -> {
+
+            }
+
+
+
         }
     }
 

@@ -1,10 +1,7 @@
 package client.view;
 import Observer.*;
 import Network.ClientSide.IOManager;
-import server.Model.PlayableItemTile;
-import server.Model.Player;
-import server.Model.Shelf;
-import server.Model.GameModel
+import server.Model.*;
 
 
 import java.io.PrintStream;
@@ -20,6 +17,8 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
     private final IOManager viewManager = new IOManager();
 
     protected final List<ViewObserver> observers = new ArrayList<>();
+
+    private GameModelView gameModelView = new GameModelView() ;
 
     private boolean checker = false;
     public TUI(){
@@ -38,7 +37,7 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
 
             askNickname();
 
-            scanner.nextLine(); // consume the newline character
+            /*scanner.nextLine(); // consume the newline character
             controller.setnumberOfPlayers(numOfPlayers);
             gameState.addPlayers;
             while (controller.gameState.equals(addPlayers)) {
@@ -78,22 +77,72 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
                 }
 
                 out.println("Game over!");
-            }
+            }*/
         }
     }
 
+    public void askPlayerNextMove(){
+        int switcher;
+        out.println("Press 1 if you want to PICK A TILE FROM LIVING ROOM " +
+                    "Press 2 if you want to SEE THE LIVINGROOM " +
+                    "Press 3 if you want to SEE THE PLAYERS IN YOUR GAMELOBBY " +
+                    "Press 4 if you want to SEE YOUR PERSONAL SHELF" +
+                    "Press 5 if you want to SEE YOUR CURRENT SCORING" +
+                    "Press 6 if you want to " +
+                    "Press 7 if you want to " +
+                    "Press 8 if you want to " +
+                    "Press 9 if you want to " +
+                    "Press 10 if you want to "
+
+                );
+        String picking = scanner.nextLine();
+        while(picking != "1" || picking !="2"||picking != "3" || picking !="4"||picking != "5" || picking !="6"||
+              picking != "7" || picking !="8"||picking != "9" || picking !="10"){
+            out.println("Symbol not recoignized, please try  again...");
+            askPlayerNextMove();
+        }
+        switch (picking){
+            case "1":
+                 askMovingTilePosition(gameModelView.getLivingRoom().getAvailableTiles());
+            case "2":
+                 showLivingRoom();
+            case "3":
+                 showPlayersList();
+            case "4":
+                 showPlayerShelf();
+            case "5":
+                 showPointMessage();
+            case "6":
+
+            case "7":
+
+            case "8":
+
+            case "9":
+
+            case "10":
+
+            case "11":
+
+
+        }
+
+
+    }
+
+
     @Override
     public String askServerInfo(){
-        out.println("Per favore, inserisci alcune informazioni:");
+        out.println("Per favore, inserisci alcune informazioni:\n");
         String serverAddress;
         do {
-            out.println("Inserisci l'indirizzo del Server [default = localhost]:");
-            // effettuo check di validità su in.nextLine();
-            serverAddress = scanner.nextLine();
+            scanner.nextLine();
+            out.println("Inserisci l'indirizzo del Server [default = localhost]:\n");
+            serverAddress = scanner.next();
             if(checkAddressValidity(serverAddress){
                 checker = true;
             }else{
-                out.println("Indirizzo non valido!");
+                out.println("Indirizzo non valido!\n");
                 checker = false;
             }
         }while(!checker);
@@ -102,24 +151,32 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
         //dovrò fornire a qualcuno serverAddress e serverPort per effettuare il collegamento
     }
 
+    private boolean checkAddressValidity(String serverAddress) {
+    }
+
     public int askServerPort() {
         do {
-            out.println("Inserisci la porta del Server [default = ??]:");
+            scanner.nextLine();
+            out.println("Inserisci la porta del Server [default = ??]:\n");
             //effettuo check validità su in.nextLine();
             int portNum = scanner.nextInt();
             if (checkPortValidity(portNum)) {
                 checker = true;
             } else {
-                out.println("Porta del server non valida!");
+                out.println("Porta del server non valida!\n");
                 checker = false;
             }
         } while (!checker);
 
         return portNum;
     }
+
+    private boolean checkPortValidity(int portNum) {
+    }
+
     @Override
     public void askNickname() {
-        out.println("Enter nickname please: ");
+        out.println("Enter nickname please: \n");
         String nickName = scanner.nextLine();
         notifyObserver(obs -> {
             try {
@@ -129,20 +186,19 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
             }
         });
 
-        out.println("Il nickname scelto è: " + nickName);
-
+        out.println("Il nickname scelto è: " + nickName+"\n");
     }
 
     @Override
     public void askPlayersNumber() {
         int playersNum;
 
-        out.println("Nickname accepted!");
-        out.println("You are the first player of the game! Please, insert the number of total player for the match [min=2, max=4]:");
+        out.println("Nickname accepted!\n");
+        out.println("You are the first player of the game! Please, insert the number of total player for the match [min=2, max=4]:\n");
         playersNum = scanner.nextInt();
         while(playersNum<2 || playersNum>4){
             out.println("The number of player is not valid!\n");
-            out.println("Insert the number of total players [min=2, max=4]:");
+            out.println("Insert the number of total players [min=2, max=4]:\n");
             playersNum = scanner.nextInt();
         }
             int finalPlayersNum = playersNum;
@@ -159,12 +215,12 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
     public void askMovingTilePosition(ArrayList<PlayableItemTile> availableTiles){
         for (PlayableItemTile tile: availableTiles
              ) {
-            out.println("La tessera in posizione x=" + tile.getPosition().toArray()[0] + " y=" + tile.getPosition().toArray()[1] + " é disponibile!");
+            out.println("La tessera in posizione x=" + tile.getPosition().toArray()[0] + " y=" + tile.getPosition().toArray()[1] + " é disponibile!\n");
         }
 
-        out.println("Scegli la posizione x della tessera che vuoi pescare!");
+        out.println("Scegli la posizione x della tessera che vuoi pescare!\n");
         int xPos = scanner.nextInt();
-        out.println("Scegli la posizione y della tessera che vuoi pescare!");
+        out.println("Scegli la posizione y della tessera che vuoi pescare!\n");
         int yPos = scanner.nextInt();
 
         notifyObserver(obs -> {
@@ -178,11 +234,11 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
 
     @Override
     public void askStopPicking() {
-            out.println("Would you like to keep picking tiles?[Y/N]");
+            out.println("Would you like to keep picking tiles?[Y/N]\n");
             String picking = scanner.nextLine();
             while(picking != "Y" || picking !="N"){
-                out.println("Symbol not recoignized, please try  again...");
-                picking= scanner.nextLine();
+                out.println("Symbol not recoignized, please try  again...\n");
+                askStopPicking();
             }
         String finalPicking = picking;
         notifyObserver(obs-> {
@@ -198,6 +254,10 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
 
     @Override
     public void askTileToPut(ArrayList<PlayableItemTile> tilesInPlayerHand) {
+        //PRIMA COSA STAMPA LA TILES IN PLAYER HAND COSI PLAYER VEDE CHE CARTE HA IN MANO
+        //POI STAMPA TUTTA LA SHELF COSI IL PLAYER VEDE LA SHELF IN TEMPO REALE
+        //POI GESTISCI INSERIMENTO COORDINATE E INVIO MESSAGGIO CON NOTIFICA AGLI OBSERVER
+
 
     }
 
@@ -209,28 +269,26 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
     @Override
     public void showLoginResults(boolean nickAccepted, String chosenNickname) {
         if(nickAccepted){
-            out.println("Login successful, nickname accepted!");
+            out.println("Login successful, nickname accepted!\n");
         }else{
-            out.println("Nickname already chosen, choose another nickname!");
+            out.println("Nickname already chosen, choose another nickname!\n");
             askNickname();
         }
 
     }
 
-    @Override
-    public void showLobby(List<String> nicknameList, int numPlayers) {
 
-    }
 
     @Override
-    public void showPlayersList(ArrayList<Player> playersList) {
+    public void showPlayersList() {
         int i=0;
         String nickName = null;
+        ArrayList<Player> playersList = gameModelView.getPlayerInGame();
         String j = String.valueOf(playersList.size());
-        out.println("In the current Game we have "+j+"players:");
+        out.println("In the current Game we have "+j+"players whose Names are:\n");
         while(i<playersList.size())
              nickName = playersList.get(i).getNickname();
-            out.println(nickName+", ");
+            out.println(nickName+" , ");
 
     }
 
@@ -240,25 +298,29 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
     }
 
     @Override
-    public void showLivingRoom(ArrayList<PlayableItemTile> livingRoom) {
+    public void showLivingRoom() {
+        LivingRoom livingRoom1 =  gameModelView.getLivingRoom();
+        //STAMPA SU COMMAND LINE LE TESSERE
+
+
+
+    }
+
+    @Override
+    public void showPlayerShelf() {
+    PlayableItemTile[][] shelfTable = gameModelView.getShelfTable();
+      // STAMPA TUTTA LA SHELF
+    }
+
+    @Override
+    public void showPointMessage() {
 
 
     }
 
     @Override
-    public void showPlayerShelf(ArrayList<PlayableItemTile> playerShelf) {
-
-    }
-
-    @Override
-    public void showPointMessage(int addingpoint) {
-        //passo punteggio derivato dal completamento di un obiettivo e lo mostro
-
-    }
-
-    @Override
-    public void showPointCounter(int  pointCount) {
-    String point = String.valueOf(pointCount);
+    public void showPartialPoint() {
+    String point = String.valueOf(gameModelView.getPartialPoint());
     out.println("Your total point so far is :"+point);
     }
 
