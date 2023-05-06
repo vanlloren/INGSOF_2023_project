@@ -1,4 +1,5 @@
 package server.Controller;
+import Network.ServerSide.RemoteServerImplementation;
 import Util.RandCommonGoal;
 import Util.RandPersonalGoal;
 import server.Model.*;
@@ -7,16 +8,19 @@ import server.enumerations.GameState;
 import Network.message.*;
 
 
+import java.rmi.RemoteException;
 import java.util.*;
 
 //All'interno di questa classe vi deve essere contenuta tutta la logica che sta dietro al gioco effettivo
 //escluso il settaggio della lobby e la costruzione del gioco quindi solo il pescaggio, l'inserimento ed il conteggio sono le azioni da seguire e tenere sott'occhio
-public  class GameController implements Observer {
+public  class GameController {
 
     private  GameModel game;
   //  private boolean timeOut;
     private final GameBoardController gameBoardController = new GameBoardController(); // gameBoardController è il tramite tra GameController e le classi GameBoard, LivingRoom e ItemBag
     private transient Map<String ,VirtualView> virtualViewMap;
+
+    private RemoteServerImplementation remoteServer;
     /*
     Il comando dichiara un campo della classe come transient,
     il che significa che il campo non sarà incluso nella serializzazione
@@ -30,6 +34,12 @@ public  class GameController implements Observer {
     private GameState gameState;
     private TurnController turnController;
 
+    boolean stopPicking = false;
+    boolean moveOn = false;
+
+    private int xPosCurrTile;
+    private int yPosCurrTile;
+
     public GameController(GameModel game) {
         this.game = game;
     }
@@ -38,11 +48,24 @@ public  class GameController implements Observer {
         return this.game;
     }
 
+    public void setRemoteServer(RemoteServerImplementation remoteServer){
+        this.remoteServer = remoteServer;
+    }
+
+    public void setPosCurrTile(int x, int y){
+        this.xPosCurrTile = x;
+        this.yPosCurrTile = y;
+    }
+
     //metodo per avviare sessione gioco
     public void initGameController() {
         this.game = GameModel.getInstance();
         setGameState(GameState.LOGIN);
     }
+
+    public void setStopPicking(){stopPicking = true;}
+
+    public void setMoveOn(){moveOn = true;}
 
     public GameBoardController getGameBoardController(){
         return this.gameBoardController;
@@ -105,7 +128,38 @@ public  class GameController implements Observer {
 
             while(!finish) {
                 if (gameBoardController.checkPickedTilesNum()) {
-                    tileArray=gameBoardController.PickManager(x, y, finish);
+
+                    try {
+                        remoteServer.onUpdateToPickTile(gameBoardController.getControlledLivingRoom().getAvailableTiles());
+                    } catch (RemoteException e) {
+                        throw new RuntimeException(e);
+                    }
+                    moveOn = false;
+                    while(!moveOn){
+                    }
+
+                    tileArray=gameBoardController.PickManager(xPosCurrTile, yPosCurrTile);
+                    //chiedo al player se vuole smettere di pescare
+                    try {
+                        remoteServer.onUpdateAskKeepPicking();
+                    } catch (RemoteException e) {
+                        throw new RuntimeException(e);
+                    }
+
+
+                    moveOn = false;
+                    while(!moveOn){
+                    }
+
+                    //stop=decisione player
+                    if(stopPicking){
+                        finish=true;
+                        gameBoardController.getControlledLivingRoom().updateAvailability();
+                        if(!gameBoardController.checkIfAdjacentTiles()){
+                            gameBoardController.livingRoomFiller();
+                            gameBoardController.getControlledLivingRoom().updateAvailability();
+                        }
+                    }
                 } else {
                     //messaggio che informi che sono già state prese tre tessere
                     finish = true;

@@ -5,15 +5,21 @@ import Network.message.*;
 import Observer.Observer;
 import Util.RandPersonalGoal;
 import server.Controller.GameController;
+import server.Model.PlayableItemTile;
 import server.Model.Player;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
 
 
-public class RemoteServerImplementation extends UnicastRemoteObject implements RemoteServerInterface {
+public class RemoteServerImplementation extends UnicastRemoteObject implements RemoteServerInterface, Observer {
     private final RMIServer server;
-    private RMIConnection rmiStream;
+
+    private final Object lock = new Object();
+    private boolean stop = false;
+    private int playerNum;
+
     private RemoteClientInterface client;
     private GameController gameController;
 
@@ -22,51 +28,60 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
         this.gameController = gameController;
     }
 
-    @Override
-    public void logIntoServer(String nickname, RemoteClientInterface client) throws RemoteException {
-        rmiStream = new RMIConnection(server, client);
-        server.login(nickname, rmiStream);
+    public void resetStop(){
+        stop = false;
     }
+
+    public void setPlayerNum(int num){
+        this.playerNum=num;
+    }
+
+
 
     @Override
     public void onMessage(Message message) throws RemoteException {
 
         switch (message.getMessageEnumeration()){
             case LOGIN_REQUEST -> {
-                if(gameController.getGame().getPlayersInGame().size() < 1){
-                    Player newPlayer = new Player(message.getNickname());
-                    RandPersonalGoal.setType(newPlayer, newPlayer.getPersonalGoal(),gameController.getGame().getPlayersInGame());
-                    gameController.getGame().setPlayersInGame(newPlayer);
-                    Message newMessage = new PlayersNumberRequestMessage(message.getNickname());
-                    client.onMessage(newMessage);
-                } else if (gameController.getGame().getPlayersInGame().size() < gameController.getGame().getPlayersNumber()) {
-                    boolean approvedNick = gameController.getGame().isNicknameAvailable(message.getNickname());
-                    Message newMessage = new LoginReplyMessage(message.getNickname(), approvedNick);
-                    client.onMessage(newMessage);
-                }
-                    else if(gameController.getGame().getPlayersInGame().size() == gameController.getGame().getPlayersNumber()){
-
+                synchronized (lock) {
+                    if (gameController.getGame().getPlayersInGame().size() < 1) {
+                        Player newPlayer = new Player(message.getNickname());
+                        RandPersonalGoal.setType(newPlayer, newPlayer.getPersonalGoal(), gameController.getGame().getPlayersInGame());
+                        gameController.getGame().setPlayersInGame(newPlayer);
+                        Message newMessage = new PlayersNumberRequestMessage(message.getNickname());
+                        client.onMessage(newMessage);
+                        stop = true;
+                        while(stop){}
+                        gameController.getGame().setPlayersNumber(this.playerNum);
+                        gameController.initGameBoard();
+                    } else if (gameController.getGame().getPlayersInGame().size() < gameController.getGame().getPlayersNumber()) {
+                        boolean approvedNick = gameController.getGame().isNicknameAvailable(message.getNickname());
+                        Message newMessage = new LoginReplyMessage(message.getNickname(), approvedNick);
+                        client.onMessage(newMessage);
                     }
                 }
-
-            case PICKTILE ->
-
-            case PLAYERNUMBER_REQUEST -> {
-                PlayersNumberReplyMessage newMessage = (PlayersNumberReplyMessage)message;
-                gameController.getGame().setPlayersNumber(newMessage.getPlayerNumber());
-                gameController.initGameBoard();
             }
             case KEEP_PICKING_REPLY -> {
                 KeepPickingReplyMessage newMessage = (KeepPickingReplyMessage)message;
                 if(!newMessage.getKeepPicking()) {
-                    gameController.getGameBoardController().setStopPicking();
-                    gameController.getGameBoardController().setMoveOn();
+                    gameController.setStopPicking();
+                    gameController.setMoveOn();
                 }
-                gameController.getGameBoardController().setMoveOn();
+                gameController.setMoveOn();
+            }
+            case TO_PICK_TILE_REPLY -> {
+                ToPickTileReplyMessage newMessage = (ToPickTileReplyMessage) message;
+                int x = newMessage.getXPos();
+                int y = newMessage.getYPos();
+                gameController.setPosCurrTile(x,y);
+                gameController.setMoveOn();
             }
         }
     }
 
+    public void onUpdateAskKeepPicking() throws RemoteException{
+        client.onMessage(new KeepPickingRequestMessage());
+    }
     @Override
     public void disconnect() throws RemoteException {
         rmiStream.disconnection();
@@ -76,6 +91,15 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
     public boolean handShake(RemoteClientInterface client) {
         this.client = client;
         return true;
+    }
+
+    @Override
+    public void update(Message message) {
+
+    }
+
+    public void onUpdateToPickTile(ArrayList<PlayableItemTile> availableTiles) throws RemoteException {
+        client.onMessage(new ToPickTileRequestMessage(availableTiles));
     }
 
 

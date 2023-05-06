@@ -17,11 +17,13 @@ public class RMIServer {
         this.gameController = gameController;
     }
 
-    public void startRMIServer(){
+    public RemoteServerImplementation startRMIServer(){
         try{
             RemoteServerImplementation remoteServer = new RemoteServerImplementation(this, gameController);
             Registry registry = LocateRegistry.createRegistry(serverRMIPort);
             registry.bind("MyShelfieServer", remoteServer);
+            System.out.println("Server RMI pronto");
+            return remoteServer;
         }catch (AlreadyBoundException e) {
             throw new RuntimeException(e);
         } catch (RemoteException e) {
