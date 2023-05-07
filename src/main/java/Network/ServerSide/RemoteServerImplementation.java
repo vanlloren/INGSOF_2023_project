@@ -18,8 +18,6 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
 
     private final Object lock = new Object();
     private boolean stop = false;
-    private int playerNum;
-
     private RemoteClientInterface client;
     private GameController gameController;
 
@@ -31,11 +29,6 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
     public void resetStop(){
         stop = false;
     }
-
-    public void setPlayerNum(int num){
-        this.playerNum=num;
-    }
-
 
 
     @Override
@@ -53,11 +46,18 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
                         stop = true;
                         while(stop){
                         }
-                        gameController.getGame().setPlayersNumber(this.playerNum);
                         gameController.initGameBoard();
                     } else if (gameController.getGame().getPlayersInGame().size() < gameController.getGame().getPlayersNumber()) {
                         boolean approvedNick = gameController.getGame().isNicknameAvailable(message.getNickname());
                         Message newMessage = new LoginReplyMessage(message.getNickname(), approvedNick);
+                        client.onMessage(newMessage);
+                        if(approvedNick){
+                            Player newPlayer = new Player(message.getNickname());
+                            RandPersonalGoal.setType(newPlayer, newPlayer.getPersonalGoal(), gameController.getGame().getPlayersInGame());
+                            gameController.getGame().setPlayersInGame(newPlayer);
+                        }
+                    } else{
+                        Message newMessage = new FullLobbyMessage();
                         client.onMessage(newMessage);
                     }
                 }
@@ -81,7 +81,10 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
 
             }
             case PLAYERNUMBER_REPLY -> {
-
+                PlayersNumberReplyMessage newMessage = (PlayersNumberReplyMessage)message;
+                int playersNum = newMessage.getNumPlayers();
+                gameController.getGame().setPlayersNumber(playersNum);
+                resetStop();
             }
 
 

@@ -18,6 +18,8 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
 
     protected final List<ViewObserver> observers = new ArrayList<>();
 
+    private boolean gameOn=true;
+
     private GameModelView gameModelView = new GameModelView() ;
 
     private boolean checker = false;
@@ -36,6 +38,8 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
             connectToServerFromTUI(serverAddress, portNum);
 
             askNickname();
+
+            matchReadyTUI();
 
             /*scanner.nextLine(); // consume the newline character
             controller.setnumberOfPlayers(numOfPlayers);
@@ -78,6 +82,17 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
 
                 out.println("Game over!");
             }*/
+        }
+    }
+
+    public void resetGameOn() {
+        this.gameOn = false;
+    }
+
+    public void matchReadyTUI(){
+        while(gameOn){
+            //qui è dove la TUI deve lavorare durante la partita.
+            //quando gameOn diventa false, la TUI si chiude perché è finita la partita
         }
     }
 
@@ -171,7 +186,13 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
         return portNum;
     }
 
-    private boolean checkPortValidity(int portNum) {
+    public boolean checkPortValidity(int portNum) {
+    }
+
+    public void fullLobbyTerminateUI(){
+        out.println("Spiacente, la lobby è piena, riprova più tardi!");
+        resetTUI();
+        resetGameOn();
     }
 
     @Override

@@ -14,5 +14,7 @@ public enum MessageEnumeration {
         WINNER_MESSAGE,
         ERROR_MESSAGE,
         KEEP_PICKING_REQUEST,
+
+        FULL_LOBBY,
         TO_PICK_TILE_REPLY, TO_PICK_TILE_REQUEST, PLAYERNUMBER_REPLY,
 }

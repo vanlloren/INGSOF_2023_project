@@ -64,6 +64,9 @@ public class RemoteClientImplementation extends Client implements RemoteClientIn
             case REPLY_INSERT_TILE -> {
 
             }
+            case FULL_LOBBY -> {
+                this.userInterface.fullLobbyTerminateUI();
+            }
         }
     }
 

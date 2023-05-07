@@ -38,6 +38,8 @@ public interface View {
 
     void showPlayersList();
 
+    void fullLobbyTerminateUI();
+
     //mostra un messaggio che indica la fine della partita e il vincitore
     void showWinMessage(String winnerNickname);
 
