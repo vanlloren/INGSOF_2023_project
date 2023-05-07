@@ -26,6 +26,7 @@ public interface View {
     //chiede al player se desidera smettere di prendere tiles dalla livingRoom volontariamente
     void askStopPicking();
 
+
     //chiede al player quale tessera della sua mano collocare nella shelf
     void askTileToPut(ArrayList<PlayableItemTile> tilesInPlayerHand);
 
@@ -37,6 +38,8 @@ public interface View {
     void showLoginResults(boolean nicknameAccepted, String chosenNickname);
 
     void showPlayersList();
+
+    void showNumberOfPlayers();
 
     void fullLobbyTerminateUI();
 
@@ -52,6 +55,8 @@ public interface View {
     //messaggio che indica al player che un'azione gli ha conferito dei punti
     void showPointMessage();
 
+    void showNickCurrentPlayer();
+
     //mostra al player il suo punteggio (volendo si può mostrare anche quello degli avversari)
     void showPartialPoint();
 
@@ -63,4 +68,7 @@ public interface View {
     void showDefaultMessage( String defaultMessage);
 
     void showMatchSituation(List<String> actualPlayers, List<Shelf> actualShelf, String actualPlayerNickname);
+
+    GameModelView getGameModelView();
+
 }

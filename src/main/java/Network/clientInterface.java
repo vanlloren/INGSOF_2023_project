@@ -1,11 +1,11 @@
 package Network;
 
 import Network.message.Message;
-import Observer.Observable;
+import Observer.ServerObservable;
 
 import java.util.logging.Logger;
 
-public abstract class clientInterface extends Observable {
+public abstract class clientInterface extends ServerObservable {
     public static final Logger LOGGER = Logger.getLogger(clientInterface.class.getName());
 
     /**

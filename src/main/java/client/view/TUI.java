@@ -20,11 +20,12 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
 
     private boolean gameOn=true;
 
-    private GameModelView gameModelView = new GameModelView() ;
+    private final GameModelView gameModelView;
 
     private boolean checker = false;
-    public TUI(){
+    public TUI(GameModel gameModel){
         this.out = System.out;
+        this.gameModelView = new GameModelView(gameModel);
     }
     //Implementando il metodo Runnable ereditiamo tutte le sue classi e oggetti
     //Run è un costruttore basilare costruito direttamente dal metodo Runnable al posto di init
@@ -95,22 +96,28 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
             //quando gameOn diventa false, la TUI si chiude perché è finita la partita
         }
     }
+    @Override
+    public GameModelView getGameModelView() {
+        return gameModelView;
+    }
+
 
     public void askPlayerNextMove(){
+        scanner.nextLine();
         int switcher;
         out.println("Press 1 if you want to PICK A TILE FROM LIVING ROOM " +
                     "Press 2 if you want to SEE THE LIVINGROOM " +
                     "Press 3 if you want to SEE THE PLAYERS IN YOUR GAMELOBBY " +
                     "Press 4 if you want to SEE YOUR PERSONAL SHELF" +
                     "Press 5 if you want to SEE YOUR CURRENT SCORING" +
-                    "Press 6 if you want to " +
+                    "Press 6 if you want to SEE THE NICKNAME OF THE PLAYER WHO'S PLAYING" +
                     "Press 7 if you want to " +
                     "Press 8 if you want to " +
                     "Press 9 if you want to " +
                     "Press 10 if you want to "
 
                 );
-        String picking = scanner.nextLine();
+        String picking = scanner.next();
         while(picking != "1" || picking !="2"||picking != "3" || picking !="4"||picking != "5" || picking !="6"||
               picking != "7" || picking !="8"||picking != "9" || picking !="10"){
             out.println("Symbol not recoignized, please try  again...");
@@ -128,7 +135,7 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
             case "5":
                  showPointMessage();
             case "6":
-
+                  showNickCurrentPlayer();
             case "7":
 
             case "8":
@@ -154,9 +161,10 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
             scanner.nextLine();
             out.println("Inserisci l'indirizzo del Server [default = localhost]:\n");
             serverAddress = scanner.next();
-            if(checkAddressValidity(serverAddress){
+            if(checkAddressValidity(serverAddress)){
                 checker = true;
-            }else{
+            }
+            else{
                 out.println("Indirizzo non valido!\n");
                 checker = false;
             }
@@ -247,6 +255,7 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
         notifyObserver(obs -> {
             try {
                 obs.onUpdateToPickTile(xPos, yPos);
+
             } catch (RemoteException e) {
                 throw new RuntimeException(e);
             }
@@ -297,7 +306,14 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
         }
 
     }
-
+    @Override
+    public void showNumberOfPlayers() {
+        int i = 0;
+        String nickName = null;
+        ArrayList<Player> playersList = gameModelView.getPlayerInGame();
+        String j = String.valueOf(playersList.size());
+        out.println("In the current Game we have " + j + "players whose Names are:\n");
+    }
 
 
     @Override
@@ -315,6 +331,11 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
 
     @Override
     public void showWinMessage(String winnerNickname) {
+
+    }
+
+    @Override
+    public void showNickCurrentPlayer(){
 
     }
 
@@ -386,6 +407,7 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
 
         }
     }
+
 
 
 }

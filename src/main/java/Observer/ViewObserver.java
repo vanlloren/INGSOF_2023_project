@@ -1,5 +1,7 @@
 package Observer;
 import Network.message.Message;
+import server.Model.GameModel;
+import server.Model.Player;
 
 import java.rmi.RemoteException;
 import java.util.List;

@@ -8,31 +8,29 @@ import java.util.ArrayList;
 
 
 public class GameModelView {
-   private LivingRoom livingRoom;
+   private final GameModel gameModel;
+   private GameBoard gameBoard = new GameBoard();
    private ArrayList<Player> playerInGame;
    private PlayableItemTile[][] shelfTable;
-   private Integer addingPoint;
-   private Integer partialPoint;
+   private int addingPoint;
+   private int partialPoint;
+   private String nicKName;
+   private String nickNameCurrentPlayer;
 
-   GameModelView(){
-       livingRoom = new LivingRoom();
-       playerInGame = new ArrayList<Player>();
-      // shelfTable = new PlayableItemTile[][];
-
-
-   }
-
-   public void setLivingRoom(LivingRoom livingRoom){
-       this.livingRoom = livingRoom;
+   public GameModelView(GameModel gameModel){  //CAPIRE DOVE FARE QUESTO PASSAGGIO, PROBABILMENTE VA FATTO PROPRIO ALL'INIZIO ALL'AVVIO DEL GAME E PASSARE CON UN SET PER OGNI TUI
+       gameModel = new GameModel();
+       this.gameModel = gameModel;
 
    }
 
-    public LivingRoom getLivingRoom() {
-        return livingRoom;
-    }
+
+   public GameBoard getGameBoard(){
+       return this.gameBoard;
+   }
+
 
     public ArrayList<Player> getPlayerInGame() {
-        return playerInGame;
+        return gameModel.getPlayersInGame();
     }
 
     public void setPlayerInGame(ArrayList<Player> playerInGame) {
@@ -43,24 +41,12 @@ public class GameModelView {
     return this.shelfTable;
     }
 
-    public void setShelfTable(PlayableItemTile[][] shelfTable){
-       this.shelfTable = shelfTable;
 
-    }
 
-    public Integer getAddingPoint() {
-        return addingPoint;
-    }
-
-    public void setAddingPoint(Integer addingPoint) {
-        this.addingPoint = addingPoint;
-    }
 
     public Integer getPartialPoint() {
         return partialPoint;
     }
 
-    public void setPartialPoint(Integer partialPoint) {
-        this.partialPoint = partialPoint;
-    }
+
 }

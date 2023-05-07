@@ -2,9 +2,10 @@ package Network.ServerSide;
 
 import Network.ClientSide.RemoteClientInterface;
 import Network.message.*;
-import Observer.Observer;
+import Observer.ServerObserver;
 import Util.RandPersonalGoal;
 import server.Controller.GameController;
+import server.Model.GameBoard;
 import server.Model.PlayableItemTile;
 import server.Model.Player;
 
@@ -13,13 +14,14 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
 
-public class RemoteServerImplementation extends UnicastRemoteObject implements RemoteServerInterface, Observer {
+public class RemoteServerImplementation extends UnicastRemoteObject implements RemoteServerInterface, ServerObserver {
     private final RMIServer server;
 
     private final Object lock = new Object();
     private boolean stop = false;
     private RemoteClientInterface client;
     private GameController gameController;
+    private ArrayList<PlayableItemTile> availableTiles;
 
     RemoteServerImplementation(RMIServer server, GameController gameController) throws RemoteException {
         this.server = server;
@@ -49,14 +51,15 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
                         gameController.initGameBoard();
                     } else if (gameController.getGame().getPlayersInGame().size() < gameController.getGame().getPlayersNumber()) {
                         boolean approvedNick = gameController.getGame().isNicknameAvailable(message.getNickname());
-                        Message newMessage = new LoginReplyMessage(message.getNickname(), approvedNick);
-                        client.onMessage(newMessage);
                         if(approvedNick){
                             Player newPlayer = new Player(message.getNickname());
                             RandPersonalGoal.setType(newPlayer, newPlayer.getPersonalGoal(), gameController.getGame().getPlayersInGame());
                             gameController.getGame().setPlayersInGame(newPlayer);
                         }
-                    } else{
+                        Message newMessage = new LoginReplyMessage(message.getNickname(), approvedNick);
+                        client.onMessage(newMessage);
+                    }
+                     else if ((gameController.getGame().getPlayersInGame().size() == gameController.getGame().getPlayersNumber())){
                         Message newMessage = new FullLobbyMessage();
                         client.onMessage(newMessage);
                     }
@@ -92,9 +95,7 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
         }
     }
 
-    public void onUpdateAskKeepPicking() throws RemoteException{
-        client.onMessage(new KeepPickingRequestMessage());
-    }
+
     @Override
     public void disconnect() throws RemoteException {
         rmiStream.disconnection();
@@ -114,6 +115,29 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
     public void onUpdateToPickTile(ArrayList<PlayableItemTile> availableTiles) throws RemoteException {
         client.onMessage(new ToPickTileRequestMessage(availableTiles));
     }
+
+    @Override
+    public void onUpdateModelEndGame(boolean endGame){
+        client.onMessage();}
+
+    @Override
+    public void onUpdateModelListPlayers(ArrayList<Player> playerArrayList){
+        client.onMessage();
+        }
+
+   @Override
+    public void onUpdateModelPlayersNumber(int playersNumber){
+        client.onMessage(new);
+    }
+    @Override
+    public void onUpdateModelChairOwner() {
+        client.onMessage(new);
+    }
+    @Override
+    public void onUpdateGameBoard(GameBoard gameBoard){
+        client.onMessage();
+    }
+
 
 
     //implementazione metodi di RemoteServerInterface

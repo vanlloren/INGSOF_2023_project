@@ -3,6 +3,7 @@ package Network.ClientSide;
 import Network.ServerSide.RemoteServerInterface;
 import Network.message.*;
 import Observer.ViewObserver;
+import client.view.GameModelView;
 import client.view.View;
 import server.Model.PlayableItemTile;
 
@@ -13,10 +14,12 @@ import java.rmi.registry.Registry;
 import java.util.ArrayList;
 import java.util.Map;
 
+
 public class RemoteClientImplementation extends Client implements RemoteClientInterface, ViewObserver {
 
     private RemoteServerInterface server;
     private String nickname;
+
 
 
     public RemoteClientImplementation(String address, int port, View userInterface) throws RemoteException {
@@ -46,6 +49,7 @@ public class RemoteClientImplementation extends Client implements RemoteClientIn
                 LoginReplyMessage newMessage = (LoginReplyMessage)message;
                 if(newMessage.isNicknameUniqueAccepted()) {
                     this.nickname = newMessage.getNickname();
+                    //METODO CHE PRINTA LA SUA PERSONAL GOAL
                 }
                 this.userInterface.showLoginResults(newMessage.isNicknameUniqueAccepted(), newMessage.getNickname());
             }
@@ -66,6 +70,31 @@ public class RemoteClientImplementation extends Client implements RemoteClientIn
             }
             case FULL_LOBBY -> {
                 this.userInterface.fullLobbyTerminateUI();
+            }
+            case UPDATE_MODEL_ENDGAME -> {
+                System.out.println("ENDGAME HAS BEEN LAUNCHED : THIS IS THE LAST TURN \n");
+
+                UpdateEndGameMessage newMessage = (UpdateEndGameMessage)message;
+            }
+            case UPDATE_MODEL_GAMEBOARD -> {
+                System.out.println("GAMEBOARD UPDATED : HERE IT IS THE CURRENT LIVING ROOM \N");
+                this.userInterface.showLivingRoom();
+                //CHIAMA METODO DELLA TUI CHE PRINTA LA LIVINGROOM
+                UpdateModelGameBoardMessage newmessage = (UpdateModelGameBoardMessage)message;
+
+            }
+            case UPDATE_MODEL_LISTPLAYERS -> {
+                System.out.println("LIST OF PLAYER UPDATED: HERE IT IS THE LIST OF ALL PLAYER \n");
+                this.userInterface.showPlayersList();
+                //CHIAMA METODO DELLA TUI CHE PRINTA TUTTI I NICKNAME DEI GIOCATORI PRESENTI FINO AD ORA
+                UpdateModelListPlayersMessage newMessage = (UpdateModelListPlayersMessage)message;
+
+            }
+            case UPDATE_MODEL_PLAYERSNUMBER -> {
+                System.out.println("NUMBER OF PLAYER UPDATED: HERE YOU HAVE THE NUMBER\n");
+                this.userInterface.showNumberOfPlayers();
+                //CHIAMA METODO DELLA TUI CHE PRINTA IL NUMERO DEI GIOCATORI PRESENTI FINO AD ORA
+                UpdatePlayersNumberMessage newMessage = (UpdatePlayersNumberMessage)message;
             }
         }
     }

@@ -50,6 +50,7 @@ public abstract class ViewObservable {
     protected void notifyObserver(Consumer<ViewObserver> lambda) {
         for (ViewObserver observer : observers) {
             lambda.accept(observer);
+
         }
     }
 
