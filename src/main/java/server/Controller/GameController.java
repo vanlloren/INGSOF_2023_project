@@ -1,5 +1,6 @@
 package server.Controller;
 import Network.ServerSide.RemoteServerImplementation;
+import Util.Colour;
 import Util.RandCommonGoal;
 import Util.RandPersonalGoal;
 import server.Model.*;
@@ -204,6 +205,68 @@ public  class GameController {
                 game.setEndGame();
             }
         }
+
+    public static HashMap<Colour, ArrayList<Integer>> findAdjGroups(Player player) {
+        HashMap<Colour, ArrayList<Integer>> adjGroups = new HashMap<>();
+
+        PlayableItemTile[][] helperShelf = player.getPersonalShelf().getStructure();
+
+        boolean[][] visited = new boolean[6][5];
+        for(int i=0; i<6; i++){
+            for(int j=0; j<5; j++){
+                visited[i][j] = false;
+            }
+        }
+
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 5; j++) {
+                if(helperShelf[i][j] != null){
+                    if (!visited[i][j]) {
+                        Colour colore = helperShelf[i][j].getColour();
+                        ArrayList<Integer> dimensioni = new ArrayList<>();
+                        int dimension = findAdjGroupDim(helperShelf, visited, i, j, colore, dimensioni);
+
+                        // Aggiungi il supergruppo alla mappa dei risultati
+                        if (adjGroups.containsKey(colore)) {
+                            adjGroups.get(colore).add(dimension);
+                        }else {
+                            ArrayList<Integer> nuovaLista = new ArrayList<>();
+                            nuovaLista.add(dimension);
+                            adjGroups.put(colore, nuovaLista);
+                        }
+                    }
+                }
+            }
+        }
+
+        return adjGroups;
+    }
+
+    private static int findAdjGroupDim(PlayableItemTile[][] structure, boolean[][] visitated, int i, int j, Colour colour, ArrayList<Integer> dimension) {
+        if (i < 0 || i >= structure.length || j < 0 || j >= structure[0].length || structure[i][j] == null || visitated[i][j] || structure[i][j].getColour() != colour) {
+            return 0;
+        }
+
+        visitated[i][j] = true;
+        int dimensione = 1;
+
+        for (Integer d : dimension) {
+            if (d != null && d == dimensione) {
+                dimensione += findAdjGroupDim(structure, visitated, i-1, j, colour, dimension); // Alto
+                dimensione += findAdjGroupDim(structure, visitated, i+1, j, colour, dimension); // Basso
+                dimensione += findAdjGroupDim(structure, visitated, i, j-1, colour, dimension); // Sinistra
+                dimensione += findAdjGroupDim(structure, visitated, i, j+1, colour, dimension); // Destra
+                return dimensione;
+            }
+        }
+
+        dimension.add(dimensione);
+        dimensione += findAdjGroupDim(structure, visitated, i-1, j, colour, dimension); // Alto
+        dimensione += findAdjGroupDim(structure, visitated, i+1, j, colour, dimension); // Basso
+        dimensione += findAdjGroupDim(structure, visitated, i, j-1, colour, dimension); // Sinistra
+        dimensione += findAdjGroupDim(structure, visitated, i, j+1, colour, dimension); // Destra
+        return dimensione;
+    }
 
         public void calculatePoint (Player player, ItemTile[][]structure, LivingRoom livingRoom) {
             if (!player.getHasCommonGoal1() && CheckCommonGoal.checkGoal(player.getPersonalShelf(), livingRoom.getCommonGoal1().getCommonGoalType())) {
