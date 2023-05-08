@@ -1,5 +1,7 @@
 package Network.ServerSide;
 
+import server.Controller.GameController;
+
 import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -7,19 +9,21 @@ import java.rmi.registry.Registry;
 
 //
 public class RMIServer {
-    private final Server server;
     private final int serverRMIPort;
+    private GameController gameController;
 
-    RMIServer(Server server, int port){
-        this.server = server;
+    RMIServer(int port, GameController gameController){
         this.serverRMIPort = port;
+        this.gameController = gameController;
     }
 
-    public void startRMIServer(){
+    public RemoteServerImplementation startRMIServer(){
         try{
-            RemoteServerImplementation remoteServer = new RemoteServerImplementation(server);
+            RemoteServerImplementation remoteServer = new RemoteServerImplementation(this, gameController);
             Registry registry = LocateRegistry.createRegistry(serverRMIPort);
             registry.bind("MyShelfieServer", remoteServer);
+            System.out.println("Server RMI pronto");
+            return remoteServer;
         }catch (AlreadyBoundException e) {
             throw new RuntimeException(e);
         } catch (RemoteException e) {

@@ -5,7 +5,7 @@ import java.util.Random;
 public class RandCommonGoal {
 
 
-    public void setType(CommonGoal commonGoal1,CommonGoal commonGoal2){
+    public static void setType(CommonGoal commonGoal1,CommonGoal commonGoal2){
         Random rand = new Random();
         int n = rand.nextInt(12);
         int m;

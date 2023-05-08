@@ -1,19 +1,20 @@
 package client.view;
 
-import Network.message.MessageEnumeration;
-import server.Model.ItemTile;
+import server.Model.LivingRoom;
 import server.Model.PlayableItemTile;
 import server.Model.Shelf;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public interface view {
+public interface View {
 
-    String askServerInfo(int portNum);
+    String askServerInfo();
+
+    int askServerPort();
     //richiede al giocatore d'indicare il nickName
     //è il server che poi si occupa di verificare che sia univoco
-    String askNickname();
+    void askNickname();
 
     //se il player è il primo a collegarsi al server, è lui che crea la partita
     //il server dunque gli chiede quanti giocatori far partecipare
@@ -25,6 +26,7 @@ public interface view {
     //chiede al player se desidera smettere di prendere tiles dalla livingRoom volontariamente
     void askStopPicking();
 
+
     //chiede al player quale tessera della sua mano collocare nella shelf
     void askTileToPut(ArrayList<PlayableItemTile> tilesInPlayerHand);
 
@@ -33,26 +35,30 @@ public interface view {
     void askPlacingTileInShelfPosition();
 
     //mostra il risultato della richiesta di login, con il nome scelto dal player
-    void showLoginResults(boolean nicknameAccepted, boolean connectionOn, String chosenNickname);
+    void showLoginResults(boolean nicknameAccepted, String chosenNickname);
 
-    void showLobby(List<String> nicknameList, int numPlayers);
-    //mostra lista dei player
-    void showPlayersList(List<String> playersList);
+    void showPlayersList();
+
+    void showNumberOfPlayers();
+
+    void fullLobbyTerminateUI();
 
     //mostra un messaggio che indica la fine della partita e il vincitore
     void showWinMessage(String winnerNickname);
 
     //rappresentazione aggiornata mossa per mossa della livingRoom
-    void showLivingRoom(ArrayList<PlayableItemTile> livingRoom);
+    void showLivingRoom();
 
     //rappresentazione aggiornata mossa per mossa della shelf relativa allo specifico Player
-    void showPlayerShelf(ArrayList<PlayableItemTile> playerShelf);
+    void showPlayerShelf();
 
     //messaggio che indica al player che un'azione gli ha conferito dei punti
     void showPointMessage();
 
+    void showNickCurrentPlayer();
+
     //mostra al player il suo punteggio (volendo si può mostrare anche quello degli avversari)
-    void showPointCounter(int pointCount);
+    void showPartialPoint();
 
     //messaggio di disconnessione
     void showDisconnectionMessage(String disconnectedPlayerNickname, String disconnectionMessage);
@@ -62,4 +68,7 @@ public interface view {
     void showDefaultMessage( String defaultMessage);
 
     void showMatchSituation(List<String> actualPlayers, List<Shelf> actualShelf, String actualPlayerNickname);
+
+    GameModelView getGameModelView();
+
 }

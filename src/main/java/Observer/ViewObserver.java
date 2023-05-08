@@ -2,6 +2,7 @@ package Observer;
 import java.util.List;
 import java.util.Map;
 public abstract class ViewObserver {
+
     /**
      * Create a new connection to the server with the updated info.
      *

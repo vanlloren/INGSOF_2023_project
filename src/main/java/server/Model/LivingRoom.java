@@ -2,6 +2,8 @@ package server.Model;
 
 import Util.*;
 
+import java.util.ArrayList;
+
 public class LivingRoom {
     private ItemTile[][] gameTable;
     private CommonGoal commonGoal1 = new CommonGoal();
@@ -19,6 +21,18 @@ public class LivingRoom {
             LivingRoomFactory factory = new FourLivingRoomFactory();
             this.gameTable = factory.create();
         }
+    }
+
+    public ArrayList<PlayableItemTile> getAvailableTiles(){
+        ArrayList<PlayableItemTile> availableTiles = new ArrayList<>();
+        for (int i=0; i<9; i++){
+            for(int j=0; j<9; j++){
+                if(gameTable[i][j].getAvailability()){
+                    availableTiles.add((PlayableItemTile) gameTable[i][j]);
+                }
+            }
+        }
+        return availableTiles;
     }
 
     public void setGameTable(ItemTile[][] gameTable){

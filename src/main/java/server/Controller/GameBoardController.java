@@ -15,12 +15,17 @@ public class GameBoardController {
 
     private int playerNum;
 
+
     public void setPlayerNum(int playerNum){
         this.playerNum = playerNum;
     }
 
     public GameBoard getControlledGameBoard(){
         return this.controlledGameBoard;
+    }
+
+    public LivingRoom getControlledLivingRoom(){
+        return this.controlledLivingRoom;
     }
 
     public void gameBoardInit(){
@@ -31,24 +36,15 @@ public class GameBoardController {
         this.controlledLivingRoom.updateAvailability();
     }
 
-    public ArrayList<PlayableItemTile> PickManager(int x, int y, boolean finish){
-        boolean stop=false;
-        controlledLivingRoom.updateAvailability();
+
+
+    public ArrayList<PlayableItemTile> PickManager(int x, int y){
+
+        controlledLivingRoom.updateAvailability(); //errore
 
         if(controlledGameBoard.getPickedTilesNum()==0){
             if(checkTileAvailability(x,y)){
                 controlledGameBoard.setToPlayerFirstTile(x,y);
-
-                //chiedo al player se vuole smettere di pescare
-                //stop=decisione player
-                if(stop){
-                    finish=true;
-                    controlledLivingRoom.updateAvailability();
-                    if(!checkIfAdjacentTiles()){
-                        livingRoomFiller();
-                        controlledLivingRoom.updateAvailability();
-                    }
-                }
             }else{
                 //messaggio/eccezione che indichi che la tessera scelta non è disponibile e ne va scelta un'altra
             }
@@ -56,17 +52,6 @@ public class GameBoardController {
             if(checkAdjacentAvailability()) {
                 if(checkTileAvailability(x,y)) {
                     controlledGameBoard.setToPlayerAnotherTile(x, y);
-
-                    //chiedo al player se vuole smettere di pescare
-                    //stop=decisione player
-                    if(stop){
-                        finish=true;
-                        controlledLivingRoom.updateAvailability();
-                        if(!checkIfAdjacentTiles()){
-                            livingRoomFiller();
-                            controlledLivingRoom.updateAvailability();
-                        }
-                    }
                 }else{
                     //messaggio/eccezione che indichi che la tessera scelta non è disponibile e ne va scelta un'altra
                 }
@@ -77,16 +62,6 @@ public class GameBoardController {
             if(checkAdjacentAvailability()) {
                 if(checkTileAvailability(x,y)) {
                     controlledGameBoard.setToPlayerAnotherTile(x, y);
-
-                    //chiedo al player se vuole smettere di pescare
-                    //stop=decisione player
-                    if(stop){
-                        controlledLivingRoom.updateAvailability();
-                        if(!checkIfAdjacentTiles()){
-                            livingRoomFiller();
-                            controlledLivingRoom.updateAvailability();
-                        }
-                    }
                 }else{
                     //messaggio/eccezione che indichi che la tessera scelta non è disponibile e ne va scelta un'altra
                 }

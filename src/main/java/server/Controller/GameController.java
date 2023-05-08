@@ -1,6 +1,5 @@
 package server.Controller;
 import Util.RandCommonGoal;
-import client.view.VirtualView;
 import server.Model.*;
 import Network.ClientSide.*;
 import server.enumerations.GameState;
@@ -20,7 +19,7 @@ public class GameController implements Observer {
     private final Client client;
   //  private boolean timeOut;
     private final GameBoardController gameBoardController = new GameBoardController(); // gameBoardController è il tramite tra GameController e le classi GameBoard, LivingRoom e ItemBag
-    private transient Map<String , VirtualView> virtualViewMap;
+    private transient Map<String ,VirtualView> virtualViewMap;
     /*
     Il comando dichiara un campo della classe come transient,
     il che significa che il campo non sarà incluso nella serializzazione

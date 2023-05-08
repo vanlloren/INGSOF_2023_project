@@ -1,11 +1,11 @@
 package server.Model;
 
 import Util.Colour;
-import Observer.Observable;
+import Observer.ServerObservable;
 
 import java.util.ArrayList;
 
-public class GameBoard extends Observable {
+public class GameBoard extends ServerObservable {
     private ItemBag bag = new ItemBag();
     private LivingRoom livingRoom = new LivingRoom();
     private PlayableItemTile nextInGameTile;//é la tessera "da mettere in gioco" ovvero quella che dalla bag sta venendo piazzata sulla plancia
