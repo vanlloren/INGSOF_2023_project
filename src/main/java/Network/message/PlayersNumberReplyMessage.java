@@ -1,13 +1,23 @@
 package Network.message;
 
 public class PlayersNumberReplyMessage extends Message{
+    private static final long serialVersionUID = -19L;
+    private final int playerNumber;
 
-    private final int numPlayers;
-    public PlayersNumberReplyMessage(String nickname, int numPlayers) {
+    public PlayerNumberReplyMessage(String nickname, int playerNumber) {
         super(nickname, MessageEnumeration.PLAYERNUMBER_REPLY);
-        this.numPlayers = numPlayers;
+        this.playerNumber = playerNumber;
     }
-    public int getNumPlayers(){
-        return this.numPlayers;
+
+    public int getPlayerNumber() {
+        return playerNumber;
+    }
+
+    @Override
+    public String toString() {
+        return "PlayerNumberReply{" +
+                "nickname=" + getNickname() +
+                ", playerNumber=" + playerNumber +
+                '}';
     }
 }

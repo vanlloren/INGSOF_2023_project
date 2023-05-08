@@ -1,35 +1,39 @@
 package server.Model;
 import Network.message.LobbyMessage;
-import Observer.ServerObservable;
-
+import Observer.Observable;
 
 import java.io.Serializable;
-import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.List;
 
 //Rappresenta il turn del gioco sasso carta forbice lizard spock
-public class GameModel extends ServerObservable implements Serializable {
+public class GameModel extends Observable implements Serializable {
     private static final long serialVersionUID = 44051L;
 
-
+    private static GameModel instance;
     private Player chosenChairOwner;
     private Integer chosenPlayersNumber;
     public static final String Server_Nick = "Server";//C'è un collegamento al server per ogni giocatore.
-    private Player currPlayer;
+    public static final int maximumNumberPlayers = 4;
+    //private Player currPlayer;
     //private String matchWinner; possiamo individuarlo attraverso un assaggio logico del giocatore con più punti e poi stabilire
     //Player matchWinner = playerInGame.equals(nickname)
-    private GameBoard myShelfie ;
-    private ArrayList<Player> playersInGame;
-    private boolean endGame;
+    private final GameBoard myShelfie ;
+    private List<Player> playersInGame;
     //private boolean endGame=false; Implementando l'enum GameState è possibile verificare lo stato della partita e quindi dell'ultimo turno di gioco
 
     private PlayableItemTile pickTile;
 
     private PlayableItemTile putTile;
 
-    public GameModel(){
+    private GameModel(){
         this.myShelfie = new GameBoard();
         this.playersInGame = new ArrayList<>();
+    }
+    public static  GameModel getInstance(){
+        if(instance == null)
+            instance = new GameModel();
+        return instance;
     }
 
     public PlayableItemTile getPickTile() {
@@ -45,18 +49,11 @@ public class GameModel extends ServerObservable implements Serializable {
     }
     public void setEndGame(){
         this.endGame = true;
-        notifyObservers(obs ->{
-            try {
-                obs.onUpdateModelEndGame(this.endGame);
-            } catch (RemoteException e) {
-                throw new RuntimeException(e);
-            }
-        });
-        //setChangedAndNotifyObservers(Event.ENDGAME);
+        setChangedAndNotifyObservers(Event.ENDGAME);
     }
 
     public Player getChairOwner() {
-        return this.chosenChairOwner;
+        return chairOwner;
     }
 
     public Player getCurrPlayer(){
@@ -65,7 +62,7 @@ public class GameModel extends ServerObservable implements Serializable {
 
     public void setMyShelfie(GameBoard gameBoard){
         this.myShelfie = gameBoard;
-        //setChangedAndNotifyObservers(Event.GAMEBOARD);
+        setChangedAndNotifyObservers(Event.GAMEBOARD);
     }
 
     public int getPlayersNumber() {
@@ -73,95 +70,97 @@ public class GameModel extends ServerObservable implements Serializable {
     }
 
     public void setPlayersNumber(int playersNumber){
+        if (playersNumber >0 && playersNumber <=maximumNumberPlayers)
         this.chosenPlayersNumber = playersNumber;
-        notifyObservers(obs ->{
-            try {
-
-                obs.onUpdateModelPlayersNumber(playersNumber);
-            } catch (RemoteException e) {
-                throw new RuntimeException(e);
-            }
-        });
-
-    }
-
-    public void setCurrPlayer(Player currPlayer){
-        this.currPlayer = currPlayer;
-
+        notifyObservers(new LobbyMessage((getPlayersNicknames()), this.chosenPlayersNumber));
     }
 
     public void setChairOwner(Player player) {
-      this.chosenChairOwner = player;
-        //setChangedAndNotifyObservers(Event.CHAIR_OWNER);
-        notifyObservers(obs ->{
-            try {
-                obs.onUpdateModelChairOwner(player);
-            } catch (RemoteException e) {
-                throw new RuntimeException(e);
-            }
-        });
+      this.chairOwner = player;
+        setChangedAndNotifyObservers(Event.CHAIR_OWNER);
     }
 
     public ArrayList<Player> getPlayersInGame() {
         return this.playersInGame;
     }
 
-    public void setPlayersInGame(Player newPlayer) {
-        this.playersInGame.add(newPlayer);
-        notifyObservers(obs ->{
-            try {
-                obs.onUpdateModelListPlayers(this.playersInGame);
-            } catch (RemoteException e) {
-                throw new RuntimeException(e);
-            }
-        });
+    public void setPlayersInGame(java.util.ArrayList<Player> playersInGame) {
+        this.playersInGame = playersInGame;
+        setChangedAndNotifyObservers(Event.PLAYERS_IN_GAME);
     }
 
     public void setmyShelfie(GameBoard myShelfie) {
         this.myShelfie = myShelfie;
-       // setChangedAndNotifyObservers(Event.GAME_BOARD);
-        notifyObservers(obs ->{
-            try {
-
-                obs.onUpdateGameBoard(myShelfie);
-            } catch (RemoteException e) {
-                throw new RuntimeException(e);
-
-            }
-        });
+        setChangedAndNotifyObservers(Event.GAME_BOARD);
     }
     public GameBoard getMyShelfie(){
         return myShelfie;
     }
 
+    @Override
+    public String askServerInfo(int portNum) {
+        return null;
+    }
+
+    @Override
+    public void askPlayersNumber() {
+
+    }
 
 
-    public ArrayList<String> getPlayersNicknames() {
-        ArrayList<String> nicknames = new ArrayList<String>();
+    public List<String> getPlayersNicknames() {
+        List<String> nicknames = new ArrayList<>();
         for (Player p : playersInGame) {
             nicknames.add(p.getNickname());
         }
         return nicknames;
     }
     public void reset() {
-        chosenChairOwner = null;
+        chairOwner = null;
         currPlayer= null;
         playersInGame = null;
         myShelfie = null;
         endGame= false;
     }
 
-    public boolean isNicknameAvailable(String nickname) {
-        for (Player p: playersInGame
-             ) {
-            if(p.getNickname() == nickname){
-                return false;
-            }
-        }
-
-        return true;
+    public boolean isNicknameNoTAvailable(String nickname) {
     }
 
-
+   /* public boolean haslaunchTerminate() {
+        return true;
+    }*/
 }
 
+    /*public ArrayList<Player> getTurnOrder(){
+
+    }
+*/
+
+
+
+
+//SEQUENZA CORRETTA GAMEBOARD<-->LIVINGROOM:
+//-creazione
+//-fillLivingRoom (al suo interno avrà multiple chiamate di getNextInGameTile e putNextInGameTile)
+//-updateAvailability
+//----1° turno----
+//-hasAdjacentTiles--->fillLivingRoom--->updateAvailability
+//-getToPlayerFirstTile
+//-checkAdjAvailability
+//-pickedTilesNum
+//-fineTurno/getToPlayerAnotherTile
+//-checkAdjAvailability
+//-pickedTilesNum
+//-fineTurno/getToPlayerAnotherTile
+//-fineTurno
+//-updateAvailability
+//----turno player succ----
+//-hasAdjacentTiles--->fillLivingRoom--->updateAvailability
+//-getToPlayerFirstTile
+//-checkAdjAvailability
+//-fineTurno/getToPlayerAnotherTile
+//-checkAdjAvailability
+//-fineTurno/getToPlayerAnotherTile
+//-fineTurno
+//-updateAvailability
+//----turno player succ----

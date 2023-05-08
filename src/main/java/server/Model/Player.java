@@ -2,6 +2,9 @@ package server.Model;
 
 
 import Util.CommonGoalType;
+
+import java.util.Vector;
+
 public class Player {
     private String nickname;
     private Integer points;
@@ -77,7 +80,8 @@ public class Player {
     }
     public void insertTile(int x, int y, PlayableItemTile tile) {
         int i = 0;
-        this.personalShelf.putTile(x,y,tile,i); //chiedi alfi come funziona questo metodo
+        Vector<Integer> position= new Vector<Integer>();
+        this.personalShelf.putTile(x,y,tile,i,position); //chiedi alfi come funziona questo metodo
         //metodo che gestisce inserimento in libreria
     }
 }
