@@ -1,26 +1,27 @@
 package server.Controller;
+import Network.ServerSide.RemoteServerImplementation;
+import Util.Colour;
 import Util.RandCommonGoal;
-import client.view.VirtualView;
+import Util.RandPersonalGoal;
 import server.Model.*;
 import Network.ClientSide.*;
 import server.enumerations.GameState;
 import Network.message.*;
 
 
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.Observable;
-import java.util.Observer;
+import java.rmi.RemoteException;
+import java.util.*;
 
 //All'interno di questa classe vi deve essere contenuta tutta la logica che sta dietro al gioco effettivo
 //escluso il settaggio della lobby e la costruzione del gioco quindi solo il pescaggio, l'inserimento ed il conteggio sono le azioni da seguire e tenere sott'occhio
-public class GameController implements Observer {
+public  class GameController {
 
     private  GameModel game;
-    private final Client client;
   //  private boolean timeOut;
     private final GameBoardController gameBoardController = new GameBoardController(); // gameBoardController è il tramite tra GameController e le classi GameBoard, LivingRoom e ItemBag
-    private transient Map<String , VirtualView> virtualViewMap;
+    private transient Map<String ,VirtualView> virtualViewMap;
+
+    private RemoteServerImplementation remoteServer;
     /*
     Il comando dichiara un campo della classe come transient,
     il che significa che il campo non sarà incluso nella serializzazione
@@ -34,19 +35,41 @@ public class GameController implements Observer {
     private GameState gameState;
     private TurnController turnController;
 
-    public GameController(GameModel game,Client client) {
+    boolean stopPicking = false;
+    boolean moveOn = false;
+
+    private int xPosCurrTile;
+    private int yPosCurrTile;
+
+    public GameController(GameModel game) {
         this.game = game;
-        this.client = client;
     }
-/*
+
     public GameModel getGame() {
         return this.game;
     }
-*/
+
+    public void setRemoteServer(RemoteServerImplementation remoteServer){
+        this.remoteServer = remoteServer;
+    }
+
+    public void setPosCurrTile(int x, int y){
+        this.xPosCurrTile = x;
+        this.yPosCurrTile = y;
+    }
+
     //metodo per avviare sessione gioco
     public void initGameController() {
         this.game = GameModel.getInstance();
         setGameState(GameState.LOGIN);
+    }
+
+    public void setStopPicking(){stopPicking = true;}
+
+    public void setMoveOn(){moveOn = true;}
+
+    public GameBoardController getGameBoardController(){
+        return this.gameBoardController;
     }
 
     public void onMessageReceived(Message receivedMessage) {
@@ -77,28 +100,67 @@ public class GameController implements Observer {
     //metodo per preparare l'inizio della partita: aggiunta giocatori e inizializzazione shelf personali etc..
     public void setUp() {
         /*Set del giocatore e del nickname*/
+
         Player newPlayer = new Player(client.getNickname());
         game.getPlayersInGame().add(newPlayer);
         game.setPlayersNumber(game.getPlayersNumber());
+
+
     }
 
+
+    /*
+    the following method is called when the number of player has reached the requested number
+    and as a consequence a game board with the right livingRoom (based on numOfPlayers) is created and the commonGoals are being set and prepared for the game
+     */
     public void initGameBoard(){
-        RandCommonGoal randCommonGoal = new RandCommonGoal();
-        gameBoardController.setPlayerNum(game.getPlayersNumber());
-        gameBoardController.gameBoardInit();  //inizializza itemBag e livingRoom riempiendola di tessere
+        gameBoardController.gameBoardInit();  //inizializza itemBag e livingRoom
         game.setMyShelfie(gameBoardController.getControlledGameBoard());
-        randCommonGoal.setType(game.getMyShelfie().getLivingRoom().getCommonGoal1(), game.getMyShelfie().getLivingRoom().getCommonGoal2());
+        RandCommonGoal.setType(game.getMyShelfie().getLivingRoom().getCommonGoal1(), game.getMyShelfie().getLivingRoom().getCommonGoal2());
         game.getMyShelfie().getLivingRoom().getCommonGoal1().setTokens(game.getPlayersNumber());
         game.getMyShelfie().getLivingRoom().getCommonGoal2().setTokens(game.getPlayersNumber());
 
     }
+
+
     public ArrayList<PlayableItemTile> pickTilesArray () {  //restituisce le 1/2/3 tiles prese dalla livingRoom dal player nel suo turno
             boolean finish=false;
             ArrayList<PlayableItemTile> tileArray = new ArrayList<PlayableItemTile>();
 
             while(!finish) {
                 if (gameBoardController.checkPickedTilesNum()) {
-                    tileArray=gameBoardController.PickManager(x, y, finish);
+
+                    try {
+                        remoteServer.onUpdateToPickTile(gameBoardController.getControlledLivingRoom().getAvailableTiles());
+                    } catch (RemoteException e) {
+                        throw new RuntimeException(e);
+                    }
+                    moveOn = false;
+                    while(!moveOn){
+                    }
+
+                    tileArray=gameBoardController.PickManager(xPosCurrTile, yPosCurrTile);
+                    //chiedo al player se vuole smettere di pescare
+                    try {
+                        remoteServer.onUpdateAskKeepPicking();
+                    } catch (RemoteException e) {
+                        throw new RuntimeException(e);
+                    }
+
+
+                    moveOn = false;
+                    while(!moveOn){
+                    }
+
+                    //stop=decisione player
+                    if(stopPicking){
+                        finish=true;
+                        gameBoardController.getControlledLivingRoom().updateAvailability();
+                        if(!gameBoardController.checkIfAdjacentTiles()){
+                            gameBoardController.livingRoomFiller();
+                            gameBoardController.getControlledLivingRoom().updateAvailability();
+                        }
+                    }
                 } else {
                     //messaggio che informi che sono già state prese tre tessere
                     finish = true;
@@ -144,6 +206,68 @@ public class GameController implements Observer {
             }
         }
 
+    public static HashMap<Colour, ArrayList<Integer>> findAdjGroups(Player player) {
+        HashMap<Colour, ArrayList<Integer>> adjGroups = new HashMap<>();
+
+        PlayableItemTile[][] helperShelf = player.getPersonalShelf().getStructure();
+
+        boolean[][] visited = new boolean[6][5];
+        for(int i=0; i<6; i++){
+            for(int j=0; j<5; j++){
+                visited[i][j] = false;
+            }
+        }
+
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 5; j++) {
+                if(helperShelf[i][j] != null){
+                    if (!visited[i][j]) {
+                        Colour colore = helperShelf[i][j].getColour();
+                        ArrayList<Integer> dimensioni = new ArrayList<>();
+                        int dimension = findAdjGroupDim(helperShelf, visited, i, j, colore, dimensioni);
+
+                        // Aggiungi il supergruppo alla mappa dei risultati
+                        if (adjGroups.containsKey(colore)) {
+                            adjGroups.get(colore).add(dimension);
+                        }else {
+                            ArrayList<Integer> nuovaLista = new ArrayList<>();
+                            nuovaLista.add(dimension);
+                            adjGroups.put(colore, nuovaLista);
+                        }
+                    }
+                }
+            }
+        }
+
+        return adjGroups;
+    }
+
+    private static int findAdjGroupDim(PlayableItemTile[][] structure, boolean[][] visitated, int i, int j, Colour colour, ArrayList<Integer> dimension) {
+        if (i < 0 || i >= structure.length || j < 0 || j >= structure[0].length || structure[i][j] == null || visitated[i][j] || structure[i][j].getColour() != colour) {
+            return 0;
+        }
+
+        visitated[i][j] = true;
+        int dimensione = 1;
+
+        for (Integer d : dimension) {
+            if (d != null && d == dimensione) {
+                dimensione += findAdjGroupDim(structure, visitated, i-1, j, colour, dimension); // Alto
+                dimensione += findAdjGroupDim(structure, visitated, i+1, j, colour, dimension); // Basso
+                dimensione += findAdjGroupDim(structure, visitated, i, j-1, colour, dimension); // Sinistra
+                dimensione += findAdjGroupDim(structure, visitated, i, j+1, colour, dimension); // Destra
+                return dimensione;
+            }
+        }
+
+        dimension.add(dimensione);
+        dimensione += findAdjGroupDim(structure, visitated, i-1, j, colour, dimension); // Alto
+        dimensione += findAdjGroupDim(structure, visitated, i+1, j, colour, dimension); // Basso
+        dimensione += findAdjGroupDim(structure, visitated, i, j-1, colour, dimension); // Sinistra
+        dimensione += findAdjGroupDim(structure, visitated, i, j+1, colour, dimension); // Destra
+        return dimensione;
+    }
+
         public void calculatePoint (Player player, ItemTile[][]structure, LivingRoom livingRoom) {
             if (!player.getHasCommonGoal1() && CheckCommonGoal.checkGoal(player.getPersonalShelf(), livingRoom.getCommonGoal1().getCommonGoalType())) {
                 Integer i;
@@ -158,15 +282,25 @@ public class GameController implements Observer {
                 i = i + addPoint(livingRoom.getCommonGoal2());
                 player.setStatusCommonGoal2();
             }
-            // DILETTA AGGIUNGI METODO CHE AGGIUNGE PUNTI PER LE TUE CARTE  if(!player.)
+            if(player.getPersonalGoal().getPoint()<CheckPersonalGoal.calculatePoints(player.getPersonalGoal(), player.getPersonalShelf().getStructure())){
+                Integer i;
+                Integer x;
+                Integer y;
+                i = player.getPoints();
+                x = CheckPersonalGoal.calculatePoints(player.getPersonalGoal(), player.getPersonalShelf().getStructure());
+                y = player.getPersonalGoal().getPoint();
+                player.getPersonalGoal().setPoint(x);
+                i = i + x - y;
+
+            }
         }
 
 
         public Integer addPoint (CommonGoal commonGoal){
             ArrayList<Integer> token_list = commonGoal.getToken_list();
             Integer i = 0;
-            if (0 < token_list.size()) {
-                i = token_list.get(token_list.size());
+            if (0 <= token_list.size()) {
+                i = token_list.get(token_list.size()-1);
                 token_list.remove(token_list.size() - 1);
             }
             return i;

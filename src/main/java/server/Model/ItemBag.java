@@ -72,7 +72,7 @@ public class ItemBag {
         PlayableItemTile helperTile;
         final Random RAND = new Random();
         if(bag.size() == 0){
-            helperTile = new PlayableItemTile("VOID", 0);
+            helperTile = new PlayableItemTile("VOID");
         }else {
             int index = RAND.nextInt(bag.size());
             helperTile = bag.get(index);

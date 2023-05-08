@@ -2,7 +2,6 @@ package server.Model;
 
 import Util.Colour;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 public class PlayableItemTile extends ItemTile {
@@ -14,7 +13,7 @@ public class PlayableItemTile extends ItemTile {
 
     private int yPos;
 
-    public PlayableItemTile(String colour, int id) {
+    public PlayableItemTile(String colour) {
         if (colour.equals("GREEN")) {
             Colour helperColour = Colour.GREEN;
             this.colour = helperColour;
