@@ -2,7 +2,7 @@ package Network.ServerSide;
 
 import Network.ClientSide.RemoteClientInterface;
 import Network.message.*;
-import Observer.ServerObserver;
+import Observer.ModelObserver;
 import Util.RandPersonalGoal;
 import server.Controller.GameController;
 import server.Model.GameBoard;
@@ -14,7 +14,7 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
 
-public class RemoteServerImplementation extends UnicastRemoteObject implements RemoteServerInterface, ServerObserver {
+public class RemoteServerImplementation extends UnicastRemoteObject implements RemoteServerInterface, ModelObserver {
     private final RMIServer server;
 
     private final Object lock = new Object();
@@ -98,7 +98,7 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
 
     @Override
     public void disconnect() throws RemoteException {
-        rmiStream.disconnection();
+
     }
 
     @Override
@@ -117,25 +117,25 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
     }
 
     @Override
-    public void onUpdateModelEndGame(boolean endGame){
-        client.onMessage();}
+    public void onUpdateModelEndGame(String Nickname,boolean endGame) throws RemoteException{
+        client.onMessage(new UpdateEndGameMessage(Nickname,endGame));}
 
     @Override
-    public void onUpdateModelListPlayers(ArrayList<Player> playerArrayList){
-        client.onMessage();
+    public void onUpdateModelListPlayers(String Nickname,ArrayList<Player> playerArrayList)throws RemoteException{
+        client.onMessage(new UpdateModelListPlayersMessage(Nickname,playerArrayList));
         }
 
    @Override
-    public void onUpdateModelPlayersNumber(int playersNumber){
-        client.onMessage(new);
+    public void onUpdateModelPlayersNumber(String Nickname,int playersNumber) throws RemoteException{
+        client.onMessage(new UpdatePlayersNumberMessage(Nickname,playersNumber));
     }
     @Override
-    public void onUpdateModelChairOwner() {
-        client.onMessage(new);
+    public void onUpdateModelChairOwner(String nickName,Player player) throws RemoteException{
+        client.onMessage(new UpdateChairOwnerMessage(nickName,player));
     }
     @Override
-    public void onUpdateGameBoard(GameBoard gameBoard){
-        client.onMessage();
+    public void onUpdateGameBoard(String Nickname,GameBoard gameBoard) throws RemoteException{
+        client.onMessage(new UpdateModelGameBoardMessage(Nickname,gameBoard));
     }
 
 

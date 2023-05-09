@@ -5,7 +5,7 @@ import Observer.ServerObservable;
 
 import java.util.ArrayList;
 
-public class GameBoard extends ServerObservable {
+public class GameBoard {
     private ItemBag bag = new ItemBag();
     private LivingRoom livingRoom = new LivingRoom();
     private PlayableItemTile nextInGameTile;//é la tessera "da mettere in gioco" ovvero quella che dalla bag sta venendo piazzata sulla plancia
@@ -82,7 +82,7 @@ public class GameBoard extends ServerObservable {
         firstX = x;
         firstY = y;
         setChanged();
-        notifyObservers(new int[]{x, y});
+
 
     }
 
@@ -101,35 +101,3 @@ public class GameBoard extends ServerObservable {
     }
 }
 
-//SEQUENZA CORRETTA GAMEBOARD<-->LIVINGROOM:
-//-creazione
-//-fillLivingRoom (al suo interno avrà multiple chiamate di getNextInGameTile e putNextInGameTile)
-//-updateAvailability
-//----1° turno----
-//-updateAvailability
-//-checkTileAvailability
-//-getToPlayerFirstTile
-//-checkAdjAvailability
-//-pickedTilesNum
-//-checkTileAvailability
-//-fineTurno/getToPlayerAnotherTile
-//-checkAdjAvailability
-//-pickedTilesNum
-//-checkTileAvailability
-//-fineTurno/getToPlayerAnotherTile
-//-fineTurno
-//-updateAvailability
-//-checkIfAdjacentTiles--->fillLivingRoom--->updateAvailability
-//----turno player succ----
-//-checkIfAdjacentTiles--->fillLivingRoom--->updateAvailability
-//-checkTileAvailability
-//-getToPlayerFirstTile
-//-checkAdjAvailability
-//-checkTileAvailability
-//-fineTurno/getToPlayerAnotherTile
-//-checkAdjAvailability
-//-checkTileAvailability
-//-fineTurno/getToPlayerAnotherTile
-//-fineTurno
-//-updateAvailability
-//----turno player succ----

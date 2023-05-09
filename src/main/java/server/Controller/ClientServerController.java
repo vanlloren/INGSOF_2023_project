@@ -1,5 +1,4 @@
 package server.Controller;
-import Network.clientInterface;
 import Network.message.*;
 import Observer.Observer;
 import Observer.ViewObserver;

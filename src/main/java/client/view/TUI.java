@@ -104,7 +104,6 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
 
     public void askPlayerNextMove(){
         scanner.nextLine();
-        int switcher;
         out.println("Press 1 if you want to PICK A TILE FROM LIVING ROOM " +
                     "Press 2 if you want to SEE THE LIVINGROOM " +
                     "Press 3 if you want to SEE THE PLAYERS IN YOUR GAMELOBBY " +
@@ -118,14 +117,14 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
 
                 );
         String picking = scanner.next();
-        while(picking != "1" || picking !="2"||picking != "3" || picking !="4"||picking != "5" || picking !="6"||
-              picking != "7" || picking !="8"||picking != "9" || picking !="10"){
+        while(!picking.equals("1") || !picking.equals("2") ||!picking.equals("3") ||!picking.equals("4") ||!picking.equals("5") ||
+                !picking.equals("6") ||!picking.equals("7") ||!picking.equals("8") ||!picking.equals("9")){
             out.println("Symbol not recoignized, please try  again...");
-            askPlayerNextMove();
+            picking = scanner.next();
         }
         switch (picking){
             case "1":
-                 askMovingTilePosition(gameModelView.getLivingRoom().getAvailableTiles());
+                 askMovingTilePosition(gameModelView.getGameBoard().getLivingRoom().getAvailableTiles());
             case "2":
                  showLivingRoom();
             case "3":
@@ -306,14 +305,7 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
         }
 
     }
-    @Override
-    public void showNumberOfPlayers() {
-        int i = 0;
-        String nickName = null;
-        ArrayList<Player> playersList = gameModelView.getPlayerInGame();
-        String j = String.valueOf(playersList.size());
-        out.println("In the current Game we have " + j + "players whose Names are:\n");
-    }
+
 
 
     @Override
@@ -323,9 +315,11 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
         ArrayList<Player> playersList = gameModelView.getPlayerInGame();
         String j = String.valueOf(playersList.size());
         out.println("In the current Game we have "+j+"players whose Names are:\n");
-        while(i<playersList.size())
+        while(i<playersList.size()){
              nickName = playersList.get(i).getNickname();
             out.println(nickName+" , ");
+            i++;
+        }
 
     }
 
@@ -345,6 +339,11 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
         //STAMPA SU COMMAND LINE LE TESSERE
 
 
+
+    }
+
+    @Override
+    public void showNumberOfPlayers(){
 
     }
 

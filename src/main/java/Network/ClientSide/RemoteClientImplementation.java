@@ -77,7 +77,7 @@ public class RemoteClientImplementation extends Client implements RemoteClientIn
                 UpdateEndGameMessage newMessage = (UpdateEndGameMessage)message;
             }
             case UPDATE_MODEL_GAMEBOARD -> {
-                System.out.println("GAMEBOARD UPDATED : HERE IT IS THE CURRENT LIVING ROOM \N");
+                System.out.println("GAMEBOARD UPDATED : HERE IT IS THE CURRENT LIVING ROOM \n");
                 this.userInterface.showLivingRoom();
                 //CHIAMA METODO DELLA TUI CHE PRINTA LA LIVINGROOM
                 UpdateModelGameBoardMessage newmessage = (UpdateModelGameBoardMessage)message;
@@ -104,10 +104,7 @@ public class RemoteClientImplementation extends Client implements RemoteClientIn
 
     }
 
-    @Override
-    public void update(Message message) {
 
-    }
 
     @Override
     public void onUpdateServerInfo(Map<String, String> serverInfo) {
@@ -124,15 +121,19 @@ public class RemoteClientImplementation extends Client implements RemoteClientIn
     }
 
     @Override
-    public void onUpdateAskKeepPicking(String choice) throws RemoteException {
+    public void onUpdateAskKeepPicking(String nickname,String choice) throws RemoteException {
         server.onMessage(new KeepPickingReplyMessage(nickname, choice));
     }
 
     @Override
-    public void onUpdatePlayersNumber(int playersNumber) throws RemoteException {
-        server.onMessage(new PlayersNumberReplyMessage(nickname,playersNumber) );
+    public void onUpdatePlayersNumber(String Nickname,int playersNumber) throws RemoteException {
+        server.onMessage(new PlayersNumberReplyMessage(Nickname,playersNumber) );
     }
 
+    @Override
+    public void onUpdateFirstPlayer(String nickname) throws RemoteException {
+
+    }
 
 
     @Override
