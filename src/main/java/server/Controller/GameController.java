@@ -206,10 +206,10 @@ public  class GameController {
             }
         }
 
-    public static HashMap<Colour, ArrayList<Integer>> findAdjGroups(Player player) {
+    public static HashMap<Colour, ArrayList<Integer>> findAdjGroups(PlayableItemTile[][] shelf) {
         HashMap<Colour, ArrayList<Integer>> adjGroups = new HashMap<>();
 
-        PlayableItemTile[][] helperShelf = player.getPersonalShelf().getStructure();
+        PlayableItemTile[][] helperShelf = shelf;
 
         boolean[][] visited = new boolean[6][5];
         for(int i=0; i<6; i++){

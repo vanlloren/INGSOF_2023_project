@@ -20,12 +20,12 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
 
     private boolean gameOn=true;
 
-    private final GameModelView gameModelView;
+    private final TurnView turnView;
 
     private boolean checker = false;
     public TUI(GameModel gameModel){
         this.out = System.out;
-        this.gameModelView = new GameModelView(gameModel);
+        this.turnView = new TurnView(gameModel);
     }
     //Implementando il metodo Runnable ereditiamo tutte le sue classi e oggetti
     //Run è un costruttore basilare costruito direttamente dal metodo Runnable al posto di init
@@ -97,8 +97,8 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
         }
     }
     @Override
-    public GameModelView getGameModelView() {
-        return gameModelView;
+    public TurnView getGameModelView() {
+        return turnView;
     }
 
 
@@ -124,7 +124,7 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
         }
         switch (picking){
             case "1":
-                 askMovingTilePosition(gameModelView.getGameBoard().getLivingRoom().getAvailableTiles());
+                 askMovingTilePosition(turnView.getGameBoard().getLivingRoom().getAvailableTiles());
             case "2":
                  showLivingRoom();
             case "3":
@@ -177,11 +177,12 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
     }
 
     public int askServerPort() {
+        int portNum;
         do {
             scanner.nextLine();
             out.println("Inserisci la porta del Server [default = ??]:\n");
             //effettuo check validità su in.nextLine();
-            int portNum = scanner.nextInt();
+            portNum = scanner.nextInt();
             if (checkPortValidity(portNum)) {
                 checker = true;
             } else {
@@ -312,7 +313,7 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
     public void showPlayersList() {
         int i=0;
         String nickName = null;
-        ArrayList<Player> playersList = gameModelView.getPlayerInGame();
+        ArrayList<Player> playersList = turnView.getPlayerInGame();
         String j = String.valueOf(playersList.size());
         out.println("In the current Game we have "+j+"players whose Names are:\n");
         while(i<playersList.size()){
@@ -335,7 +336,7 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
 
     @Override
     public void showLivingRoom() {
-        LivingRoom livingRoom1 =  gameModelView.getLivingRoom();
+
         //STAMPA SU COMMAND LINE LE TESSERE
 
 
@@ -349,7 +350,7 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
 
     @Override
     public void showPlayerShelf() {
-    PlayableItemTile[][] shelfTable = gameModelView.getShelfTable();
+    PlayableItemTile[][] shelfTable = turnView.getShelfTable();
       // STAMPA TUTTA LA SHELF
     }
 
@@ -361,7 +362,7 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
 
     @Override
     public void showPartialPoint() {
-    String point = String.valueOf(gameModelView.getPartialPoint());
+    String point = String.valueOf(turnView.getPartialPoint());
     out.println("Your total point so far is :"+point);
     }
 

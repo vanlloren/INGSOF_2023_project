@@ -7,7 +7,7 @@ import server.Model.Player;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
-public interface ModelObserver {
+public interface GameModelObserver {
     void update(Message message);
 
     void onUpdateModelListPlayers(String Nickname,ArrayList<Player> playerArrayList) throws RemoteException;

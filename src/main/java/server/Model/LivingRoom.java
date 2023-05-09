@@ -1,10 +1,11 @@
 package server.Model;
 
+import Observer.LivingRoomObservable;
 import Util.*;
 
 import java.util.ArrayList;
 
-public class LivingRoom {
+public class LivingRoom extends LivingRoomObservable {
     private ItemTile[][] gameTable;
     private CommonGoal commonGoal1 = new CommonGoal();
     private CommonGoal commonGoal2 = new CommonGoal();

@@ -3,7 +3,6 @@ package Network.ClientSide;
 import Network.ServerSide.RemoteServerInterface;
 import Network.message.*;
 import Observer.ViewObserver;
-import client.view.GameModelView;
 import client.view.View;
 import server.Model.PlayableItemTile;
 
@@ -121,7 +120,7 @@ public class RemoteClientImplementation extends Client implements RemoteClientIn
     }
 
     @Override
-    public void onUpdateAskKeepPicking(String nickname,String choice) throws RemoteException {
+    public void onUpdateAskKeepPicking(String nickname, String choice) throws RemoteException {
         server.onMessage(new KeepPickingReplyMessage(nickname, choice));
     }
 

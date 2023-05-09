@@ -2,7 +2,7 @@ package Network.ServerSide;
 
 import Network.ClientSide.RemoteClientInterface;
 import Network.message.*;
-import Observer.ModelObserver;
+import Observer.GameModelObserver;
 import Util.RandPersonalGoal;
 import server.Controller.GameController;
 import server.Model.GameBoard;
@@ -14,7 +14,7 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
 
-public class RemoteServerImplementation extends UnicastRemoteObject implements RemoteServerInterface, ModelObserver {
+public class RemoteServerImplementation extends UnicastRemoteObject implements RemoteServerInterface, GameModelObserver {
     private final RMIServer server;
 
     private final Object lock = new Object();

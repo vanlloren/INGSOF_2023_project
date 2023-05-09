@@ -3,22 +3,22 @@ import java.util.function.Consumer;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class ServerObservable  {
-    private final List<ModelObserver> observers = new ArrayList<>();
+public abstract class GameModelObservable {
+    private final List<GameModelObserver> observers = new ArrayList<>();
 
     /**
      * Adds an observer.
      *
      * @param obs the observer to be added.
      */
-    public void addObserver(ModelObserver obs){ observers.add(obs);}
+    public void addObserver(GameModelObserver obs){ observers.add(obs);}
 
     /**
      * Removes an observer.
      *
      * @param obs the observer to be removed.
      */
-    public void deleteObserver(ModelObserver obs){ observers.remove(obs);}
+    public void deleteObserver(GameModelObserver obs){ observers.remove(obs);}
 
     /**
      * Notifies all the current observers through the lambda argument.
@@ -26,8 +26,8 @@ public abstract class ServerObservable  {
      * @param lambda the lambda to be called on the observers.
      */
 
-    public void notifyObservers(Consumer<ModelObserver> lambda) {
-        for (ModelObserver observer : observers) {
+    public void notifyObservers(Consumer<GameModelObserver> lambda) {
+        for (GameModelObserver observer : observers) {
             lambda.accept(observer);
         }
     }

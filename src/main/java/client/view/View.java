@@ -1,6 +1,5 @@
 package client.view;
 
-import server.Model.LivingRoom;
 import server.Model.PlayableItemTile;
 import server.Model.Shelf;
 
@@ -69,6 +68,6 @@ public interface View {
 
     void showMatchSituation(List<String> actualPlayers, List<Shelf> actualShelf, String actualPlayerNickname);
 
-    GameModelView getGameModelView();
+    TurnView getGameModelView();
 
 }

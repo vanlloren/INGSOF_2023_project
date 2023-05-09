@@ -1,14 +1,14 @@
 package server.Model;
-import Network.message.LobbyMessage;
-import Observer.ServerObservable;
 
+
+import Observer.GameModelObservable;
 
 import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 //Rappresenta il turn del gioco sasso carta forbice lizard spock
-public class GameModel extends ModelObservable implements Serializable {
+public class GameModel extends GameModelObservable implements Serializable {
     private static final long serialVersionUID = 44051L;
 
 

@@ -1,11 +1,12 @@
 package server.Model;
 
 
+import Observer.PlayerObservable;
 import Util.CommonGoalType;
 
 import java.util.Vector;
 
-public class Player {
+public class Player extends PlayerObservable {
     private String nickname;
     private Integer points;
     private Shelf personalShelf = new Shelf();

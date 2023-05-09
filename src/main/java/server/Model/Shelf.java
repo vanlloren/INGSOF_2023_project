@@ -1,10 +1,12 @@
 package server.Model;
 
 
+import Observer.ShelfObservable;
+
 import java.util.Vector;
 
 
-public class Shelf {
+public class Shelf extends ShelfObservable {
     private PlayableItemTile[][] structure = new PlayableItemTile[5][4];
 
     public PlayableItemTile[][] getStructure(){

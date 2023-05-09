@@ -1,7 +1,6 @@
 package server.Model;
 
 import Util.Colour;
-import Observer.ServerObservable;
 
 import java.util.ArrayList;
 
