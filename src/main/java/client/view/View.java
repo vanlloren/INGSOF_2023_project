@@ -1,5 +1,6 @@
 package client.view;
 
+import server.Model.LivingRoom;
 import server.Model.PlayableItemTile;
 import server.Model.Shelf;
 
@@ -37,6 +38,8 @@ public interface View {
     void showLoginResults(boolean nicknameAccepted, String chosenNickname);
 
     void showPlayersList();
+
+    void showLivingRoom(LivingRoom livingRoom);
 
     void showNumberOfPlayers();
 
