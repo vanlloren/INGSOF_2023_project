@@ -23,13 +23,13 @@ public interface ViewObserver {
      *
      * @param choice the choice to be sent.
      */
-     void onUpdateAskKeepPicking(String Nickname, String choice) throws RemoteException;
+     void onUpdateAskKeepPicking(String choice) throws RemoteException;
     /**
      * Sends a message to the server with the player number chosen by the user.
      *
      * @param playersNumber the number of players.
      */
-     void onUpdatePlayersNumber(String Nickname,int playersNumber) throws RemoteException;
+     void onUpdatePlayersNumber(int playersNumber) throws RemoteException;
 
     /**
      * Sends a message to the server with the nickname of the first player chosen by the user.

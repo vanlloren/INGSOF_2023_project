@@ -32,6 +32,7 @@ public class GameBoard {
         helperLivingRoom.createGameTable(playerNum);
         firstFilling(helperLivingRoom);
         this.livingRoom = helperLivingRoom;
+        //qui va messa notify
     }
 
     public void firstFilling(LivingRoom livingRoom) {

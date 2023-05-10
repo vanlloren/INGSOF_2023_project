@@ -27,16 +27,16 @@ public class Player extends PlayerObservable {
 
     public void setStatusCommonGoal1(){
         this.hasCommonGoal1 = true;
+        //notifica che la commmongoal è stata soddisfatta
     }
 
     public void setStatusCommonGoal2(){
         this.hasCommonGoal2 = true;
+        //notifica che la commonGoal2 è stata soddisfatta
     }
 
 
-    public void setStatusPersonalGoal(){
-        this.hasPersonalGoal = true;
-    }
+
 
     //metodo che verra chiamato dal controller il quale preventivamente crea una living room adatta al numero di giocatori che si sono collegati e assegna a tutti la STESSA LIVING ROOM
     public void setLivingRoom(LivingRoom livingRoom){

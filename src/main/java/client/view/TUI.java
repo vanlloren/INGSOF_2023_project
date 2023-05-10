@@ -325,7 +325,7 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
     }
 
     @Override
-    public void showWinMessage(String winnerNickname) {
+    public void showWinMessage(String stringWinning) {
 
     }
 

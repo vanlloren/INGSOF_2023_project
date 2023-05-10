@@ -6,8 +6,8 @@ import java.util.ArrayList;
 
 public class UpdateModelListPlayersMessage extends Message{
     private  ArrayList<Player> playerArrayList = new ArrayList<>();
-    public UpdateModelListPlayersMessage(String nickname, ArrayList<Player> playerArrayList) {
-        super(nickname, MessageEnumeration.UPDATE_MODEL_LISTPLAYERS);
+    public UpdateModelListPlayersMessage(ArrayList<Player> playerArrayList) {
+        super(MessageEnumeration.UPDATE_MODEL_LISTPLAYERS);
         this.playerArrayList = playerArrayList;
     }
 

@@ -11,11 +11,14 @@ public abstract class Message implements Serializable {
 
     private static final long serialVersionUID = 2L;
 
-    private final String nickname;
+    private  String nickname;
     private final MessageEnumeration messageEnum;
 
     Message(String nickname, MessageEnumeration messageEnum) {
         this.nickname = nickname;
+        this.messageEnum = messageEnum;
+    }
+    Message(MessageEnumeration messageEnum){
         this.messageEnum = messageEnum;
     }
 

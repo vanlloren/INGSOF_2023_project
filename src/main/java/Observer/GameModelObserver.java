@@ -10,13 +10,13 @@ import java.util.ArrayList;
 public interface GameModelObserver {
     void update(Message message);
 
-    void onUpdateModelListPlayers(String Nickname,ArrayList<Player> playerArrayList) throws RemoteException;
+    void onUpdateModelListPlayers(ArrayList<Player> playerArrayList) ;
 
-    void onUpdateModelEndGame(String Nickname,boolean endGame) throws RemoteException;
+    void onUpdateModelEndGame(boolean endGame) ;
 
-    void onUpdateModelPlayersNumber(String Nickname,int playersNumber) throws RemoteException;
+    void onUpdateModelPlayersNumber(int playersNumber) ;
 
-    void onUpdateModelChairOwner(String Nickname,Player player) throws RemoteException;
+    void onUpdateModelChairOwner(Player player);
 
-    void onUpdateGameBoard(String nickName,GameBoard gameBoard) throws RemoteException;
+    void onUpdateGameBoard(GameBoard gameBoard);
 }

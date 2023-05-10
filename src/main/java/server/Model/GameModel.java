@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
-//Rappresenta il turn del gioco sasso carta forbice lizard spock
+
 public class GameModel extends GameModelObservable implements Serializable {
     private static final long serialVersionUID = 44051L;
 
@@ -20,25 +20,14 @@ public class GameModel extends GameModelObservable implements Serializable {
     //Player matchWinner = playerInGame.equals(nickname)
     private GameBoard myShelfie ;
     private ArrayList<Player> playersInGame;
-    private boolean endGame;
-    //private boolean endGame=false; Implementando l'enum GameState è possibile verificare lo stato della partita e quindi dell'ultimo turno di gioco
+    private boolean endGame=false;
 
-    private PlayableItemTile pickTile;
-
-    private PlayableItemTile putTile;
 
     public GameModel(){
         this.myShelfie = new GameBoard();
         this.playersInGame = new ArrayList<>();
     }
 
-    public PlayableItemTile getPickTile() {
-        return pickTile;
-    }
-
-    public PlayableItemTile getPutTile() {
-        return putTile;
-    }
 
     public boolean getEndGame(){
         return endGame;
@@ -46,13 +35,9 @@ public class GameModel extends GameModelObservable implements Serializable {
     public void setEndGame(){
         this.endGame = true;
         notifyObservers(obs ->{
-            try {
-                obs.onUpdateModelEndGame(this.currPlayer.getNickname(),this.endGame);
-            } catch (RemoteException e) {
-                throw new RuntimeException(e);
-            }
+            obs.onUpdateModelEndGame(this.currPlayer.getNickname(),this.endGame);
         });
-        //setChangedAndNotifyObservers(Event.ENDGAME);
+
     }
 
     public Player getChairOwner() {
@@ -75,12 +60,7 @@ public class GameModel extends GameModelObservable implements Serializable {
     public void setPlayersNumber(int playersNumber){
         this.chosenPlayersNumber = playersNumber;
         notifyObservers(obs ->{
-            try {
-
-                obs.onUpdateModelPlayersNumber(this.currPlayer.getNickname(),playersNumber);
-            } catch (RemoteException e) {
-                throw new RuntimeException(e);
-            }
+            obs.onUpdateModelPlayersNumber(this.currPlayer.getNickname(),playersNumber);
         });
 
     }
@@ -92,13 +72,8 @@ public class GameModel extends GameModelObservable implements Serializable {
 
     public void setChairOwner(Player player) {
       this.chosenChairOwner = player;
-        //setChangedAndNotifyObservers(Event.CHAIR_OWNER);
         notifyObservers(obs ->{
-            try {
-                obs.onUpdateModelChairOwner(this.currPlayer.getNickname(),player);
-            } catch (RemoteException e) {
-                throw new RuntimeException(e);
-            }
+            obs.onUpdateModelChairOwner(this.currPlayer.getNickname(),player);
         });
     }
 
@@ -109,11 +84,7 @@ public class GameModel extends GameModelObservable implements Serializable {
     public void setPlayersInGame(Player newPlayer) {
         this.playersInGame.add(newPlayer);
         notifyObservers(obs ->{
-            try {
                 obs.onUpdateModelListPlayers(this.currPlayer.getNickname(),this.playersInGame);
-            } catch (RemoteException e) {
-                throw new RuntimeException(e);
-            }
         });
     }
 
@@ -121,13 +92,7 @@ public class GameModel extends GameModelObservable implements Serializable {
         this.myShelfie = myShelfie;
        // setChangedAndNotifyObservers(Event.GAME_BOARD);
         notifyObservers(obs ->{
-            try {
-
-                obs.onUpdateGameBoard(this.currPlayer.getNickname(),myShelfie);
-            } catch (RemoteException e) {
-                throw new RuntimeException(e);
-
-            }
+            obs.onUpdateGameBoard(this.currPlayer.getNickname(),myShelfie);
         });
     }
     public GameBoard getMyShelfie(){

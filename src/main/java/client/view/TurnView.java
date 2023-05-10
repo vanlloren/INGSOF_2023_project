@@ -53,34 +53,36 @@ public class TurnView implements LivingRoomObserver, ShelfObserver, PlayerObserv
         return partialPoint;
     }
 
-
+//IN OGNUNO DI QUESTO DEVO MANDARE UNA NOTIFICA A TUTTI GLI OBSERVER OSSIA A TUTTA LA LISTA DEGLI CLIENTOBSERVER
+    //QUESTA A SUA VOLTA ALLA RICEZIONE DI QUELLA UPDATE AVRA NEL SUO CODICE OVVERRIDE IL COIDCE CON SCRITTO IL TESTO MODIFICATA LA ...
+    // E CHIAMO METODO SHOW CHE STAMPA LA NUOVA SITUAZIONE
     @Override
     public void update(Message message) {
 
     }
 
     @Override
-    public void onUpdateModelListPlayers(String Nickname, ArrayList<Player> playerArrayList) throws RemoteException {
+    public void onUpdateModelListPlayers(ArrayList<Player> playerArrayList) {
 
     }
 
     @Override
-    public void onUpdateModelEndGame(String Nickname, boolean endGame) throws RemoteException {
+    public void onUpdateModelEndGame(boolean endGame)  {
 
     }
 
     @Override
-    public void onUpdateModelPlayersNumber(String Nickname, int playersNumber) throws RemoteException {
+    public void onUpdateModelPlayersNumber(int playersNumber)  {
 
     }
 
     @Override
-    public void onUpdateModelChairOwner(String Nickname, Player player) throws RemoteException {
+    public void onUpdateModelChairOwner(Player player) {
 
     }
 
     @Override
-    public void onUpdateGameBoard(String nickName, GameBoard gameBoard) throws RemoteException {
+    public void onUpdateGameBoard(GameBoard gameBoard) {
 
     }
 }

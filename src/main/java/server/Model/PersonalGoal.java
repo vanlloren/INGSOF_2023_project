@@ -10,6 +10,9 @@ public class PersonalGoal {
     public PersonalGoalType getPersonalGoalType(){
         return this.personalGoalType;
     }
+    public void setPersonalGoalType(PersonalGoalType personalGoalType){
+        this.personalGoalType = personalGoalType;
+    }
 
 }
 
