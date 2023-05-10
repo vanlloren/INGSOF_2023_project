@@ -4,6 +4,7 @@ import Network.ClientSide.RemoteClientInterface;
 import Network.message.*;
 import Observer.GameModelObserver;
 import Util.RandPersonalGoal;
+import client.view.TurnView;
 import server.Controller.GameController;
 import server.Model.GameBoard;
 import server.Model.PlayableItemTile;
@@ -17,15 +18,17 @@ import java.util.ArrayList;
 public class RemoteServerImplementation extends UnicastRemoteObject implements RemoteServerInterface, GameModelObserver {
     private final RMIServer server;
 
+    private final TurnView turnView;
     private final Object lock = new Object();
     private boolean stop = false;
     private RemoteClientInterface client;
     private GameController gameController;
     private ArrayList<PlayableItemTile> availableTiles;
 
-    RemoteServerImplementation(RMIServer server, GameController gameController) throws RemoteException {
+    RemoteServerImplementation(RMIServer server, GameController gameController, TurnView turnView) throws RemoteException {
         this.server = server;
         this.gameController = gameController;
+        this.turnView = turnView;
     }
 
     public void resetStop(){
@@ -104,6 +107,7 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
     @Override
     public boolean handShake(RemoteClientInterface client) {
         this.client = client;
+        turnView.addObserver(client);
         return true;
     }
 

@@ -1,5 +1,6 @@
 package Network.ServerSide;
 
+import client.view.TurnView;
 import server.Controller.GameController;
 import server.Model.GameModel;
 
@@ -21,8 +22,9 @@ public class ServerApp {
         out.println("Please, decide on which port you would like to run the RMIServer:");
         int serverPort = scanner.nextInt();
         GameModel gameModel = new GameModel();
+        TurnView turnView = new TurnView(gameModel);
         GameController gameController = new GameController(gameModel);
-        RMIServer RMIServerCreator = new RMIServer(serverPort, gameController);
+        RMIServer RMIServerCreator = new RMIServer(serverPort, gameController, turnView);
         RemoteServerImplementation remoteServer = RMIServerCreator.startRMIServer();
         gameController.setRemoteServer(remoteServer);
         gameModel.addObserver(remoteServer);
