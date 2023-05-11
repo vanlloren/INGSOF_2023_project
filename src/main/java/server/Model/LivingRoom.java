@@ -1,9 +1,11 @@
 package server.Model;
 
 import Observer.LivingRoomObservable;
+import Observer.LivingRoomObserver;
 import Util.*;
 
 import java.util.ArrayList;
+import java.util.function.Consumer;
 
 public class LivingRoom extends LivingRoomObservable {
     private ItemTile[][] gameTable;
@@ -22,6 +24,7 @@ public class LivingRoom extends LivingRoomObservable {
             LivingRoomFactory factory = new FourLivingRoomFactory();
             this.gameTable = factory.create();
         }
+
     }
 
     public ArrayList<PlayableItemTile> getAvailableTiles(){
@@ -94,6 +97,7 @@ public class LivingRoom extends LivingRoomObservable {
         PlayableItemTile helperTile;
         helperTile = (PlayableItemTile) gameTable[x][y];
         gameTable[x][y] = null;
+        notifyObservers(obs -> obs.onUpdatePickedTileFromLivingRoom(x, y);
         return helperTile;
     }
 
@@ -265,8 +269,6 @@ public class LivingRoom extends LivingRoomObservable {
             }
         }
     }
-
-
 }
 
 

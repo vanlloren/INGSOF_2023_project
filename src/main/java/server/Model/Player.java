@@ -3,6 +3,7 @@ package server.Model;
 
 import Observer.PlayerObservable;
 import Util.CommonGoalType;
+import client.view.TurnView;
 
 import java.util.Vector;
 
@@ -17,8 +18,9 @@ public class Player extends PlayerObservable {
     private boolean hasPersonalGoal;
 
     // costruttore player in cui passo i parametri principali passati dal controller che chiamerà dopo la ricezione di tutti i nickname da lato client
-    public Player (String nickname){
+    public Player (String nickname, TurnView turnView){
         this.nickname = nickname;
+        this.personalShelf.addObserver(turnView);
     }
 
 

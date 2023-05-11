@@ -1,6 +1,7 @@
 package server.Controller;
 
 import Util.Colour;
+import client.view.TurnView;
 import server.Model.GameBoard;
 import server.Model.LivingRoom;
 import server.Model.PlayableItemTile;
@@ -15,7 +16,12 @@ public class GameBoardController {
 
     private int playerNum;
 
+    private TurnView turnView;
 
+
+    public GameBoardController(TurnView turnView){
+        this.turnView = turnView;
+    }
     public void setPlayerNum(int playerNum){
         this.playerNum = playerNum;
     }
@@ -29,7 +35,7 @@ public class GameBoardController {
     }
 
     public void gameBoardInit(){
-        this.controlledGameBoard = new GameBoard();
+        this.controlledGameBoard = new GameBoard(this.turnView);
         this.controlledGameBoard.setItemBag();
         this.controlledGameBoard.setLivingRoom(playerNum);
         this.controlledLivingRoom = controlledGameBoard.getLivingRoom();

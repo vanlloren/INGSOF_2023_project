@@ -1,6 +1,7 @@
 package server.Model;
 
 import Util.Colour;
+import client.view.TurnView;
 
 import java.util.ArrayList;
 
@@ -15,6 +16,9 @@ public class GameBoard {
     private int firstX;
     private int firstY;
 
+    public GameBoard(TurnView turnView){
+        this.livingRoom.addObserver(turnView);
+    }
     //MODEL
     public void setItemBag(){ //genera la ItemBag a ogni inizio partita chiamato dal controller
         ItemBag helperBag = new ItemBag();
@@ -81,9 +85,6 @@ public class GameBoard {
         livingRoom.updateAdjacentAvailabilityV1(x, y);
         firstX = x;
         firstY = y;
-        setChanged();
-
-
     }
 
     //MODEL

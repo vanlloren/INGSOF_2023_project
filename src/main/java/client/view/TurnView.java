@@ -97,6 +97,11 @@ public class TurnView extends TurnViewObservable implements LivingRoomObserver, 
             obs.UpdateAllClientonModelGameBoard(gameBoard);
         });
     }
+
+    @Override
+    public void onUpdatePickedTileFromLivingRoom(int x, int y) {
+        notifyObservers(obs -> obs.UpdateAllClientOnPickedTileFromLivingRoom(nickNameCurrentPlayer, x, y));
+    }
     //-------------------------Qua scrivo per le shelf---------------------------------//
     @Override
     public void onUpdateStructureShelf(int x, int y, PlayableItemTile Tile){

@@ -17,6 +17,8 @@ public interface RemoteClientInterface extends Remote {
 
     void disconnect() throws RemoteException;
 
+    void UpdateAllClientOnPickedTileFromLivingRoom(String currPlayer, int x, int y);
+
     void UpdateAllClientonModelListPlayers(ArrayList<Player> playerArrayList);
 
     void UpdateAllClientOnModelEndGame(boolean endGame);

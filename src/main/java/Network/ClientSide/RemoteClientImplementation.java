@@ -3,6 +3,7 @@ package Network.ClientSide;
 import Network.ServerSide.RemoteServerInterface;
 import Network.message.*;
 import Observer.ViewObserver;
+import client.view.TurnView;
 import client.view.View;
 import server.Model.GameBoard;
 import server.Model.PlayableItemTile;
@@ -19,6 +20,7 @@ import java.util.Map;
 public  class RemoteClientImplementation extends Client implements RemoteClientInterface, ViewObserver {
 
     private RemoteServerInterface server;
+    private TurnView turnView;
     private String nickname;
 
 
@@ -30,7 +32,8 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
     public void connectionInit() throws Exception {
         Registry registry = LocateRegistry.getRegistry(getServerAddress(), getPortNum());
         server = (RemoteServerInterface) registry.lookup("MyShelfieServer");
-        server.handShake(this);
+        turnView = server.handShake(this);
+        this.userInterface.setTurnView(turnView);
     }
 
     @Override
@@ -50,6 +53,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
                 LoginReplyMessage newMessage = (LoginReplyMessage)message;
                 if(newMessage.isNicknameUniqueAccepted()) {
                     this.nickname = newMessage.getNickname();
+                    this.userInterface.setNickname(this.nickname);
                     //METODO CHE PRINTA LA SUA PERSONAL GOAL
                 }
                 this.userInterface.showLoginResults(newMessage.isNicknameUniqueAccepted(), newMessage.getNickname());
@@ -57,6 +61,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
             case PLAYERNUMBER_REQUEST -> {
                 this.userInterface.askPlayersNumber();
                 this.nickname = message.getNickname();
+                this.userInterface.setNickname(this.nickname);
             }
             case KEEP_PICKING_REQUEST -> {
                 this.userInterface.askStopPicking();
@@ -105,9 +110,11 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
 
     }
 
-
-
-
+    @Override
+    public void UpdateAllClientOnPickedTileFromLivingRoom(String currPlayer, int x, int y) {
+        System.out.println("Il giocatore " + currPlayer + " ha pescato da LivingRoom " +
+                "la tessera in posizione: x=" + x + ", y=" + y);
+    }
 
     //
     @Override
