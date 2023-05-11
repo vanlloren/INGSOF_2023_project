@@ -296,12 +296,33 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
     }
 
     @Override
-    public void showLivingRoom() {
+    public void showLivingRoom(LivingRoom livingRoom) {
+        ItemTile[][] board = livingRoom.getGameTable();
 
-        //STAMPA SU COMMAND LINE LE TESSERE
+        //ogni volta stampo la legenda
+        out.println("Legenda: []=empty, [X]=unavailable, [B]=blue tile, [C]=cyan tile," +
+                " [Y]=yellow tile, [P]=pink tile, [W]=white tile, [G]=green tile");
 
-
-
+        //stampo livingRoom
+        for(int i=0;i<9;i++) {
+            out.println();
+            for (int j = 0; j < 9; j++) {
+                if (board[i][j] == null) {
+                    out.print("[]");
+                } else {
+                    switch (board[i][j].getColour()) {
+                        case GREEN -> out.print("[G]");
+                        case BLUE -> out.print("[B]");
+                        case CYAN -> out.print("[C]");
+                        case PINK -> out.print("[P]");
+                        case WHITE -> out.print("[W]");
+                        case YELLOW -> out.print("[Y]");
+                        case VOID -> out.print("[X]");
+                    }
+                }
+            }
+        }
+        out.println();
     }
 
     @Override

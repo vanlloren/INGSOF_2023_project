@@ -13,7 +13,7 @@ public class PlayableItemTile extends ItemTile {
 
     private int yPos;
 
-    public PlayableItemTile(String colour) {
+    public PlayableItemTile(String colour, int id) {
         if (colour.equals("GREEN")) {
             Colour helperColour = Colour.GREEN;
             this.colour = helperColour;
