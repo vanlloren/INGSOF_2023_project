@@ -2,6 +2,7 @@ package Network.ServerSide;
 
 import Network.ClientSide.RemoteClientInterface;
 import Network.message.Message;
+import client.view.TurnView;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
@@ -17,7 +18,7 @@ public interface RemoteServerInterface extends Remote {
 
     void disconnect() throws RemoteException;
 
-    boolean handShake(RemoteClientInterface client);
+    TurnView handShake(RemoteClientInterface client);
 
     void resetStop();
 }

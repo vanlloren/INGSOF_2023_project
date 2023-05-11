@@ -48,9 +48,6 @@ public interface View {
     //mostra un messaggio che indica la fine della partita e il vincitore
     void showWinMessage(String winnerNickname);
 
-    //rappresentazione aggiornata mossa per mossa della livingRoom
-    void showLivingRoom();
-
     //rappresentazione aggiornata mossa per mossa della shelf relativa allo specifico Player
     void showPlayerShelf();
 
@@ -73,4 +70,7 @@ public interface View {
 
     TurnView getGameModelView();
 
+    void setTurnView(TurnView turnView);
+
+    void setNickname(String nickname);
 }

@@ -20,13 +20,16 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
 
     private boolean gameOn=true;
 
-    private final TurnView turnView;
+    private TurnView turnView;
 
     public String Nickname;
 
     private boolean checker = false;
-    public TUI(TurnView turnView){
+    public TUI(){
         this.out = System.out;
+    }
+
+    public void setTurnView(TurnView turnView){
         this.turnView = turnView;
     }
 
@@ -95,7 +98,7 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
                         askPlayerNextMove();
                     }
                 case "2":
-                    showLivingRoom();
+                    showLivingRoom(turnView.getGameBoard().getLivingRoom());
                     askPlayerNextMove();
                 case "3":
                     showPlayersList();
@@ -115,17 +118,17 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
 
     @Override
     public String askServerInfo(){
-        out.println("Per favore, inserisci alcune informazioni:\n");
+        out.println("Per favore, inserisci alcune informazioni:");
         String serverAddress;
         do {
             scanner.nextLine();
-            out.println("Inserisci l'indirizzo del Server [default = localhost]:\n");
+            out.println("Inserisci l'indirizzo del Server [default = localhost]:");
             serverAddress = scanner.next();
             if(checkAddressValidity(serverAddress)){
                 checker = true;
             }
             else{
-                out.println("Indirizzo non valido!\n");
+                out.println("Indirizzo non valido!");
                 checker = false;
             }
         }while(!checker);
@@ -134,8 +137,30 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
         //dovrò fornire a qualcuno serverAddress e serverPort per effettuare il collegamento
     }
 
-    private boolean checkAddressValidity(String serverAddress) {
+    public static boolean checkAddressValidity(String ipAddress) {
+        if (ipAddress == null || ipAddress.isEmpty()) {
+            return false;
+        }
+
+        String[] partedAddress = ipAddress.split("\\.");
+        if (partedAddress.length != 4) {
+            return false;
+        }
+
+        for (String part : partedAddress) {
+            try {
+                int value = Integer.parseInt(part);
+                if (value < 0 || value > 255) {
+                    return false;
+                }
+            } catch (NumberFormatException e) {
+                return false;
+            }
+        }
+
+        return true;
     }
+
 
     public int askServerPort() {
         int portNum;
@@ -156,6 +181,11 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
     }
 
     public boolean checkPortValidity(int portNum) {
+        if(portNum<1024){
+            return false;
+        }
+
+        return true;
     }
 
     public void fullLobbyTerminateUI(){
@@ -166,7 +196,8 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
 
     @Override
     public void askNickname() {
-        out.println("Enter nickname please: \n");
+        scanner.nextLine();
+        out.println("Enter nickname please: ");
         String nickName = scanner.nextLine();
         notifyObserver(obs -> {
             try {

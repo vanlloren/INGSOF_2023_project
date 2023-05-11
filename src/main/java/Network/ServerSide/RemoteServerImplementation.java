@@ -42,7 +42,8 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
             case LOGIN_REQUEST -> {
                 synchronized (lock) {
                     if (gameController.getGame().getPlayersInGame().size() < 1) {
-                        Player newPlayer = new Player(message.getNickname());
+                        Player newPlayer = new Player(message.getNickname(), turnView);
+                        newPlayer.addObserver(turnView);
                         RandPersonalGoal.setType(newPlayer, newPlayer.getPersonalGoal(), gameController.getGame().getPlayersInGame());
                         gameController.getGame().setPlayersInGame(newPlayer);
                         Message newMessage = new PlayersNumberRequestMessage(message.getNickname());
@@ -54,7 +55,7 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
                     } else if (gameController.getGame().getPlayersInGame().size() < gameController.getGame().getPlayersNumber()) {
                         boolean approvedNick = gameController.getGame().isNicknameAvailable(message.getNickname());
                         if(approvedNick){
-                            Player newPlayer = new Player(message.getNickname());
+                            Player newPlayer = new Player(message.getNickname(), turnView);
                             RandPersonalGoal.setType(newPlayer, newPlayer.getPersonalGoal(), gameController.getGame().getPlayersInGame());
                             gameController.getGame().setPlayersInGame(newPlayer);
                         }
@@ -104,16 +105,21 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
     }
 
     @Override
-    public boolean handShake(RemoteClientInterface client) {
+    public TurnView handShake(RemoteClientInterface client) {
         this.client = client;
         turnView.addObserver(client);
-        return true;
+
+        return turnView;
     }
 
 
 
     public void onUpdateToPickTile(ArrayList<PlayableItemTile> availableTiles) throws RemoteException {
         client.onMessage(new ToPickTileRequestMessage(availableTiles));
+    }
+
+    public void onUpdateAskKeepPicking() throws RemoteException{
+        client.onMessage(new KeepPickingRequestMessage());
     }
 
 }

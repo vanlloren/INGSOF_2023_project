@@ -23,11 +23,11 @@ public class ServerApp {
         int serverPort = scanner.nextInt();
         GameModel gameModel = new GameModel();
         TurnView turnView = new TurnView(gameModel);
-        GameController gameController = new GameController(gameModel);
+        GameController gameController = new GameController(gameModel, turnView);
         RMIServer RMIServerCreator = new RMIServer(serverPort, gameController, turnView);
         RemoteServerImplementation remoteServer = RMIServerCreator.startRMIServer();
         gameController.setRemoteServer(remoteServer);
-        gameModel.addObserver(remoteServer);
+        gameModel.addObserver(turnView);
 
 
 

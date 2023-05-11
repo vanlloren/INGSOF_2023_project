@@ -3,6 +3,7 @@ import Network.ServerSide.RemoteServerImplementation;
 import Util.Colour;
 import Util.RandCommonGoal;
 import Util.RandPersonalGoal;
+import client.view.TurnView;
 import server.Model.*;
 import Network.ClientSide.*;
 import server.enumerations.GameState;
@@ -18,8 +19,7 @@ public  class GameController {
 
     private  GameModel game;
   //  private boolean timeOut;
-    private final GameBoardController gameBoardController = new GameBoardController(); // gameBoardController è il tramite tra GameController e le classi GameBoard, LivingRoom e ItemBag
-    private transient Map<String ,VirtualView> virtualViewMap;
+    private final GameBoardController gameBoardController; // gameBoardController è il tramite tra GameController e le classi GameBoard, LivingRoom e ItemBag
 
     private RemoteServerImplementation remoteServer;
     /*
@@ -41,8 +41,12 @@ public  class GameController {
     private int xPosCurrTile;
     private int yPosCurrTile;
 
-    public GameController(GameModel game) {
+    private TurnView turnView;
+
+    public GameController(GameModel game, TurnView turnView) {
         this.game = game;
+        this.turnView = turnView;
+        this.gameBoardController = new GameBoardController(this.turnView);
     }
 
     public GameModel getGame() {
@@ -72,42 +76,10 @@ public  class GameController {
         return this.gameBoardController;
     }
 
-    public void onMessageReceived(Message receivedMessage) {
 
-        VirtualView virtualView = virtualViewMap.get(receivedMessage.getNickname());
-        switch (gameState) {
-            case LOGIN:
-                loginState(receivedMessage);
-                break;
-            case INIT:
-                if (inputController.checkUser(receivedMessage)) {
-                    initState(receivedMessage, virtualView);
-                }
-                break;
-            case IN_GAME:
-                if (inputController.checkUser(receivedMessage)) {
-                    inGameState(receivedMessage);
-                }
-                break;
-            default: // Should never reach this condition
-                Server.LOGGER.warning(STR_INVALID_STATE);
-                break;
-        }
-    }
     private void setGameState(GameState gameState) {
         this.gameState = gameState;
     }
-    //metodo per preparare l'inizio della partita: aggiunta giocatori e inizializzazione shelf personali etc..
-    public void setUp() {
-        /*Set del giocatore e del nickname*/
-
-        Player newPlayer = new Player(client.getNickname());
-        game.getPlayersInGame().add(newPlayer);
-        game.setPlayersNumber(game.getPlayersNumber());
-
-
-    }
-
 
     /*
     the following method is called when the number of player has reached the requested number
