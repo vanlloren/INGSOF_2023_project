@@ -22,67 +22,29 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
 
     private final TurnView turnView;
 
+    public String Nickname;
+
     private boolean checker = false;
-    public TUI(GameModel gameModel){
+    public TUI(TurnView turnView){
         this.out = System.out;
-        this.turnView = new TurnView(gameModel);
+        this.turnView = turnView;
     }
+
+    public void setNickname(String nickname) {
+        this.Nickname = nickname;
+    }
+
     //Implementando il metodo Runnable ereditiamo tutte le sue classi e oggetti
     //Run è un costruttore basilare costruito direttamente dal metodo Runnable al posto di init
     public void init() {
         while (true) {
             out.println("Welcome to the game MyShelfie!");
-
             String serverAddress = askServerInfo();
             int portNum = askServerPort();
-
             connectToServerFromTUI(serverAddress, portNum);
-
             askNickname();
 
-            matchReadyTUI();
 
-            /*scanner.nextLine(); // consume the newline character
-            controller.setnumberOfPlayers(numOfPlayers);
-            gameState.addPlayers;
-            while (controller.gameState.equals(addPlayers)) {
-                for (int i = 1; i <= numOfPlayers; i++) {
-                    out.print("Enter nickname for player " + i + ": ");
-                    String nickname = askNickname();
-                    controller.addPlayer(nickname);
-                }
-                out.println("Game starting...");
-
-                while (controller.gameState.equals(GameState.FlowGame)) {
-                    out.println(controller.getGameBoard().getLivingRoom().toString());
-                    out.println("Next tile: " + controller.getGameBoard().getNextInGameTile());
-                    out.print("Enter row to pick tile from: ");
-                    int row = scanner.nextInt();
-                    System.out.print("Enter column to pick tile from: ");
-                    int column = scanner.nextInt();
-                    nextLine(); // consume the newline character
-                    controller.pickTile(row, column);
-
-                    for (Player player : controller.getPlayers()) {
-                        System.out.println(player.getNickname() + "'s tiles:");
-                        for (PlayableItemTile tile : player.getTiles()) {
-                            out.print(tile.toString() + " ");
-                        }
-                        System.out.println();
-                    }
-
-                    out.print("Enter row to place tile on: ");
-                    int placeRow = scanner.nextInt();
-                    System.out.print("Enter column to place tile on: ");
-                    int placeColumn = scanner.nextInt();
-                    scanner.nextLine(); // consume the newline character
-                    controller.putTile(placeRow, placeColumn);
-
-                    System.out.println();
-                }
-
-                out.println("Game over!");
-            }*/
         }
     }
 
@@ -103,52 +65,51 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
 
 
     public void askPlayerNextMove(){
+        String picking;
         scanner.nextLine();
-        out.println("Press 1 if you want to PICK A TILE FROM LIVING ROOM " +
-                    "Press 2 if you want to SEE THE LIVINGROOM " +
-                    "Press 3 if you want to SEE THE PLAYERS IN YOUR GAMELOBBY " +
-                    "Press 4 if you want to SEE YOUR PERSONAL SHELF" +
-                    "Press 5 if you want to SEE YOUR CURRENT SCORING" +
-                    "Press 6 if you want to SEE THE NICKNAME OF THE PLAYER WHO'S PLAYING" +
-                    "Press 7 if you want to " +
-                    "Press 8 if you want to " +
-                    "Press 9 if you want to " +
-                    "Press 10 if you want to "
-
+            do {
+                scanner.nextLine();
+                out.println("Press 1 if you want to PICK A TILE FROM LIVING ROOM " +
+                        "Press 2 if you want to SEE THE LIVINGROOM " +
+                        "Press 3 if you want to SEE THE PLAYERS IN YOUR GAMELOBBY " +
+                        "Press 4 if you want to SEE YOUR PERSONAL SHELF" +
+                        "Press 5 if you want to SEE YOUR CURRENT SCORING" +
+                        "Press 6 if you want to SEE THE NICKNAME OF THE PLAYER WHO'S PLAYING\n"
                 );
-        String picking = scanner.next();
-        while(!picking.equals("1") || !picking.equals("2") ||!picking.equals("3") ||!picking.equals("4") ||!picking.equals("5") ||
-                !picking.equals("6") ||!picking.equals("7") ||!picking.equals("8") ||!picking.equals("9")){
-            out.println("Symbol not recoignized, please try  again...");
-            picking = scanner.next();
-        }
-        switch (picking){
-            case "1":
-                 askMovingTilePosition(turnView.getGameBoard().getLivingRoom().getAvailableTiles());
-            case "2":
-                 showLivingRoom();
-            case "3":
-                 showPlayersList();
-            case "4":
-                 showPlayerShelf();
-            case "5":
-                 showPointMessage();
-            case "6":
-                  showNickCurrentPlayer();
-            case "7":
 
-            case "8":
+                picking = scanner.next();
+                if (!picking.equals("1") || !picking.equals("2") || !picking.equals("3") || !picking.equals("4") || !picking.equals("5") ||
+                        !picking.equals("6") || !picking.equals("7") || !picking.equals("8") || !picking.equals("9")) {
+                    out.println("Symbol not recognized, please try  again...\n");
+                }
+            }
+            while (!picking.equals("1") || !picking.equals("2") || !picking.equals("3") || !picking.equals("4") || !picking.equals("5") ||
+                    !picking.equals("6") || !picking.equals("7") || !picking.equals("8") || !picking.equals("9"));
 
-            case "9":
-
-            case "10":
-
-            case "11":
-
-
-        }
-
-
+            switch (picking) {
+                case "1":
+                    if (turnView.getNickNameCurrentPlayer().equals(this.Nickname))
+                        askMovingTilePosition(turnView.getGameBoard().getLivingRoom().getAvailableTiles());
+                    else {
+                        System.out.println("IT IS NOT YOUR TURN YET: PLEASE WAIT\n ");
+                        askPlayerNextMove();
+                    }
+                case "2":
+                    showLivingRoom();
+                    askPlayerNextMove();
+                case "3":
+                    showPlayersList();
+                    askPlayerNextMove();
+                case "4":
+                    showPlayerShelf();
+                    askPlayerNextMove();
+                case "5":
+                    showPointMessage();
+                    askPlayerNextMove();
+                case "6":
+                    showNickCurrentPlayer();
+                    askPlayerNextMove();
+            }
     }
 
 

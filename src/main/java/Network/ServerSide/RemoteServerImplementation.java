@@ -2,11 +2,10 @@ package Network.ServerSide;
 
 import Network.ClientSide.RemoteClientInterface;
 import Network.message.*;
-import Observer.GameModelObserver;
+
 import Util.RandPersonalGoal;
 import client.view.TurnView;
 import server.Controller.GameController;
-import server.Model.GameBoard;
 import server.Model.PlayableItemTile;
 import server.Model.Player;
 
@@ -15,14 +14,14 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
 
-public class RemoteServerImplementation extends UnicastRemoteObject implements RemoteServerInterface, GameModelObserver {
+public class RemoteServerImplementation extends UnicastRemoteObject implements RemoteServerInterface{
     private final RMIServer server;
 
     private final TurnView turnView;
     private final Object lock = new Object();
     private boolean stop = false;
     private RemoteClientInterface client;
-    private GameController gameController;
+    private final GameController gameController;
     private ArrayList<PlayableItemTile> availableTiles;
 
     RemoteServerImplementation(RMIServer server, GameController gameController, TurnView turnView) throws RemoteException {
@@ -111,38 +110,10 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
         return true;
     }
 
-    @Override
-    public void update(Message message) {
 
-    }
 
     public void onUpdateToPickTile(ArrayList<PlayableItemTile> availableTiles) throws RemoteException {
         client.onMessage(new ToPickTileRequestMessage(availableTiles));
     }
 
-    @Override
-    public void onUpdateModelEndGame(String Nickname,boolean endGame) throws RemoteException{
-        client.onMessage(new UpdateEndGameMessage(Nickname,endGame));}
-
-    @Override
-    public void onUpdateModelListPlayers(String Nickname,ArrayList<Player> playerArrayList)throws RemoteException{
-        client.onMessage(new UpdateModelListPlayersMessage(Nickname,playerArrayList));
-        }
-
-   @Override
-    public void onUpdateModelPlayersNumber(String Nickname,int playersNumber) throws RemoteException{
-        client.onMessage(new UpdatePlayersNumberMessage(Nickname,playersNumber));
-    }
-    @Override
-    public void onUpdateModelChairOwner(String nickName,Player player) throws RemoteException{
-        client.onMessage(new UpdateChairOwnerMessage(nickName,player));
-    }
-    @Override
-    public void onUpdateGameBoard(String Nickname,GameBoard gameBoard) throws RemoteException{
-        client.onMessage(new UpdateModelGameBoardMessage(Nickname,gameBoard));
-    }
-
-
-
-    //implementazione metodi di RemoteServerInterface
 }

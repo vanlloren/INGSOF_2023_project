@@ -12,7 +12,7 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 
-public class TurnView implements LivingRoomObserver, ShelfObserver, PlayerObserver, GameModelObserver {
+public class TurnView extends TurnViewObservable implements LivingRoomObserver, ShelfObserver, PlayerObserver, GameModelObserver {
    private final GameModel gameModel;
    private GameBoard gameBoard = new GameBoard();
    private ArrayList<Player> playerInGame;
@@ -38,15 +38,19 @@ public class TurnView implements LivingRoomObserver, ShelfObserver, PlayerObserv
         return gameModel.getPlayersInGame();
     }
 
-    public void setPlayerInGame(ArrayList<Player> playerInGame) {
-        this.playerInGame = playerInGame;
-    }
+
 
     public PlayableItemTile[][] getShelfTable(){
     return this.shelfTable;
     }
 
+    public int getPlayersNumber(){
+       return this.gameModel.getPlayersInGame().size();
+    }
 
+    public String getNickNameCurrentPlayer(){
+       return gameModel.getCurrPlayer().getNickname();
+    }
 
 
     public Integer getPartialPoint() {
@@ -63,17 +67,23 @@ public class TurnView implements LivingRoomObserver, ShelfObserver, PlayerObserv
 
     @Override
     public void onUpdateModelListPlayers(ArrayList<Player> playerArrayList) {
-
+    notifyObservers(obs ->{
+        obs.UpdateAllClientonModelListPlayers(playerArrayList);
+    });
     }
 
     @Override
     public void onUpdateModelEndGame(boolean endGame)  {
-
+        notifyObservers(obs ->{
+            obs.UpdateAllClientOnModelEndGame(endGame);
+        });
     }
 
     @Override
     public void onUpdateModelPlayersNumber(int playersNumber)  {
-
+        notifyObservers(obs ->{
+            obs.UpdateAllClientOnPlayersNumber(playersNumber);
+        });
     }
 
     @Override
@@ -83,6 +93,8 @@ public class TurnView implements LivingRoomObserver, ShelfObserver, PlayerObserv
 
     @Override
     public void onUpdateGameBoard(GameBoard gameBoard) {
-
+        notifyObservers(obs ->{
+            obs.UpdateAllClientonModelGameBoard(gameBoard);
+        });
     }
 }

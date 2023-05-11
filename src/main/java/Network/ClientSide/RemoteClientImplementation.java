@@ -4,7 +4,9 @@ import Network.ServerSide.RemoteServerInterface;
 import Network.message.*;
 import Observer.ViewObserver;
 import client.view.View;
+import server.Model.GameBoard;
 import server.Model.PlayableItemTile;
+import server.Model.Player;
 
 import java.io.IOException;
 import java.rmi.RemoteException;
@@ -14,7 +16,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 
-public class RemoteClientImplementation extends Client implements RemoteClientInterface, ViewObserver {
+public  class RemoteClientImplementation extends Client implements RemoteClientInterface, ViewObserver {
 
     private RemoteServerInterface server;
     private String nickname;
@@ -70,31 +72,6 @@ public class RemoteClientImplementation extends Client implements RemoteClientIn
             case FULL_LOBBY -> {
                 this.userInterface.fullLobbyTerminateUI();
             }
-            case UPDATE_MODEL_ENDGAME -> {
-                System.out.println("ENDGAME HAS BEEN LAUNCHED : THIS IS THE LAST TURN \n");
-
-                UpdateEndGameMessage newMessage = (UpdateEndGameMessage)message;
-            }
-            case UPDATE_MODEL_GAMEBOARD -> {
-                System.out.println("GAMEBOARD UPDATED : HERE IT IS THE CURRENT LIVING ROOM \n");
-                this.userInterface.showLivingRoom();
-                //CHIAMA METODO DELLA TUI CHE PRINTA LA LIVINGROOM
-                UpdateModelGameBoardMessage newmessage = (UpdateModelGameBoardMessage)message;
-
-            }
-            case UPDATE_MODEL_LISTPLAYERS -> {
-                System.out.println("LIST OF PLAYER UPDATED: HERE IT IS THE LIST OF ALL PLAYER \n");
-                this.userInterface.showPlayersList();
-                //CHIAMA METODO DELLA TUI CHE PRINTA TUTTI I NICKNAME DEI GIOCATORI PRESENTI FINO AD ORA
-                UpdateModelListPlayersMessage newMessage = (UpdateModelListPlayersMessage)message;
-
-            }
-            case UPDATE_MODEL_PLAYERSNUMBER -> {
-                System.out.println("NUMBER OF PLAYER UPDATED: HERE YOU HAVE THE NUMBER\n");
-                this.userInterface.showNumberOfPlayers();
-                //CHIAMA METODO DELLA TUI CHE PRINTA IL NUMERO DEI GIOCATORI PRESENTI FINO AD ORA
-                UpdatePlayersNumberMessage newMessage = (UpdatePlayersNumberMessage)message;
-            }
         }
     }
 
@@ -103,8 +80,36 @@ public class RemoteClientImplementation extends Client implements RemoteClientIn
 
     }
 
+    @Override
+    public void UpdateAllClientonModelListPlayers(ArrayList<Player> playerArrayList) {
+
+    }
+
+    @Override
+    public void UpdateAllClientOnModelEndGame(boolean endGame) {
+        System.out.println("CURRENT PLAYER HAS FILLED ALL HIS SHELF FOR FIRST :" +
+                           "lAST TURN IN GAME....");
+    }
+    // gestisci un booleano per quando sei arrivato all'ultimo giocatore del turno finale
+    // dal controller si determina il vincitore si comunica e a quel punto lancio
+
+    @Override
+    public void UpdateAllClientOnPlayersNumber(int playersNumber) {
+
+        System.out.println("N");
+
+    }
+
+    @Override
+    public void UpdateAllClientonModelGameBoard(GameBoard gameBoard) {
+
+    }
 
 
+
+
+
+    //
     @Override
     public void onUpdateServerInfo(Map<String, String> serverInfo) {
 
@@ -120,13 +125,13 @@ public class RemoteClientImplementation extends Client implements RemoteClientIn
     }
 
     @Override
-    public void onUpdateAskKeepPicking(String nickname, String choice) throws RemoteException {
+    public void onUpdateAskKeepPicking(String choice) throws RemoteException {
         server.onMessage(new KeepPickingReplyMessage(nickname, choice));
     }
 
     @Override
-    public void onUpdatePlayersNumber(String Nickname,int playersNumber) throws RemoteException {
-        server.onMessage(new PlayersNumberReplyMessage(Nickname,playersNumber) );
+    public void onUpdatePlayersNumber(int playersNumber) throws RemoteException {
+        server.onMessage(new PlayersNumberReplyMessage(playersNumber) );
     }
 
     @Override

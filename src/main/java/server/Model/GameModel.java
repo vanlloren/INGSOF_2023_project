@@ -4,7 +4,6 @@ package server.Model;
 import Observer.GameModelObservable;
 
 import java.io.Serializable;
-import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 
@@ -35,7 +34,7 @@ public class GameModel extends GameModelObservable implements Serializable {
     public void setEndGame(){
         this.endGame = true;
         notifyObservers(obs ->{
-            obs.onUpdateModelEndGame(this.currPlayer.getNickname(),this.endGame);
+            obs.onUpdateModelEndGame(this.endGame);
         });
 
     }
@@ -50,7 +49,6 @@ public class GameModel extends GameModelObservable implements Serializable {
 
     public void setMyShelfie(GameBoard gameBoard){
         this.myShelfie = gameBoard;
-        //setChangedAndNotifyObservers(Event.GAMEBOARD);
     }
 
     public int getPlayersNumber() {
@@ -60,7 +58,7 @@ public class GameModel extends GameModelObservable implements Serializable {
     public void setPlayersNumber(int playersNumber){
         this.chosenPlayersNumber = playersNumber;
         notifyObservers(obs ->{
-            obs.onUpdateModelPlayersNumber(this.currPlayer.getNickname(),playersNumber);
+            obs.onUpdateModelPlayersNumber(playersNumber);
         });
 
     }
@@ -73,7 +71,7 @@ public class GameModel extends GameModelObservable implements Serializable {
     public void setChairOwner(Player player) {
       this.chosenChairOwner = player;
         notifyObservers(obs ->{
-            obs.onUpdateModelChairOwner(this.currPlayer.getNickname(),player);
+            obs.onUpdateModelChairOwner(player);
         });
     }
 
@@ -84,7 +82,7 @@ public class GameModel extends GameModelObservable implements Serializable {
     public void setPlayersInGame(Player newPlayer) {
         this.playersInGame.add(newPlayer);
         notifyObservers(obs ->{
-                obs.onUpdateModelListPlayers(this.currPlayer.getNickname(),this.playersInGame);
+                obs.onUpdateModelListPlayers(this.playersInGame);
         });
     }
 
@@ -92,7 +90,7 @@ public class GameModel extends GameModelObservable implements Serializable {
         this.myShelfie = myShelfie;
        // setChangedAndNotifyObservers(Event.GAME_BOARD);
         notifyObservers(obs ->{
-            obs.onUpdateGameBoard(this.currPlayer.getNickname(),myShelfie);
+            obs.onUpdateGameBoard(myShelfie);
         });
     }
     public GameBoard getMyShelfie(){
