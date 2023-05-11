@@ -63,6 +63,8 @@ public class GameModel extends GameModelObservable implements Serializable {
 
     }
 
+    public void setPersonalShelf()
+
     public void setCurrPlayer(Player currPlayer){
         this.currPlayer = currPlayer;
 

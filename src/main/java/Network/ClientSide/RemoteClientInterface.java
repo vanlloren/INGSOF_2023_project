@@ -2,6 +2,7 @@ package Network.ClientSide;
 
 import Network.message.Message;
 import server.Model.GameBoard;
+import server.Model.PlayableItemTile;
 import server.Model.Player;
 
 import java.rmi.Remote;
@@ -23,4 +24,6 @@ public interface RemoteClientInterface extends Remote {
     void UpdateAllClientOnPlayersNumber(int playersNumber);
 
     void UpdateAllClientonModelGameBoard(GameBoard gameBoard);
+
+    void UpdatellClientonStructureShelf(int x, int y, PlayableItemTile Tile);
 }
