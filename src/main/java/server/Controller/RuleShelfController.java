@@ -1,23 +1,20 @@
 package server.Controller;
-import Observer.ShelfObservable;
-import Util.Colour;
-import server.Model.ItemTile;
 import server.Model.PlayableItemTile;
 
 import java.util.List;
 import java.util.Vector;
-import Observer.ShelfObservable;
-import java.util.Vector;
+
 
 public class RuleShelfController {
-    public boolean isColumnAvailableInGame(int y, PlayableItemTile[][] structure) {
+    /*
+    public static boolean isColumnAvailableInGame(int y, PlayableItemTile[][] structure) {
         boolean flag;
-        if (structure[0][y] != null) {
+        if (structure[0][y].getIdCode() != 0) {
             flag = false;
         } else {
             int count = 0;
             for (int i = 0; i < 5; i++) {
-                if (structure[i][y] == null) {
+                if (structure[i][y].getIdCode()==0) {
                     count++;
                 }
             }
@@ -25,8 +22,8 @@ public class RuleShelfController {
         }
         return flag;
     }
-
-    public boolean putTileCheckValidity(int x, int y, PlayableItemTile Tile,PlayableItemTile[][] structure, int numberOfTilesPicked) {
+*/
+    public static boolean putTileCheckValidity(int x, int y, PlayableItemTile Tile,PlayableItemTile[][] structure, int numberOfTilesPicked) {
         boolean flag= false;
         boolean availability;
         availability = (boolean) iscolumnAvailable(y, numberOfTilesPicked, structure)[0];
@@ -42,7 +39,7 @@ public class RuleShelfController {
         }
         return flag;
     }
-    public boolean CheckSamePosition(Vector<Integer> y) {
+    public static boolean CheckSamePosition(Vector<Integer> y) {
         // verifichiamo se il vettore ha almeno un elemento
         if (y.size() > 0) {
             // memorizziamo il primo elemento del vettore in una variabile
@@ -59,7 +56,7 @@ public class RuleShelfController {
         }
     }
 
-    public Object[] iscolumnAvailable(int Y, int NumberOfTilesPicked, PlayableItemTile[][] structure) {
+    public static Object[] iscolumnAvailable(int Y, int NumberOfTilesPicked, PlayableItemTile[][] structure) {
         int cellsAvailable = 0;
         boolean condition = false;
         boolean flag = true;
@@ -106,7 +103,7 @@ public class RuleShelfController {
         Object[] conditions = new Object[]{condition, cellsAvailable};
         return conditions;
     }
-    public int freeCellsInShelf(PlayableItemTile[][] structure){
+    public static int freeCellsInShelf(PlayableItemTile[][] structure){
         //Useful method to check also the maximum number of tiles that could be picked in the livingRoom
         List<Integer> list = new Vector<Integer>();
         int count=0;
@@ -128,7 +125,7 @@ public class RuleShelfController {
         return max;
     }
 
-    public boolean isFull(PlayableItemTile[][] structure) {
+    public static boolean isFull(PlayableItemTile[][] structure) {
         for (int j = 0; j < 5; j++) {
             if (structure[0][j] == null) {
                 return false;
