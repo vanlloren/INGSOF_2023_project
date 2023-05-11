@@ -32,7 +32,7 @@ public class Shelf extends ShelfObservable {
     public void putTile(int x, int y, PlayableItemTile Tile){
         this.structure[x][y] = Tile;
         notifyObservers(obs-> {
-            obs.onUpdateStructureShelf(x,y,Tile);
+            obs.onUpdatePuttedTileIntoShelf(x,y,Tile);
         });
     }
 }

@@ -279,7 +279,27 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
         //PRIMA COSA STAMPA LA TILES IN PLAYER HAND COSI PLAYER VEDE CHE CARTE HA IN MANO
         //POI STAMPA TUTTA LA SHELF COSI IL PLAYER VEDE LA SHELF IN TEMPO REALE
         //POI GESTISCI INSERIMENTO COORDINATE E INVIO MESSAGGIO CON NOTIFICA AGLI OBSERVER
+        for (PlayableItemTile tile: tilesInPlayerHand
+        ) {
+            out.println("Tiles picked: {["+tilesInPlayerHand.get(1)+"]," + "["+tilesInPlayerHand.get(2)+"]," +"["+tilesInPlayerHand.get(3)+"]}");
+        }
+        while(!tilesInPlayerHand.isEmpty())
+        {   out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 1 , 2 , 3 ])");
+            int index = scanner.nextInt();
+            out.println("Choose the position x where you want to put the tile first!\n");
+            int xPos = scanner.nextInt();
+            out.println("Choose the position y where you want to put the tile!\n");
+            int yPos = scanner.nextInt();
+            notifyObserver(obs -> {
+                try {
+                    obs.onUpdateToPutTile(xPos, yPos, tilesInPlayerHand.get(index));
 
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+            tilesInPlayerHand.remove(index);
+        }
 
     }
 
@@ -362,9 +382,34 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
     }
 
     @Override
-    public void showPlayerShelf() {
-    PlayableItemTile[][] shelfTable = turnView.getShelfTable();
-      // STAMPA TUTTA LA SHELF
+    public void showPlayerShelf(Shelf shelf) {
+        PlayableItemTile[][] personalShelf = shelf.getStructure();
+
+        //ogni volta stampo la legenda
+        out.println("Legenda: []=empty, [X]=unavailable, [B]=blue tile, [C]=cyan tile," +
+                " [Y]=yellow tile, [P]=pink tile, [W]=white tile, [G]=green tile , the number near the color"+
+                "rappresents the unique ID code of the tile");
+
+        //stampo livingRoom
+        for(int i=0;i<6;i++) {
+            out.println();
+            for (int j = 0; j < 5; j++) {
+                if (personalShelf[i][j] == null) {
+                    out.print("[]");
+                } else {
+                    switch (personalShelf[i][j].getColour()) {
+                        case GREEN -> out.print("[G , " + personalShelf[i][j].getIdCode()+"]");
+                        case BLUE -> out.print("[B, " + personalShelf[i][j].getIdCode()+"]");
+                        case CYAN -> out.print("[C, " + personalShelf[i][j].getIdCode()+"]");
+                        case PINK -> out.print("[P, " + personalShelf[i][j].getIdCode()+"]");
+                        case WHITE -> out.print("[W, " + personalShelf[i][j].getIdCode()+"]");
+                        case YELLOW -> out.print("[Y], " + personalShelf[i][j].getIdCode()+"]");
+                        case VOID -> out.print("[X, " + personalShelf[i][j].getIdCode()+"]");
+                    }
+                }
+            }
+        }
+        out.println();
     }
 
     @Override

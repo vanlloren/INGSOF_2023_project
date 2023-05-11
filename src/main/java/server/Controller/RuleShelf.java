@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Vector;
 
 
-public class RuleShelfController {
+public class RuleShelf {
     /*
     public static boolean isColumnAvailableInGame(int y, PlayableItemTile[][] structure) {
         boolean flag;

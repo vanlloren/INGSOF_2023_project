@@ -1,12 +1,12 @@
 package Network.message;
 
-public class ReplyInsertTileColumnMessage extends Message{
+public class ToPutTileReplyMessage extends Message{
     private final boolean flag;
     private final int x;
 
     private final int y;
-    public ReplyInsertTileColumnMessage(boolean flag, int x, int y) {
-        super(MessageEnumeration.REPLY_INSERT_TILE_COLUMN);
+    public ToPutTileReplyMessage(boolean flag, int x, int y) {
+        super(MessageEnumeration.TO_PUT_TILE_REPLY);
         this.x = x;
         this.y = y;
         this.flag = flag;
@@ -14,7 +14,6 @@ public class ReplyInsertTileColumnMessage extends Message{
     public boolean getFlag(){
         return this.flag;
     }
-
 
     public int getX() {
         return this.x;

@@ -1,5 +1,6 @@
 package Observer;
 import server.Model.LivingRoom;
+import server.Model.Shelf;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,6 +56,5 @@ public abstract class ViewObservable {
 
         }
     }
-
 
 }

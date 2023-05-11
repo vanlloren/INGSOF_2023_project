@@ -15,7 +15,7 @@ import java.util.*;
 
 //All'interno di questa classe vi deve essere contenuta tutta la logica che sta dietro al gioco effettivo
 //escluso il settaggio della lobby e la costruzione del gioco quindi solo il pescaggio, l'inserimento ed il conteggio sono le azioni da seguire e tenere sott'occhio
-public  class GameController {
+public class GameController {
 
     private  GameModel game;
   //  private boolean timeOut;
@@ -60,12 +60,6 @@ public  class GameController {
     public void setPosCurrTile(int x, int y){
         this.xPosCurrTile = x;
         this.yPosCurrTile = y;
-    }
-
-    //metodo per avviare sessione gioco
-    public void initGameController() {
-        this.game = GameModel.getInstance();
-        setGameState(GameState.LOGIN);
     }
 
     public void setStopPicking(){stopPicking = true;}
@@ -144,13 +138,14 @@ public  class GameController {
             return tileArray;
     }
 
-        public void InsertTileShelf(Player player,PlayableItemTile tile,int x, int y,int num){
+       /* public void InsertTileShelf(Player player,PlayableItemTile tile,int x, int y,int num){
         Shelf shelf = new Shelf();
         shelf = player.getPersonalShelf();
         shelf.putTile(x,y,num); //alf sistema
 
         calculatePoint(player,player.getPersonalShelf().getStructure(),game.getMyShelfie().getLivingRoom());
         }
+        */
 
         public void nextTurn (Player player) {
 
@@ -278,15 +273,6 @@ public  class GameController {
             return i;
         }
 
-    public void update(Client o, GameModel.Event arg) {
-        if (!o.equals(client)) {
-            System.err.println("Discarding notification from " + o);
-            return;
-        }
-        arg.equals(GameModel.Event.PLAYERS_IN_GAME);
-        game.setPlayersInGame(arg)
-        initGame();
-    }
 //Sono interessato a ricevere notifiche solo dalla TextualUI/GraphicalUI
 }
 

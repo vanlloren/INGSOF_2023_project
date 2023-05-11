@@ -84,7 +84,7 @@ public class Player extends PlayerObservable {
     public void insertTile(int x, int y, PlayableItemTile tile) {
         int i = 0;
         Vector<Integer> position= new Vector<Integer>();
-        this.personalShelf.putTile(x,y,tile,i,position); //chiedi alfi come funziona questo metodo
+        this.personalShelf.putTile(x,y,tile); //chiedi alfi come funziona questo metodo
         //metodo che gestisce inserimento in libreria
     }
 }

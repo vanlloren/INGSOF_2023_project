@@ -104,7 +104,7 @@ public class TurnView extends TurnViewObservable implements LivingRoomObserver, 
     }
     //-------------------------Qua scrivo per le shelf---------------------------------//
     @Override
-    public void onUpdateStructureShelf(int x, int y, PlayableItemTile Tile){
+    public void onUpdatePuttedTileIntoShelf(int x, int y, PlayableItemTile Tile){
        notifyObservers(obs -> {
            obs.UpdatellClientonStructureShelf(x , y , Tile);
        });

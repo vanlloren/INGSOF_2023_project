@@ -71,7 +71,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
                 ArrayList<PlayableItemTile> availableTiles = newMessage.getAvailableTiles();
                 this.userInterface.askMovingTilePosition(availableTiles);
             }
-            case REPLY_INSERT_TILE -> {
+            case TO_PUT_TILE_REQUEST -> {
 
             }
             case FULL_LOBBY -> {

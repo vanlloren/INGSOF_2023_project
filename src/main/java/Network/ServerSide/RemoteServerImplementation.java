@@ -83,7 +83,12 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
                 gameController.setPosCurrTile(x,y);
                 gameController.setMoveOn();
             }
-            case REQUEST_INSERT_TILE ->{
+            case TO_PUT_TILE_REPLY ->{
+                ToPutTileReplyMessage newMessage = (ToPutTileReplyMessage) message;
+                int x = newMessage.getX();
+                int y = newMessage.getY();
+
+
 
             }
             case PLAYERNUMBER_REPLY -> {
@@ -120,6 +125,10 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
 
     public void onUpdateAskKeepPicking() throws RemoteException{
         client.onMessage(new KeepPickingRequestMessage());
+    }
+
+    public void onUpdateToPutTile() throws RemoteException{
+        client.onMessage((new ToPutTileRequestMessage()));
     }
 
 }
