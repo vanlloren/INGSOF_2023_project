@@ -3,6 +3,7 @@ package server.Model;
 
 import Observer.GameModelObservable;
 import Util.RandChairOwner;
+import client.view.TurnView;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -14,6 +15,8 @@ public class GameModel extends GameModelObservable implements Serializable {
 
     private Player chosenChairOwner;
     private Integer chosenPlayersNumber;
+
+    private TurnView turnView;
     public static final String Server_Nick = "Server";//C'è un collegamento al server per ogni giocatore.
     private Player currPlayer;
     //private String matchWinner; possiamo individuarlo attraverso un assaggio logico del giocatore con più punti e poi stabilire
@@ -23,11 +26,14 @@ public class GameModel extends GameModelObservable implements Serializable {
     private boolean endGame=false;
 
 
-    public GameModel(){
-        this.myShelfie = new GameBoard();
+    public GameModel(TurnView turnView){
+        this.myShelfie = new GameBoard(turnView);
         this.playersInGame = new ArrayList<>();
     }
 
+    public void setTurnView(TurnView turnView){
+        this.turnView=turnView;
+    }
 
     public boolean getEndGame(){
         return endGame;

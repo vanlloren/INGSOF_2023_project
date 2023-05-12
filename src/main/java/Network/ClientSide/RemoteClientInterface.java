@@ -4,10 +4,12 @@ import Network.message.Message;
 import Util.CommonGoalType;
 import Util.PersonalGoalType;
 import server.Model.GameBoard;
+import server.Model.PlayableItemTile;
 import server.Model.Player;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 
 public interface RemoteClientInterface extends Remote {
 
@@ -42,4 +44,6 @@ public interface RemoteClientInterface extends Remote {
     void UpdateAllClientOnModelGameHasStarted();
 
     void onUpdateAllClientOnCurrentPlayer(Player currPlayer);
+
+    void UpdatellClientonStructureShelf(int x, int y, PlayableItemTile Tile);
 }

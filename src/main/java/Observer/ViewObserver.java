@@ -1,4 +1,6 @@
 package Observer;
+import server.Model.PlayableItemTile;
+
 import java.rmi.RemoteException;
 import java.util.List;
 import java.util.Map;
@@ -45,4 +47,6 @@ public interface ViewObserver {
     void onDisconnection();
 
     void onUpdateToPickTile(int xPos, int yPos) throws RemoteException;
+
+    void onUpdateToPutTile(int xPos, int yPos , PlayableItemTile tile) throws  RemoteException;
 }

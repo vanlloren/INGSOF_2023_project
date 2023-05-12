@@ -15,7 +15,7 @@ import java.util.*;
 
 //All'interno di questa classe vi deve essere contenuta tutta la logica che sta dietro al gioco effettivo
 //escluso il settaggio della lobby e la costruzione del gioco quindi solo il pescaggio, l'inserimento ed il conteggio sono le azioni da seguire e tenere sott'occhio
-public  class GameController {
+public class GameController {
 
     private  GameModel game;
   //  private boolean timeOut;
@@ -44,7 +44,7 @@ public  class GameController {
     public GameController(GameModel game, TurnView turnView) {
         this.game = game;
         this.turnView = turnView;
-        this.gameBoardController = new GameBoardController(this.turnView);
+        this.gameBoardController = new GameBoardController(this.turnView, this);
     }
 
     public GameModel getGame() {
@@ -273,7 +273,15 @@ public  class GameController {
             return i;
         }
 
-
+    public void update(Client o, GameModel.Event arg) {
+        if (!o.equals(client)) {
+            System.err.println("Discarding notification from " + o);
+            return;
+        }
+        arg.equals(GameModel.Event.PLAYERS_IN_GAME);
+        game.setPlayersInGame(arg)
+        initGame();
+    }
 //Sono interessato a ricevere notifiche solo dalla TextualUI/GraphicalUI
 }
 

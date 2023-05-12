@@ -51,6 +51,8 @@ public interface View {
     //rappresentazione aggiornata mossa per mossa della shelf relativa allo specifico Player
     void showPlayerShelf(Shelf shelf);
 
+    void showPlayerShelf(Shelf shelf);
+
     //messaggio che indica al player che un'azione gli ha conferito dei punti
     void showPointMessage();
 
