@@ -5,13 +5,16 @@ import Observer.GameModelObserver;
 import Observer.LivingRoomObserver;
 import Observer.PlayerObserver;
 import Observer.ShelfObserver;
+import Observer.CommonGoalObserver;
+import Observer.PersonalGoalObserver;
+import Util.CommonGoalType;
+import Util.PersonalGoalType;
 import server.Model.*;
 import java.util.ArrayList;
 
 
-public class TurnView extends TurnViewObservable implements LivingRoomObserver, ShelfObserver, PlayerObserver, GameModelObserver {
+public class TurnView extends TurnViewObservable implements LivingRoomObserver, ShelfObserver, PlayerObserver, GameModelObserver,CommonGoalObserver,PersonalGoalObserver {
    private  GameModel gameModel;
-   private GameBoard gameBoard = new GameBoard();
    private ArrayList<Player> playerInGame;
    private PlayableItemTile[][] shelfTable;
 
