@@ -97,7 +97,7 @@ public class LivingRoom extends LivingRoomObservable {
         PlayableItemTile helperTile;
         helperTile = (PlayableItemTile) gameTable[x][y];
         gameTable[x][y] = null;
-        notifyObservers(obs -> obs.onUpdatePickedTileFromLivingRoom(x, y);
+        notifyObservers(obs -> obs.onUpdatePickedTileFromLivingRoom(x, y));
         return helperTile;
     }
 

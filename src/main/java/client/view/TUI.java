@@ -342,6 +342,11 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
     }
 
     @Override
+    public void showPlayerShelf() {
+
+    }
+
+    @Override
     public void showNickCurrentPlayer(){
 
     }
@@ -390,7 +395,7 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
                 " [Y]=yellow tile, [P]=pink tile, [W]=white tile, [G]=green tile , the number near the color"+
                 "rappresents the unique ID code of the tile");
 
-        //stampo livingRoom
+        //stampo shelf
         for(int i=0;i<6;i++) {
             out.println();
             for (int j = 0; j < 5; j++) {
@@ -403,7 +408,7 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
                         case CYAN -> out.print("[C, " + personalShelf[i][j].getIdCode()+"]");
                         case PINK -> out.print("[P, " + personalShelf[i][j].getIdCode()+"]");
                         case WHITE -> out.print("[W, " + personalShelf[i][j].getIdCode()+"]");
-                        case YELLOW -> out.print("[Y], " + personalShelf[i][j].getIdCode()+"]");
+                        case YELLOW -> out.print("[Y, " + personalShelf[i][j].getIdCode()+"]");
                         case VOID -> out.print("[X, " + personalShelf[i][j].getIdCode()+"]");
                     }
                 }

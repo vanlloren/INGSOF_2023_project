@@ -46,7 +46,7 @@ public class GameController {
     public GameController(GameModel game, TurnView turnView) {
         this.game = game;
         this.turnView = turnView;
-        this.gameBoardController = new GameBoardController(this.turnView);
+        this.gameBoardController = new GameBoardController(this.turnView, this);
     }
 
     public GameModel getGame() {

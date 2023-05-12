@@ -21,8 +21,9 @@ public class ServerApp {
         out.println("Welcome to MyShelfie, you're about to create a new Server which will run MyShelfie!");
         out.println("Please, decide on which port you would like to run the RMIServer:");
         int serverPort = scanner.nextInt();
-        GameModel gameModel = new GameModel();
-        TurnView turnView = new TurnView(gameModel);
+        TurnView turnView = new TurnView();
+        GameModel gameModel = new GameModel(turnView);
+        turnView.setGameModel(gameModel);
         GameController gameController = new GameController(gameModel, turnView);
         RMIServer RMIServerCreator = new RMIServer(serverPort, gameController, turnView);
         RemoteServerImplementation remoteServer = RMIServerCreator.startRMIServer();

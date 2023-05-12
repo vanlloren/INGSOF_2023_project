@@ -13,8 +13,8 @@ import java.util.ArrayList;
 
 
 public class TurnView extends TurnViewObservable implements LivingRoomObserver, ShelfObserver, PlayerObserver, GameModelObserver {
-   private final GameModel gameModel;
-   private GameBoard gameBoard = new GameBoard();
+   private GameModel gameModel;
+   private GameBoard gameBoard;
    private ArrayList<Player> playerInGame;
    private PlayableItemTile[][] shelfTable;
    private int addingPoint;
@@ -22,23 +22,17 @@ public class TurnView extends TurnViewObservable implements LivingRoomObserver, 
    private String nicKName;
    private String nickNameCurrentPlayer;
 
-   public TurnView(GameModel gameModel) {  //CAPIRE DOVE FARE QUESTO PASSAGGIO, PROBABILMENTE VA FATTO PROPRIO ALL'INIZIO ALL'AVVIO DEL GAME E PASSARE CON UN SET PER OGNI TUI
-       gameModel = new GameModel();
-       this.gameModel = gameModel;
-
+   public void setGameModel(GameModel gameModel){
+       this.gameModel=gameModel;
    }
 
-
-   public GameBoard getGameBoard(){
-       return this.gameBoard;
+   public void setGameBoard(){
+       this.gameBoard = gameModel.getMyShelfie();
    }
-
 
     public ArrayList<Player> getPlayerInGame() {
         return gameModel.getPlayersInGame();
     }
-
-
 
     public PlayableItemTile[][] getShelfTable(){
     return this.shelfTable;

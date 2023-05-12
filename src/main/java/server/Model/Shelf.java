@@ -2,12 +2,14 @@ package server.Model;
 
 
 import Observer.ShelfObservable;
+import server.Controller.RuleShelf;
 
 import java.util.Vector;
 
 
 public class Shelf extends ShelfObservable {
 
+    private RuleShelf ruleShelf = new RuleShelf();
     private PlayableItemTile[][] structure = new PlayableItemTile[5][4];
 
     public PlayableItemTile[][] getStructure(){
@@ -31,6 +33,7 @@ public class Shelf extends ShelfObservable {
 
     public void putTile(int x, int y, PlayableItemTile Tile){
         this.structure[x][y] = Tile;
+
         notifyObservers(obs-> {
             obs.onUpdatePuttedTileIntoShelf(x,y,Tile);
         });

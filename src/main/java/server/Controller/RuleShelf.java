@@ -103,7 +103,7 @@ public class RuleShelf {
         Object[] conditions = new Object[]{condition, cellsAvailable};
         return conditions;
     }
-    public static int freeCellsInShelf(PlayableItemTile[][] structure){
+    public int freeCellsInShelf(PlayableItemTile[][] structure){
         //Useful method to check also the maximum number of tiles that could be picked in the livingRoom
         List<Integer> list = new Vector<Integer>();
         int count=0;

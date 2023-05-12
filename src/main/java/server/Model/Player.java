@@ -4,13 +4,18 @@ package server.Model;
 import Observer.PlayerObservable;
 import Util.CommonGoalType;
 import client.view.TurnView;
+import server.Controller.RuleShelf;
 
 import java.util.Vector;
 
 public class Player extends PlayerObservable {
     private String nickname;
+
+    private int maxTiles = 6;
     private Integer points;
     private Shelf personalShelf = new Shelf();
+
+    private RuleShelf ruleShelf = new RuleShelf();
     private PersonalGoal personalGoal = new PersonalGoal();
     private LivingRoom livingRoom;
     private boolean hasCommonGoal1;
@@ -23,6 +28,9 @@ public class Player extends PlayerObservable {
         this.personalShelf.addObserver(turnView);
     }
 
+    public int getMaxTiles(){
+        return this.maxTiles;
+    }
 
 
     // questi tre metodi vengono chiamati dal controller quando il player ha soddisfatto gli obbiettivi carte
@@ -84,7 +92,9 @@ public class Player extends PlayerObservable {
     public void insertTile(int x, int y, PlayableItemTile tile) {
         int i = 0;
         Vector<Integer> position= new Vector<Integer>();
-        this.personalShelf.putTile(x,y,tile); //chiedi alfi come funziona questo metodo
+        this.personalShelf.putTile(x,y,tile);
+        maxTiles = ruleShelf.freeCellsInShelf(personalShelf.getStructure());
+        //chiedi alfi come funziona questo metodo
         //metodo che gestisce inserimento in libreria
     }
 }

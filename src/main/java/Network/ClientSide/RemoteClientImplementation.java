@@ -111,6 +111,11 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
     }
 
     @Override
+    public void UpdatellClientonStructureShelf(int x, int y, PlayableItemTile Tile) {
+
+    }
+
+    @Override
     public void UpdateAllClientOnPickedTileFromLivingRoom(String currPlayer, int x, int y) {
         System.out.println("Il giocatore " + currPlayer + " ha pescato da LivingRoom " +
                 "la tessera in posizione: x=" + x + ", y=" + y);
@@ -124,6 +129,11 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
 
     public void onUpdateToPickTile(int x, int y) throws RemoteException{
         server.onMessage(new ToPickTileReplyMessage(nickname, x, y));
+    }
+
+    @Override
+    public void onUpdateToPutTile(int xPos, int yPos, PlayableItemTile tile) throws RemoteException {
+
     }
 
     @Override
