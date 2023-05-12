@@ -94,7 +94,7 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
                     if (turnView.getNickNameCurrentPlayer().equals(this.Nickname))
                         askMovingTilePosition(turnView.getGameBoard().getLivingRoom().getAvailableTiles());
                     else {
-                        System.out.println("IT IS NOT YOUR TURN YET: PLEASE WAIT\n ");
+                        System.out.println("IT IS NOT YOUR TURN YET: PLEASE WAIT ");
                         askPlayerNextMove();
                     }
                 case "2":
@@ -322,7 +322,7 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
     }
 
     @Override
-    public void showNickCurrentPlayer(){
+    public void showNickCurrentPlayer(String Nickname){
 
     }
 
@@ -362,8 +362,8 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
     }
 
     @Override
-    public void showPlayerShelf() {
-    PlayableItemTile[][] shelfTable = turnView.getShelfTable();
+    public void showPlayerShelf(Shelf shelf) {
+
       // STAMPA TUTTA LA SHELF
     }
 
@@ -374,8 +374,7 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
     }
 
     @Override
-    public void showPartialPoint() {
-    String point = String.valueOf(turnView.getPartialPoint());
+    public void showPartialPoint(int point) {
     out.println("Your total point so far is :"+point);
     }
 

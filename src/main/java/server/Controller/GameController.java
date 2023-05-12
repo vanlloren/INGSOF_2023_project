@@ -32,8 +32,6 @@ public  class GameController {
     ogni avvio del gioco e non devono essere incluse nella serializzazione,
      il campo viene dichiarato come transient.
      */
-    private GameState gameState;
-    private TurnController turnController;
 
     boolean stopPicking = false;
     boolean moveOn = false;
@@ -62,11 +60,7 @@ public  class GameController {
         this.yPosCurrTile = y;
     }
 
-    //metodo per avviare sessione gioco
-    public void initGameController() {
-        this.game = GameModel.getInstance();
-        setGameState(GameState.LOGIN);
-    }
+
 
     public void setStopPicking(){stopPicking = true;}
 
@@ -77,9 +71,7 @@ public  class GameController {
     }
 
 
-    private void setGameState(GameState gameState) {
-        this.gameState = gameState;
-    }
+
 
     /*
     the following method is called when the number of player has reached the requested number
@@ -246,6 +238,7 @@ public  class GameController {
                 i = player.getPoints();
                 i = i + addPoint(livingRoom.getCommonGoal1());
                 player.setStatusCommonGoal1();
+                player.setPoints(i);
             }
 
             if (!player.getHasCommonGoal2() && CheckCommonGoal.checkGoal(player.getPersonalShelf(), livingRoom.getCommonGoal2().getCommonGoalType())) {
@@ -253,6 +246,7 @@ public  class GameController {
                 i = player.getPoints();
                 i = i + addPoint(livingRoom.getCommonGoal2());
                 player.setStatusCommonGoal2();
+                player.setPoints(i);
             }
             if(player.getPersonalGoal().getPoint()<CheckPersonalGoal.calculatePoints(player.getPersonalGoal(), player.getPersonalShelf().getStructure())){
                 Integer i;
@@ -261,8 +255,9 @@ public  class GameController {
                 i = player.getPoints();
                 x = CheckPersonalGoal.calculatePoints(player.getPersonalGoal(), player.getPersonalShelf().getStructure());
                 y = player.getPersonalGoal().getPoint();
-                player.getPersonalGoal().setPoint(x);
                 i = i + x - y;
+                player.getPersonalGoal().setPoint(x);
+                player.setPoints(i);
 
             }
         }
@@ -278,15 +273,7 @@ public  class GameController {
             return i;
         }
 
-    public void update(Client o, GameModel.Event arg) {
-        if (!o.equals(client)) {
-            System.err.println("Discarding notification from " + o);
-            return;
-        }
-        arg.equals(GameModel.Event.PLAYERS_IN_GAME);
-        game.setPlayersInGame(arg)
-        initGame();
-    }
+
 //Sono interessato a ricevere notifiche solo dalla TextualUI/GraphicalUI
 }
 

@@ -1,14 +1,15 @@
 package server.Model;
 
+import Observer.CommonGoalObservable;
 import Util.CommonGoalType;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 
-public class CommonGoal {
+
+public class CommonGoal extends CommonGoalObservable {
     CommonGoalType commonGoalType;
-    private ArrayList<Integer> token_list = new ArrayList<Integer>();
+    private ArrayList<Integer> token_list = new ArrayList<>();
 
     public ArrayList<Integer> getToken_list(){
         return this.token_list;
@@ -17,6 +18,7 @@ public class CommonGoal {
 
     public void setCommonGoalType(CommonGoalType commonGoalType){
         this.commonGoalType = commonGoalType;
+        notifyObservers(obs -> obs.OnUpdateModelCommonGoal(commonGoalType));
     }
     public CommonGoalType getCommonGoalType() {
         return commonGoalType;

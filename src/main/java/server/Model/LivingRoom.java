@@ -1,7 +1,7 @@
 package server.Model;
 
 import Observer.LivingRoomObservable;
-import Observer.LivingRoomObserver;
+
 import Util.*;
 
 import java.util.ArrayList;
@@ -97,7 +97,7 @@ public class LivingRoom extends LivingRoomObservable {
         PlayableItemTile helperTile;
         helperTile = (PlayableItemTile) gameTable[x][y];
         gameTable[x][y] = null;
-        notifyObservers(obs -> obs.onUpdatePickedTileFromLivingRoom(x, y);
+        notifyObservers(obs -> obs.onUpdatePickedTileFromLivingRoom(x, y));
         return helperTile;
     }
 
@@ -124,6 +124,7 @@ public class LivingRoom extends LivingRoomObservable {
                 }
             }
         }
+
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
                 if (!nullTileDetection(i,j) && gameTable[i][j] != null) {

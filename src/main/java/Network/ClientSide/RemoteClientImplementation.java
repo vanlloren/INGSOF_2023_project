@@ -3,6 +3,8 @@ package Network.ClientSide;
 import Network.ServerSide.RemoteServerInterface;
 import Network.message.*;
 import Observer.ViewObserver;
+import Util.CommonGoalType;
+import Util.PersonalGoalType;
 import client.view.TurnView;
 import client.view.View;
 import server.Model.GameBoard;
@@ -86,8 +88,8 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
     }
 
     @Override
-    public void UpdateAllClientonModelListPlayers(ArrayList<Player> playerArrayList) {
-
+    public void UpdateAllClientonModelListPlayers(Player player) {
+       System.out.println("...NEW UPDATE: We have a new player: "+player.getNickname()+" has joined this lobby");
     }
 
     @Override
@@ -101,12 +103,56 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
     @Override
     public void UpdateAllClientOnPlayersNumber(int playersNumber) {
 
-        System.out.println("N");
+        System.out.println("Player 1 your request of playerNumber for this game has been accepted" +
+                           "This game will have "+playersNumber+" players");
 
     }
 
+
+
     @Override
-    public void UpdateAllClientonModelGameBoard(GameBoard gameBoard) {
+    public void UpdateAllClientOnModelPersonalGoal(String Nickname,PersonalGoalType personalGoalType) {
+    System.out.println("....NEW UPDATE:The PersonalGoal assigned to player "+Nickname+" is "+personalGoalType);
+    }
+
+    @Override
+    public void UpdateAllClientOnModelCommonGoal(CommonGoalType commonGoalType) {
+    System.out.println("....NEW UPDATE:CommonGoal for this game is "+commonGoalType);
+    }
+
+    @Override
+    public void UpdateAllClientOnModelPlayerPoint(String nickNameCurrentPlayer, Integer points) {
+        System.out.println("....NEW UPDATE:"+nickNameCurrentPlayer+"has now"+points+"points");
+    }
+
+    @Override
+    public void UpdateAllClientOnModelStatusCommonGoal1(String nickNameCurrentPlayer) {
+        System.out.println("...NEW UPDATE:"+nickNameCurrentPlayer+"has satisfied CommonGoal1");
+    }
+
+    @Override
+    public void UpdateAllClientOnModelStatusCommonGoal2(String nickNameCurrentPlayer) {
+        System.out.println("...NEW UPDATE:"+nickNameCurrentPlayer+"has satisfied CommonGoal2");
+    }
+
+    @Override
+    public void UpdateAllClientOnChairOwner(Player player) {
+        System.out.println("...NEW UPDATE: The chair owner is "+player.getNickname());
+    }
+
+    @Override
+    public void UpdateAllClientOnModelGameHasStarted() {
+        System.out.println("LOBBY HAS REACHED THE REQUESTED NUMBER OF PLAYER: GAME IS STARTING.....");
+        this.userInterface.askPlayerNextMove();
+    }
+
+    @Override
+    public void onUpdateAllClientOnCurrentPlayer(Player currPlayer) {
+        System.out.println("...NEW UPDATE: Now it's"+currPlayer.getNickname()+" turn");
+    }
+
+    @Override
+    public void UpdateAllClientOnModelGameBoard(GameBoard gameBoard) {
 
     }
 

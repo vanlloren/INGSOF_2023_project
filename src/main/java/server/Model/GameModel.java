@@ -2,6 +2,7 @@ package server.Model;
 
 
 import Observer.GameModelObservable;
+import Util.RandChairOwner;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -33,9 +34,7 @@ public class GameModel extends GameModelObservable implements Serializable {
     }
     public void setEndGame(){
         this.endGame = true;
-        notifyObservers(obs ->{
-            obs.onUpdateModelEndGame(this.endGame);
-        });
+        notifyObservers(obs -> obs.onUpdateModelEndGame(this.endGame));
 
     }
 
@@ -57,22 +56,20 @@ public class GameModel extends GameModelObservable implements Serializable {
 
     public void setPlayersNumber(int playersNumber){
         this.chosenPlayersNumber = playersNumber;
-        notifyObservers(obs ->{
-            obs.onUpdateModelPlayersNumber(playersNumber);
-        });
+        notifyObservers(obs -> obs.onUpdateModelPlayersNumber(playersNumber));
 
     }
 
     public void setCurrPlayer(Player currPlayer){
         this.currPlayer = currPlayer;
+        notifyObservers(obs -> obs.onUpdateModelCurrentPlayer(currPlayer));
 
     }
 
     public void setChairOwner(Player player) {
       this.chosenChairOwner = player;
-        notifyObservers(obs ->{
-            obs.onUpdateModelChairOwner(player);
-        });
+        notifyObservers(obs -> obs.onUpdateModelChairOwner(player));
+        setCurrPlayer(player);
     }
 
     public ArrayList<Player> getPlayersInGame() {
@@ -80,18 +77,22 @@ public class GameModel extends GameModelObservable implements Serializable {
     }
 
     public void setPlayersInGame(Player newPlayer) {
-        this.playersInGame.add(newPlayer);
-        notifyObservers(obs ->{
-                obs.onUpdateModelListPlayers(this.playersInGame);
-        });
+        if(playersInGame.size()==chosenPlayersNumber-1){
+            this.playersInGame.add(newPlayer);
+            notifyObservers(obs -> obs.onUpdateModelListPlayers(newPlayer));
+            setChairOwner(playersInGame.get(RandChairOwner.ChooseRand(playersInGame.size())));
+            notifyObservers(obs -> obs.onUpdateModelGameHasStarted());
+
+        }
+        else {
+            this.playersInGame.add(newPlayer);
+            notifyObservers(obs -> obs.onUpdateModelListPlayers(newPlayer));
+        }
     }
 
     public void setmyShelfie(GameBoard myShelfie) {
         this.myShelfie = myShelfie;
-       // setChangedAndNotifyObservers(Event.GAME_BOARD);
-        notifyObservers(obs ->{
-            obs.onUpdateGameBoard(myShelfie);
-        });
+        notifyObservers(obs -> obs.onUpdateGameBoard(myShelfie));
     }
     public GameBoard getMyShelfie(){
         return myShelfie;
@@ -100,7 +101,7 @@ public class GameModel extends GameModelObservable implements Serializable {
 
 
     public ArrayList<String> getPlayersNicknames() {
-        ArrayList<String> nicknames = new ArrayList<String>();
+        ArrayList<String> nicknames = new ArrayList<>();
         for (Player p : playersInGame) {
             nicknames.add(p.getNickname());
         }
@@ -117,7 +118,7 @@ public class GameModel extends GameModelObservable implements Serializable {
     public boolean isNicknameAvailable(String nickname) {
         for (Player p: playersInGame
              ) {
-            if(p.getNickname() == nickname){
+            if(p.getNickname().equals(nickname)){
                 return false;
             }
         }

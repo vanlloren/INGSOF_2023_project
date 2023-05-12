@@ -49,15 +49,15 @@ public interface View {
     void showWinMessage(String winnerNickname);
 
     //rappresentazione aggiornata mossa per mossa della shelf relativa allo specifico Player
-    void showPlayerShelf();
+    void showPlayerShelf(Shelf shelf);
 
     //messaggio che indica al player che un'azione gli ha conferito dei punti
     void showPointMessage();
 
-    void showNickCurrentPlayer();
+    void showNickCurrentPlayer(String Nickname);
 
     //mostra al player il suo punteggio (volendo si può mostrare anche quello degli avversari)
-    void showPartialPoint();
+    void showPartialPoint(int point);
 
     //messaggio di disconnessione
     void showDisconnectionMessage(String disconnectedPlayerNickname, String disconnectionMessage);
@@ -73,4 +73,6 @@ public interface View {
     void setTurnView(TurnView turnView);
 
     void setNickname(String nickname);
+
+    void askPlayerNextMove();
 }

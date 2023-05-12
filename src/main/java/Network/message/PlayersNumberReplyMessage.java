@@ -5,7 +5,7 @@ public class PlayersNumberReplyMessage extends Message{
     private final int playerNumber;
 
     public PlayersNumberReplyMessage(int playerNumber) {
-        super(nickname, MessageEnumeration.PLAYERNUMBER_REPLY);
+        super( MessageEnumeration.PLAYERNUMBER_REPLY);
         this.playerNumber = playerNumber;
     }
 

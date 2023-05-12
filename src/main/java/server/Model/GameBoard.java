@@ -18,6 +18,8 @@ public class GameBoard {
 
     public GameBoard(TurnView turnView){
         this.livingRoom.addObserver(turnView);
+        livingRoom.getCommonGoal1().addObserver(turnView);
+        livingRoom.getCommonGoal2().addObserver(turnView);
     }
     //MODEL
     public void setItemBag(){ //genera la ItemBag a ogni inizio partita chiamato dal controller

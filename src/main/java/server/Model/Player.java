@@ -2,7 +2,8 @@ package server.Model;
 
 
 import Observer.PlayerObservable;
-import Util.CommonGoalType;
+
+import Observer.PlayerObserver;
 import client.view.TurnView;
 
 import java.util.Vector;
@@ -10,17 +11,16 @@ import java.util.Vector;
 public class Player extends PlayerObservable {
     private String nickname;
     private Integer points;
-    private Shelf personalShelf = new Shelf();
-    private PersonalGoal personalGoal = new PersonalGoal();
-    private LivingRoom livingRoom;
+    private final Shelf personalShelf = new Shelf();
+    private final PersonalGoal personalGoal = new PersonalGoal();
     private boolean hasCommonGoal1;
     private boolean hasCommonGoal2;
-    private boolean hasPersonalGoal;
 
     // costruttore player in cui passo i parametri principali passati dal controller che chiamerà dopo la ricezione di tutti i nickname da lato client
     public Player (String nickname, TurnView turnView){
         this.nickname = nickname;
         this.personalShelf.addObserver(turnView);
+        this.personalGoal.addObserver(turnView);
     }
 
 
@@ -29,24 +29,17 @@ public class Player extends PlayerObservable {
 
     public void setStatusCommonGoal1(){
         this.hasCommonGoal1 = true;
-        //notifica che la commmongoal è stata soddisfatta
+        notifyObservers(PlayerObserver::OnUpdateModelStatusCommonGoal1);
     }
 
     public void setStatusCommonGoal2(){
         this.hasCommonGoal2 = true;
-        //notifica che la commonGoal2 è stata soddisfatta
+        notifyObservers(PlayerObserver::OnUpdateModelStatusCommonGoal2);
     }
 
 
-
-
-    //metodo che verra chiamato dal controller il quale preventivamente crea una living room adatta al numero di giocatori che si sono collegati e assegna a tutti la STESSA LIVING ROOM
-    public void setLivingRoom(LivingRoom livingRoom){
-        this.livingRoom= livingRoom;
-    }
 
     public Shelf getPersonalShelf(){
-
         return this.personalShelf;
     }
     public PersonalGoal getPersonalGoal(){
@@ -65,11 +58,9 @@ public class Player extends PlayerObservable {
         return this.points;
     }
 
-
-
-
-    public void setPersonalGoal(PersonalGoal personalGoal){ // questo viene propriamente inizializzato dal player mentre i commongoal appartengono alla living room
-     this.personalGoal = personalGoal;
+    public void setPoints(Integer points) {
+        this.points = points;
+        notifyObservers(obs -> obs.OnUpdateModelPlayerPoint(points));
     }
 
     public boolean getHasCommonGoal1(){
@@ -78,12 +69,10 @@ public class Player extends PlayerObservable {
     public boolean getHasCommonGoal2(){
         return this.hasCommonGoal2;
     }
-    public boolean getHasPersonalGoal(){
-        return this.hasPersonalGoal;
-    }
+
     public void insertTile(int x, int y, PlayableItemTile tile) {
         int i = 0;
-        Vector<Integer> position= new Vector<Integer>();
+        Vector<Integer> position= new Vector<>();
         this.personalShelf.putTile(x,y,tile,i,position); //chiedi alfi come funziona questo metodo
         //metodo che gestisce inserimento in libreria
     }

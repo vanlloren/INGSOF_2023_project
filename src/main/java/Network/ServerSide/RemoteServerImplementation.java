@@ -52,7 +52,17 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
                         while(stop){
                         }
                         gameController.initGameBoard();
-                    } else if (gameController.getGame().getPlayersInGame().size() < gameController.getGame().getPlayersNumber()) {
+                    } else if (gameController.getGame().getPlayersInGame().size() < gameController.getGame().getPlayersNumber()-1) {
+                        boolean approvedNick = gameController.getGame().isNicknameAvailable(message.getNickname());
+                        if(approvedNick){
+                            Player newPlayer = new Player(message.getNickname(), turnView);
+                            RandPersonalGoal.setType(newPlayer, newPlayer.getPersonalGoal(), gameController.getGame().getPlayersInGame());
+                            gameController.getGame().setPlayersInGame(newPlayer);
+                        }
+                        Message newMessage = new LoginReplyMessage(message.getNickname(), approvedNick);
+                        client.onMessage(newMessage);
+                          }
+                    else if(gameController.getGame().getPlayersInGame().size() == gameController.getGame().getPlayersNumber()-1){
                         boolean approvedNick = gameController.getGame().isNicknameAvailable(message.getNickname());
                         if(approvedNick){
                             Player newPlayer = new Player(message.getNickname(), turnView);
@@ -62,6 +72,7 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
                         Message newMessage = new LoginReplyMessage(message.getNickname(), approvedNick);
                         client.onMessage(newMessage);
                     }
+
                      else if ((gameController.getGame().getPlayersInGame().size() == gameController.getGame().getPlayersNumber())){
                         Message newMessage = new FullLobbyMessage();
                         client.onMessage(newMessage);
@@ -121,5 +132,6 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
     public void onUpdateAskKeepPicking() throws RemoteException{
         client.onMessage(new KeepPickingRequestMessage());
     }
+
 
 }
