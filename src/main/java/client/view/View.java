@@ -17,6 +17,8 @@ public interface View {
     //è il server che poi si occupa di verificare che sia univoco
     void askNickname();
 
+    void setCurrPlayer(String currPlayer);
+
     //se il player è il primo a collegarsi al server, è lui che crea la partita
     //il server dunque gli chiede quanti giocatori far partecipare
     void askPlayersNumber();
@@ -70,11 +72,9 @@ public interface View {
 
     void showMatchSituation(List<String> actualPlayers, List<Shelf> actualShelf, String actualPlayerNickname);
 
-    TurnView getGameModelView();
-
-    void setTurnView(TurnView turnView);
-
     void setNickname(String nickname);
+
+    void resetGameOn();
 
     void askPlayerNextMove();
 }

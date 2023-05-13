@@ -19,22 +19,17 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
     protected final List<ViewObserver> observers = new ArrayList<>();
 
     private boolean gameOn=true;
+    private String currPlayer;
 
-    private TurnView turnView;
-
-    public String Nickname;
+    public String nickname;
 
     private boolean checker = false;
     public TUI(){
         this.out = System.out;
     }
 
-    public void setTurnView(TurnView turnView){
-        this.turnView = turnView;
-    }
-
     public void setNickname(String nickname) {
-        this.Nickname = nickname;
+        this.nickname = nickname;
     }
 
     //Implementando il metodo Runnable ereditiamo tutte le sue classi e oggetti
@@ -61,16 +56,12 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
             //quando gameOn diventa false, la TUI si chiude perché è finita la partita
         }
     }
-    @Override
-    public TurnView getGameModelView() {
-        return turnView;
-    }
-
 
     public void askPlayerNextMove(){
         String picking;
         scanner.nextLine();
-        if(turnView.getIsGameOn()) {
+        askIsGameOn();
+        if(gameOn) {
             do {
                 scanner.nextLine();
                 out.println("Press 1 if you want to PICK A TILE FROM LIVING ROOM " +
@@ -92,29 +83,42 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
 
             switch (picking) {
                 case "1":
-                    if (turnView.getNickNameCurrentPlayer().equals(this.Nickname))
-                        askMovingTilePosition(turnView.getLivingRoom().getAvailableTiles());
+                    notifyObserver(obs -> {
+                        obs.onUpdateShowCurrPlayer();
+                    });
+                    if (currPlayer.equals(this.nickname))
+                        notifyObserver(obs -> {
+                            obs.onUpdateShowAvailableTiles();
+                        });
                     else {
                         System.out.println("IT IS NOT YOUR TURN YET: PLEASE WAIT ");
                         askPlayerNextMove();
                     }
                 case "2":
-                    showLivingRoom(turnView.getLivingRoom());
+                    notifyObserver(obs -> {
+                        obs.onUpdateShowLivingRoom();
+                    });
                     askPlayerNextMove();
                 case "3":
-                    showPlayersList(turnView.getPlayerInGame());
+                    notifyObserver(obs -> obs.onUpdateShowPlayersList());
                     askPlayerNextMove();
                 case "4":
-                    showPlayerShelf(turnView.getShelfTable());
+                    notifyObserver(obs -> obs.onUpdateShowPlayerShelf(nickname));
                     askPlayerNextMove();
                 case "5":
-                    showPartialPoint(turnView.getPartialPoint(Nickname));
+                    notifyObserver(obs -> obs.onUpdateShowPartialPoint(nickname));
                     askPlayerNextMove();
                 case "6":
-                    showNickCurrentPlayer(turnView.getNickNameCurrentPlayer());
+                    notifyObserver(obs -> obs.onUpdateShowNickCurrPlayer());
                     askPlayerNextMove();
             }
         }
+    }
+
+    public void askIsGameOn(){
+        notifyObserver(obs -> {
+            obs.onUpdateIsGameOn();
+        });
     }
 
 
@@ -210,6 +214,11 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
         });
 
         out.println("Il nickname scelto è: " + nickName+"\n");
+    }
+
+    @Override
+    public void setCurrPlayer(String currPlayer) {
+        this.currPlayer = currPlayer;
     }
 
     @Override
