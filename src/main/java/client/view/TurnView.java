@@ -1,5 +1,10 @@
 package client.view;
 
+import Network.ClientSide.RemoteClientImplementation;
+import Network.ClientSide.RemoteClientInterface;
+import Network.Events.UpdatePlayersListEvent;
+import Network.Events.*;
+import Network.ServerSide.RemoteServerImplementation;
 import Observer.*;
 import Util.CommonGoalType;
 import Util.PersonalGoalType;
@@ -7,8 +12,9 @@ import server.Model.*;
 import java.util.ArrayList;
 
 
-public class TurnView extends TurnViewObservable implements LivingRoomObserver, ShelfObserver, PlayerObserver, GameModelObserver,CommonGoalObserver,PersonalGoalObserver {
+public class TurnView implements LivingRoomObserver, ShelfObserver, PlayerObserver, GameModelObserver,CommonGoalObserver,PersonalGoalObserver {
    private GameModel gameModel;
+   private RemoteServerImplementation server;
 
    public void setGameModel(GameModel gameModel){
        this.gameModel=gameModel;
@@ -26,13 +32,26 @@ public class TurnView extends TurnViewObservable implements LivingRoomObserver, 
        return gameModel.getIsGameOn();
     }
 
-    public Shelf getShelfTable(){
-    return this.gameModel.getCurrPlayer().getPersonalShelf();
+    public Shelf getShelfTable(String nickname){
+        for (Player player: this.gameModel.getPlayersInGame()
+             ) {
+            if (nickname.equals(player.getNickname())) {
+                return this.gameModel.getCurrPlayer().getPersonalShelf();
+            }
+        }
+
+        return null;
+
     }
 
     public int getPlayersNumber(){
        return this.gameModel.getPlayersInGame().size();
     }
+
+    public void setServer(RemoteServerImplementation server) {
+        this.server = server;
+    }
+
 
     public int getPartialPoint(String nickName){
        int i = 0;
@@ -55,89 +74,81 @@ public class TurnView extends TurnViewObservable implements LivingRoomObserver, 
 
     @Override
     public void onUpdateModelListPlayers(Player player) {
-    notifyObservers(obs -> obs.UpdateAllClientonModelListPlayers(player));
+       server.onTurnViewModified(this, new UpdatePlayersListEvent(player));
     }
 
     @Override
     public void onUpdateModelEndGame(boolean endGame)  {
-        notifyObservers(obs -> obs.UpdateAllClientOnModelEndGame(endGame));
+       server.onTurnViewModified(this, new UpdateEndGameEvent(endGame));
     }
 
     @Override
     public void onUpdateModelPlayersNumber(int playersNumber)  {
-        notifyObservers(obs -> obs.UpdateAllClientOnPlayersNumber(playersNumber));
+       server.onTurnViewModified(this, new UpdatePlayersNumberEvent(playersNumber));
     }
 
     @Override
     public void onUpdateModelChairOwner(Player player) {
-        notifyObservers(obs -> obs.UpdateAllClientOnChairOwner(player));
-
+        server.onTurnViewModified(this, new UpdateChairOwnerEvent(player));
     }
 
     @Override
     public void onUpdateGameBoard(GameBoard gameBoard) {
-        notifyObservers(obs -> obs.UpdateAllClientOnModelGameBoard(gameBoard));
+       server.onTurnViewModified(this, new UpdateGameBoardEvent(gameBoard));
     }
 
     @Override
     public void onUpdateModelGameHasStarted() {
-        notifyObservers(obs -> obs.UpdateAllClientOnModelGameHasStarted());
+        server.onTurnViewModified(this, new UpdateGameHasStartedEvent());
     }
 
     @Override
     public void onUpdateModelCurrentPlayer(Player currPlayer) {
-        notifyObservers(obs -> obs.onUpdateAllClientOnCurrentPlayer(currPlayer));
-
+        server.onTurnViewModified(this, new UpdateCurrPlayerEvent(currPlayer));
     }
 
     @Override
     public void onUpdateModelMatchWinner(String player) {
-
+       server.onTurnViewModified(this, new UpdateMatchWinnerEvent(player));
     }
 
     @Override
     public void onUpdateModelGameHasEnd() {
-
+       server.onTurnViewModified(this, new UpdateGameHasEndEvent());
     }
 
     @Override
     public void onUpdatePickedTileFromLivingRoom(int x, int y) {
-        notifyObservers(obs -> obs.UpdateAllClientOnPickedTileFromLivingRoom(getNickNameCurrentPlayer(), x, y));
+        server.onTurnViewModified(this, new UpdatePickedLivingRoomTileEvent(this.gameModel.getCurrPlayer().getNickname() ,x, y));
     }
 
     @Override
     public void OnUpdateModelPersonalGoal(PersonalGoalType personalGoalType) {
-        notifyObservers(obs -> obs.UpdateAllClientOnModelPersonalGoal(getNickNameCurrentPlayer(),personalGoalType));
+        server.onTurnViewModified(this, new UpdatePersonalGoalEvent( ,personalGoalType));
     }
 
     @Override
     public void OnUpdateModelCommonGoal(CommonGoalType commonGoalType) {
-        notifyObservers(obs -> obs.UpdateAllClientOnModelCommonGoal(commonGoalType));
-
+        server.onTurnViewModified(this, new UpdateCommonGoalEvent(commonGoalType));
     }
 
     @Override
     public void OnUpdateModelPlayerPoint(Integer points) {
-        notifyObservers(obs -> obs.UpdateAllClientOnModelPlayerPoint(getNickNameCurrentPlayer(),points));
-
+       server.onTurnViewModified(this, new UpdatePlayerPointEvent(this.gameModel.getCurrPlayer().getNickname(), points));
     }
 
     @Override
     public void OnUpdateModelStatusCommonGoal2() {
-        notifyObservers(obs -> obs.UpdateAllClientOnModelStatusCommonGoal1(getNickNameCurrentPlayer()));
-
+        server.onTurnViewModified(this, new UpdateStatusCommonGoal2Event(this.gameModel.getCurrPlayer().getNickname()));
     }
 
     @Override
     public void OnUpdateModelStatusCommonGoal1() {
-        notifyObservers(obs -> obs.UpdateAllClientOnModelStatusCommonGoal2(getNickNameCurrentPlayer()));
-
+        server.onTurnViewModified(this, new UpdateStatusCommonGoal1Event(this.gameModel.getCurrPlayer().getNickname()));
     }
     //-------------------------Qua scrivo per le shelf---------------------------------//
     @Override
-    public void onUpdatePuttedTileIntoShelf(int x, int y, PlayableItemTile Tile){
-       notifyObservers(obs -> {
-           obs.UpdatellClientonStructureShelf(x , y , Tile);
-       });
+    public void onUpdatePuttedTileIntoShelf(int x, int y, PlayableItemTile tile){
+       server.onTurnViewModified(this, new UpdatePutShelfTileEvent(x, y, tile));
     }
 }
