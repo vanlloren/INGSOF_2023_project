@@ -19,11 +19,11 @@ public class GameModel extends GameModelObservable implements Serializable {
     private TurnView turnView;
     public static final String Server_Nick = "Server";//C'è un collegamento al server per ogni giocatore.
     private Player currPlayer;
-    //private String matchWinner; possiamo individuarlo attraverso un assaggio logico del giocatore con più punti e poi stabilire
-    //Player matchWinner = playerInGame.equals(nickname)
+    private String matchWinner;
     private GameBoard myShelfie ;
     private ArrayList<Player> playersInGame;
     private boolean endGame=false;
+    private boolean GameOn = true;
 
 
     public GameModel(TurnView turnView){
@@ -42,6 +42,20 @@ public class GameModel extends GameModelObservable implements Serializable {
         this.endGame = true;
         notifyObservers(obs -> obs.onUpdateModelEndGame(this.endGame));
 
+    }
+
+    public void setMatchWinner(Player player){
+        this.matchWinner = player.getNickname();
+        notifyObservers(obs -> obs.onUpdateModelMatchWinner(matchWinner));
+    }
+
+    public void GameTerminator() {
+        this.GameOn = false;
+        notifyObservers(obs -> obs.onUpdateModelGameHasEnd());
+
+    }
+    public boolean getIsGameOn(){
+        return this.GameOn;
     }
 
     public Player getChairOwner() {
@@ -104,15 +118,6 @@ public class GameModel extends GameModelObservable implements Serializable {
         return myShelfie;
     }
 
-
-
-    public ArrayList<String> getPlayersNicknames() {
-        ArrayList<String> nicknames = new ArrayList<>();
-        for (Player p : playersInGame) {
-            nicknames.add(p.getNickname());
-        }
-        return nicknames;
-    }
     public void reset() {
         chosenChairOwner = null;
         currPlayer= null;

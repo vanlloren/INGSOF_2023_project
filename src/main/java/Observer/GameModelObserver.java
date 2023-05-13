@@ -19,4 +19,8 @@ public interface GameModelObserver {
     void onUpdateModelGameHasStarted();
 
     void onUpdateModelCurrentPlayer(Player currPlayer);
+
+    void onUpdateModelMatchWinner(String player);
+
+    void onUpdateModelGameHasEnd();
 }

@@ -2,11 +2,11 @@ package server.Controller;
 import Network.ServerSide.RemoteServerImplementation;
 import Util.Colour;
 import Util.RandCommonGoal;
-import Util.RandPersonalGoal;
+
 import client.view.TurnView;
 import server.Model.*;
 import Network.ClientSide.*;
-import server.enumerations.GameState;
+
 import Network.message.*;
 
 
@@ -139,25 +139,44 @@ public class GameController {
         public void InsertTileShelf(Player player,PlayableItemTile tile,int x, int y,int num){
         Shelf shelf = new Shelf();
         shelf = player.getPersonalShelf();
-        shelf.putTile(x,y,num); //alf sistema
+        shelf.putTile(x,y,tile); //alf sistema
 
         calculatePoint(player,player.getPersonalShelf().getStructure(),game.getMyShelfie().getLivingRoom());
         }
 
-        public void nextTurn (Player player) {
+        public void nextTurn () {
 
         ArrayList<Player> listPLayer = game.getPlayersInGame();
 
         int index= listPLayer.indexOf(game.getCurrPlayer());
-        if(index !=listPLayer.size())
-            game.setCurrPlayer(listPLayer.get(index+1));
-        else {
-            if(!game.getEndGame()) {
-                game.setCurrPlayer(listPLayer.get(0));
-            }
-             //else ->METODO CHE BLOCCA TUTTO E ANNUNCIA VINCITORE
+
+        if(!game.getEndGame()){
+            if(game.getPlayersInGame().indexOf(game.getCurrPlayer())==game.getPlayersInGame().size()){
+            game.setCurrPlayer(listPLayer.get(0));}
+            else game.setCurrPlayer(listPLayer.get(index+1));
         }
+
+        else {
+            if(game.getPlayersInGame().indexOf(game.getCurrPlayer())==game.getPlayersInGame().indexOf(game.getChairOwner())-1){
+                game.setMatchWinner(CalculateWinner(game.getPlayersInGame()));
+            }
+            else {
+                if(game.getPlayersInGame().indexOf(game.getCurrPlayer())==game.getPlayersInGame().size()){
+                    game.setCurrPlayer(listPLayer.get(0));}
+                else game.setCurrPlayer(listPLayer.get(index+1));
+            }
+
+        }
+
+
     }
+
+        public Player CalculateWinner(ArrayList<Player> playerArrayList){
+        Player MatchWinner = null;
+        //DEVI SCRIVERE FUNZIONE CHE TROVA PLAYER CON MAX PUNTEGGIO
+        // SE CI SONO PAREGGI SEGUO REGOLA DI DISTANZA MAGGIORE DA PLAYER CON LA CHAIR
+        return MatchWinner;
+        }
 
 
         // metodo che determina l'inizio dell'ultimo turno di gioco
@@ -273,15 +292,7 @@ public class GameController {
             return i;
         }
 
-    public void update(Client o, GameModel.Event arg) {
-        if (!o.equals(client)) {
-            System.err.println("Discarding notification from " + o);
-            return;
-        }
-        arg.equals(GameModel.Event.PLAYERS_IN_GAME);
-        game.setPlayersInGame(arg)
-        initGame();
-    }
+
 //Sono interessato a ricevere notifiche solo dalla TextualUI/GraphicalUI
 }
 

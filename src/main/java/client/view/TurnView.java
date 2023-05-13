@@ -1,12 +1,6 @@
 package client.view;
 
-import Network.message.Message;
-import Observer.GameModelObserver;
-import Observer.LivingRoomObserver;
-import Observer.PlayerObserver;
-import Observer.ShelfObserver;
-import Observer.CommonGoalObserver;
-import Observer.PersonalGoalObserver;
+import Observer.*;
 import Util.CommonGoalType;
 import Util.PersonalGoalType;
 import server.Model.*;
@@ -14,33 +8,45 @@ import java.util.ArrayList;
 
 
 public class TurnView extends TurnViewObservable implements LivingRoomObserver, ShelfObserver, PlayerObserver, GameModelObserver,CommonGoalObserver,PersonalGoalObserver {
-   private  GameModel gameModel;
-   private ArrayList<Player> playerInGame;
-   private PlayableItemTile[][] shelfTable;
-
-   private int partialPoint;
-   private String nicKName;
-   private String nickNameCurrentPlayer;
+   private GameModel gameModel;
 
    public void setGameModel(GameModel gameModel){
        this.gameModel=gameModel;
    }
 
-   public GameBoard getGameBoard(){
-       return this.gameModel.getMyShelfie();
+   public LivingRoom getLivingRoom(){
+       return this.gameModel.getMyShelfie().getLivingRoom();
    }
 
     public ArrayList<Player> getPlayerInGame() {
         return gameModel.getPlayersInGame();
     }
 
-    public PlayableItemTile[][] getShelfTable(){
-    return this.shelfTable;
+    public boolean getIsGameOn(){
+       return gameModel.getIsGameOn();
+    }
+
+    public Shelf getShelfTable(){
+    return this.gameModel.getCurrPlayer().getPersonalShelf();
     }
 
     public int getPlayersNumber(){
        return this.gameModel.getPlayersInGame().size();
     }
+
+    public int getPartialPoint(String nickName){
+       int i = 0;
+       int point = 0;
+       while(i<getPlayersNumber()){
+           if(nickName.equals(getPlayerInGame().get(i).getNickname())){
+                point = getPlayerInGame().get(i).getPoints();
+
+           }
+           else i++;
+       }
+     return point;
+    }
+
 
     public String getNickNameCurrentPlayer(){
        return gameModel.getCurrPlayer().getNickname();
@@ -81,6 +87,16 @@ public class TurnView extends TurnViewObservable implements LivingRoomObserver, 
     @Override
     public void onUpdateModelCurrentPlayer(Player currPlayer) {
         notifyObservers(obs -> obs.onUpdateAllClientOnCurrentPlayer(currPlayer));
+
+    }
+
+    @Override
+    public void onUpdateModelMatchWinner(String player) {
+
+    }
+
+    @Override
+    public void onUpdateModelGameHasEnd() {
 
     }
 

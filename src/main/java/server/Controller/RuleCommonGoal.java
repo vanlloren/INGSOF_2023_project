@@ -18,12 +18,13 @@ public class RuleCommonGoal {
         }
 
         public static boolean checkSixCouples(PlayableItemTile[][] structure) {
-            Colour[][] matrix=null;
+            Colour[][] matrix = null;
             int count = 0;
 
             for (int i = 0; i < 6; i++) {
                 for (int j = 0; j < 5; j++) {
                     if (structure[i][j] != null) {
+
                         matrix[i][j] = structure[i][j].getColour();
                     }
                 }
@@ -146,17 +147,17 @@ public class RuleCommonGoal {
             else if (structure[0][0] != null) {
                 Colour value = structure[0][0].getColour();
                 for (int i = 1; i <= 4; i++) {
-                    if ((structure[i][i]!=null&&structure[i][i].getColour() != value)||structure[i][i]==null)
+                    if ((structure[i][i]!=null&&structure[i][i].getColour() != value)||structure[i][i]==null){
                         checker = false;
-                    break;
+                        break;}
                 }
             }
             else if (structure[1][0] != null) {
                 Colour value = structure[1][0].getColour();
                 for (int i = 2; i <= 5; i++) {
-                    if ((structure[i][i-1]!=null&&structure[i][i-1].getColour() != value)||structure[i][i-1]==null)
+                    if ((structure[i][i-1]!=null&&structure[i][i-1].getColour() != value)||structure[i][i-1]==null){
                         checker = false;
-                    break;
+                        break;}
                 }
             }
         return checker;

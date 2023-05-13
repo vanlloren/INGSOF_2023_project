@@ -2,6 +2,7 @@ package client.view;
 
 import server.Model.LivingRoom;
 import server.Model.PlayableItemTile;
+import server.Model.Player;
 import server.Model.Shelf;
 
 import java.util.ArrayList;
@@ -37,11 +38,11 @@ public interface View {
     //mostra il risultato della richiesta di login, con il nome scelto dal player
     void showLoginResults(boolean nicknameAccepted, String chosenNickname);
 
-    void showPlayersList();
+    void showPlayersList(ArrayList<Player> playerList);
 
     void showLivingRoom(LivingRoom livingRoom);
 
-    void showNumberOfPlayers();
+
 
     void fullLobbyTerminateUI();
 
@@ -51,10 +52,9 @@ public interface View {
     //rappresentazione aggiornata mossa per mossa della shelf relativa allo specifico Player
     void showPlayerShelf(Shelf shelf);
 
-    void showPlayerShelf(Shelf shelf);
 
-    //messaggio che indica al player che un'azione gli ha conferito dei punti
-    void showPointMessage();
+
+
 
     void showNickCurrentPlayer(String Nickname);
 

@@ -49,14 +49,6 @@ public class LivingRoom extends LivingRoomObservable {
         return this.gameTable;
     }
 
-    public void setCommonGoal1(CommonGoal commonGoal1) { // delego al controller come scegliere random i commongoal e poi uso qusti due metodi per settare alla living room quali sono i commongoal
-        this.commonGoal1 = commonGoal1;
-    }
-
-    public void setCommonGoal2(CommonGoal commonGoal2) {
-        this.commonGoal2 = commonGoal2;
-    }
-
     public CommonGoal getCommonGoal1() { //
         return commonGoal1;
     }

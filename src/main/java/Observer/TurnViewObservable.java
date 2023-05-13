@@ -1,4 +1,4 @@
-package client.view;
+package Observer;
 
 import Network.ClientSide.RemoteClientInterface;
 import java.util.ArrayList;

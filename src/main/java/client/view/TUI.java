@@ -70,6 +70,7 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
     public void askPlayerNextMove(){
         String picking;
         scanner.nextLine();
+        if(turnView.getIsGameOn()) {
             do {
                 scanner.nextLine();
                 out.println("Press 1 if you want to PICK A TILE FROM LIVING ROOM " +
@@ -92,27 +93,28 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
             switch (picking) {
                 case "1":
                     if (turnView.getNickNameCurrentPlayer().equals(this.Nickname))
-                        askMovingTilePosition(turnView.getGameBoard().getLivingRoom().getAvailableTiles());
+                        askMovingTilePosition(turnView.getLivingRoom().getAvailableTiles());
                     else {
                         System.out.println("IT IS NOT YOUR TURN YET: PLEASE WAIT ");
                         askPlayerNextMove();
                     }
                 case "2":
-                    showLivingRoom(turnView.getGameBoard().getLivingRoom());
+                    showLivingRoom(turnView.getLivingRoom());
                     askPlayerNextMove();
                 case "3":
-                    showPlayersList();
+                    showPlayersList(turnView.getPlayerInGame());
                     askPlayerNextMove();
                 case "4":
-                    showPlayerShelf();
+                    showPlayerShelf(turnView.getShelfTable());
                     askPlayerNextMove();
                 case "5":
-                    showPointMessage();
+                    showPartialPoint(turnView.getPartialPoint(Nickname));
                     askPlayerNextMove();
                 case "6":
-                    showNickCurrentPlayer();
+                    showNickCurrentPlayer(turnView.getNickNameCurrentPlayer());
                     askPlayerNextMove();
             }
+        }
     }
 
 
@@ -322,14 +324,14 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
 
 
     @Override
-    public void showPlayersList() {
+    public void showPlayersList(ArrayList<Player> playerList) {
         int i=0;
         String nickName = null;
-        ArrayList<Player> playersList = turnView.getPlayerInGame();
-        String j = String.valueOf(playersList.size());
+
+        String j = String.valueOf(playerList.size());
         out.println("In the current Game we have "+j+"players whose Names are:\n");
-        while(i<playersList.size()){
-             nickName = playersList.get(i).getNickname();
+        while(i<playerList.size()){
+             nickName = playerList.get(i).getNickname();
             out.println(nickName+" , ");
             i++;
         }
@@ -345,7 +347,7 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
 
     @Override
     public void showNickCurrentPlayer(String Nickname){
-
+    out.println("The current player is:  "+Nickname);
     }
 
     @Override
@@ -378,10 +380,6 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
         out.println();
     }
 
-    @Override
-    public void showNumberOfPlayers(){
-
-    }
 
     @Override
     public void showPlayerShelf(Shelf shelf) {
@@ -414,11 +412,7 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
         out.println();
     }
 
-    @Override
-    public void showPointMessage() {
 
-
-    }
 
     @Override
     public void showPartialPoint(int point) {
