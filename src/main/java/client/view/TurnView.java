@@ -72,6 +72,11 @@ public class TurnView implements LivingRoomObserver, ShelfObserver, PlayerObserv
     }
 
 
+    public void WriteToAllClient(String Nickname, String chatMessage){
+        notifyObservers(obs -> obs.UpdateAllClientonNewMessageChat(Nickname,chatMessage));
+
+    }
+
     @Override
     public void onUpdateModelListPlayers(Player player) {
        server.onTurnViewModified(this, new UpdatePlayersListEvent(player));

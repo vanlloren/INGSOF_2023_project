@@ -37,6 +37,8 @@ public interface View {
     //TO-DO: capire in che formato fornire l'elenco delle posizioni libere nella shelf
     void askPlacingTileInShelfPosition();
 
+
+    void WriteInChat();
     //mostra il risultato della richiesta di login, con il nome scelto dal player
     void showLoginResults(boolean nicknameAccepted, String chosenNickname);
 

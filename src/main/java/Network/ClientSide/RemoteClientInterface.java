@@ -49,4 +49,7 @@ public interface RemoteClientInterface extends Remote {
     void UpdateAllClientOnStructureShelf(int x, int y, PlayableItemTile Tile);
 
     void onModelModify(TurnView turnView, Event message);
+
+
+    void UpdateAllClientOnNewMessageChat(String string, String chatMessage);
 }
