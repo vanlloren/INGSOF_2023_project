@@ -1,15 +1,16 @@
 package Network.ClientSide;
 
+import Network.Events.Event;
 import Network.message.Message;
 import Util.CommonGoalType;
 import Util.PersonalGoalType;
+import client.view.TurnView;
 import server.Model.GameBoard;
 import server.Model.PlayableItemTile;
 import server.Model.Player;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
-import java.util.ArrayList;
 
 public interface RemoteClientInterface extends Remote {
 
@@ -21,7 +22,7 @@ public interface RemoteClientInterface extends Remote {
 
     void UpdateAllClientOnPickedTileFromLivingRoom(String currPlayer, int x, int y);
 
-    void UpdateAllClientonModelListPlayers(Player playerArrayList);
+    void UpdateAllClientOnModelListPlayers(Player player);
 
     void UpdateAllClientOnModelEndGame(boolean endGame);
 
@@ -45,5 +46,7 @@ public interface RemoteClientInterface extends Remote {
 
     void onUpdateAllClientOnCurrentPlayer(Player currPlayer);
 
-    void UpdatellClientonStructureShelf(int x, int y, PlayableItemTile Tile);
+    void UpdateAllClientOnStructureShelf(int x, int y, PlayableItemTile Tile);
+
+    void onModelModify(TurnView turnView, Event message);
 }

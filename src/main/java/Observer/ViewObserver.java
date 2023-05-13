@@ -49,4 +49,20 @@ public interface ViewObserver {
     void onUpdateToPickTile(int xPos, int yPos) throws RemoteException;
 
     void onUpdateToPutTile(int xPos, int yPos , PlayableItemTile tile) throws  RemoteException;
+
+    void onUpdateIsGameOn();
+
+    void onUpdateShowLivingRoom();
+
+    void onUpdateShowCurrPlayer();
+
+    void onUpdateShowAvailableTiles();
+
+    void onUpdateShowPlayersList();
+
+    void onUpdateShowPlayerShelf(String nickname);
+
+    void onUpdateShowPartialPoint(String nickname);
+
+    void onUpdateShowNickCurrPlayer();
 }
