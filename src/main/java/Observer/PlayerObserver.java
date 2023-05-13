@@ -6,4 +6,6 @@ public interface PlayerObserver {
     void OnUpdateModelStatusCommonGoal2();
 
     void OnUpdateModelStatusCommonGoal1();
+
+    void OnUpdateModelPlayerEndGame(Boolean endgame);
 }

@@ -31,7 +31,6 @@ public class RuleShelf {
             if ((structure[x][y].getIdCode() == 0 && (structure[x - 1][y].getIdCode() != 0))) {
                 flag = true;
             } else if (structure[x][y].getIdCode()==0) {
-                // caso inserimento in base
                 flag = true;
             }
         }else{
@@ -125,12 +124,4 @@ public class RuleShelf {
         return max;
     }
 
-    public static boolean isFull(PlayableItemTile[][] structure) {
-        for (int j = 0; j < 5; j++) {
-            if (structure[0][j] == null) {
-                return false;
-            }
-        }
-        return true;
-    }
 }

@@ -141,7 +141,9 @@ public class TurnView implements LivingRoomObserver, ShelfObserver, PlayerObserv
     public void OnUpdateModelPlayerPoint(Integer points) {
        server.onTurnViewModified(this, new UpdatePlayerPointEvent(this.gameModel.getCurrPlayer().getNickname(), points));
     }
-
+    public void OnUpdateModelPlayerEndGame(Boolean endgame){
+       server.onTurnViewModified(this, new UpdateEndGameEvent(this.gameModel.getCurrPlayer().getEndgame()));
+    }
     @Override
     public void OnUpdateModelStatusCommonGoal2() {
         server.onTurnViewModified(this, new UpdateStatusCommonGoal2Event(this.gameModel.getCurrPlayer().getNickname()));

@@ -38,4 +38,13 @@ public class Shelf extends ShelfObservable {
             obs.onUpdatePuttedTileIntoShelf(x,y,Tile);
         });
     }
+
+    public boolean isFull() {
+        for (int j = 0; j < 5; j++) {
+            if (this.structure[0][j].getIdCode()==0) {
+                return false;
+            }
+        }
+        return true;
+    }
 }

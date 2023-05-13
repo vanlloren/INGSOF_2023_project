@@ -20,6 +20,8 @@ public class Player extends PlayerObservable {
     private boolean hasCommonGoal1;
     private boolean hasCommonGoal2;
 
+    private boolean endgame = false;
+
     // costruttore player in cui passo i parametri principali passati dal controller che chiamerà dopo la ricezione di tutti i nickname da lato client
     public Player (String nickname, TurnView turnView){
         this.nickname = nickname;
@@ -68,6 +70,13 @@ public class Player extends PlayerObservable {
     public void setPoints(Integer points) {
         this.points = points;
         notifyObservers(obs -> obs.OnUpdateModelPlayerPoint(points));
+    }
+    public boolean getEndgame(){
+        return this.endgame;
+    }
+    public void setEndgame(boolean endgame){
+        this.endgame = personalShelf.isFull();
+        notifyObservers(obs ->obs.OnUpdateModelPlayerEndGame(endgame));
     }
 
     public boolean getHasCommonGoal1(){
