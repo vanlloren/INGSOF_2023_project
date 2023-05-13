@@ -1,6 +1,7 @@
 package Network.ServerSide;
 
 import Network.ClientSide.RemoteClientInterface;
+import Network.Events.Event;
 import Network.message.*;
 
 import Util.RandPersonalGoal;
@@ -12,6 +13,7 @@ import server.Model.Player;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 
 public class RemoteServerImplementation extends UnicastRemoteObject implements RemoteServerInterface{
@@ -21,6 +23,10 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
     private final Object lock = new Object();
     private boolean stop = false;
     private RemoteClientInterface client;
+
+    private ArrayList<RemoteClientInterface> clientList;
+
+    private HashMap<String, RemoteClientInterface> clientNickCombinations;
     private final GameController gameController;
     private ArrayList<PlayableItemTile> availableTiles;
 
@@ -42,12 +48,15 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
             case LOGIN_REQUEST -> {
                 synchronized (lock) {
                     if (gameController.getGame().getPlayersInGame().size() < 1) {
+                        clientNickCombinations = new HashMap<>();
+                        LoginRequestMessage newMessage = (LoginRequestMessage) message;
+                        clientNickCombinations.put(message.getNickname(), newMessage.getClient());
                         Player newPlayer = new Player(message.getNickname(), turnView);
                         newPlayer.addObserver(turnView);
                         RandPersonalGoal.setType(newPlayer, newPlayer.getPersonalGoal(), gameController.getGame().getPlayersInGame());
                         gameController.getGame().setPlayersInGame(newPlayer);
-                        Message newMessage = new PlayersNumberRequestMessage(message.getNickname());
-                        client.onMessage(newMessage);
+                        Message newMessage2 = new PlayersNumberRequestMessage(message.getNickname());
+                        client.onMessage(newMessage2);
                         stop = true;
                         while(stop){
                         }
@@ -55,6 +64,8 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
                     } else if (gameController.getGame().getPlayersInGame().size() < gameController.getGame().getPlayersNumber()-1) {
                         boolean approvedNick = gameController.getGame().isNicknameAvailable(message.getNickname());
                         if(approvedNick){
+                            LoginRequestMessage newMessage = (LoginRequestMessage) message;
+                            clientNickCombinations.put(message.getNickname(), newMessage.getClient());
                             Player newPlayer = new Player(message.getNickname(), turnView);
                             RandPersonalGoal.setType(newPlayer, newPlayer.getPersonalGoal(), gameController.getGame().getPlayersInGame());
                             gameController.getGame().setPlayersInGame(newPlayer);
@@ -65,6 +76,8 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
                     else if(gameController.getGame().getPlayersInGame().size() == gameController.getGame().getPlayersNumber()-1){
                         boolean approvedNick = gameController.getGame().isNicknameAvailable(message.getNickname());
                         if(approvedNick){
+                            LoginRequestMessage newMessage = (LoginRequestMessage) message;
+                            clientNickCombinations.put(message.getNickname(), newMessage.getClient());
                             Player newPlayer = new Player(message.getNickname(), turnView);
                             RandPersonalGoal.setType(newPlayer, newPlayer.getPersonalGoal(), gameController.getGame().getPlayersInGame());
                             gameController.getGame().setPlayersInGame(newPlayer);
@@ -103,14 +116,11 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
 
             }
             case PLAYERNUMBER_REPLY -> {
-                PlayersNumberReplyMessage newMessage = (PlayersNumberReplyMessage)message;
+                PlayersNumberReplyMessage newMessage = (PlayersNumberReplyMessage) message;
                 int playersNum = newMessage.getNumPlayers();
                 gameController.getGame().setPlayersNumber(playersNum);
                 resetStop();
             }
-
-
-
         }
     }
 
@@ -121,11 +131,8 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
     }
 
     @Override
-    public TurnView handShake(RemoteClientInterface client) {
-        this.client = client;
-        turnView.addObserver(client);
-
-        return turnView;
+    public void handShake(RemoteClientInterface client) {
+        clientList.add(client);
     }
 
 
@@ -140,6 +147,13 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
 
     public void onUpdateToPutTile() throws RemoteException{
         client.onMessage((new ToPutTileRequestMessage()));
+    }
+
+    public void onTurnViewModified(TurnView turnView, Event event){
+        for (RemoteClientInterface client: clientList
+             ) {
+            client.onModelModify(turnView, event);
+        }
     }
 
 }

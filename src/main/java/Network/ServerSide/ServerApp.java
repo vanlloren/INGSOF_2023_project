@@ -29,6 +29,7 @@ public class ServerApp {
         RemoteServerImplementation remoteServer = RMIServerCreator.startRMIServer();
         gameController.setRemoteServer(remoteServer);
         gameModel.addObserver(turnView);
+        turnView.setServer(remoteServer);
 
 
 
