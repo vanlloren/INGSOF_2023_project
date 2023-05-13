@@ -23,7 +23,7 @@ public class RuleShelf {
         return flag;
     }
 */
-    public static boolean putTileCheckValidity(int x, int y, PlayableItemTile Tile,PlayableItemTile[][] structure, int numberOfTilesPicked) {
+    public static boolean commandPutTileCheckValidity(int x, int y, PlayableItemTile Tile,PlayableItemTile[][] structure, int numberOfTilesPicked) {
         boolean flag= false;
         boolean availability;
         availability = (boolean) iscolumnAvailable(y, numberOfTilesPicked, structure)[0];
@@ -38,7 +38,7 @@ public class RuleShelf {
         }
         return flag;
     }
-    public static boolean CheckSamePosition(Vector<Integer> y) {
+    public static boolean CheckSameColumnForPlacing2or3Tiles(Vector<Integer> y) {
         // verifichiamo se il vettore ha almeno un elemento
         if (y.size() > 0) {
             // memorizziamo il primo elemento del vettore in una variabile
@@ -72,27 +72,20 @@ public class RuleShelf {
         if (cellsAvailable != 0) {
             switch (cellsAvailable) {
                 case 1:
-                    //System.out.println("You can put ONLY one tile in the column:" + Y);
                     if (cellsAvailable < NumberOfTilesPicked) {
-                        //System.err.println("Too many tiles picked");
-                        //System.out.println("Please select another column of the shelf");
                         condition = false;
                     } else {
                         condition = true;
                     }
                     break;
                 case 2:
-                    //System.out.println("You can put ONLY two tiles in the column:" + Y);
                     if (cellsAvailable < NumberOfTilesPicked) {
-                        //System.err.println("Too many tiles picked");
-                        //System.out.println("Please select another column of the shelf");
                         condition = false;
                     } else {
                         condition = true;
                     }
                     break;
                 default:
-                    //System.out.println("You can put up to 3 tiles in the column:" + Y);
                     condition = true;
             }
         } else {
