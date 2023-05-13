@@ -9,7 +9,6 @@ import server.Model.Player;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
-import java.util.ArrayList;
 
 public interface RemoteClientInterface extends Remote {
 
@@ -46,4 +45,6 @@ public interface RemoteClientInterface extends Remote {
     void onUpdateAllClientOnCurrentPlayer(Player currPlayer);
 
     void UpdatellClientonStructureShelf(int x, int y, PlayableItemTile Tile);
+
+    void UpdateAllClientonNewMessageChat(String string, String chatMessage);
 }

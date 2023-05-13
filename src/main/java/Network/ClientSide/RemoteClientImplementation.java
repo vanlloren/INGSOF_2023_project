@@ -162,6 +162,11 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
     }
 
     @Override
+    public void UpdateAllClientonNewMessageChat(String Nickname, String chatMessage) {
+        System.out.println(Nickname+": "+chatMessage+".");
+    }
+
+    @Override
     public void UpdateAllClientOnPickedTileFromLivingRoom(String currPlayer, int x, int y) {
         System.out.println("Il giocatore " + currPlayer + " ha pescato da LivingRoom " +
                 "la tessera in posizione: x=" + x + ", y=" + y);

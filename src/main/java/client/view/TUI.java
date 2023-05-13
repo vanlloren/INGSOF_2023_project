@@ -78,7 +78,8 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
                         "Press 3 if you want to SEE THE PLAYERS IN YOUR GAMELOBBY " +
                         "Press 4 if you want to SEE YOUR PERSONAL SHELF" +
                         "Press 5 if you want to SEE YOUR CURRENT SCORING" +
-                        "Press 6 if you want to SEE THE NICKNAME OF THE PLAYER WHO'S PLAYING\n"
+                        "Press 6 if you want to SEE THE NICKNAME OF THE PLAYER WHO'S PLAYING"+
+                        "Press 7 if you want to write in the chat"
                 );
 
                 picking = scanner.next();
@@ -113,10 +114,23 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
                 case "6":
                     showNickCurrentPlayer(turnView.getNickNameCurrentPlayer());
                     askPlayerNextMove();
+                case "7":
+                    WriteInChat();
+                    askPlayerNextMove();
+
             }
         }
     }
 
+
+    @Override
+    public void WriteInChat(){
+        String chatMessage;
+        scanner.nextLine();
+        out.println("Write in the following line the content of your message");
+        chatMessage = scanner.next();
+        turnView.WriteToAllClient(Nickname,chatMessage);
+    }
 
     @Override
     public String askServerInfo(){

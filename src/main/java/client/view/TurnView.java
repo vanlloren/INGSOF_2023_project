@@ -53,6 +53,11 @@ public class TurnView extends TurnViewObservable implements LivingRoomObserver, 
     }
 
 
+    public void WriteToAllClient(String Nickname, String chatMessage){
+        notifyObservers(obs -> obs.UpdateAllClientonNewMessageChat(Nickname,chatMessage));
+
+    }
+
     @Override
     public void onUpdateModelListPlayers(Player player) {
     notifyObservers(obs -> obs.UpdateAllClientonModelListPlayers(player));

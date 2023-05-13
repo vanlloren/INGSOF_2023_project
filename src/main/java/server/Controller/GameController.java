@@ -173,6 +173,25 @@ public class GameController {
 
         public Player CalculateWinner(ArrayList<Player> playerArrayList){
         Player MatchWinner = null;
+        ArrayList<Integer> pointsList = new ArrayList<>();
+        ArrayList<Player> Winner = new ArrayList<Player>();
+            for (Player p: playerArrayList) {
+                pointsList.add(p.getPoints());
+            }
+            Integer MaxPoint = Collections.max(pointsList);
+            for (Player p: playerArrayList) {
+                if(p.getPoints().equals(MaxPoint))
+                Winner.add(p);
+            }
+            if(Winner.size()==1){// caso di non parità
+            //fai notify
+            }
+            else //caso di parità multiple
+             {
+                 //fai calcolo rispetto a regola di distanza imposta
+                 }
+
+
         //DEVI SCRIVERE FUNZIONE CHE TROVA PLAYER CON MAX PUNTEGGIO
         // SE CI SONO PAREGGI SEGUO REGOLA DI DISTANZA MAGGIORE DA PLAYER CON LA CHAIR
         return MatchWinner;

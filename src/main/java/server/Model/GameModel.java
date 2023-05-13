@@ -47,6 +47,7 @@ public class GameModel extends GameModelObservable implements Serializable {
     public void setMatchWinner(Player player){
         this.matchWinner = player.getNickname();
         notifyObservers(obs -> obs.onUpdateModelMatchWinner(matchWinner));
+        GameTerminator();
     }
 
     public void GameTerminator() {
