@@ -1,5 +1,6 @@
 package Network.ServerSide;
 
+import Exceptions.MaxTilesPickedException;
 import Network.ClientSide.RemoteClientInterface;
 import Network.Events.Event;
 import Network.message.*;
@@ -56,7 +57,7 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
                         RandPersonalGoal.setType(newPlayer, newPlayer.getPersonalGoal(), gameController.getGame().getPlayersInGame());
                         gameController.getGame().setPlayersInGame(newPlayer);
                         Message newMessage2 = new PlayersNumberRequestMessage(message.getNickname());
-                        client.onMessage(newMessage2);
+                        newMessage.getClient().onMessage(newMessage2);
                         stop = true;
                         while(stop){
                         }
@@ -71,7 +72,7 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
                             gameController.getGame().setPlayersInGame(newPlayer);
                         }
                         Message newMessage = new LoginReplyMessage(message.getNickname(), approvedNick);
-                        client.onMessage(newMessage);
+                        clientNickCombinations.get(message.getNickname()).onMessage(newMessage);
                           }
                     else if(gameController.getGame().getPlayersInGame().size() == gameController.getGame().getPlayersNumber()-1){
                         boolean approvedNick = gameController.getGame().isNicknameAvailable(message.getNickname());
@@ -83,13 +84,11 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
                             gameController.getGame().setPlayersInGame(newPlayer);
                         }
                         Message newMessage = new LoginReplyMessage(message.getNickname(), approvedNick);
-                        client.onMessage(newMessage);
-                    }
+                        clientNickCombinations.get(message.getNickname()).onMessage(newMessage);                    }
 
                      else if ((gameController.getGame().getPlayersInGame().size() == gameController.getGame().getPlayersNumber())){
                         Message newMessage = new FullLobbyMessage();
-                        client.onMessage(newMessage);
-                    }
+                        clientNickCombinations.get(message.getNickname()).onMessage(newMessage);                    }
                 }
             }
             case KEEP_PICKING_REPLY -> {
@@ -121,9 +120,18 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
                 gameController.getGame().setPlayersNumber(playersNum);
                 resetStop();
             }
+            case START_PICKING_TILE_REQUEST -> {
+                clientNickCombinations.get(message.getNickname()).onMessage(new StartPuttingTileRequestMessage(gameController.pickTilesArray(message.getNickname())));
+            }
         }
     }
 
+    public void onPickTilesBegin(String nickname) throws RemoteException{
+        clientNickCombinations.get(nickname).onMessage(new StartPickingTileReplyMessage());
+    }
+    public void onMaxTilesPicked(String nickname) throws RemoteException{
+        clientNickCombinations.get(nickname).onMessage(new MaxTilesPickedMessage());
+    }
 
     @Override
     public void disconnect() throws RemoteException {
@@ -135,14 +143,8 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
         clientList.add(client);
     }
 
-
-
-    public void onUpdateToPickTile(ArrayList<PlayableItemTile> availableTiles) throws RemoteException {
-        client.onMessage(new ToPickTileRequestMessage(availableTiles));
-    }
-
-    public void onUpdateAskKeepPicking() throws RemoteException{
-        client.onMessage(new KeepPickingRequestMessage());
+    public void onUpdateAskKeepPicking(String nickname) throws RemoteException{
+        clientNickCombinations.get(nickname).onMessage(new KeepPickingRequestMessage());
     }
 
     public void onUpdateToPutTile() throws RemoteException{

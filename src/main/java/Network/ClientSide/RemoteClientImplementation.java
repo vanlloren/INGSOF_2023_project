@@ -13,6 +13,8 @@ import server.Model.PlayableItemTile;
 import server.Model.Player;
 
 import java.io.IOException;
+import java.io.Serial;
+import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -78,6 +80,16 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
             }
             case FULL_LOBBY -> {
                 this.userInterface.fullLobbyTerminateUI();
+            }
+            case START_PICKING_TILE_REPLY -> {
+                this.userInterface.setMoveOn();
+            }
+            case START_PUTTING_TILE_REQUEST -> {
+                StartPuttingTileRequestMessage newMessage = (StartPuttingTileRequestMessage) message;
+                this.userInterface.askTileToPut(newMessage.getTilesArray());
+            }
+            case MAX_TILE_PICKED -> {
+                this.userInterface.maxTilesPicked();
             }
 
 
@@ -153,6 +165,11 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
                 UpdateAllClientOnStructureShelf(newEvent.getXPos(), newEvent.getYPos(), newEvent.getTile());
             }
         }
+    }
+
+    @Override
+    public void UpdateAllClientOnNewMessageChat(String string, String chatMessage) {
+
     }
 
     @Override
@@ -266,6 +283,10 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
     @Override
     public void onUpdateToPutTile(int xPos, int yPos, PlayableItemTile tile) throws RemoteException {
 
+    }
+
+    public void onUpdateStartPicking() throws RemoteException{
+        server.onMessage(new StartPickingTileRequestMessage(nickname));
     }
 
     @Override

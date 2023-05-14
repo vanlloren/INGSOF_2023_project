@@ -19,6 +19,8 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
     protected final List<ViewObserver> observers = new ArrayList<>();
 
     private boolean gameOn=true;
+    private boolean goOnPicking=true;
+    private boolean moveOn;
     private String currPlayer;
 
     public String nickname;
@@ -87,10 +89,27 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
                     notifyObserver(obs -> {
                         obs.onUpdateShowCurrPlayer();
                     });
-                    if (currPlayer.equals(this.nickname))
+                    if (currPlayer.equals(this.nickname)) {
                         notifyObserver(obs -> {
-                            obs.onUpdateShowAvailableTiles();
+                            try {
+                                obs.onUpdateStartPicking();
+                            } catch (RemoteException e) {
+                                throw new RuntimeException(e);
+                            }
                         });
+                        moveOn=false;
+                        while(!moveOn){}
+                        goOnPicking = true;
+                        while(goOnPicking) {
+                            goOnPicking=false;
+                            moveOn=false;
+                            notifyObserver(obs -> {
+                                obs.onUpdateShowAvailableTiles();
+                            });
+
+                            while (!moveOn){}
+                        }
+                    }
                     else {
                         System.out.println("IT IS NOT YOUR TURN YET: PLEASE WAIT ");
                         askPlayerNextMove();
@@ -118,6 +137,10 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
 
             }
         }
+    }
+
+    public void setMoveOn(){
+        moveOn=true;
     }
 
     public void askIsGameOn(){
@@ -281,13 +304,14 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
 
     @Override
     public void askStopPicking() {
-            out.println("Would you like to keep picking tiles?[Y/N]\n");
-            String picking = scanner.nextLine();
-            while(picking != "Y" || picking !="N"){
-                out.println("Symbol not recoignized, please try  again...\n");
-                askStopPicking();
-            }
+        out.println("Would you like to keep picking tiles?[Y/N]\n");
+        String picking = scanner.nextLine();
+        while(picking != "Y" || picking !="N"){
+            out.println("Symbol not recoignized, please try  again...\n");
+            askStopPicking();
+        }
         String finalPicking = picking;
+
         notifyObserver(obs-> {
             try {
                 obs.onUpdateAskKeepPicking(finalPicking);
@@ -295,6 +319,12 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
                 throw new RuntimeException(e);
             }
         });
+        if(finalPicking == "Y"){
+            goOnPicking = true;
+            setMoveOn();
+        }else{
+            setMoveOn();
+        }
     }
 
 
@@ -331,6 +361,11 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
     @Override
     public void askPlacingTileInShelfPosition() {
 
+    }
+
+    public void maxTilesPicked(){
+        out.println("Numero massimo di tessere raccolte dalla LivingRoom, procedi ora a inserirle nella Shelf");
+        setMoveOn();
     }
 
     @Override

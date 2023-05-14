@@ -17,6 +17,8 @@ public interface View {
     //è il server che poi si occupa di verificare che sia univoco
     void askNickname();
 
+    void setMoveOn();
+
     void setCurrPlayer(String currPlayer);
 
     //se il player è il primo a collegarsi al server, è lui che crea la partita
@@ -79,4 +81,6 @@ public interface View {
     void resetGameOn();
 
     void askPlayerNextMove();
+
+    void maxTilesPicked();
 }

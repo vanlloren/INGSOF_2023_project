@@ -58,6 +58,8 @@ public interface ViewObserver {
 
     void onUpdateShowAvailableTiles();
 
+    void onUpdateStartPicking() throws RemoteException;
+
     void onUpdateShowPlayersList();
 
     void onUpdateShowPlayerShelf(String nickname);
