@@ -111,8 +111,10 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
                 ToPutTileReplyMessage newMessage = (ToPutTileReplyMessage) message;
                 int x = newMessage.getX();
                 int y = newMessage.getY();
-
-
+                PlayableItemTile tile = newMessage.getTile();
+                ArrayList<Integer> columnPosition = newMessage.getColumnPosition();
+                int numOfTiles= newMessage.getNumOfTiles();
+                if()
 
             }
             case PLAYERNUMBER_REPLY -> {
@@ -145,8 +147,8 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
         client.onMessage(new KeepPickingRequestMessage());
     }
 
-    public void onUpdateToPutTile() throws RemoteException{
-        client.onMessage((new ToPutTileRequestMessage()));
+    public void onUpdateToPutTile(boolean errorInTheInsertion, String errorType , ArrayList<PlayableItemTile> tilesInPlayerHand) throws RemoteException{
+        client.onMessage((new ToPutTileRequestMessage( errorInTheInsertion , errorType , tilesInPlayerHand)));
     }
 
     public void onTurnViewModified(TurnView turnView, Event event){

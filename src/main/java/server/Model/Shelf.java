@@ -4,11 +4,11 @@ package server.Model;
 import Observer.ShelfObservable;
 import server.Controller.RuleShelf;
 
+import java.util.List;
 import java.util.Vector;
 
 
 public class Shelf extends ShelfObservable {
-
     private RuleShelf ruleShelf = new RuleShelf();
     private PlayableItemTile[][] structure = new PlayableItemTile[5][4];
 
@@ -33,12 +33,31 @@ public class Shelf extends ShelfObservable {
 
     public void putTile(int x, int y, PlayableItemTile Tile){
         this.structure[x][y] = Tile;
-
         notifyObservers(obs-> {
             obs.onUpdatePuttedTileIntoShelf(x,y,Tile);
         });
     }
-
+    public int freeCellsInShelf(){
+        //Useful method to check also the maximum number of tiles that could be picked in the livingRoom
+        List<Integer> list = new Vector<Integer>();
+        int count=0;
+        for(int j= 0; j<5; j++){
+            for(int i= 0; j<6; j++){
+                if(this.structure[i][j].getIdCode() !=0){
+                    count++;
+                }
+            }
+            list.add(count);
+        }
+        int max = list.get(0);
+        for (int i = 1; i < list.size(); i++) {
+            int valore = list.get(i);
+            if (valore > max) {
+                max = valore;
+            }
+        }
+        return max;
+    }
     public boolean isFull() {
         for (int j = 0; j < 5; j++) {
             if (this.structure[0][j].getIdCode()==0) {

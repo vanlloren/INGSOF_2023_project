@@ -61,7 +61,6 @@ public class GameController {
     }
 
 
-
     public void setStopPicking(){stopPicking = true;}
 
     public void setMoveOn(){moveOn = true;}
@@ -139,8 +138,8 @@ public class GameController {
         public void InsertTileShelf(Player player,PlayableItemTile tile,int x, int y,int num){
         Shelf shelf = new Shelf();
         shelf = player.getPersonalShelf();
-        shelf.putTile(x,y,tile); //alf sistema
-
+        shelf.putTile(x,y,tile);
+        shelf.freeCellsInShelf();
         calculatePoint(player,player.getPersonalShelf().getStructure(),game.getMyShelfie().getLivingRoom());
         }
 

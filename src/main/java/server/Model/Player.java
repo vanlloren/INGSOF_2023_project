@@ -46,8 +46,6 @@ public class Player extends PlayerObservable {
         notifyObservers(PlayerObserver::OnUpdateModelStatusCommonGoal2);
     }
 
-
-
     public Shelf getPersonalShelf(){
         return this.personalShelf;
     }
@@ -78,14 +76,13 @@ public class Player extends PlayerObservable {
         this.endgame = personalShelf.isFull();
         notifyObservers(obs ->obs.OnUpdateModelPlayerEndGame(endgame));
     }
-
     public boolean getHasCommonGoal1(){
         return this.hasCommonGoal1;
     }
     public boolean getHasCommonGoal2(){
         return this.hasCommonGoal2;
     }
-
+/*
     public void insertTile(int x, int y, PlayableItemTile tile) {
         int i = 0;
         Vector<Integer> position= new Vector<>();
@@ -93,7 +90,7 @@ public class Player extends PlayerObservable {
         maxTiles = ruleShelf.freeCellsInShelf(personalShelf.getStructure());
         //chiedi alfi come funziona questo metodo
         //metodo che gestisce inserimento in libreria
-    }
+    }*/
 }
 
 

@@ -1,18 +1,34 @@
 package Network.message;
 
-public class ToPutTileReplyMessage extends Message{
-    private final boolean flag;
-    private final int x;
+import server.Model.PlayableItemTile;
 
+import java.util.ArrayList;
+
+public class ToPutTileReplyMessage extends Message{
+    private final int x;
     private final int y;
-    public ToPutTileReplyMessage(boolean flag, int x, int y) {
+    private final PlayableItemTile tile;
+    private final ArrayList<Integer> columnPosition;
+    private final int numOfTiles;
+    public ToPutTileReplyMessage(int x, int y , PlayableItemTile tile , ArrayList<Integer> columnPosition , int numOfTiles)  {
         super(MessageEnumeration.TO_PUT_TILE_REPLY);
         this.x = x;
         this.y = y;
-        this.flag = flag;
+        this.tile = tile;
+        this.columnPosition = columnPosition;
+        this.numOfTiles = numOfTiles;
     }
-    public boolean getFlag(){
-        return this.flag;
+
+    public PlayableItemTile getTile() {
+        return this.tile;
+    }
+
+    public ArrayList<Integer> getColumnPosition() {
+        return this.columnPosition;
+    }
+
+    public int getNumOfTiles() {
+        return this.numOfTiles;
     }
 
     public int getX() {

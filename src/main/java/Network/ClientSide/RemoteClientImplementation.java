@@ -74,8 +74,11 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
                 this.userInterface.askMovingTilePosition(availableTiles);
             }
             case TO_PUT_TILE_REQUEST -> {
-
-                this.userInterface.showPutTileResults(boolean errorInTheInsertion ,String errorType , ArrayList<PlayableItemTile> tilesInPlayerHand);
+                ToPutTileRequestMessage newMessage = (ToPutTileRequestMessage) message;
+                boolean errorInTheInsertion = newMessage.isErrorInTheInsertion();
+                String errorType = newMessage.getErrorType();
+                ArrayList<PlayableItemTile> tilesInPlayerHand = newMessage.getTilesInPlayerHand();
+                this.userInterface.showPutTileResults(errorInTheInsertion , errorType, tilesInPlayerHand);
             }
             case FULL_LOBBY -> {
                 this.userInterface.fullLobbyTerminateUI();
@@ -264,8 +267,8 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
         server.onMessage(new ToPickTileReplyMessage(nickname, x, y));
     }
 
-    public void onUpdateToPutTile(boolean flag, int xPos, int yPos) throws RemoteException {
-        server.onMessage(new ToPutTileReplyMessage(flag, xPos, yPos));
+    public void onUpdateToPutTile( int xPos, int yPos , PlayableItemTile tile , ArrayList<Integer> columnPosition , int numOfTiles) throws RemoteException {
+        server.onMessage(new ToPutTileReplyMessage( xPos, yPos , tile , columnPosition , numOfTiles));
     }
 
     @Override
