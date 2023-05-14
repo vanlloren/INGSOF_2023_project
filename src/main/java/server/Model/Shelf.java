@@ -6,9 +6,11 @@ import server.Controller.RuleShelf;
 
 import java.util.List;
 import java.util.Vector;
-
+import Util.Colour;
 
 public class Shelf extends ShelfObservable {
+    private int columnChoosen;
+
     private RuleShelf ruleShelf = new RuleShelf();
     private PlayableItemTile[][] structure = new PlayableItemTile[5][4];
 
@@ -25,7 +27,7 @@ public class Shelf extends ShelfObservable {
     public PlayableItemTile[][] setUpPersonalShelf(){
         for (int i= 0;i<6;i++){
             for ( int j=0;j<5;j++){
-                this.structure[i][j] = new PlayableItemTile("VOID", 0);
+                this.structure[i][j] = new PlayableItemTile("VOID", -1);
             }
         }
         return this.structure;
@@ -60,10 +62,17 @@ public class Shelf extends ShelfObservable {
     }
     public boolean isFull() {
         for (int j = 0; j < 5; j++) {
-            if (this.structure[0][j].getIdCode()==0) {
+            if (this.structure[0][j].getColour() == Colour.VOID) {
                 return false;
             }
         }
         return true;
+    }
+
+    public  int getColumnChoosen(){
+        return this.columnChoosen;
+    }
+    public void setColumnChoosen(int columnChoosen){
+        this.columnChoosen = columnChoosen;
     }
 }

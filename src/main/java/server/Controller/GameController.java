@@ -197,16 +197,6 @@ public class GameController {
         }
 
 
-        // metodo che determina l'inizio dell'ultimo turno di gioco
-        public void launchEndGame (Player player) {
-            if (game.getChairOwner().equals(game.getCurrPlayer())) {
-                //METODO CHE BLOCCA TUTTO E ANNUNCIA WINNER
-            }
-            else{
-                game.setEndGame();
-            }
-        }
-
     public static HashMap<Colour, ArrayList<Integer>> findAdjGroups(PlayableItemTile[][] shelf) {
         HashMap<Colour, ArrayList<Integer>> adjGroups = new HashMap<>();
 

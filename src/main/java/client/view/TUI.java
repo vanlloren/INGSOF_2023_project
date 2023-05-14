@@ -298,7 +298,6 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
     }
 
 
-
     @Override
     public void askTileToPut(ArrayList<PlayableItemTile> tilesInPlayerHand) {
         int numOfTiles = tilesInPlayerHand.size();
@@ -307,7 +306,6 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
         ) {
             out.println("Tiles picked: {["+tilesInPlayerHand.get(1)+"]," + "["+tilesInPlayerHand.get(2)+"]," +"["+tilesInPlayerHand.get(3)+"]}");
         }
-        while(!tilesInPlayerHand.isEmpty())
         {   out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 1 , 2 , 3 ])");
             index = scanner.nextInt();
             while(index<1 || index>3){
@@ -336,22 +334,46 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
             int finalXPos = xPos;
             notifyObserver(obs -> {
                 try {
-                    obs.onUpdateToPutTile(finalXPos, finalYPos, tilesInPlayerHand.get(finalIndex), columnPosition , numOfTiles );
+                    obs.onUpdateToPutTile(finalXPos, finalYPos, tilesInPlayerHand.get(finalIndex), columnPosition , numOfTiles , tilesInPlayerHand);
 
                 } catch (RemoteException e) {
                     throw new RuntimeException(e);
                 }
             });
-            tilesInPlayerHand.remove(index);
         }
 
     }
-/*
-    @Override
-    public void askPlacingTileInShelfPosition() {
+    public void askTileToPut2or3tile(ArrayList<PlayableItemTile> tilesInPlayerHand) {
+        int numOfTiles = tilesInPlayerHand.size();
+        int xPos; int index;
+        {   out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 1 , 2 ])");
+            index = scanner.nextInt();
+            while(index<1 || index>numOfTiles){
+                out.println("The index of the tile is not valid!\n");
+                out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 1 , 2  ])");
+                index = scanner.nextInt();
+            }
+            out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 0 , 1 , 2 , 3 , 4 , 5 ])");
+            xPos = scanner.nextInt();
+            while(xPos<0 || xPos>5){
+                out.println("The position x for the the insertion of the tile is not valid!\n");
+                out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 0 , 1 , 2 , 3 , 4 , 5 ])");
+                xPos = scanner.nextInt();
+            }
+            ArrayList<Integer> columnPosition = new ArrayList<>();
+            int finalIndex = index;
+            int finalXPos = xPos;
+            notifyObserver(obs -> {
+                try {
+                    obs.onUpdateToPut2or3Tile(finalXPos, tilesInPlayerHand.get(finalIndex) ,  tilesInPlayerHand);
+
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+        }
 
     }
-*/
     @Override
     public void showLoginResults(boolean nickAccepted, String chosenNickname) {
         if(nickAccepted){
@@ -363,14 +385,16 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
 
     }
 
-    public void showPutTileResults ( boolean errorInTheInsertion ,String errorType , ArrayList<PlayableItemTile> tilesInPlayerHand){
-        if(errorInTheInsertion){
-            out.println("Error in the insertion of type :" + errorType + "!\n");
+    public void showNegativePutTileResults (  ArrayList<PlayableItemTile> tilesInPlayerHand){
+            out.println("Error in the insertion!\n");
             out.println("Please retry the insertion\n");
-            askTileToPut( tilesInPlayerHand);
-        }else{
-            out.println("The insertion was successful!!");
-        }
+            askTileToPut(tilesInPlayerHand);
+    }
+
+    public void showNegativePut2Or3TileResults (  ArrayList<PlayableItemTile> tilesInPlayerHand){
+        out.println("Error in the insertion!\n");
+        out.println("Please retry the insertion\n");
+        askTileToPut2or3tile(tilesInPlayerHand);
     }
 
     @Override

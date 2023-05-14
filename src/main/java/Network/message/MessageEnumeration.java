@@ -11,7 +11,12 @@ public enum MessageEnumeration {
         KEEP_PICKING_REPLY,
         TO_PUT_TILE_REPLY,
         TO_PUT_TILE_REQUEST,
-        REPLY_INSERT_TILE_COLUMN,
+        TO_PUT_TILE_REPLY_ERROR,
+
+        TO_PUT_TILE_2_OR_3_REQUEST,
+
+        TO_PUT_TILE_2_OR_3_REPLY_ERROR,
+        KEEP_PUTTING_REQUEST,
         WINNER_MESSAGE,
         ERROR_MESSAGE,
         KEEP_PICKING_REQUEST,

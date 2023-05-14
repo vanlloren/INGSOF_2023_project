@@ -73,12 +73,21 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
                 ArrayList<PlayableItemTile> availableTiles = newMessage.getAvailableTiles();
                 this.userInterface.askMovingTilePosition(availableTiles);
             }
-            case TO_PUT_TILE_REQUEST -> {
-                ToPutTileRequestMessage newMessage = (ToPutTileRequestMessage) message;
-                boolean errorInTheInsertion = newMessage.isErrorInTheInsertion();
-                String errorType = newMessage.getErrorType();
-                ArrayList<PlayableItemTile> tilesInPlayerHand = newMessage.getTilesInPlayerHand();
-                this.userInterface.showPutTileResults(errorInTheInsertion , errorType, tilesInPlayerHand);
+            case TO_PUT_TILE_REPLY_ERROR-> {
+                ToPutTileReplyMessage newMessage = (ToPutTileReplyMessage) message;
+                ArrayList<PlayableItemTile> tilesInPlayerHand = newMessage.getPlayableItemTile();
+                this.userInterface.showNegativePutTileResults(tilesInPlayerHand);
+            }
+
+            case TO_PUT_TILE_2_OR_3_REPLY_ERROR ->{
+                ToPutTile2Or3ReplyMessage newMessage = (ToPutTile2Or3ReplyMessage) message;
+                ArrayList<PlayableItemTile> tilesInPlayerHand = newMessage.getPlayableItemTile();
+                this.userInterface.showNegativePut2Or3TileResults(tilesInPlayerHand);
+            }
+            case KEEP_PUTTING_REQUEST -> {
+                ToKeepPuttingMessage newMessage = (ToKeepPuttingMessage) message;
+                ArrayList<PlayableItemTile> tilesInPlayerHand = newMessage.getPlayableItemTiles();
+                this.userInterface.askTileToPut2or3tile(tilesInPlayerHand);
             }
             case FULL_LOBBY -> {
                 this.userInterface.fullLobbyTerminateUI();
@@ -267,8 +276,8 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
         server.onMessage(new ToPickTileReplyMessage(nickname, x, y));
     }
 
-    public void onUpdateToPutTile( int xPos, int yPos , PlayableItemTile tile , ArrayList<Integer> columnPosition , int numOfTiles) throws RemoteException {
-        server.onMessage(new ToPutTileReplyMessage( xPos, yPos , tile , columnPosition , numOfTiles));
+    public void onUpdateToPutTile( int xPos, int yPos , PlayableItemTile tile , ArrayList<Integer> columnPosition , int numOfTiles , ArrayList<PlayableItemTile> playableItemTiles) throws RemoteException {
+        server.onMessage(new ToPutTileRequestMessage( xPos, yPos , tile , columnPosition , numOfTiles , playableItemTiles));
     }
 
     @Override
