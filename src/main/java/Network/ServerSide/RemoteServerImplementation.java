@@ -8,6 +8,8 @@ import Network.message.*;
 import Util.RandPersonalGoal;
 import client.view.TurnView;
 import server.Controller.GameController;
+import server.Controller.RuleShelf;
+import server.Model.LivingRoom;
 import server.Model.PlayableItemTile;
 import server.Model.Player;
 
@@ -40,7 +42,6 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
     public void resetStop(){
         stop = false;
     }
-
 
     @Override
     public void onMessage(Message message) throws RemoteException {
@@ -91,11 +92,21 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
                         clientNickCombinations.get(message.getNickname()).onMessage(newMessage);                    }
                 }
             }
+            case LOGIN_REPLY -> {
+            }
+            case PLAYERNUMBER_REQUEST -> {
+            }
+            case REQUEST_PICK_TILE -> {
+            }
+            case REPLY_PICK_TILE -> {
+            }
             case KEEP_PICKING_REPLY -> {
                 KeepPickingReplyMessage newMessage = (KeepPickingReplyMessage)message;
                 if(!newMessage.getKeepPicking()) {
                     gameController.setStopPicking();
                     gameController.setMoveOn();
+                    ToPutFirstTileReplyMessage newInsertMessage = new ToPutFirstTileReplyMessage(newMessage.getCurrentPlayableItemTile());
+                    client.onMessage(newInsertMessage);
                 }
                 gameController.setMoveOn();
             }
@@ -106,13 +117,71 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
                 gameController.setPosCurrTile(x,y);
                 gameController.setMoveOn();
             }
-            case TO_PUT_TILE_REPLY ->{
-                ToPutTileReplyMessage newMessage = (ToPutTileReplyMessage) message;
+            case TO_PUT_TILE_REQUEST ->{
+                ToPutTileRequestMessage newMessage = (ToPutTileRequestMessage) message;
                 int x = newMessage.getX();
                 int y = newMessage.getY();
+                PlayableItemTile tile = newMessage.getTile();
+                ArrayList<Integer> columnPosition = newMessage.getColumnPosition();
+                int numOfTiles= newMessage.getNumOfTiles();
 
+                /*---------------------------------------------*/
+                if(RuleShelf.iscolumnAvailable(y,numOfTiles,gameController.getGame().getCurrPlayer().getPersonalShelf().getStructure())){
+                    if(RuleShelf.commandPutTileCheckValidity(x , y , tile , gameController.getGame().getCurrPlayer().getPersonalShelf().getStructure(), numOfTiles )){
+                        gameController.getGame().getCurrPlayer().getPersonalShelf().putTile(x , y , tile);
+                        Player currPlayer = gameController.getGame().getCurrPlayer();
+                        LivingRoom livingRoom = gameController.getGame().getMyShelfie().getLivingRoom();
+                        gameController.calculatePoint(currPlayer,currPlayer.getPersonalShelf().getStructure(), livingRoom );
+                        boolean shelfIsFull = gameController.getGame().getCurrPlayer().getPersonalShelf().isFull();
+                        gameController.getGame().getCurrPlayer().getPersonalShelf().setColumnChoosen(y);
+                        ArrayList<PlayableItemTile> currentPlayableItemTile = newMessage.getPlayableItemTiles();
+                        currentPlayableItemTile.remove(tile);
+                        if(currentPlayableItemTile.size() > 0) {
+                            ToKeepPuttingMessage newKeepPuttingMessage = new ToKeepPuttingMessage(currentPlayableItemTile);
+                            client.onMessage(newKeepPuttingMessage);
+                        }else{
+                            if(shelfIsFull && !gameController.getGame().getEndGame()){
+                                gameController.getGame().setEndGame();
+                            }
+                            gameController.nextTurn();
+                        }
+                } else if(!RuleShelf.iscolumnAvailable(y,numOfTiles,gameController.getGame().getCurrPlayer().getPersonalShelf().getStructure()) || (RuleShelf.iscolumnAvailable(y,numOfTiles,gameController.getGame().getCurrPlayer().getPersonalShelf().getStructure()))
+                    && !RuleShelf.commandPutTileCheckValidity(x , y , tile , gameController.getGame().getCurrPlayer().getPersonalShelf().getStructure(), numOfTiles )){
+                        ToPutTileReplyMessage newErrorMessage = new ToPutTileReplyMessage(newMessage.getPlayableItemTiles());
+                        client.onMessage(newErrorMessage);
+                    }
 
+                }
 
+            }
+            case TO_PUT_TILE_REPLY_ERROR -> {
+            }
+            case TO_PUT_TILE_2_OR_3_REQUEST -> {
+                ToPut2Or3TileRequestMessage newMessage = (ToPut2Or3TileRequestMessage) message;
+                int xPos = newMessage.getxPos();
+                int yPos = gameController.getGame().getCurrPlayer().getPersonalShelf().getColumnChoosen();
+                PlayableItemTile tile = newMessage.getTile();
+                ArrayList<PlayableItemTile> currentPlayableItemTile = newMessage.getCurrentPlayableItemTile();
+                if(RuleShelf.commandPutTileCheckValidity(xPos , yPos , tile , gameController.getGame().getCurrPlayer().getPersonalShelf().getStructure(),currentPlayableItemTile.size() )){
+                    gameController.getGame().getCurrPlayer().getPersonalShelf().putTile(xPos , yPos , tile);
+                    Player currPlayer = gameController.getGame().getCurrPlayer();
+                    LivingRoom livingRoom = gameController.getGame().getMyShelfie().getLivingRoom();
+                    gameController.calculatePoint(currPlayer,currPlayer.getPersonalShelf().getStructure(), livingRoom );
+                    boolean shelfIsFull = gameController.getGame().getCurrPlayer().getPersonalShelf().isFull();
+                    currentPlayableItemTile.remove(tile);
+                    if(currentPlayableItemTile.size()>0){
+                        ToKeepPuttingMessage newKeepPuttingMessage = new ToKeepPuttingMessage(currentPlayableItemTile);
+                        client.onMessage(newKeepPuttingMessage);
+                    }else{
+                        if(shelfIsFull && !gameController.getGame().getEndGame()){
+                            gameController.getGame().setEndGame();
+                        }
+                        gameController.nextTurn();
+                    }
+                } else {
+                    ToPutTile2Or3ReplyMessage newErrorMessage = new ToPutTile2Or3ReplyMessage(newMessage.getCurrentPlayableItemTile());
+                    client.onMessage(newErrorMessage);
+                }
             }
             case PLAYERNUMBER_REPLY -> {
                 PlayersNumberReplyMessage newMessage = (PlayersNumberReplyMessage) message;
@@ -122,6 +191,20 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
             }
             case START_PICKING_TILE_REQUEST -> {
                 clientNickCombinations.get(message.getNickname()).onMessage(new StartPuttingTileRequestMessage(gameController.pickTilesArray(message.getNickname())));
+            }
+            case TO_PUT_TILE_2_OR_3_REPLY_ERROR -> {
+            }
+            case KEEP_PUTTING_REQUEST -> {
+            }
+            case WINNER_MESSAGE -> {
+            }
+            case ERROR_MESSAGE -> {
+            }
+            case KEEP_PICKING_REQUEST -> {
+            }
+            case FULL_LOBBY -> {
+            }
+            case TO_PICK_TILE_REQUEST -> {
             }
         }
     }
@@ -147,8 +230,8 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
         clientNickCombinations.get(nickname).onMessage(new KeepPickingRequestMessage());
     }
 
-    public void onUpdateToPutTile() throws RemoteException{
-        client.onMessage((new ToPutTileRequestMessage()));
+    public void onUpdateToPutTile(boolean errorInTheInsertion, String errorType , ArrayList<PlayableItemTile> tilesInPlayerHand) throws RemoteException{
+        client.onMessage((new ToPutTileReplyMessage(tilesInPlayerHand)));
     }
 
     public void onTurnViewModified(TurnView turnView, Event event){

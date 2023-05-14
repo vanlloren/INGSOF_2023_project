@@ -61,7 +61,6 @@ public class GameController {
     }
 
 
-
     public void setStopPicking(){stopPicking = true;}
 
     public void setMoveOn(){moveOn = true;}
@@ -146,8 +145,8 @@ public class GameController {
         public void InsertTileShelf(Player player,PlayableItemTile tile,int x, int y,int num){
         Shelf shelf = new Shelf();
         shelf = player.getPersonalShelf();
-        shelf.putTile(x,y,tile); //alf sistema
-
+        shelf.putTile(x,y,tile);
+        shelf.freeCellsInShelf();
         calculatePoint(player,player.getPersonalShelf().getStructure(),game.getMyShelfie().getLivingRoom());
         }
 
@@ -204,16 +203,6 @@ public class GameController {
         return MatchWinner;
         }
 
-
-        // metodo che determina l'inizio dell'ultimo turno di gioco
-        public void launchEndGame (Player player) {
-            if (game.getChairOwner().equals(game.getCurrPlayer())) {
-                //METODO CHE BLOCCA TUTTO E ANNUNCIA WINNER
-            }
-            else{
-                game.setEndGame();
-            }
-        }
 
     public static HashMap<Colour, ArrayList<Integer>> findAdjGroups(PlayableItemTile[][] shelf) {
         HashMap<Colour, ArrayList<Integer>> adjGroups = new HashMap<>();

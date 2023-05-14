@@ -2,6 +2,7 @@ package Observer;
 import server.Model.PlayableItemTile;
 
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 public interface ViewObserver {
@@ -48,8 +49,8 @@ public interface ViewObserver {
 
     void onUpdateToPickTile(int xPos, int yPos) throws RemoteException;
 
-    void onUpdateToPutTile(int xPos, int yPos , PlayableItemTile tile) throws  RemoteException;
-
+    void onUpdateToPutTile(int xPos, int yPos , PlayableItemTile tile , ArrayList<Integer> columnPosition , int numOfTiles , ArrayList<PlayableItemTile> playableItemTiles) throws  RemoteException;
+    void onUpdateToPut2or3Tile(int finalXPos, PlayableItemTile tile , ArrayList<PlayableItemTile> playableItemTiles ) throws RemoteException;
     void onUpdateIsGameOn();
 
     void onUpdateShowLivingRoom();

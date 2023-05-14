@@ -6,10 +6,22 @@ import server.Controller.RuleShelf;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Vector;
-
+import Util.Colour;
 
 public class Shelf extends ShelfObservable implements Serializable {
+    private int columnChoosen;
+
+    public int getPointsAdj() {
+        return this.pointsAdj;
+    }
+
+    public void setPointsAdj(int pointsAdj) {
+        this.pointsAdj = pointsAdj;
+    }
+
+    private int pointsAdj;
 
     @Serial
     private static final long serialVersionUID = -5591053634616843792L;
@@ -29,7 +41,7 @@ public class Shelf extends ShelfObservable implements Serializable {
     public PlayableItemTile[][] setUpPersonalShelf(){
         for (int i= 0;i<6;i++){
             for ( int j=0;j<5;j++){
-                this.structure[i][j] = new PlayableItemTile("VOID", 0);
+                this.structure[i][j] = new PlayableItemTile("VOID", -1);
             }
         }
         return this.structure;
@@ -37,9 +49,44 @@ public class Shelf extends ShelfObservable implements Serializable {
 
     public void putTile(int x, int y, PlayableItemTile Tile){
         this.structure[x][y] = Tile;
-
         notifyObservers(obs-> {
             obs.onUpdatePuttedTileIntoShelf(x,y,Tile);
         });
+    }
+    public int freeCellsInShelf(){
+        //Useful method to check also the maximum number of tiles that could be picked in the livingRoom
+        List<Integer> list = new Vector<Integer>();
+        int count=0;
+        for(int j= 0; j<5; j++){
+            for(int i= 0; j<6; j++){
+                if(this.structure[i][j].getIdCode() !=0){
+                    count++;
+                }
+            }
+            list.add(count);
+        }
+        int max = list.get(0);
+        for (int i = 1; i < list.size(); i++) {
+            int valore = list.get(i);
+            if (valore > max) {
+                max = valore;
+            }
+        }
+        return max;
+    }
+    public boolean isFull() {
+        for (int j = 0; j < 5; j++) {
+            if (this.structure[0][j].getColour() == Colour.VOID) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public  int getColumnChoosen(){
+        return this.columnChoosen;
+    }
+    public void setColumnChoosen(int columnChoosen){
+        this.columnChoosen = columnChoosen;
     }
 }

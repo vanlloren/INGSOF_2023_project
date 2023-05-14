@@ -24,6 +24,8 @@ public class Player extends PlayerObservable implements Serializable {
     private boolean hasCommonGoal1;
     private boolean hasCommonGoal2;
 
+    private boolean endgame = false;
+
     // costruttore player in cui passo i parametri principali passati dal controller che chiamerà dopo la ricezione di tutti i nickname da lato client
     public Player (String nickname, TurnView turnView){
         this.nickname = nickname;
@@ -48,8 +50,6 @@ public class Player extends PlayerObservable implements Serializable {
         notifyObservers(PlayerObserver::OnUpdateModelStatusCommonGoal2);
     }
 
-
-
     public Shelf getPersonalShelf(){
         return this.personalShelf;
     }
@@ -73,14 +73,20 @@ public class Player extends PlayerObservable implements Serializable {
         this.points = points;
         notifyObservers(obs -> obs.OnUpdateModelPlayerPoint(points));
     }
-
+    public boolean getEndgame(){
+        return this.endgame;
+    }
+    public void setEndgame(boolean endgame){
+        this.endgame = personalShelf.isFull();
+        notifyObservers(obs ->obs.OnUpdateModelPlayerEndGame(endgame));
+    }
     public boolean getHasCommonGoal1(){
         return this.hasCommonGoal1;
     }
     public boolean getHasCommonGoal2(){
         return this.hasCommonGoal2;
     }
-
+/*
     public void insertTile(int x, int y, PlayableItemTile tile) {
         int i = 0;
         Vector<Integer> position= new Vector<>();
@@ -88,7 +94,7 @@ public class Player extends PlayerObservable implements Serializable {
         maxTiles = ruleShelf.freeCellsInShelf(personalShelf.getStructure());
         //chiedi alfi come funziona questo metodo
         //metodo che gestisce inserimento in libreria
-    }
+    }*/
 }
 
 
