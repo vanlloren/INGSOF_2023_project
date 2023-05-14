@@ -75,11 +75,6 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
                 ArrayList<PlayableItemTile> availableTiles = newMessage.getAvailableTiles();
                 this.userInterface.askMovingTilePosition(availableTiles);
             }
-            case TO_PUT_FIRST_TILE ->{
-                ToPutFirstTileReplyMessage newMessage = (ToPutFirstTileReplyMessage) message;
-                ArrayList<PlayableItemTile> tilesInPlayerHand = newMessage.getCurrentPlayableItemTile();
-                this.userInterface.askTileToPut(tilesInPlayerHand);
-            }
             case TO_PUT_TILE_REPLY_ERROR-> {
                 ToPutTileReplyMessage newMessage = (ToPutTileReplyMessage) message;
                 ArrayList<PlayableItemTile> tilesInPlayerHand = newMessage.getPlayableItemTile();
@@ -102,7 +97,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
             case START_PICKING_TILE_REPLY -> {
                 this.userInterface.setMoveOn();
             }
-            case START_PUTTING_TILE_REQUEST -> {
+            case START_PUTTING_TILE_REQUEST -> { //alf questo è esattamente uguale al tuo toPutFirstTile, quindi l'ho tolto
                 StartPuttingTileRequestMessage newMessage = (StartPuttingTileRequestMessage) message;
                 this.userInterface.askTileToPut(newMessage.getTilesArray());
             }
