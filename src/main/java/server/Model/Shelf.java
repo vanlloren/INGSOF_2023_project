@@ -11,6 +11,16 @@ import Util.Colour;
 public class Shelf extends ShelfObservable {
     private int columnChoosen;
 
+    public int getPointsAdj() {
+        return this.pointsAdj;
+    }
+
+    public void setPointsAdj(int pointsAdj) {
+        this.pointsAdj = pointsAdj;
+    }
+
+    private int pointsAdj;
+
     private RuleShelf ruleShelf = new RuleShelf();
     private PlayableItemTile[][] structure = new PlayableItemTile[5][4];
 
