@@ -87,32 +87,34 @@ public class GameController {
     }
 
 
-    public ArrayList<PlayableItemTile> pickTilesArray () {  //restituisce le 1/2/3 tiles prese dalla livingRoom dal player nel suo turno
+    public ArrayList<PlayableItemTile> pickTilesArray (String nickname) {  //restituisce le 1/2/3 tiles prese dalla livingRoom dal player nel suo turno
             boolean finish=false;
             ArrayList<PlayableItemTile> tileArray = new ArrayList<PlayableItemTile>();
+
+        try {
+            remoteServer.onPickTilesBegin(nickname);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+        moveOn = false;
+        while(!moveOn){}
 
             while(!finish) {
                 if (gameBoardController.checkPickedTilesNum()) {
 
-                    try {
-                        remoteServer.onUpdateToPickTile(gameBoardController.getControlledLivingRoom().getAvailableTiles());
-                    } catch (RemoteException e) {
-                        throw new RuntimeException(e);
-                    }
-                    moveOn = false;
-                    while(!moveOn){
-                    }
+
 
                     tileArray=gameBoardController.PickManager(xPosCurrTile, yPosCurrTile);
                     //chiedo al player se vuole smettere di pescare
+                    moveOn=false;
                     try {
-                        remoteServer.onUpdateAskKeepPicking();
+                        remoteServer.onUpdateAskKeepPicking(nickname);
                     } catch (RemoteException e) {
                         throw new RuntimeException(e);
                     }
 
 
-                    moveOn = false;
+
                     while(!moveOn){
                     }
 
@@ -129,6 +131,11 @@ public class GameController {
                     //messaggio che informi che sono già state prese tre tessere
                     finish = true;
                     tileArray=gameBoardController.giveTileToPlayer();
+                    try {
+                        remoteServer.onMaxTilesPicked(nickname);
+                    } catch (RemoteException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
             }
 

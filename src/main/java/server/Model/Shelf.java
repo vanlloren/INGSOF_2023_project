@@ -4,11 +4,15 @@ package server.Model;
 import Observer.ShelfObservable;
 import server.Controller.RuleShelf;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.Vector;
 
 
-public class Shelf extends ShelfObservable {
+public class Shelf extends ShelfObservable implements Serializable {
 
+    @Serial
+    private static final long serialVersionUID = -5591053634616843792L;
     private RuleShelf ruleShelf = new RuleShelf();
     private PlayableItemTile[][] structure = new PlayableItemTile[5][4];
 

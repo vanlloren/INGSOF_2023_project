@@ -9,11 +9,16 @@ import Observer.*;
 import Util.CommonGoalType;
 import Util.PersonalGoalType;
 import server.Model.*;
+
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 
-public class TurnView implements LivingRoomObserver, ShelfObserver, PlayerObserver, GameModelObserver,CommonGoalObserver,PersonalGoalObserver {
-   private GameModel gameModel;
+public class TurnView implements LivingRoomObserver, ShelfObserver, PlayerObserver, GameModelObserver,CommonGoalObserver,PersonalGoalObserver, Serializable {
+    @Serial
+    private static final long serialVersionUID = -4523368433517565685L;
+    private GameModel gameModel;
    private RemoteServerImplementation server;
 
    public void setGameModel(GameModel gameModel){

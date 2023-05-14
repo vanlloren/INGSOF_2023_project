@@ -2,9 +2,12 @@ package server.Model;
 
 import Util.Colour;
 
+import java.io.Serial;
 import java.util.*;
 
 public class PlayableItemTile extends ItemTile {
+    @Serial
+    private static final long serialVersionUID = -8977350255435956841L;
     private Colour colour;
     private int idCode;
     private boolean availability;

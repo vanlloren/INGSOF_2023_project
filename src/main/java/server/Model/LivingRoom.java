@@ -4,10 +4,13 @@ import Observer.LivingRoomObservable;
 
 import Util.*;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Observable;
 import java.util.function.Consumer;
 
-public class LivingRoom extends LivingRoomObservable {
+public class LivingRoom extends LivingRoomObservable implements Serializable {
+    private static final long serialVersionUID = 44051L;
     private ItemTile[][] gameTable;
     private CommonGoal commonGoal1 = new CommonGoal();
     private CommonGoal commonGoal2 = new CommonGoal();

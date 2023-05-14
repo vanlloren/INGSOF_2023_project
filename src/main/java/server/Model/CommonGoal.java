@@ -3,11 +3,15 @@ package server.Model;
 import Observer.CommonGoalObservable;
 import Util.CommonGoalType;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 
 
-public class CommonGoal extends CommonGoalObservable {
+public class CommonGoal extends CommonGoalObservable implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 6744912126943243456L;
     CommonGoalType commonGoalType;
     private ArrayList<Integer> token_list = new ArrayList<>();
 

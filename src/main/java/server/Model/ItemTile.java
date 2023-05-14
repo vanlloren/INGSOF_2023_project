@@ -3,10 +3,15 @@ package server.Model;
 
 import Util.Colour;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class ItemTile {
+public abstract class ItemTile implements Serializable {
+
+        @Serial
+        private static final long serialVersionUID = 3141006218010219600L;
         private Colour colour;
         private int idCode;
         private boolean availability;

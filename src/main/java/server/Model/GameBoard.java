@@ -3,10 +3,14 @@ package server.Model;
 import Util.Colour;
 import client.view.TurnView;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class GameBoard {
-    private ItemBag bag = new ItemBag();
+public class GameBoard implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 2987798677668898344L;
+    private transient ItemBag bag = new ItemBag();
     private LivingRoom livingRoom = new LivingRoom();
     private PlayableItemTile nextInGameTile;//é la tessera "da mettere in gioco" ovvero quella che dalla bag sta venendo piazzata sulla plancia
 

@@ -7,9 +7,13 @@ import Observer.PlayerObserver;
 import client.view.TurnView;
 import server.Controller.RuleShelf;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.Vector;
 
-public class Player extends PlayerObservable {
+public class Player extends PlayerObservable implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1303503671022200446L;
     private String nickname;
 
     private int maxTiles = 6;

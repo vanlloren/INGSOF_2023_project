@@ -2,9 +2,12 @@ package server.Model;
 
 import Util.Colour;
 
+import java.io.Serial;
 import java.util.ArrayList;
 
 public class NullItemTile extends ItemTile {
+    @Serial
+    private static final long serialVersionUID = -8726544593745400731L;
     private Colour colour;
     private int idCode;
     private boolean availability;

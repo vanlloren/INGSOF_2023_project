@@ -4,7 +4,12 @@ package server.Model;
 import Observer.PersonalGoalObservable;
 import Util.PersonalGoalType;
 
-public class PersonalGoal extends PersonalGoalObservable {
+import java.io.Serial;
+import java.io.Serializable;
+
+public class PersonalGoal extends PersonalGoalObservable implements Serializable {
+    @Serial
+    private static final long serialVersionUID = -1257488172741056944L;
     public Integer point;
     public PersonalGoalType personalGoalType;
 
