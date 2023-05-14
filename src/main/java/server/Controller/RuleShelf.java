@@ -22,15 +22,6 @@ public class RuleShelf {
         }
         return flag;
     }
-    public static boolean CheckSameColumnForPlacing2or3Tiles(int y , int columnChoosen) {
-        // verifichiamo se il vettore ha almeno un elemento
-        if (y>0) {
-            if (y != columnChoosen) {
-                    return false;
-                }
-            }
-            return true;
-    }
 
 
     public static boolean iscolumnAvailable(int Y, int NumberOfTilesPicked, PlayableItemTile[][] structure) {

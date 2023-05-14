@@ -42,7 +42,6 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
         stop = false;
     }
 
-
     @Override
     public void onMessage(Message message) throws RemoteException {
 
@@ -93,6 +92,14 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
                         client.onMessage(newMessage);
                     }
                 }
+            }
+            case LOGIN_REPLY -> {
+            }
+            case PLAYERNUMBER_REQUEST -> {
+            }
+            case REQUEST_PICK_TILE -> {
+            }
+            case REPLY_PICK_TILE -> {
             }
             case KEEP_PICKING_REPLY -> {
                 KeepPickingReplyMessage newMessage = (KeepPickingReplyMessage)message;
@@ -146,13 +153,15 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
                 }
 
             }
+            case TO_PUT_TILE_REPLY_ERROR -> {
+            }
             case TO_PUT_TILE_2_OR_3_REQUEST -> {
                 ToPut2Or3TileRequestMessage newMessage = (ToPut2Or3TileRequestMessage) message;
                 int xPos = newMessage.getxPos();
-                int yPos = gameController.getGame().getCurrPlayer().getPersonalShelf().getColumnChoosen()
+                int yPos = gameController.getGame().getCurrPlayer().getPersonalShelf().getColumnChoosen();
                 PlayableItemTile tile = newMessage.getTile();
                 ArrayList<PlayableItemTile> currentPlayableItemTile = newMessage.getCurrentPlayableItemTile();
-                if(RuleShelf.commandPutTileCheckValidity(xPos , yPos , tile , gameController.getGame().getCurrPlayer().getPersonalShelf().getStructure(),currentPlayableItemTile.size() ))){
+                if(RuleShelf.commandPutTileCheckValidity(xPos , yPos , tile , gameController.getGame().getCurrPlayer().getPersonalShelf().getStructure(),currentPlayableItemTile.size() )){
                     gameController.getGame().getCurrPlayer().getPersonalShelf().putTile(xPos , yPos , tile);
                     Player currPlayer = gameController.getGame().getCurrPlayer();
                     LivingRoom livingRoom = gameController.getGame().getMyShelfie().getLivingRoom();
@@ -169,7 +178,8 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
                         gameController.nextTurn();
                     }
                 } else {
-                    ToPutTileReplyMessage
+                    ToPutTile2Or3ReplyMessage newErrorMessage = new ToPutTile2Or3ReplyMessage(newMessage.getCurrentPlayableItemTile());
+                    client.onMessage(newErrorMessage);
                 }
             }
             case PLAYERNUMBER_REPLY -> {
@@ -177,6 +187,20 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
                 int playersNum = newMessage.getNumPlayers();
                 gameController.getGame().setPlayersNumber(playersNum);
                 resetStop();
+            }
+            case TO_PUT_TILE_2_OR_3_REPLY_ERROR -> {
+            }
+            case KEEP_PUTTING_REQUEST -> {
+            }
+            case WINNER_MESSAGE -> {
+            }
+            case ERROR_MESSAGE -> {
+            }
+            case KEEP_PICKING_REQUEST -> {
+            }
+            case FULL_LOBBY -> {
+            }
+            case TO_PICK_TILE_REQUEST -> {
             }
         }
     }

@@ -391,7 +391,7 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
             askTileToPut(tilesInPlayerHand);
     }
 
-    public void showNegativePut2Or3TileResults (  ArrayList<PlayableItemTile> tilesInPlayerHand){
+    public void showNegativePut2Or3TileResults ( ArrayList<PlayableItemTile> tilesInPlayerHand){
         out.println("Error in the insertion!\n");
         out.println("Please retry the insertion\n");
         askTileToPut2or3tile(tilesInPlayerHand);

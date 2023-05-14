@@ -280,6 +280,11 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
         server.onMessage(new ToPutTileRequestMessage( xPos, yPos , tile , columnPosition , numOfTiles , playableItemTiles));
     }
 
+    public void onUpdateToPut2or3Tile(int finalXPos,PlayableItemTile tile , ArrayList<PlayableItemTile> playableItemTiles) throws RemoteException {
+        server.onMessage(new ToPut2Or3TileRequestMessage(finalXPos , tile , playableItemTiles));
+    }
+
+
     @Override
     public void onUpdateNickname(String nickname) throws RemoteException {
         server.onMessage(new LoginRequestMessage(this, nickname));

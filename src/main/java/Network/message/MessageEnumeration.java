@@ -9,7 +9,6 @@ public enum MessageEnumeration {
         REQUEST_PICK_TILE,
         REPLY_PICK_TILE,
         KEEP_PICKING_REPLY,
-        TO_PUT_TILE_REPLY,
         TO_PUT_TILE_REQUEST,
         TO_PUT_TILE_REPLY_ERROR,
 

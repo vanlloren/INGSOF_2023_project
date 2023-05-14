@@ -79,4 +79,6 @@ public interface View {
     void askPlayerNextMove();
 
     void askTileToPut2or3tile(ArrayList<PlayableItemTile> tilesInPlayerHand);
+
+    void showNegativePut2Or3TileResults(ArrayList<PlayableItemTile> tilesInPlayerHand);
 }
