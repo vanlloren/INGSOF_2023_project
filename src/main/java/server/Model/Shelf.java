@@ -12,16 +12,8 @@ import Util.Colour;
 
 public class Shelf extends ShelfObservable implements Serializable {
     private int columnChoosen;
+    private int pointsAdj = 0;
 
-    public int getPointsAdj() {
-        return this.pointsAdj;
-    }
-
-    public void setPointsAdj(int pointsAdj) {
-        this.pointsAdj = pointsAdj;
-    }
-
-    private int pointsAdj;
 
     @Serial
     private static final long serialVersionUID = -5591053634616843792L;
@@ -37,6 +29,15 @@ public class Shelf extends ShelfObservable implements Serializable {
     }
 
     public PlayableItemTile[][] getShelfie() {return this.structure;}
+
+    public int getPointsAdj() {
+        return this.pointsAdj;
+    }
+
+    public void setPointsAdj(int pointsAdj) {
+        this.pointsAdj = pointsAdj;
+    }
+
 
     public PlayableItemTile[][] setUpPersonalShelf(){
         for (int i= 0;i<6;i++){

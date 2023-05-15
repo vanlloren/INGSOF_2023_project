@@ -206,7 +206,7 @@ public class GameController {
 
         else {
             if(game.getPlayersInGame().indexOf(game.getCurrPlayer())==game.getPlayersInGame().indexOf(game.getChairOwner())-1){
-                game.setMatchWinner(CalculateWinner(game.getPlayersInGame()));
+                CalculateWinner(game.getPlayersInGame());
             }
             else {
                 if(game.getPlayersInGame().indexOf(game.getCurrPlayer())==game.getPlayersInGame().size()){
@@ -219,30 +219,46 @@ public class GameController {
 
     }
 
-        public Player CalculateWinner(ArrayList<Player> playerArrayList){
-        Player MatchWinner = null;
+        public void CalculateWinner(ArrayList<Player> playerArrayList){
         ArrayList<Integer> pointsList = new ArrayList<>();
-        ArrayList<Player> Winner = new ArrayList<Player>();
+        ArrayList<Player> Winners = new ArrayList<Player>();
             for (Player p: playerArrayList) {
                 pointsList.add(p.getPoints());
             }
             Integer MaxPoint = Collections.max(pointsList);
             for (Player p: playerArrayList) {
                 if(p.getPoints().equals(MaxPoint))
-                Winner.add(p);
+                Winners.add(p);
             }
-            if(Winner.size()==1){// caso di non parità
-            //fai notify
+            if(Winners.size()==1){
+            game.setMatchWinner(Winners.get(0));
             }
             else //caso di parità multiple
-             {
-                 //fai calcolo rispetto a regola di distanza imposta
-                 }
+            {
+                Player Winner;
+                Player chairOwner = game.getChairOwner();
+                int i = 0;
+                ArrayList<Integer> positions = new ArrayList<>();
+                for (Player p: playerArrayList) {
+                    if(p.getPoints().equals(MaxPoint))
+                    positions.add(playerArrayList.indexOf(p));
+                    i = positions.indexOf(playerArrayList.indexOf(chairOwner));
+                    if(i>0){
+                         Winner = playerArrayList.get(positions.get(i-1)) ;
+                    }
+                    else
+                    {
+                        Winner = playerArrayList.get(positions.get(positions.size())) ;
+                    }
+                    game.setMatchWinner(Winner);
 
+                }
+
+            }
 
         //DEVI SCRIVERE FUNZIONE CHE TROVA PLAYER CON MAX PUNTEGGIO
         // SE CI SONO PAREGGI SEGUO REGOLA DI DISTANZA MAGGIORE DA PLAYER CON LA CHAIR
-        return MatchWinner;
+
         }
 
 
@@ -308,6 +324,30 @@ public class GameController {
         return dimensione;
     }
 
+        public Integer AddAdjacencyPoint(HashMap<Colour, ArrayList<Integer>> adjacencyGroups){
+            Set<Colour> keys = adjacencyGroups.keySet();
+            Integer point = 0;
+            for (Colour colour : keys) {
+              ArrayList<Integer> counter = adjacencyGroups.get(colour);
+              for(int i=0;i<counter.size();i++){
+                  if(counter.get(i)==3){
+                     point = point+2;
+                  }
+                  else if (counter.get(i)==4){
+                     point = point+3;
+                  }
+                  else if (counter.get(i)==5){
+                     point = point+5;
+                  }
+                  else if (counter.get(i)>6){
+                     point = point+8;
+                  }
+              }
+            }
+
+            return point;
+        }
+
         public void calculatePoint (Player player, ItemTile[][]structure, LivingRoom livingRoom) {
             if (!player.getHasCommonGoal1() && CheckCommonGoal.checkGoal(player.getPersonalShelf(), livingRoom.getCommonGoal1().getCommonGoalType())) {
                 Integer i;
@@ -336,13 +376,22 @@ public class GameController {
                 player.setPoints(i);
 
             }
+            if(player.getPersonalShelf().getPointsAdj()<AddAdjacencyPoint(findAdjGroups(player.getPersonalShelf().getStructure()))){
+                int i = AddAdjacencyPoint(findAdjGroups(player.getPersonalShelf().getStructure()));
+                int x = player.getPoints();
+                int y = player.getPersonalShelf().getPointsAdj();
+                player.getPersonalShelf().setPointsAdj(i);
+                x = x+i-y;
+                player.setPoints(x);
+
+            }
         }
 
 
         public Integer addPoint (CommonGoal commonGoal){
             ArrayList<Integer> token_list = commonGoal.getToken_list();
             Integer i = 0;
-            if (0 <= token_list.size()) {
+            if (0 < token_list.size()) {
                 i = token_list.get(token_list.size()-1);
                 token_list.remove(token_list.size() - 1);
             }
