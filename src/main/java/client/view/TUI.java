@@ -262,12 +262,12 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
     public void askPlayersNumber() {
         int playersNum;
 
-        out.println("Nickname accepted!\n");
-        out.println("You are the first player of the game! Please, insert the number of total player for the match [min=2, max=4]:\n");
+        out.println("Nickname accepted!");
+        out.println("You are the first player of the game! Please, insert the number of total player for the match [min=2, max=4]:");
         playersNum = scanner.nextInt();
         while(playersNum<2 || playersNum>4){
-            out.println("The number of player is not valid!\n");
-            out.println("Insert the number of total players [min=2, max=4]:\n");
+            out.println("The number of player is not valid!");
+            out.println("Insert the number of total players [min=2, max=4]:");
             playersNum = scanner.nextInt();
         }
             int finalPlayersNum = playersNum;
@@ -307,7 +307,7 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
         out.println("Would you like to keep picking tiles?[Y/N]\n");
         String picking = scanner.nextLine();
         while(picking != "Y" || picking !="N"){
-            out.println("Symbol not recoignized, please try  again...\n");
+            out.println("Symbol not recognized, please try  again...\n");
             askStopPicking();
         }
         String finalPicking = picking;
@@ -375,17 +375,19 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
     }
     public void askTileToPut2or3tile(ArrayList<PlayableItemTile> tilesInPlayerHand) {
         int numOfTiles = tilesInPlayerHand.size();
-        int xPos; int index;
-        {   out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 1 , 2 ])");
+        int xPos;
+        int index;
+        {
+            out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 1 , 2 ])");
             index = scanner.nextInt();
-            while(index<1 || index>numOfTiles){
+            while (index < 1 || index > numOfTiles) {
                 out.println("The index of the tile is not valid!\n");
                 out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 1 , 2  ])");
                 index = scanner.nextInt();
             }
             out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 0 , 1 , 2 , 3 , 4 , 5 ])");
             xPos = scanner.nextInt();
-            while(xPos<0 || xPos>5){
+            while (xPos < 0 || xPos > 5) {
                 out.println("The position x for the the insertion of the tile is not valid!\n");
                 out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 0 , 1 , 2 , 3 , 4 , 5 ])");
                 xPos = scanner.nextInt();
@@ -395,20 +397,20 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
             int finalXPos = xPos;
             notifyObserver(obs -> {
                 try {
-                    obs.onUpdateToPut2or3Tile(finalXPos, tilesInPlayerHand.get(finalIndex) ,  tilesInPlayerHand);
+                    obs.onUpdateToPut2or3Tile(finalXPos, tilesInPlayerHand.get(finalIndex), tilesInPlayerHand);
 
                 } catch (RemoteException e) {
                     throw new RuntimeException(e);
                 }
             });
         }
+    }
 
     public void maxTilesPicked(){
         out.println("Numero massimo di tessere raccolte dalla LivingRoom, procedi ora a inserirle nella Shelf");
         setMoveOn();
     }
 
-    }
     @Override
     public void showLoginResults(boolean nickAccepted, String chosenNickname) {
         if(nickAccepted){
@@ -430,6 +432,13 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
         out.println("Error in the insertion!\n");
         out.println("Please retry the insertion\n");
         askTileToPut2or3tile(tilesInPlayerHand);
+    }
+
+    @Override
+    public void invalidTileHandler() {
+        out.println("Tessera scelta non disponibile, scegline un'altra!");
+        goOnPicking = true;
+        setMoveOn();
     }
 
     @Override
