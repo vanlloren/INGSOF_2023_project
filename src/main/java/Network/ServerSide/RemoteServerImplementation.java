@@ -52,6 +52,7 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
                     if (gameController.getGame().getPlayersInGame().size() < 1) {
                         clientNickCombinations = new HashMap<>();
                         LoginRequestMessage newMessage = (LoginRequestMessage) message;
+                        clientList.add(newMessage.getClient());
                         clientNickCombinations.put(message.getNickname(), newMessage.getClient());
                         Player newPlayer = new Player(message.getNickname(), turnView);
                         newPlayer.addObserver(turnView);
@@ -67,6 +68,7 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
                         boolean approvedNick = gameController.getGame().isNicknameAvailable(message.getNickname());
                         if(approvedNick){
                             LoginRequestMessage newMessage = (LoginRequestMessage) message;
+                            clientList.add(newMessage.getClient());
                             clientNickCombinations.put(message.getNickname(), newMessage.getClient());
                             Player newPlayer = new Player(message.getNickname(), turnView);
                             RandPersonalGoal.setType(newPlayer, newPlayer.getPersonalGoal(), gameController.getGame().getPlayersInGame());
@@ -79,6 +81,7 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
                         boolean approvedNick = gameController.getGame().isNicknameAvailable(message.getNickname());
                         if(approvedNick){
                             LoginRequestMessage newMessage = (LoginRequestMessage) message;
+                            clientList.add(newMessage.getClient());
                             clientNickCombinations.put(message.getNickname(), newMessage.getClient());
                             Player newPlayer = new Player(message.getNickname(), turnView);
                             RandPersonalGoal.setType(newPlayer, newPlayer.getPersonalGoal(), gameController.getGame().getPlayersInGame());
@@ -208,12 +211,6 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
 
     @Override
     public void disconnect() throws RemoteException {
-
-    }
-
-    @Override
-    public void handShake(RemoteClientInterface client) {
-        clientList.add(client);
     }
 
     public void onUpdateAskKeepPicking(String nickname) throws RemoteException{

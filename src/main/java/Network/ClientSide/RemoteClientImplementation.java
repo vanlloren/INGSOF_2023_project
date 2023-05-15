@@ -37,7 +37,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
     public void connectionInit() throws Exception {
         Registry registry = LocateRegistry.getRegistry(getServerAddress(), getPortNum());
         server = (RemoteServerInterface) registry.lookup("MyShelfieServer");
-        server.handShake(this);
+
     }
 
     @Override
