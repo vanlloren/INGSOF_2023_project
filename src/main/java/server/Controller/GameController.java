@@ -275,6 +275,30 @@ public class GameController {
         return dimensione;
     }
 
+        public Integer AddAdjacencyPoint(HashMap<Colour, ArrayList<Integer>> adjacencyGroups){
+            Set<Colour> keys = adjacencyGroups.keySet();
+            Integer point = 0;
+            for (Colour colour : keys) {
+              ArrayList<Integer> counter = adjacencyGroups.get(colour);
+              for(int i=0;i<counter.size();i++){
+                  if(counter.get(i)==3){
+                     point = point+2;
+                  }
+                  else if (counter.get(i)==4){
+                     point = point+3;
+                  }
+                  else if (counter.get(i)==5){
+                     point = point+5;
+                  }
+                  else if (counter.get(i)>6){
+                     point = point+8;
+                  }
+              }
+            }
+
+            return point;
+        }
+
         public void calculatePoint (Player player, ItemTile[][]structure, LivingRoom livingRoom) {
             if (!player.getHasCommonGoal1() && CheckCommonGoal.checkGoal(player.getPersonalShelf(), livingRoom.getCommonGoal1().getCommonGoalType())) {
                 Integer i;
@@ -301,6 +325,15 @@ public class GameController {
                 i = i + x - y;
                 player.getPersonalGoal().setPoint(x);
                 player.setPoints(i);
+
+            }
+            if(player.getPersonalShelf().getPointsAdj()<AddAdjacencyPoint(findAdjGroups(player.getPersonalShelf().getStructure()))){
+                int i = AddAdjacencyPoint(findAdjGroups(player.getPersonalShelf().getStructure()));
+                int x = player.getPoints();
+                int y = player.getPersonalShelf().getPointsAdj();
+                player.getPersonalShelf().setPointsAdj(i);
+                x = x+i-y;
+                player.setPoints(x);
 
             }
         }

@@ -10,16 +10,8 @@ import Util.Colour;
 
 public class Shelf extends ShelfObservable {
     private int columnChoosen;
+    private int pointsAdj = 0;
 
-    public int getPointsAdj() {
-        return this.pointsAdj;
-    }
-
-    public void setPointsAdj(int pointsAdj) {
-        this.pointsAdj = pointsAdj;
-    }
-
-    private int pointsAdj;
 
     private RuleShelf ruleShelf = new RuleShelf();
     private PlayableItemTile[][] structure = new PlayableItemTile[5][4];
@@ -33,6 +25,15 @@ public class Shelf extends ShelfObservable {
     }
 
     public PlayableItemTile[][] getShelfie() {return this.structure;}
+
+    public int getPointsAdj() {
+        return this.pointsAdj;
+    }
+
+    public void setPointsAdj(int pointsAdj) {
+        this.pointsAdj = pointsAdj;
+    }
+
 
     public PlayableItemTile[][] setUpPersonalShelf(){
         for (int i= 0;i<6;i++){
