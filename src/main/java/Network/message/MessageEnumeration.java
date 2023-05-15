@@ -4,10 +4,10 @@ package Network.message;
  */
 public enum MessageEnumeration {
         // MAIN MESSAGES
-        LOGIN_REQUEST, LOGIN_REPLY,
+        LOGIN_REQUEST,
+        LOGIN_REPLY,
         PLAYERNUMBER_REQUEST,
         REQUEST_PICK_TILE,
-        REPLY_PICK_TILE,
         KEEP_PICKING_REPLY,
         TO_PUT_TILE_REPLY,
 
@@ -26,6 +26,7 @@ public enum MessageEnumeration {
         WINNER_MESSAGE,
         ERROR_MESSAGE,
         KEEP_PICKING_REQUEST,
+        INVALID_TILE,
 
 
         FULL_LOBBY,
