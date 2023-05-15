@@ -35,6 +35,8 @@ public class GameController {
 
     boolean stopPicking = false;
     boolean moveOn = false;
+    boolean stillGoing = true;
+    boolean invalidTile = false;
 
     private int xPosCurrTile;
     private int yPosCurrTile;
@@ -53,6 +55,21 @@ public class GameController {
 
     public void setRemoteServer(RemoteServerImplementation remoteServer){
         this.remoteServer = remoteServer;
+    }
+
+    public void setInvalidTile(){
+        this.invalidTile=true;
+    }
+    public void resetInvalidTile(){
+        this.invalidTile=false;
+    }
+
+    public void resetStillGoing(){
+        this.stillGoing = false;
+    }
+
+    public void setStillGoing(){
+        this.stillGoing = true;
     }
 
     public void setPosCurrTile(int x, int y){
@@ -89,41 +106,66 @@ public class GameController {
     public ArrayList<PlayableItemTile> pickTilesArray (String nickname) {  //restituisce le 1/2/3 tiles prese dalla livingRoom dal player nel suo turno
             boolean finish=false;
             ArrayList<PlayableItemTile> tileArray = new ArrayList<PlayableItemTile>();
+            moveOn = false;
 
         try {
             remoteServer.onPickTilesBegin(nickname);
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
-        moveOn = false;
-        while(!moveOn){}
+
 
             while(!finish) {
-                if (gameBoardController.checkPickedTilesNum()) {
+                while(!moveOn){}
+                if (gameBoardController.checkPickedTilesNum() && gameBoardController.getControlledGameBoard().getPickedTilesNum()<getGame().getCurrPlayer().getMaxTiles()) {
 
 
 
                     tileArray=gameBoardController.PickManager(xPosCurrTile, yPosCurrTile);
+
                     //chiedo al player se vuole smettere di pescare
                     moveOn=false;
-                    try {
-                        remoteServer.onUpdateAskKeepPicking(nickname);
-                    } catch (RemoteException e) {
-                        throw new RuntimeException(e);
-                    }
+
+                    if(!invalidTile){
+                        if(stillGoing) {
+                            try {
+                                remoteServer.onUpdateAskKeepPicking(nickname);
+                            } catch (RemoteException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
 
 
 
-                    while(!moveOn){
-                    }
 
-                    //stop=decisione player
-                    if(stopPicking){
-                        finish=true;
-                        gameBoardController.getControlledLivingRoom().updateAvailability();
-                        if(!gameBoardController.checkIfAdjacentTiles()){
-                            gameBoardController.livingRoomFiller();
+
+                        //stop=decisione player
+                        if(stopPicking){
+                            finish=true;
                             gameBoardController.getControlledLivingRoom().updateAvailability();
+                            if(!gameBoardController.checkIfAdjacentTiles()){
+                                gameBoardController.livingRoomFiller();
+                                gameBoardController.getControlledLivingRoom().updateAvailability();
+                            }
+                        } else if (!stillGoing) {
+                            setStillGoing();
+                            finish=true;
+                            gameBoardController.getControlledLivingRoom().updateAvailability();
+                            if(!gameBoardController.checkIfAdjacentTiles()){
+                                gameBoardController.livingRoomFiller();
+                                gameBoardController.getControlledLivingRoom().updateAvailability();
+                            }
+                            try {
+                                remoteServer.onMaxTilesPicked(nickname);
+                            } catch (RemoteException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
+                    }else{
+                        try {
+                            remoteServer.onInvalidTile(nickname);
+                        } catch (RemoteException e) {
+                            throw new RuntimeException(e);
                         }
                     }
                 } else {

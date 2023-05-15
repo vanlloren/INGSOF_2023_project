@@ -47,35 +47,37 @@ public class GameBoardController {
 
     public ArrayList<PlayableItemTile> PickManager(int x, int y){
 
-        controlledLivingRoom.updateAvailability(); //errore
+        controlledLivingRoom.updateAvailability();
 
-        if(controlledGameBoard.getPickedTilesNum()< gameController.getGame().getCurrPlayer().getMaxTiles()){
-            if(controlledGameBoard.getPickedTilesNum()==0){
-                if(checkTileAvailability(x,y)){
-                    controlledGameBoard.setToPlayerFirstTile(x,y);
-                }else{
+        if(controlledGameBoard.getPickedTilesNum()==0){
+            if(checkTileAvailability(x,y)){
+                controlledGameBoard.setToPlayerFirstTile(x,y);
+            }else{
+                //messaggio/eccezione che indichi che la tessera scelta non è disponibile e ne va scelta un'altra
+                gameController.setInvalidTile();
+            }
+        }else if(controlledGameBoard.getPickedTilesNum()==1){
+            if(checkAdjacentAvailability()) {
+                if(checkTileAvailability(x,y)) {
+                    controlledGameBoard.setToPlayerAnotherTile(x, y);
+                }else {
                     //messaggio/eccezione che indichi che la tessera scelta non è disponibile e ne va scelta un'altra
-                }
-            }else if(controlledGameBoard.getPickedTilesNum()==1){
-                if(checkAdjacentAvailability()) {
-                    if(checkTileAvailability(x,y)) {
-                        controlledGameBoard.setToPlayerAnotherTile(x, y);
-                    }else{
-                        //messaggio/eccezione che indichi che la tessera scelta non è disponibile e ne va scelta un'altra
-                    }
-                }else{
-                    //messaggio/eccezione che indichi che non posso più scegliere altre tessere
+                    gameController.setInvalidTile();
                 }
             }else{
-                if(checkAdjacentAvailability()) {
-                    if(checkTileAvailability(x,y)) {
-                        controlledGameBoard.setToPlayerAnotherTile(x, y);
-                    }else{
-                        //messaggio/eccezione che indichi che la tessera scelta non è disponibile e ne va scelta un'altra
-                    }
+                //messaggio/eccezione che indichi che non posso più scegliere altre tessere
+                gameController.resetStillGoing();
+            }
+        }else{
+            if(checkAdjacentAvailability()) {
+                if(checkTileAvailability(x,y)) {
+                    controlledGameBoard.setToPlayerAnotherTile(x, y);
                 }else{
-                    //messaggio/eccezione che indichi che non posso più scegliere altre tessere
+                    //messaggio/eccezione che indichi che la tessera scelta non è disponibile e ne va scelta un'altra
+                    gameController.setInvalidTile();
                 }
+            }else{
+                gameController.resetStillGoing();
             }
         }
 
