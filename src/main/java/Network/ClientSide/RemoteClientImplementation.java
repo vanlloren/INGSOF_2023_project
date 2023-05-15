@@ -70,6 +70,9 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
             case KEEP_PICKING_REQUEST -> {
                 this.userInterface.askStopPicking();
             }
+            case INVALID_TILE -> {
+                this.userInterface.invalidTileHandler();
+            }
             case TO_PICK_TILE_REQUEST -> {
                 ToPickTileRequestMessage newMessage = (ToPickTileRequestMessage) message;
                 ArrayList<PlayableItemTile> availableTiles = newMessage.getAvailableTiles();

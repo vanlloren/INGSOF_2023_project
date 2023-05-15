@@ -92,21 +92,11 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
                         clientNickCombinations.get(message.getNickname()).onMessage(newMessage);                    }
                 }
             }
-            case LOGIN_REPLY -> {
-            }
-            case PLAYERNUMBER_REQUEST -> {
-            }
-            case REQUEST_PICK_TILE -> {
-            }
-            case REPLY_PICK_TILE -> {
-            }
             case KEEP_PICKING_REPLY -> {
                 KeepPickingReplyMessage newMessage = (KeepPickingReplyMessage)message;
                 if(!newMessage.getKeepPicking()) {
                     gameController.setStopPicking();
-                    gameController.setMoveOn();
                 }
-                gameController.setMoveOn();
             }
             case TO_PICK_TILE_REPLY -> {
                 ToPickTileReplyMessage newMessage = (ToPickTileReplyMessage) message;
@@ -200,8 +190,6 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
             }
             case KEEP_PICKING_REQUEST -> {
             }
-            case FULL_LOBBY -> {
-            }
             case TO_PICK_TILE_REQUEST -> {
             }
         }
@@ -212,6 +200,10 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
     }
     public void onMaxTilesPicked(String nickname) throws RemoteException{
         clientNickCombinations.get(nickname).onMessage(new MaxTilesPickedMessage());
+    }
+
+    public void onInvalidTile(String nickname) throws RemoteException{
+        clientNickCombinations.get(nickname).onMessage(new InvalidTileMessage());
     }
 
     @Override
