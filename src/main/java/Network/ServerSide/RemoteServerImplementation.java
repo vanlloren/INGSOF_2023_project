@@ -106,6 +106,8 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
                 if(!newMessage.getKeepPicking()) {
                     gameController.setStopPicking();
                     gameController.setMoveOn();
+                    ToPutFirstTileReplyMessage newInsertMessage = new ToPutFirstTileReplyMessage(newMessage.getCurrentPlayableItemTile());
+                    client.onMessage(newInsertMessage);
                 }
                 gameController.setMoveOn();
             }
