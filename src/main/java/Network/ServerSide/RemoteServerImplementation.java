@@ -4,7 +4,6 @@ import Exceptions.MaxTilesPickedException;
 import Network.ClientSide.RemoteClientInterface;
 import Network.Events.Event;
 import Network.message.*;
-
 import Util.RandPersonalGoal;
 import client.view.TurnView;
 import server.Controller.GameController;
