@@ -32,7 +32,7 @@ public class GameBoardController {
     }
 
     public void gameBoardInit(){
-        this.controlledGameBoard = new GameBoard();
+        this.controlledGameBoard = new GameBoard(gameController.getGame());
         this.controlledGameBoard.setItemBag();
         this.controlledGameBoard.setLivingRoom(playerNum);
         this.controlledLivingRoom = controlledGameBoard.getLivingRoom();

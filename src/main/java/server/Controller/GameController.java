@@ -179,8 +179,7 @@ public class GameController {
     }
 
         public void InsertTileShelf(Player player,PlayableItemTile tile,int x, int y,int num){
-        Shelf shelf = new Shelf();
-        shelf = player.getPersonalShelf();
+        Shelf shelf = player.getPersonalShelf();
         shelf.putTile(x,y,tile);
         shelf.freeCellsInShelf();
         calculatePoint(player,player.getPersonalShelf().getStructure(),game.getMyShelfie().getLivingRoom());

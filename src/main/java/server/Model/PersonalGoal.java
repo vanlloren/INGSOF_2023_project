@@ -12,8 +12,12 @@ public class PersonalGoal extends PersonalGoalObservable implements Serializable
     @Serial
     private static final long serialVersionUID = -1257488172741056944L;
     public Integer point;
+    public GameModel gameModel;
     public PersonalGoalType personalGoalType;
 
+    public PersonalGoal(GameModel gameModel){
+        this.gameModel = gameModel;
+    }
     public Integer getPoint() {
         return point;
     }
@@ -32,7 +36,7 @@ public class PersonalGoal extends PersonalGoalObservable implements Serializable
 
     public void setPersonalGoalType(PersonalGoalType personalGoalType, String nickname){
         this.personalGoalType = personalGoalType;
-        notifyObservers(obs -> obs.OnUpdateModelPersonalGoal(new TurnView(), personalGoalType, nickname));
+        notifyObservers(obs -> obs.OnUpdateModelPersonalGoal(new TurnView(gameModel), personalGoalType, nickname));
     }
 
 }

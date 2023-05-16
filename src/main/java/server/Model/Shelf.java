@@ -12,14 +12,19 @@ import java.util.Vector;
 import Util.Colour;
 
 public class Shelf extends ShelfObservable implements Serializable {
-    private int columnChoosen;
+    private int columnChosen;
     private int pointsAdj = 0;
+    private GameModel gameModel;
 
 
     @Serial
     private static final long serialVersionUID = -5591053634616843792L;
     private RuleShelf ruleShelf = new RuleShelf();
     private PlayableItemTile[][] structure = new PlayableItemTile[5][4];
+
+    public Shelf(GameModel gameModel){
+        this.gameModel = gameModel;
+    }
 
     public PlayableItemTile[][] getStructure(){
         return this.structure;
@@ -52,7 +57,7 @@ public class Shelf extends ShelfObservable implements Serializable {
     public void putTile(int x, int y, PlayableItemTile Tile){
         this.structure[x][y] = Tile;
         notifyObservers(obs-> {
-            obs.onUpdatePuttedTileIntoShelf(new TurnView(), x,y,Tile);
+            obs.onUpdatePuttedTileIntoShelf(new TurnView(gameModel), x,y,Tile);
         });
     }
     public int freeCellsInShelf(){
@@ -85,10 +90,10 @@ public class Shelf extends ShelfObservable implements Serializable {
         return true;
     }
 
-    public  int getColumnChoosen(){
-        return this.columnChoosen;
+    public  int getColumnChosen(){
+        return this.columnChosen;
     }
-    public void setColumnChoosen(int columnChoosen){
-        this.columnChoosen = columnChoosen;
+    public void setColumnChosen(int columnChosen){
+        this.columnChosen = columnChosen;
     }
 }

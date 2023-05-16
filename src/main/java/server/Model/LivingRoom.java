@@ -13,9 +13,15 @@ import java.util.function.Consumer;
 public class LivingRoom extends LivingRoomObservable implements Serializable {
     private static final long serialVersionUID = 44051L;
     private ItemTile[][] gameTable;
-    private CommonGoal commonGoal1 = new CommonGoal();
-    private CommonGoal commonGoal2 = new CommonGoal();
+    private CommonGoal commonGoal1;
+    private CommonGoal commonGoal2;
+    private GameModel gameModel;
 
+    public LivingRoom(GameModel gameModel){
+        this.gameModel=gameModel;
+        this.commonGoal1 = new CommonGoal(gameModel);
+        this.commonGoal2 = new CommonGoal(gameModel);
+    }
     //MODEL
     public void createGameTable(int playerNum) { //nell'inserimento di playernum chiamo metodo di gamemodel getnumplayer e lo metto come argomento
         if (playerNum == 2) {
@@ -93,7 +99,7 @@ public class LivingRoom extends LivingRoomObservable implements Serializable {
         PlayableItemTile helperTile;
         helperTile = (PlayableItemTile) gameTable[x][y];
         gameTable[x][y] = null;
-        notifyObservers(obs -> obs.onUpdatePickedTileFromLivingRoom(new TurnView(), x, y));
+        notifyObservers(obs -> obs.onUpdatePickedTileFromLivingRoom(new TurnView(gameModel), x, y));
         return helperTile;
     }
 

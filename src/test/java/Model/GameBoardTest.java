@@ -9,10 +9,7 @@ import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.Test;
 
 
-import server.Model.GameBoard;
-import server.Model.LivingRoom;
-import server.Model.PlayableItemTile;
-import server.Model.ItemTile;
+import server.Model.*;
 
 public class GameBoardTest {
 
@@ -20,7 +17,8 @@ public class GameBoardTest {
 
     @BeforeEach
     public void setUp() {
-        board = new GameBoard();
+        GameModel model = new GameModel();
+        board = new GameBoard(model);
     }
 
     @Test

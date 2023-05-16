@@ -1,13 +1,15 @@
 package Model;
 
 import org.junit.*;
+import server.Model.GameModel;
 import server.Model.PersonalGoal;
 import server.Model.PlayableItemTile;
 
 
 public class PersonalGoalTest {
 
-    PersonalGoal personalGoal=new PersonalGoal();
+    GameModel gameModel = new GameModel();
+    PersonalGoal personalGoal=new PersonalGoal(gameModel);
     PlayableItemTile[][] structure = new PlayableItemTile[6][5];
 
 

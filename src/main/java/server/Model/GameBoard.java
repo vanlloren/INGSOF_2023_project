@@ -9,8 +9,10 @@ import java.util.ArrayList;
 public class GameBoard implements Serializable {
     @Serial
     private static final long serialVersionUID = 2987798677668898344L;
+
+    private final GameModel gameModel;
     private transient ItemBag bag = new ItemBag();
-    private LivingRoom livingRoom = new LivingRoom();
+    private LivingRoom livingRoom;
     private PlayableItemTile nextInGameTile;//é la tessera "da mettere in gioco" ovvero quella che dalla bag sta venendo piazzata sulla plancia
 
     private ArrayList<PlayableItemTile> toPlayerTiles;//sono le tessere che il giocatore ha raccolto dalla plancia, forse si può fare meglio
@@ -20,6 +22,9 @@ public class GameBoard implements Serializable {
     private int firstY;
 
     //MODEL
+    public GameBoard(GameModel gameModel){
+        this.gameModel = gameModel;
+    }
     public void setItemBag(){ //genera la ItemBag a ogni inizio partita chiamato dal controller
         ItemBag helperBag = new ItemBag();
         helperBag.putTiles();
@@ -32,7 +37,7 @@ public class GameBoard implements Serializable {
 
     //MODEL
     public void setLivingRoom(int playerNum){ // il parametro viene passato dal controller
-        LivingRoom helperLivingRoom = new LivingRoom();
+        LivingRoom helperLivingRoom = new LivingRoom(gameModel);
         helperLivingRoom.createGameTable(playerNum);
         firstFilling(helperLivingRoom);
         this.livingRoom = helperLivingRoom;

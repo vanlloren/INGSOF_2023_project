@@ -16,7 +16,11 @@ public class CommonGoal extends CommonGoalObservable implements Serializable {
     private static final long serialVersionUID = 6744912126943243456L;
     CommonGoalType commonGoalType;
     private ArrayList<Integer> token_list = new ArrayList<>();
+    private GameModel gameModel;
 
+    public CommonGoal(GameModel gameModel){
+        this.gameModel=gameModel;
+    }
     public ArrayList<Integer> getToken_list(){
         return this.token_list;
     }
@@ -24,7 +28,7 @@ public class CommonGoal extends CommonGoalObservable implements Serializable {
 
     public void setCommonGoalType(CommonGoalType commonGoalType){
         this.commonGoalType = commonGoalType;
-        notifyObservers(obs -> obs.OnUpdateModelCommonGoal(new TurnView(), commonGoalType));
+        notifyObservers(obs -> obs.OnUpdateModelCommonGoal(new TurnView(gameModel), commonGoalType));
     }
     public CommonGoalType getCommonGoalType() {
         return commonGoalType;

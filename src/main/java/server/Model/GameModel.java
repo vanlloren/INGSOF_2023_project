@@ -26,9 +26,10 @@ public class GameModel extends GameModelObservable implements Serializable {
 
 
     public GameModel(){
-        this.myShelfie = new GameBoard();
+        this.myShelfie = new GameBoard(this);
         this.playersInGame = new ArrayList<>();
     }
+
 
 
     public boolean getEndGame(){
