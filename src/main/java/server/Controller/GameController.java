@@ -199,7 +199,7 @@ public class GameController {
         int index= listPLayer.indexOf(game.getCurrPlayer());
 
         if(!game.getEndGame()){
-            if(game.getPlayersInGame().indexOf(game.getCurrPlayer())==game.getPlayersInGame().size()){
+            if(game.getPlayersInGame().indexOf(game.getCurrPlayer())==game.getPlayersInGame().size()-1){
             game.setCurrPlayer(listPLayer.get(0));}
             else game.setCurrPlayer(listPLayer.get(index+1));
         }

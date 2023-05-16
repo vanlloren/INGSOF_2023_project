@@ -131,9 +131,18 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
                             client.onMessage(newKeepPuttingMessage);
                         }else{
                             if(shelfIsFull && !gameController.getGame().getEndGame()){
+                                //Sei il primo a settare endgame
                                 gameController.getGame().setEndGame();
-                            }
-                            gameController.nextTurn();
+                                gameController.nextTurn();
+                            } else if(gameController.getGame().getEndGame()){
+                                //Qua ultimo turno e te non sei il primo a settare l'endGame
+                                gameController.nextTurn();
+                            } else if (!gameController.getGame().getEndGame()){
+                                gameController.nextTurn();
+
+                                clientNickCombinations.get(message.getNickname()).onMessage(newMessage);                    }
+
+                        }
                         }
                 } else if(!RuleShelf.iscolumnAvailable(y,numOfTiles,gameController.getGame().getCurrPlayer().getPersonalShelf().getStructure()) || (RuleShelf.iscolumnAvailable(y,numOfTiles,gameController.getGame().getCurrPlayer().getPersonalShelf().getStructure()))
                     && !RuleShelf.commandPutTileCheckValidity(x , y , tile , gameController.getGame().getCurrPlayer().getPersonalShelf().getStructure(), numOfTiles )){
