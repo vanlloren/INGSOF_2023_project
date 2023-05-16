@@ -15,17 +15,16 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 
-public class TurnView implements LivingRoomObserver, ShelfObserver, PlayerObserver, GameModelObserver,CommonGoalObserver,PersonalGoalObserver, Serializable {
+public class TurnView implements Serializable {
     @Serial
     private static final long serialVersionUID = -4523368433517565685L;
-    private GameModel gameModel;
-   private RemoteServerImplementation server;
+    private final GameModel gameModel;
 
-   public void setGameModel(GameModel gameModel){
-       this.gameModel=gameModel;
-   }
+    public TurnView(GameModel gameModel){
+        this.gameModel= gameModel;
+    }
 
-   public LivingRoom getLivingRoom(){
+    public LivingRoom getLivingRoom(){
        return this.gameModel.getMyShelfie().getLivingRoom();
    }
 
@@ -53,9 +52,7 @@ public class TurnView implements LivingRoomObserver, ShelfObserver, PlayerObserv
        return this.gameModel.getPlayersInGame().size();
     }
 
-    public void setServer(RemoteServerImplementation server) {
-        this.server = server;
-    }
+
 
 
     public int getPartialPoint(String nickName){
@@ -82,85 +79,5 @@ public class TurnView implements LivingRoomObserver, ShelfObserver, PlayerObserv
 
     }
 
-    @Override
-    public void onUpdateModelListPlayers(Player player) {
-       server.onTurnViewModified(this, new UpdatePlayersListEvent(player));
-    }
 
-    @Override
-    public void onUpdateModelEndGame(boolean endGame)  {
-       server.onTurnViewModified(this, new UpdateEndGameEvent(endGame));
-    }
-
-    @Override
-    public void onUpdateModelPlayersNumber(int playersNumber)  {
-       server.onTurnViewModified(this, new UpdatePlayersNumberEvent(playersNumber));
-    }
-
-    @Override
-    public void onUpdateModelChairOwner(Player player) {
-        server.onTurnViewModified(this, new UpdateChairOwnerEvent(player));
-    }
-
-    @Override
-    public void onUpdateGameBoard(GameBoard gameBoard) {
-       server.onTurnViewModified(this, new UpdateGameBoardEvent(gameBoard));
-    }
-
-    @Override
-    public void onUpdateModelGameHasStarted() {
-        server.onTurnViewModified(this, new UpdateGameHasStartedEvent());
-    }
-
-    @Override
-    public void onUpdateModelCurrentPlayer(Player currPlayer) {
-        server.onTurnViewModified(this, new UpdateCurrPlayerEvent(currPlayer));
-    }
-
-    @Override
-    public void onUpdateModelMatchWinner(String player) {
-       server.onTurnViewModified(this, new UpdateMatchWinnerEvent(player));
-    }
-
-    @Override
-    public void onUpdateModelGameHasEnd() {
-       server.onTurnViewModified(this, new UpdateGameHasEndEvent());
-    }
-
-    @Override
-    public void onUpdatePickedTileFromLivingRoom(int x, int y) {
-        server.onTurnViewModified(this, new UpdatePickedLivingRoomTileEvent(this.gameModel.getCurrPlayer().getNickname() ,x, y));
-    }
-
-    @Override
-    public void OnUpdateModelPersonalGoal(PersonalGoalType personalGoalType) {
-        server.onTurnViewModified(this, new UpdatePersonalGoalEvent( ,personalGoalType));
-    }
-
-    @Override
-    public void OnUpdateModelCommonGoal(CommonGoalType commonGoalType) {
-        server.onTurnViewModified(this, new UpdateCommonGoalEvent(commonGoalType));
-    }
-
-    @Override
-    public void OnUpdateModelPlayerPoint(Integer points) {
-       server.onTurnViewModified(this, new UpdatePlayerPointEvent(this.gameModel.getCurrPlayer().getNickname(), points));
-    }
-    public void OnUpdateModelPlayerEndGame(Boolean endgame){
-       server.onTurnViewModified(this, new UpdateEndGameEvent(this.gameModel.getCurrPlayer().getEndgame()));
-    }
-    @Override
-    public void OnUpdateModelStatusCommonGoal2() {
-        server.onTurnViewModified(this, new UpdateStatusCommonGoal2Event(this.gameModel.getCurrPlayer().getNickname()));
-    }
-
-    @Override
-    public void OnUpdateModelStatusCommonGoal1() {
-        server.onTurnViewModified(this, new UpdateStatusCommonGoal1Event(this.gameModel.getCurrPlayer().getNickname()));
-    }
-    //-------------------------Qua scrivo per le shelf---------------------------------//
-    @Override
-    public void onUpdatePuttedTileIntoShelf(int x, int y, PlayableItemTile tile){
-       server.onTurnViewModified(this, new UpdatePutShelfTileEvent(x, y, tile));
-    }
 }

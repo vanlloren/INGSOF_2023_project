@@ -3,6 +3,7 @@ package Model;
 import static org.junit.Assert.*;
 import java.util.ArrayList;
 
+import Network.ServerSide.ProxyObserver;
 import client.view.TurnView;
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
@@ -21,8 +22,8 @@ public class GameBoardTest {
 
     @BeforeEach
     public void setUp() {
-        TurnView turnView = new TurnView();
-        board = new GameBoard(turnView);
+        ProxyObserver proxyObserver = new ProxyObserver();
+        board = new GameBoard(proxyObserver);
     }
 
     @Test

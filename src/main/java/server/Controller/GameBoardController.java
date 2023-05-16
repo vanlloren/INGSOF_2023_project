@@ -1,5 +1,6 @@
 package server.Controller;
 
+import Network.ServerSide.ProxyObserver;
 import Util.Colour;
 import client.view.TurnView;
 import server.Model.GameBoard;
@@ -17,11 +18,11 @@ public class GameBoardController {
     private int playerNum;
     private GameController gameController;
 
-    private TurnView turnView;
+    private ProxyObserver proxyObserver;
 
 
-    public GameBoardController(TurnView turnView, GameController gameController){
-        this.turnView = turnView;
+    public GameBoardController(ProxyObserver proxyObserver, GameController gameController){
+        this.proxyObserver = proxyObserver;
     }
     public void setPlayerNum(int playerNum){
         this.playerNum = playerNum;
@@ -36,7 +37,7 @@ public class GameBoardController {
     }
 
     public void gameBoardInit(){
-        this.controlledGameBoard = new GameBoard(this.turnView);
+        this.controlledGameBoard = new GameBoard(proxyObserver);
         this.controlledGameBoard.setItemBag();
         this.controlledGameBoard.setLivingRoom(playerNum);
         this.controlledLivingRoom = controlledGameBoard.getLivingRoom();

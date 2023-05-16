@@ -1,6 +1,7 @@
 package server.Model;
 
 
+import Network.ServerSide.ProxyObserver;
 import Observer.GameModelObservable;
 import Util.RandChairOwner;
 import client.view.TurnView;
@@ -16,7 +17,7 @@ public class GameModel extends GameModelObservable implements Serializable {
     private Player chosenChairOwner;
     private Integer chosenPlayersNumber;
 
-    private TurnView turnView;
+    private final ProxyObserver proxyObserver;
     public static final String Server_Nick = "Server";//C'è un collegamento al server per ogni giocatore.
     private Player currPlayer;
     private String matchWinner;
@@ -26,14 +27,12 @@ public class GameModel extends GameModelObservable implements Serializable {
     private boolean GameOn = true;
 
 
-    public GameModel(TurnView turnView){
-        this.myShelfie = new GameBoard(turnView);
+    public GameModel(ProxyObserver proxyObserver){
+        this.myShelfie = new GameBoard(proxyObserver);
         this.playersInGame = new ArrayList<>();
+        this.proxyObserver = proxyObserver;
     }
 
-    public void setTurnView(TurnView turnView){
-        this.turnView=turnView;
-    }
 
     public boolean getEndGame(){
         return endGame;

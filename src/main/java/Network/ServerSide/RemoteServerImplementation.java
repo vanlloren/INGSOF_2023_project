@@ -22,7 +22,7 @@ import java.util.HashMap;
 public class RemoteServerImplementation extends UnicastRemoteObject implements RemoteServerInterface{
     private final RMIServer server;
 
-    private final TurnView turnView;
+    private final ProxyObserver proxyObserver;
     private final Object lock = new Object();
     private boolean stop = false;
     private RemoteClientInterface client;
@@ -33,10 +33,10 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
     private final GameController gameController;
     private ArrayList<PlayableItemTile> availableTiles;
 
-    RemoteServerImplementation(RMIServer server, GameController gameController, TurnView turnView) throws RemoteException {
+    RemoteServerImplementation(RMIServer server, GameController gameController, ProxyObserver proxyObserver) throws RemoteException {
         this.server = server;
         this.gameController = gameController;
-        this.turnView = turnView;
+        this.proxyObserver = proxyObserver;
     }
 
     public void resetStop(){
@@ -54,8 +54,8 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
                         LoginRequestMessage newMessage = (LoginRequestMessage) message;
                         clientList.add(newMessage.getClient());
                         clientNickCombinations.put(message.getNickname(), newMessage.getClient());
-                        Player newPlayer = new Player(message.getNickname(), turnView);
-                        newPlayer.addObserver(turnView);
+                        Player newPlayer = new Player(message.getNickname(), proxyObserver);
+                        newPlayer.addObserver(proxyObserver);
                         RandPersonalGoal.setType(newPlayer, newPlayer.getPersonalGoal(), gameController.getGame().getPlayersInGame());
                         gameController.getGame().setPlayersInGame(newPlayer);
                         Message newMessage2 = new PlayersNumberRequestMessage(message.getNickname());
@@ -70,7 +70,7 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
                             LoginRequestMessage newMessage = (LoginRequestMessage) message;
                             clientList.add(newMessage.getClient());
                             clientNickCombinations.put(message.getNickname(), newMessage.getClient());
-                            Player newPlayer = new Player(message.getNickname(), turnView);
+                            Player newPlayer = new Player(message.getNickname(), proxyObserver);
                             RandPersonalGoal.setType(newPlayer, newPlayer.getPersonalGoal(), gameController.getGame().getPlayersInGame());
                             gameController.getGame().setPlayersInGame(newPlayer);
                         }
@@ -83,7 +83,7 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
                             LoginRequestMessage newMessage = (LoginRequestMessage) message;
                             clientList.add(newMessage.getClient());
                             clientNickCombinations.put(message.getNickname(), newMessage.getClient());
-                            Player newPlayer = new Player(message.getNickname(), turnView);
+                            Player newPlayer = new Player(message.getNickname(), proxyObserver);
                             RandPersonalGoal.setType(newPlayer, newPlayer.getPersonalGoal(), gameController.getGame().getPlayersInGame());
                             gameController.getGame().setPlayersInGame(newPlayer);
                         }
@@ -221,10 +221,10 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
         client.onMessage((new ToPutTileReplyMessage(tilesInPlayerHand)));
     }
 
-    public void onTurnViewModified(TurnView turnView, Event event){
+    public void onTurnViewModified(Event event){
         for (RemoteClientInterface client: clientList
              ) {
-            client.onModelModify(turnView, event);
+            client.onModelModify(new TurnView(gameController.getGame()), event);
         }
     }
 

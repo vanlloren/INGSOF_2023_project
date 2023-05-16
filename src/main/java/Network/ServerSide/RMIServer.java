@@ -13,17 +13,17 @@ public class RMIServer {
     private final int serverRMIPort;
     private GameController gameController;
 
-    private TurnView turnView;
+    private ProxyObserver proxyObserver;
 
-    RMIServer(int port, GameController gameController, TurnView turnView){
+    RMIServer(int port, GameController gameController, ProxyObserver proxyObserver){
         this.serverRMIPort = port;
         this.gameController = gameController;
-        this.turnView = turnView;
+        this.proxyObserver = proxyObserver;
     }
 
     public RemoteServerImplementation startRMIServer(){
         try{
-            RemoteServerImplementation remoteServer = new RemoteServerImplementation(this, gameController, turnView);
+            RemoteServerImplementation remoteServer = new RemoteServerImplementation(this, gameController, proxyObserver);
             Registry registry = LocateRegistry.createRegistry(serverRMIPort);
             registry.bind("MyShelfieServer", remoteServer);
             System.out.println("Server RMI pronto");

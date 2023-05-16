@@ -21,15 +21,19 @@ public class ServerApp {
         out.println("Welcome to MyShelfie, you're about to create a new Server which will run MyShelfie!");
         out.println("Please, decide on which port you would like to run the RMIServer:");
         int serverPort = scanner.nextInt();
-        TurnView turnView = new TurnView();
-        GameModel gameModel = new GameModel(turnView);
-        turnView.setGameModel(gameModel);
-        GameController gameController = new GameController(gameModel, turnView);
-        RMIServer RMIServerCreator = new RMIServer(serverPort, gameController, turnView);
+        ProxyObserver proxyObserver = new ProxyObserver();
+        GameModel gameModel = new GameModel(proxyObserver);
+        gameModel.addObserver(proxyObserver);
+        proxyObserver.setGameModel(gameModel);
+        GameController gameController = new GameController(gameModel, proxyObserver);
+        RMIServer RMIServerCreator = new RMIServer(serverPort, gameController, proxyObserver);
         RemoteServerImplementation remoteServer = RMIServerCreator.startRMIServer();
+        proxyObserver.setServer(remoteServer);
         gameController.setRemoteServer(remoteServer);
-        gameModel.addObserver(turnView);
-        turnView.setServer(remoteServer);
+
+
+
+
 
 
 

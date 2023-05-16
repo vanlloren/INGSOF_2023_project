@@ -1,5 +1,6 @@
 package server.Model;
 
+import Network.ServerSide.ProxyObserver;
 import Util.Colour;
 import client.view.TurnView;
 
@@ -20,10 +21,10 @@ public class GameBoard implements Serializable {
     private int firstX;
     private int firstY;
 
-    public GameBoard(TurnView turnView){
-        this.livingRoom.addObserver(turnView);
-        livingRoom.getCommonGoal1().addObserver(turnView);
-        livingRoom.getCommonGoal2().addObserver(turnView);
+    public GameBoard(ProxyObserver proxyObserver){
+        this.livingRoom.addObserver(proxyObserver);
+        livingRoom.getCommonGoal1().addObserver(proxyObserver);
+        livingRoom.getCommonGoal2().addObserver(proxyObserver);
     }
     //MODEL
     public void setItemBag(){ //genera la ItemBag a ogni inizio partita chiamato dal controller

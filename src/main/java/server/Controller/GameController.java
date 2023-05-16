@@ -1,4 +1,5 @@
 package server.Controller;
+import Network.ServerSide.ProxyObserver;
 import Network.ServerSide.RemoteServerImplementation;
 import Util.Colour;
 import Util.RandCommonGoal;
@@ -41,12 +42,12 @@ public class GameController {
     private int xPosCurrTile;
     private int yPosCurrTile;
 
-    private TurnView turnView;
+    private ProxyObserver proxyObserver;
 
-    public GameController(GameModel game, TurnView turnView) {
+    public GameController(GameModel game, ProxyObserver proxyObserver) {
         this.game = game;
-        this.turnView = turnView;
-        this.gameBoardController = new GameBoardController(this.turnView, this);
+        this.proxyObserver = proxyObserver;
+        this.gameBoardController = new GameBoardController(this.proxyObserver, this);
     }
 
     public GameModel getGame() {

@@ -1,6 +1,7 @@
 package server.Model;
 
 
+import Network.ServerSide.ProxyObserver;
 import Observer.PlayerObservable;
 
 import Observer.PlayerObserver;
@@ -27,10 +28,10 @@ public class Player extends PlayerObservable implements Serializable {
     private boolean endgame = false;
 
     // costruttore player in cui passo i parametri principali passati dal controller che chiamerà dopo la ricezione di tutti i nickname da lato client
-    public Player (String nickname, TurnView turnView){
+    public Player (String nickname, ProxyObserver proxyObserver){
         this.nickname = nickname;
-        this.personalShelf.addObserver(turnView);
-        this.personalGoal.addObserver(turnView);
+        this.personalShelf.addObserver(proxyObserver);
+        this.personalGoal.addObserver(proxyObserver);
     }
 
     public int getMaxTiles(){
