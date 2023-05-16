@@ -38,7 +38,7 @@ public interface View {
     //chiede al player dove collocare la tessera nella shelf
     //TO-DO: capire in che formato fornire l'elenco delle posizioni libere nella shelf
     void showNegativePutTileResults( ArrayList<PlayableItemTile> tilesInPlayerHand);
-    void WriteInChat();
+    //void WriteInChat();
     //mostra il risultato della richiesta di login, con il nome scelto dal player
     void showLoginResults(boolean nicknameAccepted, String chosenNickname);
 

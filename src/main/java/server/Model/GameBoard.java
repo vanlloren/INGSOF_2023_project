@@ -1,8 +1,6 @@
 package server.Model;
 
-import Network.ServerSide.ProxyObserver;
 import Util.Colour;
-import client.view.TurnView;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -21,11 +19,6 @@ public class GameBoard implements Serializable {
     private int firstX;
     private int firstY;
 
-    public GameBoard(ProxyObserver proxyObserver){
-        this.livingRoom.addObserver(proxyObserver);
-        livingRoom.getCommonGoal1().addObserver(proxyObserver);
-        livingRoom.getCommonGoal2().addObserver(proxyObserver);
-    }
     //MODEL
     public void setItemBag(){ //genera la ItemBag a ogni inizio partita chiamato dal controller
         ItemBag helperBag = new ItemBag();

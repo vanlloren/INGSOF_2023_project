@@ -11,6 +11,7 @@ import server.Controller.RuleShelf;
 import server.Model.LivingRoom;
 import server.Model.PlayableItemTile;
 import server.Model.Player;
+import Util.*;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -21,7 +22,6 @@ import java.util.HashMap;
 public class RemoteServerImplementation extends UnicastRemoteObject implements RemoteServerInterface{
     private final RMIServer server;
 
-    private final ProxyObserver proxyObserver;
     private final Object lock = new Object();
     private boolean stop = false;
     private RemoteClientInterface client;
@@ -32,10 +32,9 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
     private final GameController gameController;
     private ArrayList<PlayableItemTile> availableTiles;
 
-    RemoteServerImplementation(RMIServer server, GameController gameController, ProxyObserver proxyObserver) throws RemoteException {
+    RemoteServerImplementation(RMIServer server, GameController gameController) throws RemoteException {
         this.server = server;
         this.gameController = gameController;
-        this.proxyObserver = proxyObserver;
     }
 
     public void resetStop(){
@@ -53,8 +52,12 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
                         LoginRequestMessage newMessage = (LoginRequestMessage) message;
                         clientList.add(newMessage.getClient());
                         clientNickCombinations.put(message.getNickname(), newMessage.getClient());
-                        Player newPlayer = new Player(message.getNickname(), proxyObserver);
-                        newPlayer.addObserver(proxyObserver);
+                        Player newPlayer = new Player(message.getNickname(), newMessage.getClient());
+                        newPlayer.addObserver(newMessage.getClient());
+                        gameController.getGame().addObserver(newMessage.getClient());
+                        gameController.getGame().getMyShelfie().getLivingRoom().addObserver(newMessage.getClient());
+                        gameController.getGame().getMyShelfie().getLivingRoom().getCommonGoal1().addObserver(newMessage.getClient());
+                        gameController.getGame().getMyShelfie().getLivingRoom().getCommonGoal2().addObserver(newMessage.getClient());
                         RandPersonalGoal.setType(newPlayer, newPlayer.getPersonalGoal(), gameController.getGame().getPlayersInGame());
                         gameController.getGame().setPlayersInGame(newPlayer);
                         Message newMessage2 = new PlayersNumberRequestMessage(message.getNickname());
@@ -69,7 +72,12 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
                             LoginRequestMessage newMessage = (LoginRequestMessage) message;
                             clientList.add(newMessage.getClient());
                             clientNickCombinations.put(message.getNickname(), newMessage.getClient());
-                            Player newPlayer = new Player(message.getNickname(), proxyObserver);
+                            Player newPlayer = new Player(message.getNickname(), newMessage.getClient());
+                            newPlayer.addObserver(newMessage.getClient());
+                            gameController.getGame().addObserver(newMessage.getClient());
+                            gameController.getGame().getMyShelfie().getLivingRoom().addObserver(newMessage.getClient());
+                            gameController.getGame().getMyShelfie().getLivingRoom().getCommonGoal1().addObserver(newMessage.getClient());
+                            gameController.getGame().getMyShelfie().getLivingRoom().getCommonGoal2().addObserver(newMessage.getClient());
                             RandPersonalGoal.setType(newPlayer, newPlayer.getPersonalGoal(), gameController.getGame().getPlayersInGame());
                             gameController.getGame().setPlayersInGame(newPlayer);
                         }
@@ -82,7 +90,12 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
                             LoginRequestMessage newMessage = (LoginRequestMessage) message;
                             clientList.add(newMessage.getClient());
                             clientNickCombinations.put(message.getNickname(), newMessage.getClient());
-                            Player newPlayer = new Player(message.getNickname(), proxyObserver);
+                            Player newPlayer = new Player(message.getNickname(), newMessage.getClient());
+                            newPlayer.addObserver(newMessage.getClient());
+                            gameController.getGame().addObserver(newMessage.getClient());
+                            gameController.getGame().getMyShelfie().getLivingRoom().addObserver(newMessage.getClient());
+                            gameController.getGame().getMyShelfie().getLivingRoom().getCommonGoal1().addObserver(newMessage.getClient());
+                            gameController.getGame().getMyShelfie().getLivingRoom().getCommonGoal2().addObserver(newMessage.getClient());
                             RandPersonalGoal.setType(newPlayer, newPlayer.getPersonalGoal(), gameController.getGame().getPlayersInGame());
                             gameController.getGame().setPlayersInGame(newPlayer);
                         }
@@ -220,11 +233,5 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
         client.onMessage((new ToPutTileReplyMessage(tilesInPlayerHand)));
     }
 
-    public void onTurnViewModified(Event event){
-        for (RemoteClientInterface client: clientList
-             ) {
-            client.onModelModify(new TurnView(gameController.getGame()), event);
-        }
-    }
 
 }

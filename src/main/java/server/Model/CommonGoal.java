@@ -1,7 +1,9 @@
 package server.Model;
 
 import Observer.CommonGoalObservable;
+import Observer.TurnViewObservable;
 import Util.CommonGoalType;
+import client.view.TurnView;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -22,7 +24,7 @@ public class CommonGoal extends CommonGoalObservable implements Serializable {
 
     public void setCommonGoalType(CommonGoalType commonGoalType){
         this.commonGoalType = commonGoalType;
-        notifyObservers(obs -> obs.OnUpdateModelCommonGoal(commonGoalType));
+        notifyObservers(obs -> obs.OnUpdateModelCommonGoal(new TurnView(), commonGoalType));
     }
     public CommonGoalType getCommonGoalType() {
         return commonGoalType;

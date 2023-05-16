@@ -7,7 +7,7 @@ public class ErrorMessage extends Message{
     private final String error;
 
     public ErrorMessage(String nickname, String error) {
-        super(nickname, MessageEnumeration.ERROR);
+        super(nickname, MessageEnumeration.ERROR_MESSAGE);
         this.error = error;
     }
 

@@ -1,7 +1,9 @@
 package Observer;
 
 import Util.CommonGoalType;
+import client.view.TurnView;
 
 public interface CommonGoalObserver {
-    void OnUpdateModelCommonGoal(CommonGoalType commonGoalType);
+    void OnUpdateModelCommonGoal(TurnView turnView, CommonGoalType commonGoalType);
+
 }

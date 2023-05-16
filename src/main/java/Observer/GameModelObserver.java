@@ -1,26 +1,27 @@
 package Observer;
 
 
+import client.view.TurnView;
 import server.Model.GameBoard;
 import server.Model.Player;
 
 public interface GameModelObserver {
 
-    void onUpdateModelListPlayers(Player playerArrayList) ;
+    void onUpdateModelListPlayers(TurnView turnView, Player playerArrayList) ;
 
-    void onUpdateModelEndGame(boolean endGame) ;
+    void onUpdateModelEndGame(TurnView turnView, boolean endGame) ;
 
-    void onUpdateModelPlayersNumber(int playersNumber) ;
+    void onUpdateModelPlayersNumber(TurnView turnView, int playersNumber) ;
 
-    void onUpdateModelChairOwner(Player player);
+    void onUpdateModelChairOwner(TurnView turnView, Player player);
 
-    void onUpdateGameBoard(GameBoard gameBoard);
+    void onUpdateGameBoard(TurnView turnView, GameBoard gameBoard);
 
-    void onUpdateModelGameHasStarted();
+    void onUpdateModelGameHasStarted(TurnView turnView);
 
-    void onUpdateModelCurrentPlayer(Player currPlayer);
+    void onUpdateModelCurrentPlayer(TurnView turnView, Player currPlayer);
 
-    void onUpdateModelMatchWinner(String player);
+    void onUpdateModelMatchWinner(TurnView turnView, String player);
 
-    void onUpdateModelGameHasEnd();
+    void onUpdateModelGameHasEnd(TurnView turnView);
 }

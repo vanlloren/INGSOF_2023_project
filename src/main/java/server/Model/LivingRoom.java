@@ -3,6 +3,7 @@ package server.Model;
 import Observer.LivingRoomObservable;
 
 import Util.*;
+import client.view.TurnView;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -92,7 +93,7 @@ public class LivingRoom extends LivingRoomObservable implements Serializable {
         PlayableItemTile helperTile;
         helperTile = (PlayableItemTile) gameTable[x][y];
         gameTable[x][y] = null;
-        notifyObservers(obs -> obs.onUpdatePickedTileFromLivingRoom(x, y));
+        notifyObservers(obs -> obs.onUpdatePickedTileFromLivingRoom(new TurnView(), x, y));
         return helperTile;
     }
 

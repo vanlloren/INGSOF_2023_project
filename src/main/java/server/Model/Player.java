@@ -1,7 +1,7 @@
 package server.Model;
 
 
-import Network.ServerSide.ProxyObserver;
+import Network.ClientSide.RemoteClientInterface;
 import Observer.PlayerObservable;
 
 import Observer.PlayerObserver;
@@ -10,7 +10,6 @@ import server.Controller.RuleShelf;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.Vector;
 
 public class Player extends PlayerObservable implements Serializable {
     @Serial
@@ -28,10 +27,10 @@ public class Player extends PlayerObservable implements Serializable {
     private boolean endgame = false;
 
     // costruttore player in cui passo i parametri principali passati dal controller che chiamerà dopo la ricezione di tutti i nickname da lato client
-    public Player (String nickname, ProxyObserver proxyObserver){
+    public Player (String nickname, RemoteClientInterface client){
         this.nickname = nickname;
-        this.personalShelf.addObserver(proxyObserver);
-        this.personalGoal.addObserver(proxyObserver);
+        this.personalShelf.addObserver(client);
+        this.personalGoal.addObserver(client);
     }
 
     public int getMaxTiles(){
@@ -43,12 +42,12 @@ public class Player extends PlayerObservable implements Serializable {
 
     public void setStatusCommonGoal1(){
         this.hasCommonGoal1 = true;
-        notifyObservers(PlayerObserver::OnUpdateModelStatusCommonGoal1);
+        notifyObservers(obs -> obs.OnUpdateModelStatusCommonGoal1(new TurnView()));
     }
 
     public void setStatusCommonGoal2(){
         this.hasCommonGoal2 = true;
-        notifyObservers(PlayerObserver::OnUpdateModelStatusCommonGoal2);
+        notifyObservers(obs -> obs.OnUpdateModelStatusCommonGoal2(new TurnView()));
     }
 
     public Shelf getPersonalShelf(){
@@ -72,14 +71,14 @@ public class Player extends PlayerObservable implements Serializable {
 
     public void setPoints(Integer points) {
         this.points = points;
-        notifyObservers(obs -> obs.OnUpdateModelPlayerPoint(points));
+        notifyObservers(obs -> obs.OnUpdateModelPlayerPoint(new TurnView(), points));
     }
     public boolean getEndgame(){
         return this.endgame;
     }
     public void setEndgame(boolean endgame){
         this.endgame = personalShelf.isFull();
-        notifyObservers(obs ->obs.OnUpdateModelPlayerEndGame(endgame));
+        notifyObservers(obs ->obs.OnUpdateModelPlayerEndGame(new TurnView(), endgame));
     }
     public boolean getHasCommonGoal1(){
         return this.hasCommonGoal1;

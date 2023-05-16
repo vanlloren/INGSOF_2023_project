@@ -2,6 +2,7 @@ package server.Model;
 
 
 import Observer.ShelfObservable;
+import client.view.TurnView;
 import server.Controller.RuleShelf;
 
 import java.io.Serial;
@@ -51,7 +52,7 @@ public class Shelf extends ShelfObservable implements Serializable {
     public void putTile(int x, int y, PlayableItemTile Tile){
         this.structure[x][y] = Tile;
         notifyObservers(obs-> {
-            obs.onUpdatePuttedTileIntoShelf(x,y,Tile);
+            obs.onUpdatePuttedTileIntoShelf(new TurnView(), x,y,Tile);
         });
     }
     public int freeCellsInShelf(){

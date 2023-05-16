@@ -24,6 +24,10 @@ public class TurnView implements Serializable {
         this.gameModel= gameModel;
     }
 
+    public TurnView(){
+        this.gameModel = null; //è da modificare, lo faccio dopo
+    }
+
     public LivingRoom getLivingRoom(){
        return this.gameModel.getMyShelfie().getLivingRoom();
    }

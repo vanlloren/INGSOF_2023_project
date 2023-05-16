@@ -1,11 +1,13 @@
 package Observer;
 
+import client.view.TurnView;
+
 public interface PlayerObserver {
-    void OnUpdateModelPlayerPoint(Integer points);
+    void OnUpdateModelPlayerPoint(TurnView turnView, Integer points);
 
-    void OnUpdateModelStatusCommonGoal2();
+    void OnUpdateModelStatusCommonGoal2(TurnView turnView);
 
-    void OnUpdateModelStatusCommonGoal1();
+    void OnUpdateModelStatusCommonGoal1(TurnView turnView);
 
-    void OnUpdateModelPlayerEndGame(Boolean endgame);
+    void OnUpdateModelPlayerEndGame(TurnView turnView, Boolean endgame);
 }

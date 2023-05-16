@@ -3,6 +3,7 @@ package server.Model;
 
 import Observer.PersonalGoalObservable;
 import Util.PersonalGoalType;
+import client.view.TurnView;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -29,9 +30,9 @@ public class PersonalGoal extends PersonalGoalObservable implements Serializable
         return this.personalGoalType;
     }
 
-    public void setPersonalGoalType(PersonalGoalType personalGoalType){
+    public void setPersonalGoalType(PersonalGoalType personalGoalType, String nickname){
         this.personalGoalType = personalGoalType;
-        notifyObservers(obs -> obs.OnUpdateModelPersonalGoal(personalGoalType));
+        notifyObservers(obs -> obs.OnUpdateModelPersonalGoal(new TurnView(), personalGoalType, nickname));
     }
 
 }

@@ -43,20 +43,11 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
             int portNum = askServerPort();
             connectToServerFromTUI(serverAddress, portNum);
             askNickname();
-
-
         }
     }
 
     public void resetGameOn() {
         this.gameOn = false;
-    }
-
-    public void matchReadyTUI(){
-        while(gameOn){
-            //qui è dove la TUI deve lavorare durante la partita.
-            //quando gameOn diventa false, la TUI si chiude perché è finita la partita
-        }
     }
 
     public void askPlayerNextMove(){
@@ -132,7 +123,7 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
                     notifyObserver(obs -> obs.onUpdateShowNickCurrPlayer());
                     askPlayerNextMove();
                 case "7":
-                    WriteInChat();
+                    //WriteInChat();
                     askPlayerNextMove();
 
             }
@@ -150,14 +141,14 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
     }
 
 
-    @Override
+    /*@Override
     public void WriteInChat(){
         String chatMessage;
         scanner.nextLine();
         out.println("Write in the following line the content of your message");
         chatMessage = scanner.next();
-        turnView.WriteToAllClient(Nickname,chatMessage);
-    }
+        turnView.WriteToAllClient(nickname,chatMessage);
+    }*/
 
     @Override
     public String askServerInfo(){

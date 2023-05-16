@@ -3,7 +3,7 @@ package Network.ClientSide;
 import Network.Events.*;
 import Network.ServerSide.RemoteServerInterface;
 import Network.message.*;
-import Observer.ViewObserver;
+import Observer.*;
 import Util.CommonGoalType;
 import Util.PersonalGoalType;
 import client.view.TurnView;
@@ -13,8 +13,6 @@ import server.Model.PlayableItemTile;
 import server.Model.Player;
 
 import java.io.IOException;
-import java.io.Serial;
-import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -22,7 +20,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 
-public  class RemoteClientImplementation extends Client implements RemoteClientInterface, ViewObserver {
+public  class RemoteClientImplementation extends Client implements RemoteClientInterface, ViewObserver, LivingRoomObserver, ShelfObserver, PlayerObserver, GameModelObserver, CommonGoalObserver,PersonalGoalObserver {
 
     private RemoteServerInterface server;
     private TurnView turnView;
@@ -373,5 +371,87 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
     @Override
     public void onDisconnection() {
 
+    }
+
+    @Override
+    public void onUpdateModelListPlayers(TurnView turnView, Player player) {
+        onModelModify(turnView, new UpdatePlayersListEvent(player));
+    }
+
+    @Override
+    public void onUpdateModelEndGame(TurnView turnView, boolean endGame)  {
+        onModelModify(turnView, new UpdateEndGameEvent(endGame));
+    }
+
+    @Override
+    public void onUpdateModelPlayersNumber(TurnView turnView, int playersNumber)  {
+        onModelModify(turnView, new UpdatePlayersNumberEvent(playersNumber));
+    }
+
+    @Override
+    public void onUpdateModelChairOwner(TurnView turnView, Player player) {
+        onModelModify(turnView, new UpdateChairOwnerEvent(player));
+    }
+
+    @Override
+    public void onUpdateGameBoard(TurnView turnView, GameBoard gameBoard) {
+        onModelModify(turnView, new UpdateGameBoardEvent(gameBoard));
+    }
+
+    @Override
+    public void onUpdateModelGameHasStarted(TurnView turnView) {
+        onModelModify(turnView, new UpdateGameHasStartedEvent());
+    }
+
+    @Override
+    public void onUpdateModelCurrentPlayer(TurnView turnView, Player currPlayer) {
+        onModelModify(turnView, new UpdateCurrPlayerEvent(currPlayer));
+    }
+
+    @Override
+    public void onUpdateModelMatchWinner(TurnView turnView, String player) {
+        onModelModify(turnView, new UpdateMatchWinnerEvent(player));
+    }
+
+    @Override
+    public void onUpdateModelGameHasEnd(TurnView turnView) {
+        onModelModify(turnView, new UpdateGameHasEndEvent());
+    }
+
+    @Override
+    public void onUpdatePickedTileFromLivingRoom(TurnView turnView, int x, int y) {
+        onModelModify(turnView, new UpdatePickedLivingRoomTileEvent(turnView.getNickNameCurrentPlayer() ,x, y));
+    }
+
+    @Override
+    public void OnUpdateModelPersonalGoal(TurnView turnView, PersonalGoalType personalGoalType, String nickname) {
+        onModelModify(turnView, new UpdatePersonalGoalEvent(nickname, personalGoalType));
+    }
+
+    @Override
+    public void OnUpdateModelCommonGoal(TurnView turnView, CommonGoalType commonGoalType) {
+        onModelModify(turnView, new UpdateCommonGoalEvent(commonGoalType));
+    }
+
+    @Override
+    public void OnUpdateModelPlayerPoint(TurnView turnView, Integer points) {
+        onModelModify(turnView, new UpdatePlayerPointEvent(turnView.getNickNameCurrentPlayer(), points));
+    }
+    public void OnUpdateModelPlayerEndGame(TurnView turnView, Boolean endgame){
+        onModelModify(turnView, new UpdateEndGameEvent(turnView.getIsGameOn()));
+    }
+    @Override
+    public void OnUpdateModelStatusCommonGoal2(TurnView turnView) {
+        onModelModify(turnView, new UpdateStatusCommonGoal2Event(turnView.getNickNameCurrentPlayer()));
+    }
+
+    @Override
+    public void OnUpdateModelStatusCommonGoal1(TurnView turnView) {
+        onModelModify(turnView, new UpdateStatusCommonGoal1Event(turnView.getNickNameCurrentPlayer()));
+    }
+    //-------------------------Qua scrivo per le shelf---------------------------------//
+    @Override
+    public void onUpdatePuttedTileIntoShelf(TurnView turnView, int x, int y, PlayableItemTile tile){
+        onModelModify(turnView, new UpdatePutShelfTileEvent(x, y, tile));
     }
 }

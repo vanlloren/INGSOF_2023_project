@@ -1,7 +1,6 @@
 package server.Model;
 
 
-import Network.ServerSide.ProxyObserver;
 import Observer.GameModelObservable;
 import Util.RandChairOwner;
 import client.view.TurnView;
@@ -17,7 +16,6 @@ public class GameModel extends GameModelObservable implements Serializable {
     private Player chosenChairOwner;
     private Integer chosenPlayersNumber;
 
-    private final ProxyObserver proxyObserver;
     public static final String Server_Nick = "Server";//C'è un collegamento al server per ogni giocatore.
     private Player currPlayer;
     private String matchWinner;
@@ -27,10 +25,9 @@ public class GameModel extends GameModelObservable implements Serializable {
     private boolean GameOn = true;
 
 
-    public GameModel(ProxyObserver proxyObserver){
-        this.myShelfie = new GameBoard(proxyObserver);
+    public GameModel(){
+        this.myShelfie = new GameBoard();
         this.playersInGame = new ArrayList<>();
-        this.proxyObserver = proxyObserver;
     }
 
 
@@ -39,19 +36,19 @@ public class GameModel extends GameModelObservable implements Serializable {
     }
     public void setEndGame(){
         this.endGame = true;
-        notifyObservers(obs -> obs.onUpdateModelEndGame(this.endGame));
+        notifyObservers(obs -> obs.onUpdateModelEndGame(new TurnView(this), this.endGame));
 
     }
 
     public void setMatchWinner(Player player){
         this.matchWinner = player.getNickname();
-        notifyObservers(obs -> obs.onUpdateModelMatchWinner(matchWinner));
+        notifyObservers(obs -> obs.onUpdateModelMatchWinner(new TurnView(this), matchWinner));
         GameTerminator();
     }
 
     public void GameTerminator() {
         this.GameOn = false;
-        notifyObservers(obs -> obs.onUpdateModelGameHasEnd());
+        notifyObservers(obs -> obs.onUpdateModelGameHasEnd(new TurnView(this)));
 
     }
     public boolean getIsGameOn(){
@@ -76,19 +73,19 @@ public class GameModel extends GameModelObservable implements Serializable {
 
     public void setPlayersNumber(int playersNumber){
         this.chosenPlayersNumber = playersNumber;
-        notifyObservers(obs -> obs.onUpdateModelPlayersNumber(playersNumber));
+        notifyObservers(obs -> obs.onUpdateModelPlayersNumber(new TurnView(this), playersNumber));
 
     }
 
     public void setCurrPlayer(Player currPlayer){
         this.currPlayer = currPlayer;
-        notifyObservers(obs -> obs.onUpdateModelCurrentPlayer(currPlayer));
+        notifyObservers(obs -> obs.onUpdateModelCurrentPlayer(new TurnView(this), currPlayer));
 
     }
 
     public void setChairOwner(Player player) {
       this.chosenChairOwner = player;
-        notifyObservers(obs -> obs.onUpdateModelChairOwner(player));
+        notifyObservers(obs -> obs.onUpdateModelChairOwner(new TurnView(this), player));
         setCurrPlayer(player);
     }
 
@@ -99,20 +96,20 @@ public class GameModel extends GameModelObservable implements Serializable {
     public void setPlayersInGame(Player newPlayer) {
         if(playersInGame.size()==chosenPlayersNumber-1){
             this.playersInGame.add(newPlayer);
-            notifyObservers(obs -> obs.onUpdateModelListPlayers(newPlayer));
+            notifyObservers(obs -> obs.onUpdateModelListPlayers(new TurnView(this), newPlayer));
             setChairOwner(playersInGame.get(RandChairOwner.ChooseRand(playersInGame.size())));
-            notifyObservers(obs -> obs.onUpdateModelGameHasStarted());
+            notifyObservers(obs -> obs.onUpdateModelGameHasStarted(new TurnView(this)));
 
         }
         else {
             this.playersInGame.add(newPlayer);
-            notifyObservers(obs -> obs.onUpdateModelListPlayers(newPlayer));
+            notifyObservers(obs -> obs.onUpdateModelListPlayers(new TurnView(this), newPlayer));
         }
     }
 
     public void setmyShelfie(GameBoard myShelfie) {
         this.myShelfie = myShelfie;
-        notifyObservers(obs -> obs.onUpdateGameBoard(myShelfie));
+        notifyObservers(obs -> obs.onUpdateGameBoard(new TurnView(this), myShelfie));
     }
     public GameBoard getMyShelfie(){
         return myShelfie;

@@ -1,12 +1,9 @@
 package server.Controller;
 
-import Network.ServerSide.ProxyObserver;
 import Util.Colour;
-import client.view.TurnView;
 import server.Model.GameBoard;
 import server.Model.LivingRoom;
 import server.Model.PlayableItemTile;
-import server.Model.Player;
 
 import java.util.ArrayList;
 
@@ -18,11 +15,9 @@ public class GameBoardController {
     private int playerNum;
     private GameController gameController;
 
-    private ProxyObserver proxyObserver;
 
 
-    public GameBoardController(ProxyObserver proxyObserver, GameController gameController){
-        this.proxyObserver = proxyObserver;
+    public GameBoardController(GameController gameController){
     }
     public void setPlayerNum(int playerNum){
         this.playerNum = playerNum;
@@ -37,7 +32,7 @@ public class GameBoardController {
     }
 
     public void gameBoardInit(){
-        this.controlledGameBoard = new GameBoard(proxyObserver);
+        this.controlledGameBoard = new GameBoard();
         this.controlledGameBoard.setItemBag();
         this.controlledGameBoard.setLivingRoom(playerNum);
         this.controlledLivingRoom = controlledGameBoard.getLivingRoom();

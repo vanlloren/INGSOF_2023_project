@@ -15,20 +15,15 @@ public class ServerApp {
 
 
     public static void main(String[] args){
-        RMIServer RemoteServer;
         //qui ci sarà il SocketServer
 
         out.println("Welcome to MyShelfie, you're about to create a new Server which will run MyShelfie!");
         out.println("Please, decide on which port you would like to run the RMIServer:");
         int serverPort = scanner.nextInt();
-        ProxyObserver proxyObserver = new ProxyObserver();
-        GameModel gameModel = new GameModel(proxyObserver);
-        gameModel.addObserver(proxyObserver);
-        proxyObserver.setGameModel(gameModel);
-        GameController gameController = new GameController(gameModel, proxyObserver);
-        RMIServer RMIServerCreator = new RMIServer(serverPort, gameController, proxyObserver);
+        GameModel gameModel = new GameModel();
+        GameController gameController = new GameController(gameModel);
+        RMIServer RMIServerCreator = new RMIServer(serverPort, gameController);
         RemoteServerImplementation remoteServer = RMIServerCreator.startRMIServer();
-        proxyObserver.setServer(remoteServer);
         gameController.setRemoteServer(remoteServer);
 
 

@@ -1,5 +1,11 @@
 package Observer;
 
+import Util.CommonGoalType;
+import client.view.TurnView;
+
 public interface LivingRoomObserver {
-    public void onUpdatePickedTileFromLivingRoom(int x, int y);
+
+
+    void onUpdatePickedTileFromLivingRoom(TurnView turnView, int x, int y);
+
 }
