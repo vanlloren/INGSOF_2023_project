@@ -105,6 +105,7 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
                         clientNickCombinations.get(message.getNickname()).onMessage(newMessage);
                     }
                 }
+
             }
             case KEEP_PICKING_REPLY -> {
                 KeepPickingReplyMessage newMessage = (KeepPickingReplyMessage) message;
@@ -164,57 +165,56 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
                 }
 
             }
-
-        }
-        case TO_PUT_TILE_REPLY_ERROR -> {
-        }
-        case TO_PUT_TILE_2_OR_3_REQUEST -> {
-            ToPut2Or3TileRequestMessage newMessage = (ToPut2Or3TileRequestMessage) message;
-            int xPos = newMessage.getxPos();
-            int yPos = gameController.getGame().getCurrPlayer().getPersonalShelf().getColumnChosen();
-            PlayableItemTile tile = newMessage.getTile();
-            ArrayList<PlayableItemTile> currentPlayableItemTile = newMessage.getCurrentPlayableItemTile();
-            if (RuleShelf.commandPutTileCheckValidity(xPos, yPos, tile, gameController.getGame().getCurrPlayer().getPersonalShelf().getStructure(), currentPlayableItemTile.size())) {
-                gameController.getGame().getCurrPlayer().getPersonalShelf().putTile(xPos, yPos, tile);
-                Player currPlayer = gameController.getGame().getCurrPlayer();
-                LivingRoom livingRoom = gameController.getGame().getMyShelfie().getLivingRoom();
-                gameController.calculatePoint(currPlayer, currPlayer.getPersonalShelf().getStructure(), livingRoom);
-                boolean shelfIsFull = gameController.getGame().getCurrPlayer().getPersonalShelf().isFull();
-                currentPlayableItemTile.remove(tile);
-                if (currentPlayableItemTile.size() > 0) {
-                    ToKeepPuttingMessage newKeepPuttingMessage = new ToKeepPuttingMessage(currentPlayableItemTile);
-                    client.onMessage(newKeepPuttingMessage);
-                } else {
-                    if (shelfIsFull && !gameController.getGame().getEndGame()) {
-                        gameController.getGame().setEndGame();
-                    }
-                    gameController.nextTurn();
-                }
-            } else {
-                ToPutTile2Or3ReplyMessage newErrorMessage = new ToPutTile2Or3ReplyMessage(newMessage.getCurrentPlayableItemTile());
-                client.onMessage(newErrorMessage);
+            case TO_PUT_TILE_REPLY_ERROR -> {
             }
-        }
-        case PLAYERNUMBER_REPLY -> {
-            PlayersNumberReplyMessage newMessage = (PlayersNumberReplyMessage) message;
-            int playersNum = newMessage.getNumPlayers();
-            gameController.getGame().setPlayersNumber(playersNum);
-            resetStop();
-        }
-        case START_PICKING_TILE_REQUEST -> {
-            clientNickCombinations.get(message.getNickname()).onMessage(new StartPuttingTileRequestMessage(gameController.pickTilesArray(message.getNickname())));
-        }
-        case TO_PUT_TILE_2_OR_3_REPLY_ERROR -> {
-        }
-        case KEEP_PUTTING_REQUEST -> {
-        }
-        case WINNER_MESSAGE -> {
-        }
-        case ERROR_MESSAGE -> {
-        }
-        case KEEP_PICKING_REQUEST -> {
-        }
-        case TO_PICK_TILE_REQUEST -> {
+            case TO_PUT_TILE_2_OR_3_REQUEST -> {
+                ToPut2Or3TileRequestMessage newMessage = (ToPut2Or3TileRequestMessage) message;
+                int xPos = newMessage.getxPos();
+                int yPos = gameController.getGame().getCurrPlayer().getPersonalShelf().getColumnChosen();
+                PlayableItemTile tile = newMessage.getTile();
+                ArrayList<PlayableItemTile> currentPlayableItemTile = newMessage.getCurrentPlayableItemTile();
+                if (RuleShelf.commandPutTileCheckValidity(xPos, yPos, tile, gameController.getGame().getCurrPlayer().getPersonalShelf().getStructure(), currentPlayableItemTile.size())) {
+                    gameController.getGame().getCurrPlayer().getPersonalShelf().putTile(xPos, yPos, tile);
+                    Player currPlayer = gameController.getGame().getCurrPlayer();
+                    LivingRoom livingRoom = gameController.getGame().getMyShelfie().getLivingRoom();
+                    gameController.calculatePoint(currPlayer, currPlayer.getPersonalShelf().getStructure(), livingRoom);
+                    boolean shelfIsFull = gameController.getGame().getCurrPlayer().getPersonalShelf().isFull();
+                    currentPlayableItemTile.remove(tile);
+                    if (currentPlayableItemTile.size() > 0) {
+                        ToKeepPuttingMessage newKeepPuttingMessage = new ToKeepPuttingMessage(currentPlayableItemTile);
+                        client.onMessage(newKeepPuttingMessage);
+                    } else {
+                        if (shelfIsFull && !gameController.getGame().getEndGame()) {
+                            gameController.getGame().setEndGame();
+                        }
+                        gameController.nextTurn();
+                    }
+                } else {
+                    ToPutTile2Or3ReplyMessage newErrorMessage = new ToPutTile2Or3ReplyMessage(newMessage.getCurrentPlayableItemTile());
+                    client.onMessage(newErrorMessage);
+                }
+            }
+            case PLAYERNUMBER_REPLY -> {
+                PlayersNumberReplyMessage newMessage = (PlayersNumberReplyMessage) message;
+                int playersNum = newMessage.getNumPlayers();
+                gameController.getGame().setPlayersNumber(playersNum);
+                resetStop();
+            }
+            case START_PICKING_TILE_REQUEST -> {
+                clientNickCombinations.get(message.getNickname()).onMessage(new StartPuttingTileRequestMessage(gameController.pickTilesArray(message.getNickname())));
+            }
+            case TO_PUT_TILE_2_OR_3_REPLY_ERROR -> {
+            }
+            case KEEP_PUTTING_REQUEST -> {
+            }
+            case WINNER_MESSAGE -> {
+            }
+            case ERROR_MESSAGE -> {
+            }
+            case KEEP_PICKING_REQUEST -> {
+            }
+            case TO_PICK_TILE_REQUEST -> {
+            }
         }
     }
 

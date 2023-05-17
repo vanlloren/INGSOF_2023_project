@@ -18,62 +18,59 @@ import java.util.ArrayList;
 public class TurnView implements Serializable {
     @Serial
     private static final long serialVersionUID = -4523368433517565685L;
-    private final GameModel gameModel;
+    private final SimpleLivingRoom livingRoom;
+    private final SimpleGameModel gameModel;
+    private final SimplePlayer currPlayer;
 
     public TurnView(GameModel gameModel){
-        this.gameModel= gameModel;
+        this.gameModel = gameModel;
+        this.currPlayer = gameModel.getCurrPlayer();
+        this.livingRoom = gameModel.getMyShelfie().getLivingRoom();
     }
 
-    public LivingRoom getLivingRoom(){
-       return this.gameModel.getMyShelfie().getLivingRoom();
-   }
-
-    public ArrayList<Player> getPlayerInGame() {
-        return gameModel.getPlayersInGame();
+    public SimpleLivingRoom getLivingRoom(){
+        return this.livingRoom;
     }
 
     public boolean getIsGameOn(){
-       return gameModel.getIsGameOn();
+        return this.gameModel.getIsGameOn();
     }
 
-    public Shelf getShelfTable(String nickname){
-        for (Player player: this.gameModel.getPlayersInGame()
-             ) {
-            if (nickname.equals(player.getNickname())) {
-                return this.gameModel.getCurrPlayer().getPersonalShelf();
+    public SimpleGameModel getGameModel(){
+        return this.gameModel;
+    }
+
+    public String getNicknameCurrentPlayer(){
+        return this.currPlayer.getNickname();
+    }
+
+    public SimplePlayer getPlayer(String nickname){
+        SimplePlayer player=null;
+        for (SimplePlayer p: gameModel.getPlayersInGame()
+        ) {
+            if(p.getNickname().equals(nickname)){
+                player = p;
             }
         }
-
-        return null;
-
+        return player;
     }
 
-    public int getPlayersNumber(){
-       return this.gameModel.getPlayersInGame().size();
+    public SimpleShelf getShelfTable(String nickname){
+        return (SimpleShelf)getPlayer(nickname).getPersonalShelf();
     }
-
-
-
 
     public int getPartialPoint(String nickName){
-       int i = 0;
-       int point = 0;
-       while(i<getPlayersNumber()){
-           if(nickName.equals(getPlayerInGame().get(i).getNickname())){
-                point = getPlayerInGame().get(i).getPoints();
+        int i = 0;
+        int point = 0;
+        while(i<gameModel.getPlayersNumber()){
+            if(nickName.equals(gameModel.getPlayersInGame().get(i).getNickname())){
+                point = gameModel.getPlayersInGame().get(i).getPoints();
 
-           }
-           else i++;
-       }
-     return point;
+            }
+            else i++;
+        }
+        return point;
     }
-
-
-    public String getNickNameCurrentPlayer(){
-       return gameModel.getCurrPlayer().getNickname();
-    }
-
-
     public void WriteToAllClient(String Nickname, String chatMessage){
         //notifyObservers(obs -> obs.UpdateAllClientonNewMessageChat(Nickname,chatMessage));
 

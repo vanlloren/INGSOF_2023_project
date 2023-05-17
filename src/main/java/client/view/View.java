@@ -1,9 +1,6 @@
 package client.view;
 
-import server.Model.LivingRoom;
-import server.Model.PlayableItemTile;
-import server.Model.Player;
-import server.Model.Shelf;
+import server.Model.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +41,6 @@ public interface View {
 
     void showPlayersList(ArrayList<Player> playerList);
 
-    void showLivingRoom(LivingRoom livingRoom);
 
 
 
@@ -53,14 +49,18 @@ public interface View {
     //mostra un messaggio che indica la fine della partita e il vincitore
     void showWinMessage(String winnerNickname);
 
+    void showLivingRoom(SimpleLivingRoom livingRoom);
+
     //rappresentazione aggiornata mossa per mossa della shelf relativa allo specifico Player
-    void showPlayerShelf(Shelf shelf);
+    void showPlayerShelf(SimpleShelf shelf);
 
 
 
 
 
     void showNickCurrentPlayer(String Nickname);
+
+
 
     //mostra al player il suo punteggio (volendo si può mostrare anche quello degli avversari)
     void showPartialPoint(int point);

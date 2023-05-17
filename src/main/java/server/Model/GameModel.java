@@ -9,7 +9,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 
-public class GameModel extends GameModelObservable implements Serializable {
+public class GameModel extends GameModelObservable implements Serializable, SimpleGameModel {
     private static final long serialVersionUID = 44051L;
 
 

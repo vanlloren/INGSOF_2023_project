@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Vector;
 import Util.Colour;
 
-public class Shelf extends ShelfObservable implements Serializable {
+public class Shelf extends ShelfObservable implements Serializable, SimpleShelf {
     private int columnChosen;
     private int pointsAdj = 0;
     private GameModel gameModel;

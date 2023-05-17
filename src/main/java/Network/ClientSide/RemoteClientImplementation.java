@@ -13,6 +13,7 @@ import server.Model.PlayableItemTile;
 import server.Model.Player;
 
 import java.io.IOException;
+import java.io.Serial;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -22,6 +23,8 @@ import java.util.Map;
 
 public  class RemoteClientImplementation extends Client implements RemoteClientInterface, ViewObserver, LivingRoomObserver, ShelfObserver, PlayerObserver, GameModelObserver, CommonGoalObserver,PersonalGoalObserver {
 
+    @Serial
+    private static final long serialVersionUID = 3324195868427777436L;
     private RemoteServerInterface server;
     private TurnView turnView;
     private String nickname;
@@ -257,11 +260,11 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
 
     @Override
     public void UpdateAllClientOnStructureShelf(int x, int y, PlayableItemTile Tile) {
-        System.out.println("Il giocatore " + turnView.getNickNameCurrentPlayer() + " ha posizionato la tessera "
+        System.out.println("Il giocatore " + turnView.getNicknameCurrentPlayer() + " ha posizionato la tessera "
         + Tile.getColour() + " " + Tile.getIdCode() + " nella posizione x=" + x + ", y=" + y);
 
         System.out.println("A seguire verrà stampata la PlayerShelf aggiornata");
-        this.userInterface.showPlayerShelf(turnView.getShelfTable(turnView.getNickNameCurrentPlayer()));
+        this.userInterface.showPlayerShelf(turnView.getShelfTable(turnView.getNicknameCurrentPlayer()));
 
     }
 
@@ -339,7 +342,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
 
     @Override
     public void onUpdateShowCurrPlayer(){
-        this.userInterface.setCurrPlayer(turnView.getNickNameCurrentPlayer());
+        this.userInterface.setCurrPlayer(turnView.getNicknameCurrentPlayer());
     }
 
     @Override
@@ -349,7 +352,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
 
     @Override
     public void onUpdateShowPlayersList() {
-        this.userInterface.showPlayersList(turnView.getPlayerInGame());
+        this.userInterface.showPlayersList(turnView.getGameModel().getPlayersInGame());
     }
 
     @Override
@@ -364,7 +367,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
 
     @Override
     public void onUpdateShowNickCurrPlayer() {
-        this.userInterface.showNickCurrentPlayer(turnView.getNickNameCurrentPlayer());
+        this.userInterface.showNickCurrentPlayer(turnView.getNicknameCurrentPlayer());
     }
 
 
@@ -420,7 +423,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
 
     @Override
     public void onUpdatePickedTileFromLivingRoom(TurnView turnView, int x, int y) {
-        onModelModify(turnView, new UpdatePickedLivingRoomTileEvent(turnView.getNickNameCurrentPlayer() ,x, y));
+        onModelModify(turnView, new UpdatePickedLivingRoomTileEvent(turnView.getNicknameCurrentPlayer() ,x, y));
     }
 
     @Override
@@ -435,19 +438,19 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
 
     @Override
     public void OnUpdateModelPlayerPoint(TurnView turnView, Integer points) {
-        onModelModify(turnView, new UpdatePlayerPointEvent(turnView.getNickNameCurrentPlayer(), points));
+        onModelModify(turnView, new UpdatePlayerPointEvent(turnView.getNicknameCurrentPlayer(), points));
     }
     public void OnUpdateModelPlayerEndGame(TurnView turnView, Boolean endgame){
         onModelModify(turnView, new UpdateEndGameEvent(turnView.getIsGameOn()));
     }
     @Override
     public void OnUpdateModelStatusCommonGoal2(TurnView turnView) {
-        onModelModify(turnView, new UpdateStatusCommonGoal2Event(turnView.getNickNameCurrentPlayer()));
+        onModelModify(turnView, new UpdateStatusCommonGoal2Event(turnView.getNicknameCurrentPlayer()));
     }
 
     @Override
     public void OnUpdateModelStatusCommonGoal1(TurnView turnView) {
-        onModelModify(turnView, new UpdateStatusCommonGoal1Event(turnView.getNickNameCurrentPlayer()));
+        onModelModify(turnView, new UpdateStatusCommonGoal1Event(turnView.getNicknameCurrentPlayer()));
     }
     //-------------------------Qua scrivo per le shelf---------------------------------//
     @Override

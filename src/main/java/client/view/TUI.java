@@ -14,6 +14,8 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
     private final PrintStream out;
     private final Scanner scanner = new Scanner(System.in);
 
+    private boolean needNick=true;
+
     private final IOManager viewManager = new IOManager();
 
     protected final List<ViewObserver> observers = new ArrayList<>();
@@ -34,6 +36,10 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
         this.nickname = nickname;
     }
 
+    public void resetNeedNick(){
+        this.needNick = false;
+    }
+
     //Implementando il metodo Runnable ereditiamo tutte le sue classi e oggetti
     //Run è un costruttore basilare costruito direttamente dal metodo Runnable al posto di init
     public void init() {
@@ -42,7 +48,9 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
             String serverAddress = askServerInfo();
             int portNum = askServerPort();
             connectToServerFromTUI(serverAddress, portNum);
-            askNickname();
+            while(needNick) {
+                askNickname();
+            }
         }
     }
 
@@ -406,9 +414,9 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
     public void showLoginResults(boolean nickAccepted, String chosenNickname) {
         if(nickAccepted){
             out.println("Login successful, nickname accepted!\n");
+            resetNeedNick();
         }else{
             out.println("Nickname already chosen, choose another nickname!\n");
-            askNickname();
         }
 
     }
@@ -460,7 +468,7 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
     }
 
     @Override
-    public void showLivingRoom(LivingRoom livingRoom) {
+    public void showLivingRoom(SimpleLivingRoom livingRoom) {
         ItemTile[][] board = livingRoom.getGameTable();
 
         //ogni volta stampo la legenda
@@ -491,7 +499,7 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
 
 
     @Override
-    public void showPlayerShelf(Shelf shelf) {
+    public void showPlayerShelf(SimpleShelf shelf) {
         PlayableItemTile[][] personalShelf = shelf.getStructure();
 
         //ogni volta stampo la legenda

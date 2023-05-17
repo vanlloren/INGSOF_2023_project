@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.function.Consumer;
 
-public class LivingRoom extends LivingRoomObservable implements Serializable {
+public class LivingRoom extends LivingRoomObservable implements Serializable, SimpleLivingRoom {
     private static final long serialVersionUID = 44051L;
     private ItemTile[][] gameTable;
     private CommonGoal commonGoal1;

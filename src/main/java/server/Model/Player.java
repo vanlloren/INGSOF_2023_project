@@ -11,7 +11,7 @@ import server.Controller.RuleShelf;
 import java.io.Serial;
 import java.io.Serializable;
 
-public class Player extends PlayerObservable implements Serializable {
+public class Player extends PlayerObservable implements Serializable, SimplePlayer {
     @Serial
     private static final long serialVersionUID = 1303503671022200446L;
     private String nickname;
