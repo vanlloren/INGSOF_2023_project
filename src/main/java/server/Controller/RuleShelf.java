@@ -1,13 +1,18 @@
 package server.Controller;
 import server.Model.PlayableItemTile;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.List;
 import java.util.Vector;
 
 
-public class RuleShelf {
+public class RuleShelf implements Serializable {
 
-    public static boolean commandPutTileCheckValidity(int x, int y, PlayableItemTile Tile,PlayableItemTile[][] structure, int numberOfTilesPicked) {
+    @Serial
+    private static final long serialVersionUID = -4871491315493787470L;
+
+    public static boolean commandPutTileCheckValidity(int x, int y, PlayableItemTile Tile, PlayableItemTile[][] structure, int numberOfTilesPicked) {
         boolean flag= false;
         boolean availability;
         availability = iscolumnAvailable(y, numberOfTilesPicked, structure);
