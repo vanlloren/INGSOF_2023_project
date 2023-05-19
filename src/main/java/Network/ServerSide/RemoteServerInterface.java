@@ -17,5 +17,4 @@ public interface RemoteServerInterface extends Remote {
 
     void disconnect() throws RemoteException;
 
-    void resetStop();
 }

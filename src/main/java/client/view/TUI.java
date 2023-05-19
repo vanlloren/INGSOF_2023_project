@@ -193,6 +193,8 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
     public static boolean checkAddressValidity(String ipAddress) {
         if (ipAddress == null || ipAddress.isEmpty()) {
             return false;
+        }else if(ipAddress.equals("localhost")){
+            return true;
         }
 
         String[] partedAddress = ipAddress.split("\\.");
