@@ -55,8 +55,9 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
                         Player newPlayer = new Player(message.getNickname(), newMessage.getClient(), gameController.getGame());
                         newPlayer.addObserver(newMessage.getClient());
                         gameController.getGame().addObserver(newMessage.getClient());
-                        RandPersonalGoal.setType(newPlayer, newPlayer.getPersonalGoal(), gameController.getGame().getPlayersInGame());
                         gameController.getGame().setPlayersInGame(newPlayer);
+                        RandPersonalGoal.setType(newPlayer, newPlayer.getPersonalGoal(), gameController.getGame().getPlayersInGame());
+
                         Message newMessage2 = new PlayersNumberRequestMessage(message.getNickname());
                         newMessage.getClient().onMessage(newMessage2);
                         stop = true;
