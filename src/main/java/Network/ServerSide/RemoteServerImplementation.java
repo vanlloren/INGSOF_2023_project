@@ -56,7 +56,7 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
                         newPlayer.addObserver(newMessage.getClient());
                         gameController.getGame().addObserver(newMessage.getClient());
                         gameController.getGame().setPlayersInGame(newPlayer);
-                        RandPersonalGoal.setType(newPlayer, newPlayer.getPersonalGoal(), gameController.getGame().getPlayersInGame());
+                        RandPersonalGoal.setType(newPlayer, gameController.getGame().getPlayersInGame());
 
                         Message newMessage2 = new PlayersNumberRequestMessage(message.getNickname());
                         newMessage.getClient().onMessage(newMessage2);
@@ -79,7 +79,7 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
                             gameController.getGame().getMyShelfie().getLivingRoom().addObserver(newMessage.getClient());
                             gameController.getGame().getMyShelfie().getLivingRoom().getCommonGoal1().addObserver(newMessage.getClient());
                             gameController.getGame().getMyShelfie().getLivingRoom().getCommonGoal2().addObserver(newMessage.getClient());
-                            RandPersonalGoal.setType(newPlayer, newPlayer.getPersonalGoal(), gameController.getGame().getPlayersInGame());
+                            RandPersonalGoal.setType(newPlayer, gameController.getGame().getPlayersInGame());
                             gameController.getGame().setPlayersInGame(newPlayer);
                         }
                         Message newMessage = new LoginReplyMessage(message.getNickname(), approvedNick);
@@ -96,7 +96,7 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
                             gameController.getGame().getMyShelfie().getLivingRoom().addObserver(newMessage.getClient());
                             gameController.getGame().getMyShelfie().getLivingRoom().getCommonGoal1().addObserver(newMessage.getClient());
                             gameController.getGame().getMyShelfie().getLivingRoom().getCommonGoal2().addObserver(newMessage.getClient());
-                            RandPersonalGoal.setType(newPlayer, newPlayer.getPersonalGoal(), gameController.getGame().getPlayersInGame());
+                            RandPersonalGoal.setType(newPlayer, gameController.getGame().getPlayersInGame());
                             gameController.getGame().setPlayersInGame(newPlayer);
 
                         }
