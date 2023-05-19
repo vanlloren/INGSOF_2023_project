@@ -6,6 +6,7 @@ import Util.RandChairOwner;
 import client.view.TurnView;
 
 import java.io.Serializable;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 
@@ -37,24 +38,48 @@ public class GameModel extends GameModelObservable implements Serializable, Simp
     }
     public void setEndGame(){
         this.endGame = true;
-        notifyObservers(obs -> obs.onUpdateModelEndGame(new TurnView(this),this.getCurrPlayer(), this.endGame));
+        notifyObservers(obs -> {
+            try {
+                obs.onUpdateModelEndGame(new TurnView(this),this.getCurrPlayer(), this.endGame);
+            } catch (RemoteException e) {
+                throw new RuntimeException(e);
+            }
+        });
 
     }
 
     public void setMatchWinner(Player player){
         this.matchWinner = player.getNickname();
-        notifyObservers(obs -> obs.onUpdateModelMatchWinner(new TurnView(this), matchWinner));
+        notifyObservers(obs -> {
+            try {
+                obs.onUpdateModelMatchWinner(new TurnView(this), matchWinner);
+            } catch (RemoteException e) {
+                throw new RuntimeException(e);
+            }
+        });
         GameTerminator();
     }
 
     public void setChat(String Nickname,String chat) {
         this.Chat = chat;
-        notifyObservers(obs -> obs.onUpdateModelChat(new TurnView(this), Nickname,chat));
+        notifyObservers(obs -> {
+            try {
+                obs.onUpdateModelChat(new TurnView(this), Nickname,chat);
+            } catch (RemoteException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
     public void GameTerminator() {
         this.GameOn = false;
-        notifyObservers(obs -> obs.onUpdateModelGameHasEnd(new TurnView(this)));
+        notifyObservers(obs -> {
+            try {
+                obs.onUpdateModelGameHasEnd(new TurnView(this));
+            } catch (RemoteException e) {
+                throw new RuntimeException(e);
+            }
+        });
 
     }
     public boolean getIsGameOn(){
@@ -79,19 +104,37 @@ public class GameModel extends GameModelObservable implements Serializable, Simp
 
     public void setPlayersNumber(int playersNumber){
         this.chosenPlayersNumber = playersNumber;
-        notifyObservers(obs -> obs.onUpdateModelPlayersNumber(new TurnView(this), playersNumber));
+        notifyObservers(obs -> {
+            try {
+                obs.onUpdateModelPlayersNumber(new TurnView(this), playersNumber);
+            } catch (RemoteException e) {
+                throw new RuntimeException(e);
+            }
+        });
 
     }
 
     public void setCurrPlayer(Player currPlayer){
         this.currPlayer = currPlayer;
-        notifyObservers(obs -> obs.onUpdateModelCurrentPlayer(new TurnView(this), currPlayer));
+        notifyObservers(obs -> {
+            try {
+                obs.onUpdateModelCurrentPlayer(new TurnView(this), currPlayer);
+            } catch (RemoteException e) {
+                throw new RuntimeException(e);
+            }
+        });
 
     }
 
     public void setChairOwner(Player player) {
       this.chosenChairOwner = player;
-        notifyObservers(obs -> obs.onUpdateModelChairOwner(new TurnView(this), player));
+        notifyObservers(obs -> {
+            try {
+                obs.onUpdateModelChairOwner(new TurnView(this), player);
+            } catch (RemoteException e) {
+                throw new RuntimeException(e);
+            }
+        });
         setCurrPlayer(player);
     }
 
@@ -104,20 +147,44 @@ public class GameModel extends GameModelObservable implements Serializable, Simp
     public void setPlayersInGame(Player newPlayer) {
         if(playersInGame.size()==chosenPlayersNumber-1){
             this.playersInGame.add(newPlayer);
-            notifyObservers(obs -> obs.onUpdateModelListPlayers(new TurnView(this), newPlayer));
-            notifyObservers(obs -> obs.onUpdateModelGameHasStarted(new TurnView(this)));
+            notifyObservers(obs -> {
+                try {
+                    obs.onUpdateModelListPlayers(new TurnView(this), newPlayer);
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+            notifyObservers(obs -> {
+                try {
+                    obs.onUpdateModelGameHasStarted(new TurnView(this));
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
+            });
             setChairOwner(playersInGame.get(RandChairOwner.ChooseRand(playersInGame.size())));
 
         }
         else {
             this.playersInGame.add(newPlayer);
-            notifyObservers(obs -> obs.onUpdateModelListPlayers(new TurnView(this), newPlayer));
+            notifyObservers(obs -> {
+                try {
+                    obs.onUpdateModelListPlayers(new TurnView(this), newPlayer);
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
+            });
         }
     }
 
     public void setmyShelfie(GameBoard myShelfie) {
         this.myShelfie = myShelfie;
-        notifyObservers(obs -> obs.onUpdateGameBoard(new TurnView(this), myShelfie));
+        notifyObservers(obs -> {
+            try {
+                obs.onUpdateGameBoard(new TurnView(this), myShelfie);
+            } catch (RemoteException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
     public GameBoard getMyShelfie(){
         return myShelfie;

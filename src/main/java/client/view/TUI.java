@@ -174,7 +174,6 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
         out.println("Per favore, inserisci alcune informazioni:");
         String serverAddress;
         do {
-            scanner.nextLine();
             out.println("Inserisci l'indirizzo del Server [default = localhost]:");
             serverAddress = scanner.next();
             if(checkAddressValidity(serverAddress)){
@@ -579,19 +578,17 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
 
         out.println("Per favore, indica il tipo di connessione desiderata [0=RMI, 1=Socket]: ");
         int connectionType = scanner.nextInt();
-        try {
-            if (connectionType == 0) {
-                observers.add(viewManager.connectRMI(address, port, this));
-                out.println("Connessione col Server riuscita!");
-            } else {
-                //observers.add(viewManager.connectSocket(address, port, this));
-            }
-        }catch (Exception e){
 
+        if (connectionType == 0) {
+            try {
+                observers.add(viewManager.connectRMI(address, port, this));
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+            out.println("Connessione col Server riuscita!");
+        } else {
+            //observers.add(viewManager.connectSocket(address, port, this));
         }
     }
-
-
-
 }
 

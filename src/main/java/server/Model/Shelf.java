@@ -7,6 +7,7 @@ import server.Controller.RuleShelf;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.rmi.RemoteException;
 import java.util.List;
 import java.util.Vector;
 import Util.Colour;
@@ -57,7 +58,11 @@ public class Shelf extends ShelfObservable implements Serializable, SimpleShelf 
     public void putTile(int x, int y, PlayableItemTile Tile){
         this.structure[x][y] = Tile;
         notifyObservers(obs-> {
-            obs.onUpdatePuttedTileIntoShelf(new TurnView(gameModel), x,y,Tile);
+            try {
+                obs.onUpdatePuttedTileIntoShelf(new TurnView(gameModel), x,y,Tile);
+            } catch (RemoteException e) {
+                throw new RuntimeException(e);
+            }
         });
     }
     public int freeCellsInShelf(){

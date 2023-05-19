@@ -7,6 +7,7 @@ import client.view.TurnView;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.rmi.RemoteException;
 
 public class PersonalGoal extends PersonalGoalObservable implements Serializable {
     @Serial
@@ -36,7 +37,13 @@ public class PersonalGoal extends PersonalGoalObservable implements Serializable
 
     public void setPersonalGoalType(PersonalGoalType personalGoalType, String nickname){
         this.personalGoalType = personalGoalType;
-        notifyObservers(obs -> obs.OnUpdateModelPersonalGoal(new TurnView(gameModel), personalGoalType, nickname));
+        notifyObservers(obs -> {
+            try {
+                obs.OnUpdateModelPersonalGoal(new TurnView(gameModel), personalGoalType, nickname);
+            } catch (RemoteException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
 }

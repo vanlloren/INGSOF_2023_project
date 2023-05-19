@@ -10,6 +10,7 @@ import server.Controller.RuleShelf;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.rmi.RemoteException;
 
 public class Player extends PlayerObservable implements Serializable, SimplePlayer {
     @Serial
@@ -46,12 +47,24 @@ public class Player extends PlayerObservable implements Serializable, SimplePlay
 
     public void setStatusCommonGoal1(){
         this.hasCommonGoal1 = true;
-        notifyObservers(obs -> obs.OnUpdateModelStatusCommonGoal1(new TurnView(gameModel)));
+        notifyObservers(obs -> {
+            try {
+                obs.OnUpdateModelStatusCommonGoal1(new TurnView(gameModel));
+            } catch (RemoteException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
     public void setStatusCommonGoal2(){
         this.hasCommonGoal2 = true;
-        notifyObservers(obs -> obs.OnUpdateModelStatusCommonGoal2(new TurnView(gameModel)));
+        notifyObservers(obs -> {
+            try {
+                obs.OnUpdateModelStatusCommonGoal2(new TurnView(gameModel));
+            } catch (RemoteException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
     public Shelf getPersonalShelf(){
@@ -75,7 +88,13 @@ public class Player extends PlayerObservable implements Serializable, SimplePlay
 
     public void setPoints(Integer points) {
         this.points = points;
-        notifyObservers(obs -> obs.OnUpdateModelPlayerPoint(new TurnView(gameModel), points));
+        notifyObservers(obs -> {
+            try {
+                obs.OnUpdateModelPlayerPoint(new TurnView(gameModel), points);
+            } catch (RemoteException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
     public boolean getEndgame(){
         return this.endgame;

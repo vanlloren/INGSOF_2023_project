@@ -21,80 +21,43 @@ public interface RemoteClientInterface extends Remote, LivingRoomObserver, Shelf
 
     void disconnect() throws RemoteException;
 
-    void UpdateAllClientOnPickedTileFromLivingRoom(String currPlayer, int x, int y);
-
-    void UpdateAllClientOnModelListPlayers(Player player);
-
-    void UpdateAllClientOnModelEndGame(String Nickname,boolean endGame);
-
-    void UpdateAllClientOnPlayersNumber(int playersNumber);
-
-    void UpdateAllClientOnModelGameBoard(GameBoard gameBoard);
-
-    void UpdateAllClientOnModelPersonalGoal(String Nickname,PersonalGoalType personalGoalType);
-
-    void UpdateAllClientOnModelCommonGoal(CommonGoalType commonGoalType);
-
-    void UpdateAllClientOnModelPlayerPoint(String nickNameCurrentPlayer, Integer points);
-
-    void UpdateAllClientOnModelStatusCommonGoal1(String nickNameCurrentPlayer);
-
-    void UpdateAllClientOnModelStatusCommonGoal2(String nickNameCurrentPlayer);
-
-    void UpdateAllClientOnChairOwner(Player player);
-
-    void UpdateAllClientOnModelGameHasStarted();
-
-    void onUpdateAllClientOnCurrentPlayer(Player currPlayer);
-
-    void UpdateAllClientOnStructureShelf(int x, int y, PlayableItemTile Tile);
-
-    void onModelModify(TurnView turnView, Event message);
 
 
-    void UpdateAllClientOnModelGameHasEnd();
-
-    void UpdateAllClientOnModelMatchWinner(String matchWinner);
-
-    void UpdateAllClientOnModelCurrPlayer(Player currPlayer);
-
-    void UpdateAllClientOnNewMessageChat(String Nickname, String chatMessage);
-
-    void OnUpdateModelCommonGoal(TurnView turnView, CommonGoalType commonGoalType);
+    void OnUpdateModelCommonGoal(TurnView turnView, CommonGoalType commonGoalType) throws RemoteException;
 
 
 
-    void onUpdateModelListPlayers(TurnView turnView, Player player);
+    void onUpdateModelListPlayers(TurnView turnView, Player player) throws RemoteException;
 
-    void onUpdateModelEndGame(TurnView turnView,Player player, boolean endGame);
+    void onUpdateModelEndGame(TurnView turnView,Player player, boolean endGame) throws RemoteException;
 
 
 
-    void onUpdateModelChairOwner(TurnView turnView, Player player);
+    void onUpdateModelChairOwner(TurnView turnView, Player player) throws RemoteException;
 
 
 
 
 
-    void onUpdateModelCurrentPlayer(TurnView turnView, Player currPlayer);
+    void onUpdateModelCurrentPlayer(TurnView turnView, Player currPlayer) throws RemoteException;
 
-    void onUpdateModelMatchWinner(TurnView turnView, String player);
+    void onUpdateModelMatchWinner(TurnView turnView, String player) throws RemoteException;
 
-    void onUpdateModelGameHasEnd(TurnView turnView);
+    void onUpdateModelGameHasEnd(TurnView turnView) throws RemoteException;
 
-    void onUpdatePickedTileFromLivingRoom(TurnView turnView, int x, int y);
+    void onUpdatePickedTileFromLivingRoom(TurnView turnView, int x, int y) throws RemoteException;
 
-    void OnUpdateModelPersonalGoal(TurnView turnView, PersonalGoalType personalGoalType, String nickname);
+    void OnUpdateModelPersonalGoal(TurnView turnView, PersonalGoalType personalGoalType, String nickname) throws RemoteException;
 
-    void OnUpdateModelPlayerPoint(TurnView turnView, Integer points);
+    void OnUpdateModelPlayerPoint(TurnView turnView, Integer points) throws RemoteException;
 
-    void OnUpdateModelStatusCommonGoal2(TurnView turnView);
+    void OnUpdateModelStatusCommonGoal2(TurnView turnView) throws RemoteException;
 
-    void OnUpdateModelStatusCommonGoal1(TurnView turnView);
+    void OnUpdateModelStatusCommonGoal1(TurnView turnView) throws RemoteException;
 
-    void onUpdatePuttedTileIntoShelf(TurnView turnView, int x, int y, PlayableItemTile Tile);
-    void onUpdateModelPlayersNumber(TurnView turnView, int playersNumber) ;
-    void onUpdateGameBoard(TurnView turnView, GameBoard gameBoard);
-    void onUpdateModelGameHasStarted(TurnView turnView);
+    void onUpdatePuttedTileIntoShelf(TurnView turnView, int x, int y, PlayableItemTile Tile) throws RemoteException;
+    void onUpdateModelPlayersNumber(TurnView turnView, int playersNumber) throws RemoteException;
+    void onUpdateGameBoard(TurnView turnView, GameBoard gameBoard) throws RemoteException;
+    void onUpdateModelGameHasStarted(TurnView turnView) throws RemoteException;
 
 }

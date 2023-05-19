@@ -6,6 +6,7 @@ import Util.*;
 import client.view.TurnView;
 
 import java.io.Serializable;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.function.Consumer;
@@ -99,7 +100,13 @@ public class LivingRoom extends LivingRoomObservable implements Serializable, Si
         PlayableItemTile helperTile;
         helperTile = (PlayableItemTile) gameTable[x][y];
         gameTable[x][y] = null;
-        notifyObservers(obs -> obs.onUpdatePickedTileFromLivingRoom(new TurnView(gameModel), x, y));
+        notifyObservers(obs -> {
+            try {
+                obs.onUpdatePickedTileFromLivingRoom(new TurnView(gameModel), x, y);
+            } catch (RemoteException e) {
+                throw new RuntimeException(e);
+            }
+        });
         return helperTile;
     }
 
