@@ -15,7 +15,7 @@ public class GameModel extends GameModelObservable implements Serializable, Simp
 
 
     private Player chosenChairOwner;
-    private Integer chosenPlayersNumber;
+    private Integer chosenPlayersNumber = -1;
 
     public static final String Server_Nick = "Server";//C'è un collegamento al server per ogni giocatore.
     private Player currPlayer;
@@ -145,7 +145,27 @@ public class GameModel extends GameModelObservable implements Serializable, Simp
     }
 
     public void setPlayersInGame(Player newPlayer) {
-        if(playersInGame.size()==chosenPlayersNumber-1){
+        if(chosenPlayersNumber.equals(-1)){
+            this.playersInGame.add(newPlayer);
+            notifyObservers(obs -> {
+                try {
+                    obs.onUpdateModelListPlayers(new TurnView(this), newPlayer);
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+                }
+        else if (!chosenPlayersNumber.equals(-1)&&playersInGame.size()!=chosenPlayersNumber-1){
+            this.playersInGame.add(newPlayer);
+            notifyObservers(obs -> {
+                try {
+                    obs.onUpdateModelListPlayers(new TurnView(this), newPlayer);
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+        }
+        else if(!chosenPlayersNumber.equals(-1)&&playersInGame.size()==chosenPlayersNumber-1){
             this.playersInGame.add(newPlayer);
             notifyObservers(obs -> {
                 try {
@@ -162,19 +182,9 @@ public class GameModel extends GameModelObservable implements Serializable, Simp
                 }
             });
             setChairOwner(playersInGame.get(RandChairOwner.ChooseRand(playersInGame.size())));
+        }
+        }
 
-        }
-        else {
-            this.playersInGame.add(newPlayer);
-            notifyObservers(obs -> {
-                try {
-                    obs.onUpdateModelListPlayers(new TurnView(this), newPlayer);
-                } catch (RemoteException e) {
-                    throw new RuntimeException(e);
-                }
-            });
-        }
-    }
 
     public void setmyShelfie(GameBoard myShelfie) {
         this.myShelfie = myShelfie;

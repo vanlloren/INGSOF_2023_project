@@ -185,7 +185,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
         }
     }
     @Override
-    public void UpdateAllClientOnModelGameHasEnd() {
+    public void UpdateAllClientOnModelGameHasEnd(){
         this.userInterface.resetGameOn();
         System.out.println(".......................\n" +
                            ".......................\n" +
@@ -330,7 +330,12 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
 
     @Override
     public void onUpdateNickname(String nickname) throws RemoteException {
-        server.onMessage(new LoginRequestMessage(this, nickname));
+        try {
+            LoginRequestMessage loginRequestMessage = new LoginRequestMessage(this,nickname);
+
+            server.onMessage(loginRequestMessage);
+            System.out.println("cicicic");
+        }catch (RemoteException e){e.printStackTrace();}
     }
 
     @Override
