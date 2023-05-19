@@ -26,7 +26,7 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
     private boolean stop = false;
     private RemoteClientInterface client;
 
-    private ArrayList<RemoteClientInterface> clientList;
+    private ArrayList<RemoteClientInterface> clientList = new ArrayList<>();
 
     private HashMap<String, RemoteClientInterface> clientNickCombinations;
     private final GameController gameController;
@@ -55,9 +55,6 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
                         Player newPlayer = new Player(message.getNickname(), newMessage.getClient(), gameController.getGame());
                         newPlayer.addObserver(newMessage.getClient());
                         gameController.getGame().addObserver(newMessage.getClient());
-                        gameController.getGame().getMyShelfie().getLivingRoom().addObserver(newMessage.getClient());
-                        gameController.getGame().getMyShelfie().getLivingRoom().getCommonGoal1().addObserver(newMessage.getClient());
-                        gameController.getGame().getMyShelfie().getLivingRoom().getCommonGoal2().addObserver(newMessage.getClient());
                         RandPersonalGoal.setType(newPlayer, newPlayer.getPersonalGoal(), gameController.getGame().getPlayersInGame());
                         gameController.getGame().setPlayersInGame(newPlayer);
                         Message newMessage2 = new PlayersNumberRequestMessage(message.getNickname());
@@ -66,6 +63,9 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
                         while (stop) {
                         }
                         gameController.initGameBoard();
+                        gameController.getGame().getMyShelfie().getLivingRoom().addObserver(newMessage.getClient());
+                        gameController.getGame().getMyShelfie().getLivingRoom().getCommonGoal1().addObserver(newMessage.getClient());
+                        gameController.getGame().getMyShelfie().getLivingRoom().getCommonGoal2().addObserver(newMessage.getClient());
                     } else if (gameController.getGame().getPlayersInGame().size() < gameController.getGame().getPlayersNumber() - 1) {
                         boolean approvedNick = gameController.getGame().isNicknameAvailable(message.getNickname());
                         if (approvedNick) {

@@ -585,6 +585,7 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
                 observers.add(viewManager.connectRMI(address, port, this));
                 out.println("ciao ho aggiunto client come observer");
             } catch (Exception e) {
+                e.printStackTrace();
                 throw new RuntimeException(e);
             }
             out.println("Connessione col Server riuscita!");
