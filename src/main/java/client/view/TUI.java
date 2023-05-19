@@ -18,7 +18,6 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
 
     private final IOManager viewManager = new IOManager();
 
-    protected final List<ViewObserver> observers = new ArrayList<>();
 
     private boolean gameOn=true;
     private boolean goOnPicking=true;
@@ -220,13 +219,13 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
         int portNum;
         do {
             scanner.nextLine();
-            out.println("Inserisci la porta del Server [default = ??]:\n");
+            out.println("Inserisci la porta del Server [default = ??]:");
             //effettuo check validità su in.nextLine();
             portNum = scanner.nextInt();
             if (checkPortValidity(portNum)) {
                 checker = true;
             } else {
-                out.println("Porta del server non valida!\n");
+                out.println("Porta del server non valida!");
                 checker = false;
             }
         } while (!checker);
@@ -255,13 +254,15 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
         String nickName = scanner.nextLine();
         notifyObserver(obs -> {
             try {
+                out.println("ciao");
                 obs.onUpdateNickname(nickName);
             } catch (RemoteException e) {
+                out.println("errore");
                 throw new RuntimeException(e);
             }
         });
 
-        out.println("Il nickname scelto è: " + nickName+"\n");
+        out.println("Il nickname scelto è: " + nickName);
     }
 
     @Override
@@ -582,6 +583,7 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
         if (connectionType == 0) {
             try {
                 observers.add(viewManager.connectRMI(address, port, this));
+                out.println("ciao ho aggiunto client come observer");
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
