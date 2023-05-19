@@ -80,10 +80,7 @@ public class Player extends PlayerObservable implements Serializable, SimplePlay
     public boolean getEndgame(){
         return this.endgame;
     }
-    public void setEndgame(boolean endgame){
-        this.endgame = personalShelf.isFull();
-        notifyObservers(obs ->obs.OnUpdateModelPlayerEndGame(new TurnView(gameModel), endgame));
-    }
+
     public boolean getHasCommonGoal1(){
         return this.hasCommonGoal1;
     }

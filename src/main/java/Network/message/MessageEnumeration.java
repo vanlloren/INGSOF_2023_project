@@ -23,10 +23,11 @@ public enum MessageEnumeration {
 
         TO_PUT_TILE_2_OR_3_REPLY_ERROR,
         KEEP_PUTTING_REQUEST,
-        WINNER_MESSAGE,
+
         ERROR_MESSAGE,
         KEEP_PICKING_REQUEST,
         INVALID_TILE,
+        WRITE_IN_CHAT,
 
 
         FULL_LOBBY,

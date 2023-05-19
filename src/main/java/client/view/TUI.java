@@ -43,16 +43,21 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
     //Implementando il metodo Runnable ereditiamo tutte le sue classi e oggetti
     //Run è un costruttore basilare costruito direttamente dal metodo Runnable al posto di init
     public void init() {
-        while (true) {
-            out.println("Welcome to the game MyShelfie!");
+        out.println("╔════════════════════════════════════════╗");
+        out.println("║    --------------------------------    ║");
+        out.println("║    |*****WELCOME TO MYSHELFIE*****|    ║");
+        out.println("║    --------------------------------    ║");
+        out.println("╚════════════════════════════════════════╝");
+
             String serverAddress = askServerInfo();
             int portNum = askServerPort();
             connectToServerFromTUI(serverAddress, portNum);
             while(needNick) {
                 askNickname();
             }
+            while(gameOn){
+            }
         }
-    }
 
     public void resetGameOn() {
         this.gameOn = false;
@@ -131,7 +136,7 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
                     notifyObserver(obs -> obs.onUpdateShowNickCurrPlayer());
                     askPlayerNextMove();
                 case "7":
-                    //WriteInChat();
+                    WriteInChat();
                     askPlayerNextMove();
 
             }
@@ -149,14 +154,20 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
     }
 
 
-    /*@Override
+    @Override
     public void WriteInChat(){
         String chatMessage;
         scanner.nextLine();
         out.println("Write in the following line the content of your message");
-        chatMessage = scanner.next();
-        turnView.WriteToAllClient(nickname,chatMessage);
-    }*/
+        chatMessage = scanner.nextLine();
+        notifyObserver(obs -> {
+            try {
+                obs.onUpdateChat(this.nickname,chatMessage);
+            } catch (RemoteException e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
 
     @Override
     public String askServerInfo(){

@@ -28,6 +28,7 @@ public class TurnView implements Serializable {
         this.livingRoom = gameModel.getMyShelfie().getLivingRoom();
     }
 
+
     public SimpleLivingRoom getLivingRoom(){
         return this.livingRoom;
     }
@@ -71,10 +72,10 @@ public class TurnView implements Serializable {
         }
         return point;
     }
-    public void WriteToAllClient(String Nickname, String chatMessage){
+   // public void WriteToAllClient(String Nickname, String chatMessage){
         //notifyObservers(obs -> obs.UpdateAllClientonNewMessageChat(Nickname,chatMessage));
 
     }
 
 
-}
+
