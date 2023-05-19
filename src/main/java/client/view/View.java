@@ -87,4 +87,6 @@ public interface View {
     void showNegativePut2Or3TileResults(ArrayList<PlayableItemTile> tilesInPlayerHand);
 
     void invalidTileHandler();
+
+    void WriteInChat();
 }

@@ -23,7 +23,7 @@ public class GameModel extends GameModelObservable implements Serializable, Simp
     private ArrayList<Player> playersInGame;
     private boolean endGame=false;
     private boolean GameOn = true;
-
+    private String Chat;
 
     public GameModel(){
         this.myShelfie = new GameBoard(this);
@@ -37,7 +37,7 @@ public class GameModel extends GameModelObservable implements Serializable, Simp
     }
     public void setEndGame(){
         this.endGame = true;
-        notifyObservers(obs -> obs.onUpdateModelEndGame(new TurnView(this), this.endGame));
+        notifyObservers(obs -> obs.onUpdateModelEndGame(new TurnView(this),this.getCurrPlayer(), this.endGame));
 
     }
 
@@ -45,6 +45,11 @@ public class GameModel extends GameModelObservable implements Serializable, Simp
         this.matchWinner = player.getNickname();
         notifyObservers(obs -> obs.onUpdateModelMatchWinner(new TurnView(this), matchWinner));
         GameTerminator();
+    }
+
+    public void setChat(String Nickname,String chat) {
+        this.Chat = chat;
+        notifyObservers(obs -> obs.onUpdateModelChat(new TurnView(this), Nickname,chat));
     }
 
     public void GameTerminator() {
@@ -90,6 +95,8 @@ public class GameModel extends GameModelObservable implements Serializable, Simp
         setCurrPlayer(player);
     }
 
+
+
     public ArrayList<Player> getPlayersInGame() {
         return this.playersInGame;
     }
@@ -98,8 +105,8 @@ public class GameModel extends GameModelObservable implements Serializable, Simp
         if(playersInGame.size()==chosenPlayersNumber-1){
             this.playersInGame.add(newPlayer);
             notifyObservers(obs -> obs.onUpdateModelListPlayers(new TurnView(this), newPlayer));
-            setChairOwner(playersInGame.get(RandChairOwner.ChooseRand(playersInGame.size())));
             notifyObservers(obs -> obs.onUpdateModelGameHasStarted(new TurnView(this)));
+            setChairOwner(playersInGame.get(RandChairOwner.ChooseRand(playersInGame.size())));
 
         }
         else {

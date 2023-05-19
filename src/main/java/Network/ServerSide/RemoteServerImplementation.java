@@ -97,6 +97,7 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
                             gameController.getGame().getMyShelfie().getLivingRoom().getCommonGoal2().addObserver(newMessage.getClient());
                             RandPersonalGoal.setType(newPlayer, newPlayer.getPersonalGoal(), gameController.getGame().getPlayersInGame());
                             gameController.getGame().setPlayersInGame(newPlayer);
+
                         }
                         Message newMessage = new LoginReplyMessage(message.getNickname(), approvedNick);
                         clientNickCombinations.get(message.getNickname()).onMessage(newMessage);
@@ -152,7 +153,6 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
                                 gameController.nextTurn();
                             } else if (!gameController.getGame().getEndGame()) {
                                 gameController.nextTurn();
-
                                 clientNickCombinations.get(message.getNickname()).onMessage(newMessage);
                             }
 
@@ -205,15 +205,9 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
             }
             case TO_PUT_TILE_2_OR_3_REPLY_ERROR -> {
             }
-            case KEEP_PUTTING_REQUEST -> {
-            }
-            case WINNER_MESSAGE -> {
-            }
-            case ERROR_MESSAGE -> {
-            }
-            case KEEP_PICKING_REQUEST -> {
-            }
-            case TO_PICK_TILE_REQUEST -> {
+            case WRITE_IN_CHAT -> {
+                WriteInChatMessage newMessage = (WriteInChatMessage) message;
+                gameController.getGame().setChat(newMessage.getNickname(),newMessage.getChat());
             }
         }
     }

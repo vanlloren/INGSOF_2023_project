@@ -9,7 +9,7 @@ public interface GameModelObserver {
 
     void onUpdateModelListPlayers(TurnView turnView, Player playerArrayList) ;
 
-    void onUpdateModelEndGame(TurnView turnView, boolean endGame) ;
+    void onUpdateModelEndGame(TurnView turnView, Player currPlayer, boolean endGame) ;
 
     void onUpdateModelPlayersNumber(TurnView turnView, int playersNumber) ;
 
@@ -24,4 +24,6 @@ public interface GameModelObserver {
     void onUpdateModelMatchWinner(TurnView turnView, String player);
 
     void onUpdateModelGameHasEnd(TurnView turnView);
+
+    void onUpdateModelChat(TurnView turnView, String nickname, String chat);
 }

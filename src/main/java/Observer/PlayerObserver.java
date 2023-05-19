@@ -9,5 +9,4 @@ public interface PlayerObserver {
 
     void OnUpdateModelStatusCommonGoal1(TurnView turnView);
 
-    void OnUpdateModelPlayerEndGame(TurnView turnView, Boolean endgame);
 }

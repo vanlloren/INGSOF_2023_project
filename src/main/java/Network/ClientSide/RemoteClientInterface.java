@@ -25,7 +25,7 @@ public interface RemoteClientInterface extends Remote, LivingRoomObserver, Shelf
 
     void UpdateAllClientOnModelListPlayers(Player player);
 
-    void UpdateAllClientOnModelEndGame(boolean endGame);
+    void UpdateAllClientOnModelEndGame(String Nickname,boolean endGame);
 
     void UpdateAllClientOnPlayersNumber(int playersNumber);
 
@@ -52,7 +52,13 @@ public interface RemoteClientInterface extends Remote, LivingRoomObserver, Shelf
     void onModelModify(TurnView turnView, Event message);
 
 
-    void UpdateAllClientOnNewMessageChat(String string, String chatMessage);
+    void UpdateAllClientOnModelGameHasEnd();
+
+    void UpdateAllClientOnModelMatchWinner(String matchWinner);
+
+    void UpdateAllClientOnModelCurrPlayer(Player currPlayer);
+
+    void UpdateAllClientOnNewMessageChat(String Nickname, String chatMessage);
 
     void OnUpdateModelCommonGoal(TurnView turnView, CommonGoalType commonGoalType);
 
@@ -60,7 +66,7 @@ public interface RemoteClientInterface extends Remote, LivingRoomObserver, Shelf
 
     void onUpdateModelListPlayers(TurnView turnView, Player player);
 
-    void onUpdateModelEndGame(TurnView turnView, boolean endGame);
+    void onUpdateModelEndGame(TurnView turnView,Player player, boolean endGame);
 
 
 
@@ -85,8 +91,6 @@ public interface RemoteClientInterface extends Remote, LivingRoomObserver, Shelf
     void OnUpdateModelStatusCommonGoal2(TurnView turnView);
 
     void OnUpdateModelStatusCommonGoal1(TurnView turnView);
-
-    void OnUpdateModelPlayerEndGame(TurnView turnView, Boolean endgame);
 
     void onUpdatePuttedTileIntoShelf(TurnView turnView, int x, int y, PlayableItemTile Tile);
     void onUpdateModelPlayersNumber(TurnView turnView, int playersNumber) ;
