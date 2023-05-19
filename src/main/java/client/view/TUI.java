@@ -254,7 +254,6 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
         String nickName = scanner.nextLine();
         notifyObserver(obs -> {
             try {
-                out.println("ciao");
                 obs.onUpdateNickname(nickName);
             } catch (RemoteException e) {
                 out.println("errore");
@@ -583,7 +582,6 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
         if (connectionType == 0) {
             try {
                 observers.add(viewManager.connectRMI(address, port, this));
-                out.println("ciao ho aggiunto client come observer");
             } catch (Exception e) {
                 e.printStackTrace();
                 throw new RuntimeException(e);
