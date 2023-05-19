@@ -68,12 +68,10 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
                 this.nickname = message.getNickname();
                 this.userInterface.setNickname(this.nickname);
             }
-            case KEEP_PICKING_REQUEST -> {
+            case KEEP_PICKING_REQUEST ->
                 this.userInterface.askStopPicking();
-            }
-            case INVALID_TILE -> {
+            case INVALID_TILE ->
                 this.userInterface.invalidTileHandler();
-            }
             case TO_PICK_TILE_REQUEST -> {
                 ToPickTileRequestMessage newMessage = (ToPickTileRequestMessage) message;
                 ArrayList<PlayableItemTile> availableTiles = newMessage.getAvailableTiles();
@@ -95,21 +93,18 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
                 ArrayList<PlayableItemTile> tilesInPlayerHand = newMessage.getPlayableItemTiles();
                 this.userInterface.askTileToPut2or3tile(tilesInPlayerHand);
             }
-            case FULL_LOBBY -> {
+            case FULL_LOBBY ->
                 this.userInterface.fullLobbyTerminateUI();
-            }
-            case START_PICKING_TILE_REPLY -> {
+
+            case START_PICKING_TILE_REPLY ->
                 this.userInterface.setMoveOn();
-            }
+
             case START_PUTTING_TILE_REQUEST -> { //alf questo è esattamente uguale al tuo toPutFirstTile, quindi l'ho tolto
                 StartPuttingTileRequestMessage newMessage = (StartPuttingTileRequestMessage) message;
                 this.userInterface.askTileToPut(newMessage.getTilesArray());
             }
-            case MAX_TILE_PICKED -> {
+            case MAX_TILE_PICKED ->
                 this.userInterface.maxTilesPicked();
-            }
-
-
 
         }
     }
@@ -184,10 +179,16 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
         }
     }
 
-    @Override
-    public void UpdateAllClientOnNewMessageChat(String string, String chatMessage) {
+    private void UpdateAllClientOnModelCurrPlayer(Player player){
 
     }
+    private void UpdateAllClientOnModelGameHasEnd() {
+    }
+
+    private void UpdateAllClientOnModelMatchWinner(String matchWinner) {
+
+    }
+
 
     @Override
     public void disconnect() throws RemoteException {
@@ -274,7 +275,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
     }
 
     @Override
-    public void UpdateAllClientonNewMessageChat(String Nickname, String chatMessage) {
+    public void UpdateAllClientOnNewMessageChat(String Nickname, String chatMessage) {
         System.out.println(Nickname+": "+chatMessage+".");
     }
 

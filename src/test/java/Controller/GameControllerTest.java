@@ -17,30 +17,8 @@ import static server.Controller.GameController.findAdjGroupDim;
 import static server.Controller.GameController.findAdjGroups;
 
 
-public class GameControllerTest extends TestCase {
-    private PlayableItemTile[][] structure;
+public class GameControllerTest {
 
-    @BeforeEach
-    public void initialize() {
-
-        //expected PINK=5
-        structure[0][0] = new PlayableItemTile("PINK");
-        structure[0][1] = new PlayableItemTile("PINK");
-        structure[0][2] = new PlayableItemTile("PINK");
-        structure[1][0] = new PlayableItemTile("PINK");
-        structure[1][1] = new PlayableItemTile("PINK");
-        //expected CYAN = 3 && 1
-        structure[2][5] = new PlayableItemTile("CYAN");
-        structure[2][6] = new PlayableItemTile("CYAN");
-        structure[1][6] = new PlayableItemTile("CYAN");
-        structure[6][6] = new PlayableItemTile("CYAN");
-        //expected WHITE=2
-        structure[5][5] = new PlayableItemTile("WHITE");
-        structure[4][5] = new PlayableItemTile("WHITE");
-        //expected YELLOW=0
-        //expected GREEN=0
-        //expected BLUE=0
-    }
     @Test
     public void emptyShelfTest() {
         PlayableItemTile[][] structure1 = new PlayableItemTile[6][5];
@@ -51,7 +29,7 @@ public class GameControllerTest extends TestCase {
     @Test
     public void singleobjtest(){
         PlayableItemTile[][] structure1 = new PlayableItemTile[6][5];
-        structure1[0][0] = new PlayableItemTile("PINK");
+        structure1[0][0] = new PlayableItemTile("PINK", 1);
         HashMap<Colour, ArrayList<Integer>> result = findAdjGroups(structure1);
         HashMap<Colour, ArrayList<Integer>> compare = new HashMap<>();
         ArrayList<Integer> list = new ArrayList<>();
@@ -62,9 +40,9 @@ public class GameControllerTest extends TestCase {
     @Test
     public void groupObjTest3(){
         PlayableItemTile[][] structure1 = new PlayableItemTile[6][5];
-        structure1[0][0] = new PlayableItemTile("PINK");
-        structure1[0][1] = new PlayableItemTile("PINK");
-        structure1[0][2] = new PlayableItemTile("PINK");
+        structure1[0][0] = new PlayableItemTile("PINK", 1);
+        structure1[0][1] = new PlayableItemTile("PINK", 11);
+        structure1[0][2] = new PlayableItemTile("PINK", 1);
 
         HashMap<Colour, ArrayList<Integer>> result = findAdjGroups(structure1);
         HashMap<Colour, ArrayList<Integer>> compare = new HashMap<>();
@@ -79,10 +57,10 @@ public class GameControllerTest extends TestCase {
     @Test
     public void groupObjTest4(){
         PlayableItemTile[][] structure1 = new PlayableItemTile[6][5];
-        structure1[0][0] = new PlayableItemTile("PINK");
-        structure1[0][1] = new PlayableItemTile("PINK");
-        structure1[1][0] = new PlayableItemTile("PINK");
-        structure1[1][1] = new PlayableItemTile("PINK");
+        structure1[0][0] = new PlayableItemTile("PINK", 1);
+        structure1[0][1] = new PlayableItemTile("PINK", 1);
+        structure1[1][0] = new PlayableItemTile("PINK", 1);
+        structure1[1][1] = new PlayableItemTile("PINK", 1);
 
         HashMap<Colour, ArrayList<Integer>> result = findAdjGroups(structure1);
         HashMap<Colour, ArrayList<Integer>> compare = new HashMap<>();
@@ -94,6 +72,26 @@ public class GameControllerTest extends TestCase {
 
     @Test
     public void generalTest(){
+        PlayableItemTile[][] structure = new PlayableItemTile[6][5];
+
+        //expected PINK=5
+        structure[0][0] = new PlayableItemTile("PINK", 1);
+        structure[0][1] = new PlayableItemTile("PINK", 1);
+        structure[0][2] = new PlayableItemTile("PINK", 1);
+        structure[1][0] = new PlayableItemTile("PINK", 1);
+        structure[1][1] = new PlayableItemTile("PINK", 1);
+        //expected CYAN = 3 && 1
+        structure[2][4] = new PlayableItemTile("CYAN", 1);
+        structure[2][2] = new PlayableItemTile("CYAN", 1);
+        structure[1][4] = new PlayableItemTile("CYAN", 1);
+        structure[3][4] = new PlayableItemTile("CYAN", 1);
+        //expected WHITE=2
+        structure[5][4] = new PlayableItemTile("WHITE", 1);
+        structure[4][4] = new PlayableItemTile("WHITE", 1);
+        //expected YELLOW=0
+        //expected GREEN=0
+        //expected BLUE=0
+
         HashMap<Colour, ArrayList<Integer>> result = findAdjGroups(structure);
         HashMap<Colour, ArrayList<Integer>> compare = new HashMap<>();
         ArrayList<Integer> list1 = new ArrayList<>();

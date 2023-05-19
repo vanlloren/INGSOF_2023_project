@@ -4,17 +4,15 @@ import org.junit.Assert;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.Test;
 
-import server.Model.ItemBag;
-import server.Model.ItemTile;
-import server.Model.LivingRoom;
-import server.Model.PlayableItemTile;
+import server.Model.*;
 
 public class LivingRoomTest {
     private LivingRoom livingRoom;
 
     @BeforeEach
     public void setup() {
-        livingRoom = new LivingRoom();
+        GameModel gameModel = new GameModel();
+        livingRoom = new LivingRoom(gameModel);
     }
 
     @Test
