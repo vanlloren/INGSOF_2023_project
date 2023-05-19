@@ -227,7 +227,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
     @Override
     public void UpdateAllClientOnPlayersNumber(int playersNumber) {
 
-        System.out.println("Player 1 your request of playerNumber for this game has been accepted" +
+        System.out.println("Your request of playerNumber for this game has been accepted\n" +
                            "This game will have "+playersNumber+" players");
 
     }
