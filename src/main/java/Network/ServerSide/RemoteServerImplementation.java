@@ -4,6 +4,7 @@ package Network.ServerSide;
 import Network.ClientSide.RemoteClientInterface;
 
 import Network.message.*;
+import Util.RandChairOwner;
 import Util.RandCommonGoal;
 import Util.RandPersonalGoal;
 import server.Controller.GameController;
@@ -80,7 +81,6 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
                             gameController.getGame().addObserver(newMessage1.getClient());
                             gameController.getGame().getMyShelfie().getLivingRoom().addObserver(newMessage1.getClient());
                             RandPersonalGoal.setType(newPlayer, gameController.getGame().getPlayersInGame());
-
                             gameController.getGame().setPlayersInGame(newPlayer);
                         }else {
                             LoginRequestMessage newMessage2 = (LoginRequestMessage) message;
@@ -100,6 +100,8 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
                             gameController.getGame().getMyShelfie().getLivingRoom().addObserver(newMessage1.getClient());
                             RandPersonalGoal.setType(newPlayer, gameController.getGame().getPlayersInGame());
                             gameController.getGame().setPlayersInGame(newPlayer);
+                            gameController.getGame().setChairOwner(gameController.getGame().getPlayersInGame().get(RandChairOwner.ChooseRand(gameController.getGame().getPlayersNumber())));
+                            gameController.getGame().setCurrPlayer(gameController.getGame().getChairOwner());
                         }else{
                             LoginRequestMessage newMessage2 = (LoginRequestMessage) message;
                             newMessage2.getClient().onMessage(newMessage);

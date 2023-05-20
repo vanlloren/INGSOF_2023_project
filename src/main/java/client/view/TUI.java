@@ -33,6 +33,7 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
   @Override
     public void setNickname(String nickname) {
         this.nickname = nickname;
+
     }
 
     public void resetNeedNick(){
@@ -63,11 +64,11 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
         this.gameOn = false;
     }
 
+    @Override
     public void askPlayerNextMove(){
         int picking;
         if(gameOn) {
             do {
-
                 out.println("""
                         Press 1 if you want to PICK A TILE FROM LIVING ROOM\s
                         Press 2 if you want to SEE THE LIVINGROOM\s
@@ -263,6 +264,7 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
     @Override
     public void setCurrPlayer(String currPlayer) {
         this.currPlayer = currPlayer;
+
     }
 
     @Override
@@ -582,7 +584,6 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
             try {
                 observers.add(viewManager.connectRMI(address, port, this));
             } catch (Exception e) {
-                e.printStackTrace();
                 throw new RuntimeException(e);
             }
             out.println("Connessione col Server riuscita!");

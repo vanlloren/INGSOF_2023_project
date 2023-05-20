@@ -131,6 +131,8 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
             case UPDATE_CHAIR_OWNER -> {
                 UpdateChairOwnerEvent newEvent = (UpdateChairOwnerEvent) event;
                 UpdateAllClientOnChairOwner(newEvent.getPlayer());
+
+
             }
             case UPDATE_GAME_BOARD -> {
                 UpdateGameBoardEvent newEvent = (UpdateGameBoardEvent) event;
@@ -204,7 +206,9 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
     @Override
     public void UpdateAllClientOnModelCurrPlayer(Player currPlayer) {
         this.userInterface.setCurrPlayer(currPlayer.getNickname());
-        System.out.println("NEW UPDATE: "+currPlayer.getNickname()+"is now the current player");
+        System.out.println("NEW UPDATE: " + currPlayer.getNickname() + " is now the current player");
+        System.out.println("ccccc");
+
     }
 
     @Override
@@ -264,9 +268,6 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
     @Override
     public void UpdateAllClientOnChairOwner(Player player) {
         System.out.println("...NEW UPDATE: The chair owner is "+player.getNickname());
-        this.userInterface.setCurrPlayer(player.getNickname());
-        this.userInterface.askPlayerNextMove();
-
     }
 
     @Override
@@ -279,6 +280,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
     public void onUpdateAllClientOnCurrentPlayer(Player currPlayer) {
         System.out.println("...NEW UPDATE: Now it's"+currPlayer.getNickname()+" turn");
         this.userInterface.setCurrPlayer(currPlayer.getNickname());
+        this.userInterface.askPlayerNextMove();
     }
 
     @Override

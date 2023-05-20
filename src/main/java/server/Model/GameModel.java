@@ -134,8 +134,8 @@ public class GameModel extends GameModelObservable implements Serializable, Simp
             } catch (RemoteException e) {
                 throw new RuntimeException(e);
             }
-            setCurrPlayer(player);
         });
+
 
     }
 
@@ -189,7 +189,7 @@ public class GameModel extends GameModelObservable implements Serializable, Simp
                     throw new RuntimeException(e);
                 }
             });
-            setChairOwner(playersInGame.get(RandChairOwner.ChooseRand(playersInGame.size())));
+
         }
         }
 
