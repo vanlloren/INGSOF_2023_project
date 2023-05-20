@@ -18,7 +18,7 @@ public class GameModel extends GameModelObservable implements Serializable, Simp
     private Integer chosenPlayersNumber = -1;
 
     public static final String Server_Nick = "Server";//C'è un collegamento al server per ogni giocatore.
-    private Player currPlayer;
+    private Player currPlayer ;
     private String matchWinner;
     private GameBoard myShelfie ;
     private ArrayList<Player> playersInGame;
@@ -134,8 +134,9 @@ public class GameModel extends GameModelObservable implements Serializable, Simp
             } catch (RemoteException e) {
                 throw new RuntimeException(e);
             }
+            setCurrPlayer(player);
         });
-        setCurrPlayer(player);
+
     }
 
 
@@ -155,7 +156,7 @@ public class GameModel extends GameModelObservable implements Serializable, Simp
                 }
             });
                 }
-        else if (!chosenPlayersNumber.equals(-1)&&playersInGame.size()!=chosenPlayersNumber-1){
+        else if (!chosenPlayersNumber.equals(-1)&&playersInGame.size()<chosenPlayersNumber-1){
             this.playersInGame.add(newPlayer);
             notifyObservers(obs -> {
                 try {

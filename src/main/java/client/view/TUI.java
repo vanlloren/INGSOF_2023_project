@@ -30,7 +30,7 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
     public TUI(){
         this.out = System.out;
     }
-
+  @Override
     public void setNickname(String nickname) {
         this.nickname = nickname;
     }
@@ -64,35 +64,30 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
     }
 
     public void askPlayerNextMove(){
-        String picking;
-        scanner.nextLine();
-        askIsGameOn();
+        int picking;
         if(gameOn) {
             do {
-                scanner.nextLine();
-                out.println("Press 1 if you want to PICK A TILE FROM LIVING ROOM " +
-                        "Press 2 if you want to SEE THE LIVINGROOM " +
-                        "Press 3 if you want to SEE THE PLAYERS IN YOUR GAMELOBBY " +
-                        "Press 4 if you want to SEE YOUR PERSONAL SHELF" +
-                        "Press 5 if you want to SEE YOUR CURRENT SCORING" +
-                        "Press 6 if you want to SEE THE NICKNAME OF THE PLAYER WHO'S PLAYING"+
-                        "Press 7 if you want to write in the chat"
+
+                out.println("""
+                        Press 1 if you want to PICK A TILE FROM LIVING ROOM\s
+                        Press 2 if you want to SEE THE LIVINGROOM\s
+                        Press 3 if you want to SEE THE PLAYERS IN YOUR GAMELOBBY\s
+                        Press 4 if you want to SEE YOUR PERSONAL SHELF\s
+                        Press 5 if you want to SEE YOUR CURRENT SCORING\s
+                        Press 6 if you want to SEE THE NICKNAME OF THE PLAYER WHO'S PLAYING\s
+                        Press 7 if you want to write in the chat"""
                 );
 
-                picking = scanner.next();
-                if (!picking.equals("1") || !picking.equals("2") || !picking.equals("3") || !picking.equals("4") || !picking.equals("5") ||
-                        !picking.equals("6") || !picking.equals("7") || !picking.equals("8") || !picking.equals("9")) {
-                    out.println("Symbol not recognized, please try  again...\n");
+                picking = scanner.nextInt();
+                if (picking != 1 && picking != 2 && picking != 3 && picking != 4 && picking != 5 && picking != 6 && picking != 7) {
+                    out.println("Symbol not recognized, please try again...\n");
                 }
+
             }
-            while (!picking.equals("1") || !picking.equals("2") || !picking.equals("3") || !picking.equals("4") || !picking.equals("5") ||
-                    !picking.equals("6") || !picking.equals("7") || !picking.equals("8") || !picking.equals("9"));
+            while (picking != 1 && picking != 2 && picking != 3 && picking != 4 && picking != 5 && picking != 6 && picking != 7);
 
             switch (picking) {
-                case "1":
-                    notifyObserver(obs -> {
-                        obs.onUpdateShowCurrPlayer();
-                    });
+                case 1:
                     if (currPlayer.equals(this.nickname)) {
                         notifyObserver(obs -> {
                             try {
@@ -118,24 +113,24 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
                         System.out.println("IT IS NOT YOUR TURN YET: PLEASE WAIT ");
                         askPlayerNextMove();
                     }
-                case "2":
+                case 2:
                     notifyObserver(obs -> {
                         obs.onUpdateShowLivingRoom();
                     });
                     askPlayerNextMove();
-                case "3":
+                case 3:
                     notifyObserver(obs -> obs.onUpdateShowPlayersList());
                     askPlayerNextMove();
-                case "4":
+                case 4:
                     notifyObserver(obs -> obs.onUpdateShowPlayerShelf(nickname));
                     askPlayerNextMove();
-                case "5":
+                case 5:
                     notifyObserver(obs -> obs.onUpdateShowPartialPoint(nickname));
                     askPlayerNextMove();
-                case "6":
+                case 6:
                     notifyObserver(obs -> obs.onUpdateShowNickCurrPlayer());
                     askPlayerNextMove();
-                case "7":
+                case 7:
                     WriteInChat();
                     askPlayerNextMove();
 
