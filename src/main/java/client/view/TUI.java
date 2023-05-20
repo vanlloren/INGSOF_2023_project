@@ -274,6 +274,7 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
         int playersNum;
 
         out.println("Nickname accepted!");
+        resetNeedNick();
         out.println("You are the first player of the game! Please, insert the number of total player for the match [min=2, max=4]:");
         playersNum = scanner.nextInt();
         while(playersNum<2 || playersNum>4){

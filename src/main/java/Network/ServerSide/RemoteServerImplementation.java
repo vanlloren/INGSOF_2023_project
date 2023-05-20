@@ -48,6 +48,7 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
             case LOGIN_REQUEST -> {
                 synchronized (lock) {
                     if (gameController.getGame().getPlayersInGame().size() < 1) {
+                        stop = true;
                         clientNickCombinations = new HashMap<>();
                         LoginRequestMessage newMessage = (LoginRequestMessage) message;
                         clientList.add(newMessage.getClient());
@@ -60,7 +61,7 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
 
                         Message newMessage2 = new PlayersNumberRequestMessage(message.getNickname());
                         newMessage.getClient().onMessage(newMessage2);
-                        stop = true;
+
                         while (stop) {
                         }
                         gameController.initGameBoard();

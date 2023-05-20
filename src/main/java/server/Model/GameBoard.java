@@ -39,8 +39,9 @@ public class GameBoard implements Serializable {
     public void setLivingRoom(int playerNum){ // il parametro viene passato dal controller
         LivingRoom helperLivingRoom = new LivingRoom(gameModel);
         helperLivingRoom.createGameTable(playerNum);
-        firstFilling(helperLivingRoom);
         this.livingRoom = helperLivingRoom;
+        firstFilling(this.livingRoom);
+
         //qui va messa notify
     }
 

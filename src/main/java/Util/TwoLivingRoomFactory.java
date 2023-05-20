@@ -10,6 +10,12 @@ public class TwoLivingRoomFactory extends LivingRoomFactory {
         ItemTile[][] helperTable = new ItemTile[9][9];
         NullItemTile nullTile = new NullItemTile();
 
+        for(int i=0; i<9; i++){
+            for(int j=0; j<9; j++){
+                helperTable[i][j] = null;
+            }
+        }
+
         for (int i = 0; i < 9; i++) {
             //metto null Tiles da [0][0] a [0][8]
             for (int j = 0; j < 9 && i == 0; j++) {

@@ -18,6 +18,7 @@ public class GameBoardController {
 
 
     public GameBoardController(GameController gameController){
+        this.gameController=gameController;
     }
     public void setPlayerNum(int playerNum){
         this.playerNum = playerNum;

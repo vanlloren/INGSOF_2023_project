@@ -20,6 +20,7 @@ public class LivingRoom extends LivingRoomObservable implements Serializable, Si
 
     public LivingRoom(GameModel gameModel){
         this.gameModel=gameModel;
+
         this.commonGoal1 = new CommonGoal(gameModel);
         this.commonGoal2 = new CommonGoal(gameModel);
     }
@@ -112,10 +113,11 @@ public class LivingRoom extends LivingRoomObservable implements Serializable, Si
 
     //MODEL
     public boolean searchVoid(int x, int y) {
-        if (gameTable[x][y] != null) {
+        if(gameTable[x][y] == null) {
+            return true;
+        }else {
             return false;
         }
-        return true;
     }
 
     //MODEL
