@@ -59,6 +59,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
                 if(newMessage.isNicknameUniqueAccepted()) {
                     this.nickname = newMessage.getNickname();
                     this.userInterface.setNickname(this.nickname);
+
                 }
                 this.userInterface.showLoginResults(newMessage.isNicknameUniqueAccepted(), newMessage.getNickname());
             }
@@ -262,7 +263,9 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
     @Override
     public void UpdateAllClientOnChairOwner(Player player) {
         System.out.println("...NEW UPDATE: The chair owner is "+player.getNickname());
+        this.userInterface.setCurrPlayer(player.getNickname());
         this.userInterface.askPlayerNextMove();
+
     }
 
     @Override
@@ -274,6 +277,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
     @Override
     public void onUpdateAllClientOnCurrentPlayer(Player currPlayer) {
         System.out.println("...NEW UPDATE: Now it's"+currPlayer.getNickname()+" turn");
+        this.userInterface.setCurrPlayer(currPlayer.getNickname());
     }
 
     @Override
@@ -402,6 +406,8 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
 
     }
 
+
+    //---------------------------------//
     @Override
     public void onUpdateModelListPlayers(TurnView turnView, Player player) {
         onModelModify(turnView, new UpdatePlayersListEvent(player));

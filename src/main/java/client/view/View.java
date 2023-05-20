@@ -76,6 +76,8 @@ public interface View {
 
     void setNickname(String nickname);
 
+
+
     void resetGameOn();
 
     void askPlayerNextMove();

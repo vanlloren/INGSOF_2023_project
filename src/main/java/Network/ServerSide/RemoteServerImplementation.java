@@ -1,17 +1,17 @@
 package Network.ServerSide;
 
-import Exceptions.MaxTilesPickedException;
+
 import Network.ClientSide.RemoteClientInterface;
-import Network.Events.Event;
+
 import Network.message.*;
+import Util.RandCommonGoal;
 import Util.RandPersonalGoal;
-import client.view.TurnView;
 import server.Controller.GameController;
 import server.Controller.RuleShelf;
 import server.Model.LivingRoom;
 import server.Model.PlayableItemTile;
 import server.Model.Player;
-import Util.*;
+
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -23,7 +23,7 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
     private final RMIServer server;
 
     private final Object lock = new Object();
-    private boolean stop = false;
+    private volatile boolean stop = false;
     private RemoteClientInterface client;
 
     private ArrayList<RemoteClientInterface> clientList = new ArrayList<>();
@@ -179,8 +179,7 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
                 }
 
             }
-            case TO_PUT_TILE_REPLY_ERROR -> {
-            }
+
             case TO_PUT_TILE_2_OR_3_REQUEST -> {
                 ToPut2Or3TileRequestMessage newMessage = (ToPut2Or3TileRequestMessage) message;
                 int xPos = newMessage.getxPos();
@@ -217,8 +216,6 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
             }
             case START_PICKING_TILE_REQUEST -> {
                 clientNickCombinations.get(message.getNickname()).onMessage(new StartPuttingTileRequestMessage(gameController.pickTilesArray(message.getNickname())));
-            }
-            case TO_PUT_TILE_2_OR_3_REPLY_ERROR -> {
             }
             case WRITE_IN_CHAT -> {
                 WriteInChatMessage newMessage = (WriteInChatMessage) message;
