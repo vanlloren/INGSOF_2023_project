@@ -84,7 +84,13 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
                             gameController.getGame().setPlayersInGame(newPlayer);
                         }
                         Message newMessage = new LoginReplyMessage(message.getNickname(), approvedNick);
-                        clientNickCombinations.get(message.getNickname()).onMessage(newMessage);
+                        if(approvedNick){
+                            clientNickCombinations.get(message.getNickname()).onMessage(newMessage);
+                        }else{
+                            LoginRequestMessage newMessage2 = (LoginRequestMessage) message;
+                            newMessage2.getClient().onMessage(newMessage);
+                        }
+
                     } else if (gameController.getGame().getPlayersInGame().size() == gameController.getGame().getPlayersNumber() - 1) {
                         boolean approvedNick = gameController.getGame().isNicknameAvailable(message.getNickname());
                         if (approvedNick) {
@@ -102,10 +108,16 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
 
                         }
                         Message newMessage = new LoginReplyMessage(message.getNickname(), approvedNick);
-                        clientNickCombinations.get(message.getNickname()).onMessage(newMessage);
+                        if(approvedNick){
+                            clientNickCombinations.get(message.getNickname()).onMessage(newMessage);
+                        }else{
+                            LoginRequestMessage newMessage2 = (LoginRequestMessage) message;
+                            newMessage2.getClient().onMessage(newMessage);
+                        }
                     } else if ((gameController.getGame().getPlayersInGame().size() == gameController.getGame().getPlayersNumber())) {
                         Message newMessage = new FullLobbyMessage();
-                        clientNickCombinations.get(message.getNickname()).onMessage(newMessage);
+                        LoginRequestMessage newMessage2 = (LoginRequestMessage) message;
+                        newMessage2.getClient().onMessage(newMessage);
                     }
                 }
 

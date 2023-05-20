@@ -63,9 +63,9 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
                 this.userInterface.showLoginResults(newMessage.isNicknameUniqueAccepted(), newMessage.getNickname());
             }
             case PLAYERNUMBER_REQUEST -> {
-                this.userInterface.askPlayersNumber();
                 this.nickname = message.getNickname();
                 this.userInterface.setNickname(this.nickname);
+                this.userInterface.askPlayersNumber();
             }
             case KEEP_PICKING_REQUEST -> this.userInterface.askStopPicking();
             case INVALID_TILE -> {

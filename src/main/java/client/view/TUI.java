@@ -261,7 +261,7 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
             }
         });
 
-        out.println("Il nickname scelto è: " + nickName);
+
     }
 
     @Override
@@ -274,6 +274,7 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
         int playersNum;
 
         out.println("Nickname accepted!");
+        out.println("Il nickname scelto è: " + this.nickname);
         resetNeedNick();
         out.println("You are the first player of the game! Please, insert the number of total player for the match [min=2, max=4]:");
         playersNum = scanner.nextInt();
@@ -426,10 +427,11 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
     @Override
     public void showLoginResults(boolean nickAccepted, String chosenNickname) {
         if(nickAccepted){
-            out.println("Login successful, nickname accepted!\n");
+            out.println("Login successful, nickname accepted!");
+            out.println("Il nickname scelto è: " + this.nickname);
             resetNeedNick();
         }else{
-            out.println("Nickname already chosen, choose another nickname!\n");
+            out.println("Nickname already chosen, choose another nickname!");
         }
 
     }
