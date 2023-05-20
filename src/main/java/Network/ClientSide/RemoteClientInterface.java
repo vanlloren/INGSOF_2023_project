@@ -1,6 +1,5 @@
 package Network.ClientSide;
 
-import Network.Events.Event;
 import Network.message.Message;
 import Observer.*;
 import Util.CommonGoalType;
@@ -13,7 +12,7 @@ import server.Model.Player;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
-public interface RemoteClientInterface extends Remote, LivingRoomObserver, ShelfObserver, PlayerObserver, GameModelObserver, CommonGoalObserver, PersonalGoalObserver {
+public interface RemoteClientInterface extends Remote, LivingRoomObserver, ShelfObserver, PlayerObserver, GameModelObserver, PersonalGoalObserver {
 
     void onMessage(Message message) throws RemoteException;
 
@@ -23,7 +22,7 @@ public interface RemoteClientInterface extends Remote, LivingRoomObserver, Shelf
 
 
 
-    void OnUpdateModelCommonGoal(TurnView turnView, CommonGoalType commonGoalType) throws RemoteException;
+    void OnUpdateModelCommonGoal(TurnView turnView, CommonGoalType commonGoalType1, CommonGoalType commonGoalType2) throws RemoteException;
 
 
 

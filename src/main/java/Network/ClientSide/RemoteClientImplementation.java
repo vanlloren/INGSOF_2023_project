@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 
-public  class RemoteClientImplementation extends Client implements RemoteClientInterface, ViewObserver, LivingRoomObserver, ShelfObserver, PlayerObserver, GameModelObserver, CommonGoalObserver,PersonalGoalObserver {
+public  class RemoteClientImplementation extends Client implements RemoteClientInterface, ViewObserver, LivingRoomObserver, ShelfObserver, PlayerObserver, GameModelObserver, PersonalGoalObserver {
 
     @Serial
     private static final long serialVersionUID = 3324195868427777436L;
@@ -56,7 +56,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
         switch (message.getMessageEnumeration()){
             case LOGIN_REPLY -> {
                 LoginReplyMessage newMessage = (LoginReplyMessage)message;
-                if(newMessage.isNicknameUniqueAccepted()) {
+                if(newMessage.isNicknameUniqueAccepted()){
                     this.nickname = newMessage.getNickname();
                     this.userInterface.setNickname(this.nickname);
                 }
@@ -159,7 +159,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
             }
             case UPDATE_COMMON_GOAL -> {
                 UpdateCommonGoalEvent newEvent = (UpdateCommonGoalEvent) event;
-                UpdateAllClientOnModelCommonGoal(newEvent.getCommonGoalType());
+                UpdateAllClientOnModelCommonGoal(newEvent.getCommonGoalType1(), newEvent.getCommonGoalType2());
             }
             case UPDATE_PLAYER_POINTS -> {
                 UpdatePlayerPointEvent newEvent = (UpdatePlayerPointEvent) event;
@@ -240,8 +240,9 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
     }
 
     @Override
-    public void UpdateAllClientOnModelCommonGoal(CommonGoalType commonGoalType) {
-    System.out.println("....NEW UPDATE:CommonGoal for this game is "+commonGoalType);
+    public void UpdateAllClientOnModelCommonGoal(CommonGoalType commonGoalType1, CommonGoalType commonGoalType2) {
+        System.out.println("....NEW UPDATE:CommonGoal 1 for this game is "+commonGoalType1);
+        System.out.println("....NEW UPDATE:CommonGoal 2 for this game is "+commonGoalType2);
     }
 
     @Override
@@ -463,8 +464,8 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
     }
 
     @Override
-    public void OnUpdateModelCommonGoal(TurnView turnView, CommonGoalType commonGoalType) {
-        onModelModify(turnView, new UpdateCommonGoalEvent(commonGoalType));
+    public void OnUpdateModelCommonGoal(TurnView turnView, CommonGoalType commonGoalType1, CommonGoalType commonGoalType2) {
+        onModelModify(turnView, new UpdateCommonGoalEvent(commonGoalType1, commonGoalType2));
     }
 
     @Override

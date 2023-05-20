@@ -51,6 +51,7 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
             String serverAddress = askServerInfo();
             int portNum = askServerPort();
             connectToServerFromTUI(serverAddress, portNum);
+            scanner.nextLine();
             while(needNick) {
                 askNickname();
             }
@@ -249,7 +250,7 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
 
     @Override
     public void askNickname() {
-        scanner.nextLine();
+
         out.println("Enter nickname please: ");
         String nickName = scanner.nextLine();
         notifyObserver(obs -> {
@@ -426,7 +427,7 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
 
     @Override
     public void showLoginResults(boolean nickAccepted, String chosenNickname) {
-        if(nickAccepted){
+        if(nickAccepted == true){
             out.println("Login successful, nickname accepted!");
             out.println("Il nickname scelto è: " + this.nickname);
             resetNeedNick();

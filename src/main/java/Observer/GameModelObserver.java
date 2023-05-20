@@ -1,6 +1,7 @@
 package Observer;
 
 
+import Util.CommonGoalType;
 import client.view.TurnView;
 import server.Model.GameBoard;
 import server.Model.Player;
@@ -28,4 +29,6 @@ public interface GameModelObserver {
     void onUpdateModelGameHasEnd(TurnView turnView) throws RemoteException;
 
     void onUpdateModelChat(TurnView turnView, String nickname, String chat) throws RemoteException;
+
+    void OnUpdateModelCommonGoal(TurnView turnView, CommonGoalType commonGoalType1, CommonGoalType commonGoalType2) throws RemoteException;
 }

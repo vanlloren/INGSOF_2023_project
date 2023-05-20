@@ -14,9 +14,8 @@ import server.Model.Player;
 import java.io.IOException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.*;
 
-public abstract class Client extends UnicastRemoteObject implements ViewObserver, LivingRoomObserver, ShelfObserver, PlayerObserver, GameModelObserver, CommonGoalObserver,PersonalGoalObserver {
+public abstract class Client extends UnicastRemoteObject implements ViewObserver, LivingRoomObserver, ShelfObserver, PlayerObserver, GameModelObserver, PersonalGoalObserver {
 
     private String nickname;
     private final String serverAddress;
@@ -74,7 +73,7 @@ public abstract class Client extends UnicastRemoteObject implements ViewObserver
 
     abstract void UpdateAllClientOnModelPersonalGoal(String Nickname, PersonalGoalType personalGoalType);
 
-    abstract void UpdateAllClientOnModelCommonGoal(CommonGoalType commonGoalType);
+    abstract void UpdateAllClientOnModelCommonGoal(CommonGoalType commonGoalType1, CommonGoalType commonGoalType2);
 
     abstract void UpdateAllClientOnModelPlayerPoint(String nickNameCurrentPlayer, Integer points);
 

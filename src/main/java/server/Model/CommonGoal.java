@@ -1,18 +1,14 @@
 package server.Model;
 
-import Observer.CommonGoalObservable;
-import Observer.TurnViewObservable;
 import Util.CommonGoalType;
-import client.view.TurnView;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 
 
-public class CommonGoal extends CommonGoalObservable implements Serializable {
+public class CommonGoal implements Serializable {
     @Serial
     private static final long serialVersionUID = 6744912126943243456L;
     CommonGoalType commonGoalType;
@@ -29,13 +25,6 @@ public class CommonGoal extends CommonGoalObservable implements Serializable {
 
     public void setCommonGoalType(CommonGoalType commonGoalType){
         this.commonGoalType = commonGoalType;
-        notifyObservers(obs -> {
-            try {
-                obs.OnUpdateModelCommonGoal(new TurnView(gameModel), commonGoalType);
-            } catch (RemoteException e) {
-                throw new RuntimeException(e);
-            }
-        });
     }
     public CommonGoalType getCommonGoalType() {
         return commonGoalType;

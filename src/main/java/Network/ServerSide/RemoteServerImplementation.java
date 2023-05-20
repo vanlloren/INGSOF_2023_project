@@ -58,58 +58,48 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
                         gameController.getGame().addObserver(newMessage.getClient());
                         gameController.getGame().setPlayersInGame(newPlayer);
                         RandPersonalGoal.setType(newPlayer, gameController.getGame().getPlayersInGame());
-
                         Message newMessage2 = new PlayersNumberRequestMessage(message.getNickname());
                         newMessage.getClient().onMessage(newMessage2);
+
+
 
                         while (stop) {
                         }
                         gameController.initGameBoard();
                         gameController.getGame().getMyShelfie().getLivingRoom().addObserver(newMessage.getClient());
-                        gameController.getGame().getMyShelfie().getLivingRoom().getCommonGoal1().addObserver(newMessage.getClient());
-                        gameController.getGame().getMyShelfie().getLivingRoom().getCommonGoal2().addObserver(newMessage.getClient());
                     } else if (gameController.getGame().getPlayersInGame().size() < gameController.getGame().getPlayersNumber() - 1) {
                         boolean approvedNick = gameController.getGame().isNicknameAvailable(message.getNickname());
-                        if (approvedNick) {
-                            LoginRequestMessage newMessage = (LoginRequestMessage) message;
-                            clientList.add(newMessage.getClient());
-                            clientNickCombinations.put(message.getNickname(), newMessage.getClient());
-                            Player newPlayer = new Player(message.getNickname(), newMessage.getClient(), gameController.getGame());
-                            newPlayer.addObserver(newMessage.getClient());
-                            gameController.getGame().addObserver(newMessage.getClient());
-                            gameController.getGame().getMyShelfie().getLivingRoom().addObserver(newMessage.getClient());
-                            gameController.getGame().getMyShelfie().getLivingRoom().getCommonGoal1().addObserver(newMessage.getClient());
-                            gameController.getGame().getMyShelfie().getLivingRoom().getCommonGoal2().addObserver(newMessage.getClient());
-                            RandPersonalGoal.setType(newPlayer, gameController.getGame().getPlayersInGame());
-                            gameController.getGame().setPlayersInGame(newPlayer);
-                        }
                         Message newMessage = new LoginReplyMessage(message.getNickname(), approvedNick);
-                        if(approvedNick){
+                        if (approvedNick) {
+                            LoginRequestMessage newMessage1 = (LoginRequestMessage) message;
+                            clientList.add(newMessage1.getClient());
+                            clientNickCombinations.put(message.getNickname(), newMessage1.getClient());
                             clientNickCombinations.get(message.getNickname()).onMessage(newMessage);
-                        }else{
+                            Player newPlayer = new Player(message.getNickname(), newMessage1.getClient(), gameController.getGame());
+                            newPlayer.addObserver(newMessage1.getClient());
+                            gameController.getGame().addObserver(newMessage1.getClient());
+                            gameController.getGame().getMyShelfie().getLivingRoom().addObserver(newMessage1.getClient());
+                            RandPersonalGoal.setType(newPlayer, gameController.getGame().getPlayersInGame());
+
+                            gameController.getGame().setPlayersInGame(newPlayer);
+                        }else {
                             LoginRequestMessage newMessage2 = (LoginRequestMessage) message;
                             newMessage2.getClient().onMessage(newMessage);
                         }
-
                     } else if (gameController.getGame().getPlayersInGame().size() == gameController.getGame().getPlayersNumber() - 1) {
                         boolean approvedNick = gameController.getGame().isNicknameAvailable(message.getNickname());
+                        Message newMessage = new LoginReplyMessage(message.getNickname(), approvedNick);
                         if (approvedNick) {
-                            LoginRequestMessage newMessage = (LoginRequestMessage) message;
-                            clientList.add(newMessage.getClient());
-                            clientNickCombinations.put(message.getNickname(), newMessage.getClient());
-                            Player newPlayer = new Player(message.getNickname(), newMessage.getClient(), gameController.getGame());
-                            newPlayer.addObserver(newMessage.getClient());
-                            gameController.getGame().addObserver(newMessage.getClient());
-                            gameController.getGame().getMyShelfie().getLivingRoom().addObserver(newMessage.getClient());
-                            gameController.getGame().getMyShelfie().getLivingRoom().getCommonGoal1().addObserver(newMessage.getClient());
-                            gameController.getGame().getMyShelfie().getLivingRoom().getCommonGoal2().addObserver(newMessage.getClient());
+                            LoginRequestMessage newMessage1 = (LoginRequestMessage) message;
+                            clientList.add(newMessage1.getClient());
+                            clientNickCombinations.put(message.getNickname(), newMessage1.getClient());
+                            clientNickCombinations.get(message.getNickname()).onMessage(newMessage);
+                            Player newPlayer = new Player(message.getNickname(), newMessage1.getClient(), gameController.getGame());
+                            newPlayer.addObserver(newMessage1.getClient());
+                            gameController.getGame().addObserver(newMessage1.getClient());
+                            gameController.getGame().getMyShelfie().getLivingRoom().addObserver(newMessage1.getClient());
                             RandPersonalGoal.setType(newPlayer, gameController.getGame().getPlayersInGame());
                             gameController.getGame().setPlayersInGame(newPlayer);
-
-                        }
-                        Message newMessage = new LoginReplyMessage(message.getNickname(), approvedNick);
-                        if(approvedNick){
-                            clientNickCombinations.get(message.getNickname()).onMessage(newMessage);
                         }else{
                             LoginRequestMessage newMessage2 = (LoginRequestMessage) message;
                             newMessage2.getClient().onMessage(newMessage);

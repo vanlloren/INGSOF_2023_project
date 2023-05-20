@@ -176,6 +176,13 @@ public class GameModel extends GameModelObservable implements Serializable, Simp
             });
             notifyObservers(obs -> {
                 try {
+                    obs.OnUpdateModelCommonGoal(new TurnView(this), getMyShelfie().getLivingRoom().getCommonGoal1().getCommonGoalType(), getMyShelfie().getLivingRoom().getCommonGoal2().getCommonGoalType());
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+            notifyObservers(obs -> {
+                try {
                     obs.onUpdateModelGameHasStarted(new TurnView(this));
                 } catch (RemoteException e) {
                     throw new RuntimeException(e);
