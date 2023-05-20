@@ -200,6 +200,7 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
                 PlayersNumberReplyMessage newMessage = (PlayersNumberReplyMessage) message;
                 int playersNum = newMessage.getNumPlayers();
                 gameController.getGame().setPlayersNumber(playersNum);
+                gameController.getGameBoardController().setPlayerNum(playersNum);
                 resetStop();
             }
             case START_PICKING_TILE_REQUEST -> {
