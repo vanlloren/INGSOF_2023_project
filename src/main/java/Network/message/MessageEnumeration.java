@@ -6,6 +6,8 @@ public enum MessageEnumeration {
         // MAIN MESSAGES
         LOGIN_REQUEST,
         LOGIN_REPLY,
+
+        CHOICE_BEGIN,
         PLAYERNUMBER_REQUEST,
         REQUEST_PICK_TILE,
         KEEP_PICKING_REPLY,

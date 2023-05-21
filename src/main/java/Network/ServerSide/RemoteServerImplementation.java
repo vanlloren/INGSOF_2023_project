@@ -102,6 +102,10 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
                             gameController.getGame().setPlayersInGame(newPlayer);
                             gameController.getGame().setChairOwner(gameController.getGame().getPlayersInGame().get(RandChairOwner.ChooseRand(gameController.getGame().getPlayersNumber())));
                             gameController.getGame().setCurrPlayer(gameController.getGame().getChairOwner());
+                            for (RemoteClientInterface client: clientList
+                                 ) {
+                                client.onMessage(new ChoiceBeginMessage());
+                            }
                         }else{
                             LoginRequestMessage newMessage2 = (LoginRequestMessage) message;
                             newMessage2.getClient().onMessage(newMessage);

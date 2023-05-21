@@ -28,11 +28,16 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
     private RemoteServerInterface server;
     private TurnView turnView;
     private String nickname;
+    private boolean gameBegin=false;
 
 
 
     public RemoteClientImplementation(String address, int port, View userInterface) throws RemoteException {
         super(address, port, userInterface);
+    }
+
+    private void setGameBegin(){
+        gameBegin=true;
     }
     @Override
     public void connectionInit() throws Exception {
@@ -106,7 +111,9 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
             case MAX_TILE_PICKED -> {
                 this.userInterface.maxTilesPicked();
             }
-
+            case CHOICE_BEGIN -> {
+                onUpdateChoiceBegin();
+            }
 
 
         }
@@ -207,8 +214,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
     public void UpdateAllClientOnModelCurrPlayer(Player currPlayer) {
         this.userInterface.setCurrPlayer(currPlayer.getNickname());
         System.out.println("NEW UPDATE: " + currPlayer.getNickname() + " is now the current player");
-        System.out.println("ccccc");
-
+        this.userInterface.riprendiEsecuzione();
     }
 
     @Override
@@ -279,8 +285,13 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
     @Override
     public void onUpdateAllClientOnCurrentPlayer(Player currPlayer) {
         System.out.println("...NEW UPDATE: Now it's"+currPlayer.getNickname()+" turn");
-        this.userInterface.setCurrPlayer(currPlayer.getNickname());
-        this.userInterface.askPlayerNextMove();
+        //this.userInterface.setCurrPlayer(currPlayer.getNickname());
+
+        //this.userInterface.askPlayerNextMove();
+    }
+
+    public void onUpdateChoiceBegin(){
+        this.userInterface.riprendiEsecuzione();
     }
 
     @Override

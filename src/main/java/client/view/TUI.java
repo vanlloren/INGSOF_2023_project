@@ -8,6 +8,10 @@ import java.io.PrintStream;
 import java.rmi.RemoteException;
 import java.util.Scanner;
 import java.util.*;
+import java.util.concurrent.Semaphore;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 
 public class TUI extends ViewObservable implements View {  //dovrà diventare observable dal client
@@ -18,13 +22,16 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
 
     private final IOManager viewManager = new IOManager();
 
-
     private boolean gameOn=true;
+
+
     private boolean goOnPicking=true;
     private boolean moveOn;
     private String currPlayer;
 
     public String nickname;
+    private boolean isPaused = true;
+    private Semaphore semaphore= new Semaphore(0);
 
     private boolean checker = false;
     public TUI(){
@@ -35,7 +42,6 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
         this.nickname = nickname;
 
     }
-
     public void resetNeedNick(){
         this.needNick = false;
     }
@@ -49,19 +55,46 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
         out.println("║    --------------------------------    ║");
         out.println("╚════════════════════════════════════════╝");
 
-            String serverAddress = askServerInfo();
-            int portNum = askServerPort();
-            connectToServerFromTUI(serverAddress, portNum);
-            scanner.nextLine();
-            while(needNick) {
-                askNickname();
-            }
-            while(gameOn){
-            }
+        String serverAddress = askServerInfo();
+        int portNum = askServerPort();
+        connectToServerFromTUI(serverAddress, portNum);
+        scanner.nextLine();
+        while (needNick) {
+            askNickname();
         }
+
+        try {
+            semaphore.acquire();
+            askPlayerNextMove();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    @Override
+    public void riprendiEsecuzione() {
+        semaphore.release();
+    }
 
     public void resetGameOn() {
         this.gameOn = false;
+    }
+
+    public void setGameOn(){
+        this.gameOn=true;
+    }
+
+    public void resetPaused(){
+        this.isPaused=false;
+    }
+
+    public void getGoing(){
+        while(true){
+            if(!isPaused){
+                askPlayerNextMove();
+            }
+        }
     }
 
     @Override
@@ -89,6 +122,7 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
 
             switch (picking) {
                 case 1:
+                    notifyObserver(obs -> obs.onUpdateShowCurrPlayer());
                     if (currPlayer.equals(this.nickname)) {
                         notifyObserver(obs -> {
                             try {
@@ -112,27 +146,34 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
                     }
                     else {
                         System.out.println("IT IS NOT YOUR TURN YET: PLEASE WAIT ");
+                        out.println();
                         askPlayerNextMove();
                     }
                 case 2:
                     notifyObserver(obs -> {
                         obs.onUpdateShowLivingRoom();
                     });
+                    out.println();
                     askPlayerNextMove();
                 case 3:
                     notifyObserver(obs -> obs.onUpdateShowPlayersList());
+                    out.println();
                     askPlayerNextMove();
                 case 4:
                     notifyObserver(obs -> obs.onUpdateShowPlayerShelf(nickname));
+                    out.println();
                     askPlayerNextMove();
                 case 5:
                     notifyObserver(obs -> obs.onUpdateShowPartialPoint(nickname));
+                    out.println();
                     askPlayerNextMove();
                 case 6:
                     notifyObserver(obs -> obs.onUpdateShowNickCurrPlayer());
+                    out.println();
                     askPlayerNextMove();
                 case 7:
                     WriteInChat();
+                    out.println();
                     askPlayerNextMove();
 
             }
@@ -508,6 +549,7 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
             }
         }
         out.println();
+
     }
 
 
@@ -517,8 +559,8 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
 
         //ogni volta stampo la legenda
         out.println("Legenda: []=empty, [X]=unavailable, [B]=blue tile, [C]=cyan tile," +
-                " [Y]=yellow tile, [P]=pink tile, [W]=white tile, [G]=green tile , the number near the color"+
-                "rappresents the unique ID code of the tile");
+                " [Y]=yellow tile, [P]=pink tile, [W]=white tile, [G]=green tile , the number near the color "+
+                "represents the unique ID code of the tile");
 
         //stampo shelf
         for(int i=0;i<6;i++) {
@@ -571,7 +613,7 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
 
     public void resetTUI(){
         out.println("Cleaning of the textual interface...");
-        out.flush();
+        //out.flush();
     }
 
     public void connectToServerFromTUI(String address, int port){
