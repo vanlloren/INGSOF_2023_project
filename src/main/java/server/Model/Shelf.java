@@ -21,7 +21,7 @@ public class Shelf extends ShelfObservable implements Serializable, SimpleShelf 
     @Serial
     private static final long serialVersionUID = -5591053634616843792L;
     private RuleShelf ruleShelf = new RuleShelf();
-    private PlayableItemTile[][] structure = new PlayableItemTile[5][4];
+    private PlayableItemTile[][] structure = new PlayableItemTile[6][5];
 
     public Shelf(GameModel gameModel){
         this.gameModel = gameModel;

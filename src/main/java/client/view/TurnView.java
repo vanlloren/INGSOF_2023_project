@@ -75,7 +75,7 @@ public class TurnView implements Serializable {
    // public void WriteToAllClient(String Nickname, String chatMessage){
         //notifyObservers(obs -> obs.UpdateAllClientonNewMessageChat(Nickname,chatMessage));
 
-    }
+}
 
 
 
