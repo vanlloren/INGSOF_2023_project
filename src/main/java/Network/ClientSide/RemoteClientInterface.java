@@ -51,7 +51,6 @@ public interface RemoteClientInterface extends Remote, LivingRoomObserver, Shelf
     void OnUpdateModelPlayerPoint(TurnView turnView, Integer points) throws RemoteException;
 
     void OnUpdateModelStatusCommonGoal2(TurnView turnView) throws RemoteException;
-    void onUpdateModelChat(TurnView turnView, String nickname, String chat) throws RemoteException;
 
     void OnUpdateModelStatusCommonGoal1(TurnView turnView) throws RemoteException;
 
