@@ -3,7 +3,6 @@ import server.Model.PlayableItemTile;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 public interface ViewObserver {
 
@@ -21,12 +20,7 @@ public interface ViewObserver {
      */
      void onUpdateNickname(String nickname) throws RemoteException;
 
-    /**
-     * Sends a message to the server with the updated choice of keep picking tiles.
-     *
-     * @param choice the choice to be sent.
-     */
-     void onUpdateAskKeepPicking(String choice) throws RemoteException;
+
     /**
      * Sends a message to the server with the player number chosen by the user.
      *
@@ -47,7 +41,7 @@ public interface ViewObserver {
      */
     void onDisconnection();
 
-    void onUpdateToPickTile(int xPos, int yPos) throws RemoteException;
+    void onUpdateToPickTile() throws RemoteException;
 
     void onUpdateToPutTile(int xPos, int yPos , PlayableItemTile tile , ArrayList<Integer> columnPosition , int numOfTiles , ArrayList<PlayableItemTile> playableItemTiles) throws  RemoteException;
     void onUpdateToPut2or3Tile(int finalXPos, PlayableItemTile tile , ArrayList<PlayableItemTile> playableItemTiles ) throws RemoteException;
@@ -59,13 +53,11 @@ public interface ViewObserver {
 
     void onUpdateShowAvailableTiles();
 
-    void onUpdateStartPicking() throws RemoteException;
-
     void onUpdateShowPlayersList();
 
     void onUpdateShowPlayerShelf(String nickname);
 
-    void onUpdateShowPartialPoint(String nickname);
+    int onUpdateShowPartialPoint(String nickname);
 
     void onUpdateShowNickCurrPlayer();
 

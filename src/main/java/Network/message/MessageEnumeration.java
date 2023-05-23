@@ -7,16 +7,17 @@ public enum MessageEnumeration {
         LOGIN_REQUEST,
         LOGIN_REPLY,
 
+        TILE_REPLY,
+        STOP_PICKING,
+
         CHOICE_BEGIN,
         PLAYERNUMBER_REQUEST,
-        REQUEST_PICK_TILE,
-        KEEP_PICKING_REPLY,
-        TO_PUT_TILE_REPLY,
 
-        START_PICKING_TILE_REQUEST,
-        START_PICKING_TILE_REPLY,
+
+
+
         START_PUTTING_TILE_REQUEST,
-        MAX_TILE_PICKED,
+
         TO_PUT_FIRST_TILE,
         TO_PUT_TILE_REQUEST,
         TO_PUT_TILE_REPLY_ERROR,
@@ -27,7 +28,6 @@ public enum MessageEnumeration {
         KEEP_PUTTING_REQUEST,
 
         ERROR_MESSAGE,
-        KEEP_PICKING_REQUEST,
         INVALID_TILE,
         WRITE_IN_CHAT,
 

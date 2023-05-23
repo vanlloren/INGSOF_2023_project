@@ -51,7 +51,7 @@ public class TwoLivingRoomFactory extends LivingRoomFactory {
             helperTable[4][8] = nullTile;
 
             //metto null Tiles in [5][1] e [5][8] e [5][7]
-            helperTable[5][1] = nullTile;
+            helperTable[5][0] = nullTile;
             helperTable[5][7] = nullTile;
             helperTable[5][8] = nullTile;
 

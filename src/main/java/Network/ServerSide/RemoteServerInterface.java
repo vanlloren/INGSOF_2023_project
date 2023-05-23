@@ -2,6 +2,7 @@ package Network.ServerSide;
 
 import Network.ClientSide.RemoteClientInterface;
 import Network.message.Message;
+import Network.message.TileReplyMessage;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
@@ -17,4 +18,5 @@ public interface RemoteServerInterface extends Remote {
 
     void disconnect() throws RemoteException;
 
+    TileReplyMessage onTilePickMessage(String nickname, int x, int y) throws RemoteException;
 }

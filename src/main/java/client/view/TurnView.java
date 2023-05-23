@@ -66,9 +66,11 @@ public class TurnView implements Serializable {
         while(i<gameModel.getPlayersNumber()){
             if(nickName.equals(gameModel.getPlayersInGame().get(i).getNickname())){
                 point = gameModel.getPlayersInGame().get(i).getPoints();
-
+                break;
             }
-            else i++;
+            else {
+                i++;
+            }
         }
         return point;
     }

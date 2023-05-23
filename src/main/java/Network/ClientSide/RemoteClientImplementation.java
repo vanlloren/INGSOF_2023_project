@@ -11,24 +11,30 @@ import client.view.View;
 import server.Model.GameBoard;
 import server.Model.PlayableItemTile;
 import server.Model.Player;
+import server.enumerations.PickTileResponse;
 
 import java.io.IOException;
+import java.io.PrintStream;
 import java.io.Serial;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Scanner;
 
 
 public  class RemoteClientImplementation extends Client implements RemoteClientInterface, ViewObserver, LivingRoomObserver, ShelfObserver, PlayerObserver, GameModelObserver, PersonalGoalObserver {
 
     @Serial
     private static final long serialVersionUID = 3324195868427777436L;
+    private final PrintStream out = System.out;
+    private final Scanner scanner = new Scanner(System.in);
     private RemoteServerInterface server;
     private TurnView turnView;
     private String nickname;
     private boolean gameBegin=false;
+    private ArrayList<PlayableItemTile> turnTiles = null;
 
 
 
@@ -73,15 +79,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
                 this.userInterface.setNickname(this.nickname);
                 this.userInterface.askPlayersNumber();
             }
-            case KEEP_PICKING_REQUEST -> this.userInterface.askStopPicking();
-            case INVALID_TILE -> {
-                this.userInterface.invalidTileHandler();
-            }
-            case TO_PICK_TILE_REQUEST -> {
-                ToPickTileRequestMessage newMessage = (ToPickTileRequestMessage) message;
-                ArrayList<PlayableItemTile> availableTiles = newMessage.getAvailableTiles();
-                this.userInterface.askMovingTilePosition(availableTiles);
-            }
+
             case TO_PUT_TILE_REPLY_ERROR-> {
                 ToPutTileReplyMessage newMessage = (ToPutTileReplyMessage) message;
                 ArrayList<PlayableItemTile> tilesInPlayerHand = newMessage.getPlayableItemTile();
@@ -101,15 +99,10 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
             case FULL_LOBBY -> {
                 this.userInterface.fullLobbyTerminateUI();
             }
-            case START_PICKING_TILE_REPLY -> {
-                this.userInterface.setMoveOn();
-            }
+
             case START_PUTTING_TILE_REQUEST -> { //alf questo è esattamente uguale al tuo toPutFirstTile, quindi l'ho tolto
                 StartPuttingTileRequestMessage newMessage = (StartPuttingTileRequestMessage) message;
                 this.userInterface.askTileToPut(newMessage.getTilesArray());
-            }
-            case MAX_TILE_PICKED -> {
-                this.userInterface.maxTilesPicked();
             }
             case CHOICE_BEGIN -> {
                 onUpdateChoiceBegin();
@@ -329,8 +322,127 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
 
     }
 
-    public void onUpdateToPickTile(int x, int y) throws RemoteException{
-        server.onMessage(new ToPickTileReplyMessage(nickname, x, y));
+    public void onUpdateToPickTile() throws RemoteException{
+        ArrayList<PlayableItemTile> helperList = new ArrayList<>();
+
+        //pesca prima tessera
+        System.out.println("Scegli la posizione x della prima tessera che vuoi pescare!");
+        int x = scanner.nextInt();
+        out.println("Scegli la posizione y della prima tessera che vuoi pescare!");
+        int y = scanner.nextInt();
+        TileReplyMessage message = server.onTilePickMessage(nickname, x, y);
+        while (message.isTileAccepted().equals(PickTileResponse.MAX_TILE_PICKED) || message.isTileAccepted().equals(PickTileResponse.INVALID_TILE)){
+            if(message.isTileAccepted().equals(PickTileResponse.MAX_TILE_PICKED)){
+                out.println("Massimo numero di tessere scelte. Ora ti verrà chiesto di collocare le tessere nella tua Shelf");
+                this.turnTiles=helperList;
+                return;
+            } else if (message.isTileAccepted().equals(PickTileResponse.INVALID_TILE)) {
+                out.println("Tessera scelta non disponibile, scegli un'altra tessera");
+                onUpdateShowAvailableTiles();
+                System.out.println("Scegli la posizione x della prima tessera che vuoi pescare!");
+                x = scanner.nextInt();
+                out.println("Scegli la posizione y della prima tessera che vuoi pescare!");
+                y = scanner.nextInt();
+                message = server.onTilePickMessage(nickname, x, y);
+            }
+        }
+        helperList.add(message.getTile());
+
+        out.println("Una tessera pescata, vuoi pescare altre tessere? [Y/N]");
+        String test = scanner.nextLine();
+        while(!test.equals("Y")){
+            if(test.equals("N")){
+                this.turnTiles=helperList;
+                server.onMessage(new StopPickingMessage(nickname));
+                out.println("Ora ti verrà chiesto di collocare le tessere nella tua Shelf");
+                return;
+            }
+            out.println("Simbolo errato!");
+            out.println("Una tessera pescata, vuoi pescare altre tessere? [Y/N]");
+            test = scanner.nextLine();
+        }
+
+        onUpdateShowLivingRoom();
+        onUpdateShowAvailableTiles();
+        if(turnView.getLivingRoom().getAvailableTiles().size()==0) {
+            out.println("Non ci sono altre tessere disponibili, mi spiace!");
+            out.println("Massimo numero di tessere scelte. Ora ti verrà chiesto di collocare le tessere nella tua Shelf");
+            this.turnTiles = helperList;
+            return;
+        }
+
+
+        //pesca seconda tessera
+        System.out.println("Scegli la posizione x della seconda tessera che vuoi pescare!");
+        x = scanner.nextInt();
+        out.println("Scegli la posizione y della seconda tessera che vuoi pescare!");
+        y = scanner.nextInt();
+        message = server.onTilePickMessage(nickname, x, y);
+        while (message.isTileAccepted().equals(PickTileResponse.MAX_TILE_PICKED) || message.isTileAccepted().equals(PickTileResponse.INVALID_TILE)){
+            if(message.isTileAccepted().equals(PickTileResponse.MAX_TILE_PICKED)){
+                out.println("Massimo numero di tessere scelte. Ora ti verrà chiesto di collocare le tessere nella tua Shelf");
+                this.turnTiles=helperList;
+                return;
+            } else if (message.isTileAccepted().equals(PickTileResponse.INVALID_TILE)) {
+                out.println("Tessera scelta non disponibile, scegli un'altra tessera");
+                onUpdateShowAvailableTiles();
+                System.out.println("Scegli la posizione x della seconda tessera che vuoi pescare!");
+                x = scanner.nextInt();
+                out.println("Scegli la posizione y della seconda tessera che vuoi pescare!");
+                y = scanner.nextInt();
+                message = server.onTilePickMessage(nickname, x, y);
+            }
+        }
+        helperList.add(message.getTile());
+
+        out.println("Due tessere pescate, vuoi pescare altre tessere? [Y/N]");
+        test = scanner.nextLine();
+        while(!test.equals("Y")){
+            if(test.equals("N")){
+                this.turnTiles=helperList;
+                server.onMessage(new StopPickingMessage(nickname));
+                out.println("Ora ti verrà chiesto di collocare le tessere nella tua Shelf");
+                return;
+            }
+            out.println("Simbolo errato!");
+            out.println("Due tessere pescate, vuoi pescare altre tessere? [Y/N]");
+            test = scanner.nextLine();
+        }
+
+        onUpdateShowLivingRoom();
+        onUpdateShowAvailableTiles();
+        if(turnView.getLivingRoom().getAvailableTiles().size()==0) {
+            out.println("Non ci sono altre tessere disponibili, mi spiace!");
+            out.println("Massimo numero di tessere scelte. Ora ti verrà chiesto di collocare le tessere nella tua Shelf");
+            this.turnTiles = helperList;
+            return;
+        }
+
+        //pesca terza tessera
+        System.out.println("Scegli la posizione x della terza tessera che vuoi pescare!");
+        x = scanner.nextInt();
+        out.println("Scegli la posizione y della terza tessera che vuoi pescare!");
+        y = scanner.nextInt();
+        message = server.onTilePickMessage(nickname, x, y);
+        while (message.isTileAccepted().equals(PickTileResponse.MAX_TILE_PICKED) || message.isTileAccepted().equals(PickTileResponse.INVALID_TILE)){
+            if(message.isTileAccepted().equals(PickTileResponse.MAX_TILE_PICKED)){
+                out.println("Massimo numero di tessere scelte. Ora ti verrà chiesto di collocare le tessere nella tua Shelf");
+                this.turnTiles=helperList;
+                return;
+            } else if (message.isTileAccepted().equals(PickTileResponse.INVALID_TILE)) {
+                out.println("Tessera scelta non disponibile, scegli un'altra tessera");
+                onUpdateShowAvailableTiles();
+                System.out.println("Scegli la posizione x della terza tessera che vuoi pescare!");
+                x = scanner.nextInt();
+                out.println("Scegli la posizione y della terza tessera che vuoi pescare!");
+                y = scanner.nextInt();
+                message = server.onTilePickMessage(nickname, x, y);
+            }
+        }
+        helperList.add(message.getTile());
+
+        out.println("Massimo numero di tessere scelte. Ora ti verrà chiesto di collocare le tessere nella tua Shelf");
+        this.turnTiles=helperList;
     }
 
     public void onUpdateToPutTile( int xPos, int yPos , PlayableItemTile tile , ArrayList<Integer> columnPosition , int numOfTiles , ArrayList<PlayableItemTile> playableItemTiles) throws RemoteException {
@@ -342,19 +454,10 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
     }
 
 
-    public void onUpdateStartPicking() throws RemoteException{
-        server.onMessage(new StartPickingTileRequestMessage(nickname));
-    }
-
     @Override
     public void onUpdateNickname(String nickname) throws RemoteException {
             LoginRequestMessage loginRequestMessage = new LoginRequestMessage(this,nickname);
             server.onMessage(loginRequestMessage);
-    }
-
-    @Override
-    public void onUpdateAskKeepPicking(String choice) throws RemoteException {
-        server.onMessage(new KeepPickingReplyMessage(nickname, choice));
     }
 
     @Override
@@ -389,7 +492,9 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
 
     @Override
     public void onUpdateShowAvailableTiles(){
-        this.userInterface.askMovingTilePosition(turnView.getLivingRoom().getAvailableTiles());
+        for (PlayableItemTile tile: turnView.getLivingRoom().getAvailableTiles()){
+            System.out.println("La tessera in posizione x=" + tile.getPosition().toArray()[0] + " y=" + tile.getPosition().toArray()[1] + " é disponibile!\n");
+        }
     }
 
     @Override
@@ -403,8 +508,8 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
     }
 
     @Override
-    public void onUpdateShowPartialPoint(String nickname) {
-        this.userInterface.showPartialPoint(turnView.getPartialPoint(nickname));
+    public int onUpdateShowPartialPoint(String nickname) {
+        return turnView.getPartialPoint(nickname);
     }
 
     @Override
@@ -435,6 +540,10 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
     @Override
     public void onUpdateModelPlayersNumber(TurnView turnView, int playersNumber)  {
         onModelModify(turnView, new UpdatePlayersNumberEvent(playersNumber));
+    }
+
+    public void onUpdateTilesAvailability(TurnView turnView){
+        onModelModify(turnView, new UpdateTileAvailabilityEvent());
     }
 
     @Override

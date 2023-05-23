@@ -42,43 +42,47 @@ public class GameBoardController {
 
 
 
-    public ArrayList<PlayableItemTile> PickManager(int x, int y){
+    public PlayableItemTile PickManager(int x, int y){
 
         controlledLivingRoom.updateAvailability();
 
         if(controlledGameBoard.getPickedTilesNum()==0){
             if(checkTileAvailability(x,y)){
                 controlledGameBoard.setToPlayerFirstTile(x,y);
+                return controlledGameBoard.getToPlayerTiles().get(0);
             }else{
                 //messaggio/eccezione che indichi che la tessera scelta non è disponibile e ne va scelta un'altra
-                gameController.setInvalidTile();
+                return null;
             }
         }else if(controlledGameBoard.getPickedTilesNum()==1){
             if(checkAdjacentAvailability()) {
                 if(checkTileAvailability(x,y)) {
                     controlledGameBoard.setToPlayerAnotherTile(x, y);
+                    return controlledGameBoard.getToPlayerTiles().get(1);
                 }else {
                     //messaggio/eccezione che indichi che la tessera scelta non è disponibile e ne va scelta un'altra
-                    gameController.setInvalidTile();
+                    return null;
                 }
             }else{
                 //messaggio/eccezione che indichi che non posso più scegliere altre tessere
-                gameController.resetStillGoing();
+                gameController.setFull();
+                return null;
             }
         }else{
             if(checkAdjacentAvailability()) {
                 if(checkTileAvailability(x,y)) {
                     controlledGameBoard.setToPlayerAnotherTile(x, y);
+                    return controlledGameBoard.getToPlayerTiles().get(2);
                 }else{
                     //messaggio/eccezione che indichi che la tessera scelta non è disponibile e ne va scelta un'altra
-                    gameController.setInvalidTile();
+                    return null;
                 }
             }else{
-                gameController.resetStillGoing();
+                gameController.setFull();
+                return null;
             }
         }
 
-        return controlledGameBoard.getToPlayerTiles();
     }
     //----->LIVING ROOM
     public boolean checkTileAvailability(int x, int y){

@@ -59,5 +59,6 @@ public interface RemoteClientInterface extends Remote, LivingRoomObserver, Shelf
     void onUpdateModelPlayersNumber(TurnView turnView, int playersNumber) throws RemoteException;
     void onUpdateGameBoard(TurnView turnView, GameBoard gameBoard) throws RemoteException;
     void onUpdateModelGameHasStarted(TurnView turnView) throws RemoteException;
+    void onUpdateTilesAvailability(TurnView turnView) throws RemoteException;
 
 }

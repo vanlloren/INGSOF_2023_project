@@ -42,6 +42,12 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
         stop = false;
     }
 
+    public TileReplyMessage onTilePickMessage(String nickname, int x, int y){
+        TileReplyMessage message = gameController.pickTile(x, y);
+
+        return message;
+    }
+
     @Override
     public void onMessage(Message message) throws RemoteException {
 
@@ -118,19 +124,6 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
                 }
 
             }
-            case KEEP_PICKING_REPLY -> {
-                KeepPickingReplyMessage newMessage = (KeepPickingReplyMessage) message;
-                if (!newMessage.getKeepPicking()) {
-                    gameController.setStopPicking();
-                }
-            }
-            case TO_PICK_TILE_REPLY -> {
-                ToPickTileReplyMessage newMessage = (ToPickTileReplyMessage) message;
-                int x = newMessage.getXPos();
-                int y = newMessage.getYPos();
-                gameController.setPosCurrTile(x, y);
-                gameController.setMoveOn();
-            }
             case TO_PUT_TILE_REQUEST -> {
                 ToPutTileRequestMessage newMessage = (ToPutTileRequestMessage) message;
                 int x = newMessage.getX();
@@ -158,12 +151,13 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
                                 //Sei il primo a settare endgame
                                 gameController.getGame().setEndGame();
                                 gameController.nextTurn();
+
                             } else if (gameController.getGame().getEndGame()) {
                                 //Qua ultimo turno e te non sei il primo a settare l'endGame
                                 gameController.nextTurn();
                             } else if (!gameController.getGame().getEndGame()) {
                                 gameController.nextTurn();
-                                clientNickCombinations.get(message.getNickname()).onMessage(newMessage);
+                                //messaggio client per nuovo askPlayerNextMove
                             }
 
                         }
@@ -210,36 +204,27 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
                 gameController.getGameBoardController().setPlayerNum(playersNum);
                 resetStop();
             }
-            case START_PICKING_TILE_REQUEST -> {
-                clientNickCombinations.get(message.getNickname()).onMessage(new StartPuttingTileRequestMessage(gameController.pickTilesArray(message.getNickname())));
-            }
             case WRITE_IN_CHAT -> {
                 WriteInChatMessage newMessage = (WriteInChatMessage) message;
                 gameController.getGame().setChat(newMessage.getNickname(),newMessage.getChat());
+            }
+            case STOP_PICKING -> {
+                gameController.getGameBoardController().getControlledLivingRoom().updateAvailability();
+                if (!gameController.getGameBoardController().checkIfAdjacentTiles()) {
+                    gameController.getGameBoardController().livingRoomFiller();
+                    gameController.getGameBoardController().getControlledLivingRoom().updateAvailability();
+                }
+                gameController.getGameBoardController().toPlayerTilesResetter();
             }
         }
     }
 
 
-
-    public void onPickTilesBegin(String nickname) throws RemoteException{
-        clientNickCombinations.get(nickname).onMessage(new StartPickingTileReplyMessage());
-    }
-    public void onMaxTilesPicked(String nickname) throws RemoteException{
-        clientNickCombinations.get(nickname).onMessage(new MaxTilesPickedMessage());
-    }
-
-    public void onInvalidTile(String nickname) throws RemoteException{
-        clientNickCombinations.get(nickname).onMessage(new InvalidTileMessage());
-    }
-
     @Override
     public void disconnect() throws RemoteException {
     }
 
-    public void onUpdateAskKeepPicking(String nickname) throws RemoteException{
-        clientNickCombinations.get(nickname).onMessage(new KeepPickingRequestMessage());
-    }
+
 
     public void onUpdateToPutTile(boolean errorInTheInsertion, String errorType , ArrayList<PlayableItemTile> tilesInPlayerHand) throws RemoteException{
         client.onMessage((new ToPutTileReplyMessage(tilesInPlayerHand)));

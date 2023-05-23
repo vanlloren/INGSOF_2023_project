@@ -9,9 +9,6 @@ import java.rmi.RemoteException;
 import java.util.Scanner;
 import java.util.*;
 import java.util.concurrent.Semaphore;
-import java.util.concurrent.locks.Condition;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 
 public class TUI extends ViewObservable implements View {  //dovrà diventare observable dal client
@@ -124,25 +121,8 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
                 case 1:
                     notifyObserver(obs -> obs.onUpdateShowCurrPlayer());
                     if (currPlayer.equals(this.nickname)) {
-                        notifyObserver(obs -> {
-                            try {
-                                obs.onUpdateStartPicking();
-                            } catch (RemoteException e) {
-                                throw new RuntimeException(e);
-                            }
-                        });
-                        moveOn=false;
-                        while(!moveOn){}
-                        goOnPicking = true;
-                        while(goOnPicking) {
-                            goOnPicking=false;
-                            moveOn=false;
-                            notifyObserver(obs -> {
-                                obs.onUpdateShowAvailableTiles();
-                            });
-
-                            while (!moveOn){}
-                        }
+                        askMovingTilePosition();
+                        //qua ci va la chiamata a quello che inserisce le tiles nella shelf
                     }
                     else {
                         System.out.println("IT IS NOT YOUR TURN YET: PLEASE WAIT ");
@@ -164,7 +144,9 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
                     out.println();
                     askPlayerNextMove();
                 case 5:
-                    notifyObserver(obs -> obs.onUpdateShowPartialPoint(nickname));
+                    final int[] points = new int[1];
+                    notifyObserver(obs -> points[0] = obs.onUpdateShowPartialPoint(nickname));
+                    showPartialPoint(points[0]);
                     out.println();
                     askPlayerNextMove();
                 case 6:
@@ -333,50 +315,17 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
     }
 
     @Override
-    public void askMovingTilePosition(ArrayList<PlayableItemTile> availableTiles){
-        for (PlayableItemTile tile: availableTiles
-             ) {
-            out.println("La tessera in posizione x=" + tile.getPosition().toArray()[0] + " y=" + tile.getPosition().toArray()[1] + " é disponibile!\n");
-        }
+    public void askMovingTilePosition(){
+        notifyObserver(obs -> obs.onUpdateShowAvailableTiles());
 
-        out.println("Scegli la posizione x della tessera che vuoi pescare!\n");
-        int xPos = scanner.nextInt();
-        out.println("Scegli la posizione y della tessera che vuoi pescare!\n");
-        int yPos = scanner.nextInt();
 
         notifyObserver(obs -> {
             try {
-                obs.onUpdateToPickTile(xPos, yPos);
-
+                obs.onUpdateToPickTile();
             } catch (RemoteException e) {
                 throw new RuntimeException(e);
             }
         });
-    }
-
-    @Override
-    public void askStopPicking() {
-        out.println("Would you like to keep picking tiles?[Y/N]\n");
-        String picking = scanner.nextLine();
-        while(picking != "Y" || picking !="N"){
-            out.println("Symbol not recognized, please try  again...\n");
-            askStopPicking();
-        }
-        String finalPicking = picking;
-
-        notifyObserver(obs-> {
-            try {
-                obs.onUpdateAskKeepPicking(finalPicking);
-            } catch (RemoteException e) {
-                throw new RuntimeException(e);
-            }
-        });
-        if(finalPicking == "Y"){
-            goOnPicking = true;
-            setMoveOn();
-        }else{
-            setMoveOn();
-        }
     }
 
 

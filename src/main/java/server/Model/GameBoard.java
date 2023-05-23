@@ -15,7 +15,7 @@ public class GameBoard implements Serializable {
     private LivingRoom livingRoom;
     private PlayableItemTile nextInGameTile;//é la tessera "da mettere in gioco" ovvero quella che dalla bag sta venendo piazzata sulla plancia
 
-    private ArrayList<PlayableItemTile> toPlayerTiles;//sono le tessere che il giocatore ha raccolto dalla plancia, forse si può fare meglio
+    private ArrayList<PlayableItemTile> toPlayerTiles= new ArrayList<>();//sono le tessere che il giocatore ha raccolto dalla plancia, forse si può fare meglio
 
     //servono per regolare correttamente le adiacenze
     private int firstX;

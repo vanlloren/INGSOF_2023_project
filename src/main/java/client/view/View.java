@@ -25,11 +25,9 @@ public interface View {
     void askPlayersNumber();
 
     //chiede al player la posizione nella livingRoom della tessera da spostare
-    void askMovingTilePosition(ArrayList<PlayableItemTile> availableTiles);
+    void askMovingTilePosition();
 
     //chiede al player se desidera smettere di prendere tiles dalla livingRoom volontariamente
-    void askStopPicking();
-
 
     //chiede al player quale tessera della sua mano collocare nella shelf
     void askTileToPut(ArrayList<PlayableItemTile> tilesInPlayerHand);

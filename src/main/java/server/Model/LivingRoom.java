@@ -43,8 +43,16 @@ public class LivingRoom extends LivingRoomObservable implements Serializable, Si
         ArrayList<PlayableItemTile> availableTiles = new ArrayList<>();
         for (int i=0; i<9; i++){
             for(int j=0; j<9; j++){
-                if(gameTable[i][j].getAvailability()){
-                    availableTiles.add((PlayableItemTile) gameTable[i][j]);
+                if(gameTable[i][j] != null) {
+                    if (gameTable[i][j].getAvailability()) {
+                        if(gameModel.getMyShelfie().getPickedTilesNum()>0) {
+                            if (gameTable[i][j].getAdjacency()) {
+                                availableTiles.add((PlayableItemTile) gameTable[i][j]);
+                            }
+                        }else{
+                            availableTiles.add((PlayableItemTile) gameTable[i][j]);
+                        }
+                    }
                 }
             }
         }
@@ -199,6 +207,14 @@ public class LivingRoom extends LivingRoomObservable implements Serializable, Si
                 }
             }
         }
+
+        notifyObservers(obs -> {
+            try {
+                obs.onUpdateTilesAvailability(new TurnView(gameModel));
+            } catch (RemoteException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
     //MODEL
@@ -222,6 +238,14 @@ public class LivingRoom extends LivingRoomObservable implements Serializable, Si
         if(gameTable[x][y+1] != null && !getTileAdjacency(x,y+1) && !nullTileDetection(x,y+1)){
             gameTable[x][y+1].setAdjacency();
         }
+
+        notifyObservers(obs -> {
+            try {
+                obs.onUpdateTilesAvailability(new TurnView(gameModel));
+            } catch (RemoteException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
     //MODEL
@@ -232,6 +256,14 @@ public class LivingRoom extends LivingRoomObservable implements Serializable, Si
                     gameTable[i][j].resetAdjacency();
             }
         }
+
+        notifyObservers(obs -> {
+            try {
+                obs.onUpdateTilesAvailability(new TurnView(gameModel));
+            } catch (RemoteException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
     //MODEL
@@ -280,7 +312,16 @@ public class LivingRoom extends LivingRoomObservable implements Serializable, Si
                 gameTable[firstX + 1][firstY].resetAdjacency();
             }
         }
+        notifyObservers(obs -> {
+            try {
+                obs.onUpdateTilesAvailability(new TurnView(gameModel));
+            } catch (RemoteException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
+
+
 }
 
 

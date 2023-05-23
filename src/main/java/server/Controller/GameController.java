@@ -1,12 +1,13 @@
 package server.Controller;
 import Network.ServerSide.RemoteServerImplementation;
+import Network.message.TileReplyMessage;
 import Util.Colour;
 import Util.RandCommonGoal;
 
 import server.Model.*;
+import server.enumerations.PickTileResponse;
 
 
-import java.rmi.RemoteException;
 import java.util.*;
 
 //All'interno di questa classe vi deve essere contenuta tutta la logica che sta dietro al gioco effettivo
@@ -32,6 +33,8 @@ public class GameController {
     boolean stopPicking = false;
     boolean moveOn = false;
     boolean stillGoing = true;
+
+    boolean full=false;
     boolean invalidTile = false;
 
     private int xPosCurrTile;
@@ -49,6 +52,10 @@ public class GameController {
 
     public void setRemoteServer(RemoteServerImplementation remoteServer){
         this.remoteServer = remoteServer;
+    }
+
+    public void setFull() {
+        this.full = true;
     }
 
     public void setInvalidTile(){
@@ -97,85 +104,53 @@ public class GameController {
     }
 
 
-    public ArrayList<PlayableItemTile> pickTilesArray (String nickname) {  //restituisce le 1/2/3 tiles prese dalla livingRoom dal player nel suo turno
-            boolean finish=false;
-            ArrayList<PlayableItemTile> tileArray = new ArrayList<PlayableItemTile>();
-            moveOn = false;
+    public TileReplyMessage pickTile (int x, int y) {  //restituisce le 1/2/3 tiles prese dalla livingRoom dal player nel suo turno
+        boolean finish = false;
+        PlayableItemTile tile;
+        PickTileResponse response;
+        moveOn = false;
 
-        try {
-            remoteServer.onPickTilesBegin(nickname);
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
+
+        //controllo su max 3 pick
+        if (gameBoardController.checkPickedTilesNum()) {
+            //controllo su max numero caselle libere shelf
+            if (gameBoardController.getControlledGameBoard().getPickedTilesNum() < getGame().getCurrPlayer().getMaxTiles()) {
+                tile = gameBoardController.PickManager(x, y);
+                if (tile == null) {
+                    if (full == true) {
+                        gameBoardController.getControlledLivingRoom().updateAvailability();
+                        if (!gameBoardController.checkIfAdjacentTiles()) {
+                            gameBoardController.livingRoomFiller();
+                            gameBoardController.getControlledLivingRoom().updateAvailability();
+                        }
+                        gameBoardController.toPlayerTilesResetter();
+                        return new TileReplyMessage(null, PickTileResponse.MAX_TILE_PICKED);
+                    } else {
+                        return new TileReplyMessage(tile, PickTileResponse.INVALID_TILE);
+                    }
+                } else {
+                    return new TileReplyMessage(tile, PickTileResponse.CORRECT_TILE);
+                }
+            } else {
+                gameBoardController.getControlledLivingRoom().updateAvailability();
+                if (!gameBoardController.checkIfAdjacentTiles()) {
+                    gameBoardController.livingRoomFiller();
+                    gameBoardController.getControlledLivingRoom().updateAvailability();
+                }
+                gameBoardController.toPlayerTilesResetter();
+                return new TileReplyMessage(null, PickTileResponse.MAX_TILE_PICKED);
+            }
+        } else {
+            gameBoardController.getControlledLivingRoom().updateAvailability();
+            if (!gameBoardController.checkIfAdjacentTiles()) {
+                gameBoardController.livingRoomFiller();
+                gameBoardController.getControlledLivingRoom().updateAvailability();
+            }
+            gameBoardController.toPlayerTilesResetter();
+            return new TileReplyMessage(null, PickTileResponse.MAX_TILE_PICKED);
         }
 
 
-            while(!finish) {
-                while(!moveOn){}
-                if (gameBoardController.checkPickedTilesNum() && gameBoardController.getControlledGameBoard().getPickedTilesNum()<getGame().getCurrPlayer().getMaxTiles()) {
-
-
-
-                    tileArray=gameBoardController.PickManager(xPosCurrTile, yPosCurrTile);
-
-                    //chiedo al player se vuole smettere di pescare
-                    moveOn=false;
-
-                    if(!invalidTile){
-                        if(stillGoing) {
-                            try {
-                                remoteServer.onUpdateAskKeepPicking(nickname);
-                            } catch (RemoteException e) {
-                                throw new RuntimeException(e);
-                            }
-                        }
-
-
-
-
-
-                        //stop=decisione player
-                        if(stopPicking){
-                            finish=true;
-                            gameBoardController.getControlledLivingRoom().updateAvailability();
-                            if(!gameBoardController.checkIfAdjacentTiles()){
-                                gameBoardController.livingRoomFiller();
-                                gameBoardController.getControlledLivingRoom().updateAvailability();
-                            }
-                        } else if (!stillGoing) {
-                            setStillGoing();
-                            finish=true;
-                            gameBoardController.getControlledLivingRoom().updateAvailability();
-                            if(!gameBoardController.checkIfAdjacentTiles()){
-                                gameBoardController.livingRoomFiller();
-                                gameBoardController.getControlledLivingRoom().updateAvailability();
-                            }
-                            try {
-                                remoteServer.onMaxTilesPicked(nickname);
-                            } catch (RemoteException e) {
-                                throw new RuntimeException(e);
-                            }
-                        }
-                    }else{
-                        try {
-                            remoteServer.onInvalidTile(nickname);
-                        } catch (RemoteException e) {
-                            throw new RuntimeException(e);
-                        }
-                    }
-                } else {
-                    //messaggio che informi che sono già state prese tre tessere
-                    finish = true;
-                    tileArray=gameBoardController.giveTileToPlayer();
-                    try {
-                        remoteServer.onMaxTilesPicked(nickname);
-                    } catch (RemoteException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-            }
-
-            gameBoardController.toPlayerTilesResetter();
-            return tileArray;
     }
 
         public void InsertTileShelf(Player player,PlayableItemTile tile,int x, int y,int num){
