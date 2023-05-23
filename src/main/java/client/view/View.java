@@ -9,8 +9,6 @@ public interface View {
 
     String askServerInfo();
 
-    void setGameOn();
-
     int askServerPort();
     //richiede al giocatore d'indicare il nickName
     //è il server che poi si occupa di verificare che sia univoco
@@ -79,6 +77,7 @@ public interface View {
     void setNickname(String nickname);
 
 
+    void setIsTurn(boolean isTurn);
 
     void resetGameOn();
 
@@ -93,8 +92,4 @@ public interface View {
     void invalidTileHandler();
 
     void WriteInChat();
-
-    void resetPaused();
-
-    void riprendiEsecuzione();
 }

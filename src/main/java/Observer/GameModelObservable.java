@@ -1,4 +1,5 @@
 package Observer;
+import java.rmi.RemoteException;
 import java.util.function.Consumer;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,14 +12,18 @@ public abstract class GameModelObservable {
      *
      * @param obs the observer to be added.
      */
-    public void addObserver(GameModelObserver obs){ observers.add(obs);}
+    public void addObserver(GameModelObserver obs) {
+        observers.add(obs);
+    }
 
     /**
      * Removes an observer.
      *
      * @param obs the observer to be removed.
      */
-    public void deleteObserver(GameModelObserver obs){ observers.remove(obs);}
+    public void deleteObserver(GameModelObserver obs) {
+        observers.remove(obs);
+    }
 
     /**
      * Notifies all the current observers through the lambda argument.
@@ -28,8 +33,10 @@ public abstract class GameModelObservable {
 
     public void notifyObservers(Consumer<GameModelObserver> lambda) {
         for (GameModelObserver observer : observers) {
-            lambda.accept(observer);
+            new Thread(() -> {
+                lambda.accept(observer);
+            }).start();
+
         }
     }
-
 }
