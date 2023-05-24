@@ -39,6 +39,12 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
         this.nickname = nickname;
 
     }
+
+    @Override
+    public void setIsTurn(boolean isTurn) {
+
+    }
+
     public void resetNeedNick(){
         this.needNick = false;
     }
@@ -316,6 +322,7 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
 
     @Override
     public void askMovingTilePosition(){
+        notifyObserver(obs -> obs.onUpdateShowLivingRoom());
         notifyObserver(obs -> obs.onUpdateShowAvailableTiles());
 
 
@@ -483,7 +490,7 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
             out.println();
             for (int j = 0; j < 9; j++) {
                 if (board[i][j] == null) {
-                    out.print("[]");
+                    out.print("[ ]");
                 } else {
                     switch (board[i][j].getColour()) {
                         case GREEN -> out.print("[G]");

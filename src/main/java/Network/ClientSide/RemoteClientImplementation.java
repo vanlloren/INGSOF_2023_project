@@ -338,16 +338,30 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
                 return;
             } else if (message.isTileAccepted().equals(PickTileResponse.INVALID_TILE)) {
                 out.println("Tessera scelta non disponibile, scegli un'altra tessera");
+                onUpdateShowLivingRoom();
                 onUpdateShowAvailableTiles();
-                System.out.println("Scegli la posizione x della prima tessera che vuoi pescare!");
-                x = scanner.nextInt();
-                out.println("Scegli la posizione y della prima tessera che vuoi pescare!");
-                y = scanner.nextInt();
+                do {
+                    System.out.println("Scegli la posizione x della prima tessera che vuoi pescare!");
+                    x = scanner.nextInt();
+                    if(x<0 || x>8){
+                        out.println("Coordinata non valida, riprova!");
+                    }
+                }while(x<0 || x>8);
+
+                do {
+                    out.println("Scegli la posizione y della prima tessera che vuoi pescare!");
+                    y = scanner.nextInt();
+                    if (y < 0 || y > 8) {
+                        out.println("Coordinata non valida, riprova!");
+                    }
+                }while(y<0 || y>8);
+
                 message = server.onTilePickMessage(nickname, x, y);
             }
         }
         helperList.add(message.getTile());
 
+        scanner.nextLine();
         out.println("Una tessera pescata, vuoi pescare altre tessere? [Y/N]");
         String test = scanner.nextLine();
         while(!test.equals("Y")){
@@ -358,6 +372,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
                 return;
             }
             out.println("Simbolo errato!");
+            scanner.nextLine();
             out.println("Una tessera pescata, vuoi pescare altre tessere? [Y/N]");
             test = scanner.nextLine();
         }
@@ -373,10 +388,21 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
 
 
         //pesca seconda tessera
-        System.out.println("Scegli la posizione x della seconda tessera che vuoi pescare!");
-        x = scanner.nextInt();
-        out.println("Scegli la posizione y della seconda tessera che vuoi pescare!");
-        y = scanner.nextInt();
+        do {
+            System.out.println("Scegli la posizione x della seconda tessera che vuoi pescare!");
+            x = scanner.nextInt();
+            if(x<0 || x>8){
+                out.println("Coordinata non valida, riprova!");
+            }
+        }while(x<0 || x>8);
+
+        do {
+            out.println("Scegli la posizione y della seconda tessera che vuoi pescare!");
+            y = scanner.nextInt();
+            if (y < 0 || y > 8) {
+                out.println("Coordinata non valida, riprova!");
+            }
+        }while(y<0 || y>8);
         message = server.onTilePickMessage(nickname, x, y);
         while (message.isTileAccepted().equals(PickTileResponse.MAX_TILE_PICKED) || message.isTileAccepted().equals(PickTileResponse.INVALID_TILE)){
             if(message.isTileAccepted().equals(PickTileResponse.MAX_TILE_PICKED)){
@@ -385,6 +411,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
                 return;
             } else if (message.isTileAccepted().equals(PickTileResponse.INVALID_TILE)) {
                 out.println("Tessera scelta non disponibile, scegli un'altra tessera");
+                onUpdateShowLivingRoom();
                 onUpdateShowAvailableTiles();
                 System.out.println("Scegli la posizione x della seconda tessera che vuoi pescare!");
                 x = scanner.nextInt();
@@ -395,6 +422,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
         }
         helperList.add(message.getTile());
 
+        scanner.nextLine();
         out.println("Due tessere pescate, vuoi pescare altre tessere? [Y/N]");
         test = scanner.nextLine();
         while(!test.equals("Y")){
@@ -405,6 +433,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
                 return;
             }
             out.println("Simbolo errato!");
+            scanner.nextLine();
             out.println("Due tessere pescate, vuoi pescare altre tessere? [Y/N]");
             test = scanner.nextLine();
         }
@@ -419,10 +448,21 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
         }
 
         //pesca terza tessera
-        System.out.println("Scegli la posizione x della terza tessera che vuoi pescare!");
-        x = scanner.nextInt();
-        out.println("Scegli la posizione y della terza tessera che vuoi pescare!");
-        y = scanner.nextInt();
+        do {
+            System.out.println("Scegli la posizione x della terza tessera che vuoi pescare!");
+            x = scanner.nextInt();
+            if(x<0 || x>8){
+                out.println("Coordinata non valida, riprova!");
+            }
+        }while(x<0 || x>8);
+
+        do {
+            out.println("Scegli la posizione y della terza tessera che vuoi pescare!");
+            y = scanner.nextInt();
+            if (y < 0 || y > 8) {
+                out.println("Coordinata non valida, riprova!");
+            }
+        }while(y<0 || y>8);
         message = server.onTilePickMessage(nickname, x, y);
         while (message.isTileAccepted().equals(PickTileResponse.MAX_TILE_PICKED) || message.isTileAccepted().equals(PickTileResponse.INVALID_TILE)){
             if(message.isTileAccepted().equals(PickTileResponse.MAX_TILE_PICKED)){
@@ -431,6 +471,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
                 return;
             } else if (message.isTileAccepted().equals(PickTileResponse.INVALID_TILE)) {
                 out.println("Tessera scelta non disponibile, scegli un'altra tessera");
+                onUpdateShowLivingRoom();
                 onUpdateShowAvailableTiles();
                 System.out.println("Scegli la posizione x della terza tessera che vuoi pescare!");
                 x = scanner.nextInt();

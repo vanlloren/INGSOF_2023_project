@@ -18,7 +18,7 @@ public class Player extends PlayerObservable implements Serializable, SimplePlay
     private String nickname;
 
     private int maxTiles = 6;
-    private Integer points;
+    private Integer points=0;
     private final Shelf personalShelf;
     private RuleShelf ruleShelf;
     private GameModel gameModel;

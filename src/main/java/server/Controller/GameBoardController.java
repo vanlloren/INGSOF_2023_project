@@ -56,7 +56,7 @@ public class GameBoardController {
             }
         }else if(controlledGameBoard.getPickedTilesNum()==1){
             if(checkAdjacentAvailability()) {
-                if(checkTileAvailability(x,y)) {
+                if(checkTileAvailability(x,y) && checkTileAdjacency(x,y)) {
                     controlledGameBoard.setToPlayerAnotherTile(x, y);
                     return controlledGameBoard.getToPlayerTiles().get(1);
                 }else {
@@ -70,7 +70,7 @@ public class GameBoardController {
             }
         }else{
             if(checkAdjacentAvailability()) {
-                if(checkTileAvailability(x,y)) {
+                if(checkTileAvailability(x,y) && checkTileAdjacency(x,y)) {
                     controlledGameBoard.setToPlayerAnotherTile(x, y);
                     return controlledGameBoard.getToPlayerTiles().get(2);
                 }else{
@@ -89,6 +89,10 @@ public class GameBoardController {
         //determina se una tessera sulla LivingRoom è available o no
         //da lanciare prima di ogni getPlayerXTile
         return controlledLivingRoom.getTileAvailability(x, y);
+    }
+
+    public boolean checkTileAdjacency(int x, int y){
+        return controlledLivingRoom.getTileAdjacency(x,y);
     }
 
     public boolean checkPickedTilesNum() {//tiene conto del numero d' ItemTiles pescate ogni turno

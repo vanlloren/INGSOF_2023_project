@@ -36,7 +36,7 @@ public interface RemoteClientInterface extends Remote, LivingRoomObserver, Shelf
 
 
 
-
+    void onUpdateModelChat(TurnView turnView, String nickname, String chat) throws RemoteException;
 
     void onUpdateModelCurrentPlayer(TurnView turnView, Player currPlayer) throws RemoteException;
 

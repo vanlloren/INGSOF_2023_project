@@ -223,20 +223,28 @@ public class LivingRoom extends LivingRoomObservable implements Serializable, Si
 
 
         //adiacenza sopra
-        if(gameTable[x-1][y] != null && !getTileAdjacency(x-1,y)&& !nullTileDetection(x-1,y)){
-            gameTable[x-1][y].setAdjacency();
+        if(x-1>=0){
+            if(gameTable[x-1][y] != null && !getTileAdjacency(x-1,y)&& !nullTileDetection(x-1,y)) {
+                gameTable[x - 1][y].setAdjacency();
+            }
         }
         //adiacenza sotto
-        if(gameTable[x+1][y] != null && !getTileAdjacency(x+1,y)&& !nullTileDetection(x+1,y)){
-            gameTable[x+1][y].setAdjacency();
+        if(x+1<9){
+            if(gameTable[x+1][y] != null && !getTileAdjacency(x+1,y)&& !nullTileDetection(x+1,y)) {
+                gameTable[x + 1][y].setAdjacency();
+            }
         }
         //adiacenza a sx
-        if(gameTable[x][y-1] != null && !getTileAdjacency(x,y-1)&& !nullTileDetection(x,y-1)){
-            gameTable[x][y-1].setAdjacency();
+        if(y-1>=0){
+            if(gameTable[x][y-1] != null && !getTileAdjacency(x,y-1)&& !nullTileDetection(x,y-1)) {
+                gameTable[x][y - 1].setAdjacency();
+            }
         }
         //adiacenza a dx
-        if(gameTable[x][y+1] != null && !getTileAdjacency(x,y+1) && !nullTileDetection(x,y+1)){
-            gameTable[x][y+1].setAdjacency();
+        if(y+1<9) {
+            if (gameTable[x][y + 1] != null && !getTileAdjacency(x, y + 1) && !nullTileDetection(x, y + 1)) {
+                gameTable[x][y + 1].setAdjacency();
+            }
         }
 
         notifyObservers(obs -> {
@@ -272,44 +280,68 @@ public class LivingRoom extends LivingRoomObservable implements Serializable, Si
 
         //capisco dove mi sono spostato
         if (x == firstX - 1) { //sono andato sopra
-            if (gameTable[x - 1][y] != null && !nullTileDetection(x-1,y)) {
-                gameTable[x - 1][y].setAdjacency();
+            if(x-1>=0) {
+                if (gameTable[x - 1][y] != null && !nullTileDetection(x - 1, y)) {
+                    gameTable[x - 1][y].setAdjacency();
+                }
             }
-            if (gameTable[firstX][firstY - 1] != null && !nullTileDetection(firstX,firstY-1)) {
-                gameTable[firstX][firstY - 1].resetAdjacency();
+            if(firstY-1>=0) {
+                if (gameTable[firstX][firstY - 1] != null && !nullTileDetection(firstX, firstY - 1)) {
+                    gameTable[firstX][firstY - 1].resetAdjacency();
+                }
             }
-            if (gameTable[firstX][firstY + 1] != null && !nullTileDetection(firstX,firstY+1)) {
-                gameTable[firstX][firstY + 1].resetAdjacency();
+            if(firstY+1<9) {
+                if (gameTable[firstX][firstY + 1] != null && !nullTileDetection(firstX, firstY + 1)) {
+                    gameTable[firstX][firstY + 1].resetAdjacency();
+                }
             }
         } else if (x == firstX + 1) { //sono andato sotto
-            if (gameTable[x + 1][y] != null && !nullTileDetection(x+1,y)) {
-                gameTable[x + 1][y].setAdjacency();
+            if(x+1<9) {
+                if (gameTable[x + 1][y] != null && !nullTileDetection(x + 1, y)) {
+                    gameTable[x + 1][y].setAdjacency();
+                }
             }
-            if (gameTable[firstX][firstY - 1] != null && !nullTileDetection(firstX,firstY-1)) {
-                gameTable[firstX][firstY - 1].resetAdjacency();
+            if(firstY-1>=0) {
+                if (gameTable[firstX][firstY - 1] != null && !nullTileDetection(firstX, firstY - 1)) {
+                    gameTable[firstX][firstY - 1].resetAdjacency();
+                }
             }
-            if (gameTable[firstX][firstY + 1] != null && !nullTileDetection(firstX,firstY+1)) {
-                gameTable[firstX][firstY + 1].resetAdjacency();
+            if(firstY+1<9) {
+                if (gameTable[firstX][firstY + 1] != null && !nullTileDetection(firstX, firstY + 1)) {
+                    gameTable[firstX][firstY + 1].resetAdjacency();
+                }
             }
         } else if (y == firstY - 1) { //sono andato a sx
-            if (gameTable[x][y - 1] != null && !nullTileDetection(x,y-1)) {
-                gameTable[x][y - 1].setAdjacency();
+            if(y-1>=0) {
+                if (gameTable[x][y - 1] != null && !nullTileDetection(x, y - 1)) {
+                    gameTable[x][y - 1].setAdjacency();
+                }
             }
-            if (gameTable[firstX + 1][firstY] != null && !nullTileDetection(firstX + 1,firstY)) {
-                gameTable[firstX + 1][firstY].resetAdjacency();
+            if(firstX+1<9) {
+                if (gameTable[firstX + 1][firstY] != null && !nullTileDetection(firstX + 1, firstY)) {
+                    gameTable[firstX + 1][firstY].resetAdjacency();
+                }
             }
-            if (gameTable[firstX - 1][firstY] != null && !nullTileDetection(firstX - 1,firstY)) {
-                gameTable[firstX - 1][firstY].resetAdjacency();
+            if(firstX-1>=0) {
+                if (gameTable[firstX - 1][firstY] != null && !nullTileDetection(firstX - 1, firstY)) {
+                    gameTable[firstX - 1][firstY].resetAdjacency();
+                }
             }
         } else if (y == firstY + 1) { //sono andato a dx
-            if (gameTable[x][y + 1] != null && !nullTileDetection(x,y+1)) {
-                gameTable[x][y + 1].setAdjacency();
+            if(y+1<9) {
+                if (gameTable[x][y + 1] != null && !nullTileDetection(x, y + 1)) {
+                    gameTable[x][y + 1].setAdjacency();
+                }
             }
-            if (gameTable[firstX - 1][firstY] != null && !nullTileDetection(firstX -1,firstY)) {
-                gameTable[firstX - 1][firstY].resetAdjacency();
+            if(firstX-1>=0) {
+                if (gameTable[firstX - 1][firstY] != null && !nullTileDetection(firstX - 1, firstY)) {
+                    gameTable[firstX - 1][firstY].resetAdjacency();
+                }
             }
-            if (gameTable[firstX + 1][firstY] != null && !nullTileDetection(firstX + 1,firstY)) {
-                gameTable[firstX + 1][firstY].resetAdjacency();
+            if(firstX+1<9) {
+                if (gameTable[firstX + 1][firstY] != null && !nullTileDetection(firstX + 1, firstY)) {
+                    gameTable[firstX + 1][firstY].resetAdjacency();
+                }
             }
         }
         notifyObservers(obs -> {

@@ -33,10 +33,7 @@ public abstract class GameModelObservable {
 
     public void notifyObservers(Consumer<GameModelObserver> lambda) {
         for (GameModelObserver observer : observers) {
-            new Thread(() -> {
-                lambda.accept(observer);
-            }).start();
-
+            lambda.accept(observer);
         }
     }
 }

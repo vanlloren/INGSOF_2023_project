@@ -64,12 +64,15 @@ public class GameModel extends GameModelObservable implements Serializable, Simp
         this.Chat = chat;
         notifyObservers(obs -> {
             try {
-                obs.onUpdateModelChat(new TurnView(this), Nickname,chat);
+                obs.onUpdateModelChat(new TurnView(this), Nickname, chat);
             } catch (RemoteException e) {
                 throw new RuntimeException(e);
             }
         });
+
     }
+
+
 
     public void GameTerminator() {
         this.GameOn = false;

@@ -77,6 +77,8 @@ public interface View {
 
     void setIsTurn(boolean isTurn);
 
+    void riprendiEsecuzione();
+
     void resetGameOn();
 
     void askPlayerNextMove();
