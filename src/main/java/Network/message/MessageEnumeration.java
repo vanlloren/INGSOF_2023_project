@@ -14,7 +14,7 @@ public enum MessageEnumeration {
         PLAYERNUMBER_REQUEST,
 
 
-
+        INSERTION_REPLY,
 
         START_PUTTING_TILE_REQUEST,
 

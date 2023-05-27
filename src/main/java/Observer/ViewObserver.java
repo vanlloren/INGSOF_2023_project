@@ -43,9 +43,7 @@ public interface ViewObserver {
 
     void onUpdateToPickTile() throws RemoteException;
 
-    void onUpdateToPutTile(int xPos, int yPos , PlayableItemTile tile , ArrayList<Integer> columnPosition , int numOfTiles , ArrayList<PlayableItemTile> playableItemTiles) throws  RemoteException;
-    void onUpdateToPut2or3Tile(int finalXPos, PlayableItemTile tile , ArrayList<PlayableItemTile> playableItemTiles ) throws RemoteException;
-    void onUpdateIsGameOn();
+     void onUpdateIsGameOn();
 
     void onUpdateShowLivingRoom() ;
 
@@ -62,4 +60,6 @@ public interface ViewObserver {
     void onUpdateShowNickCurrPlayer();
 
     void onUpdateChat(String Nickname, String chat) throws RemoteException;
+
+    void onUpdateToStartPutting() throws RemoteException;
 }

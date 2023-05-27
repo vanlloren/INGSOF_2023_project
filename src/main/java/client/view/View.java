@@ -28,7 +28,7 @@ public interface View {
     //chiede al player se desidera smettere di prendere tiles dalla livingRoom volontariamente
 
     //chiede al player quale tessera della sua mano collocare nella shelf
-    void askTileToPut(ArrayList<PlayableItemTile> tilesInPlayerHand);
+    void askTileToPut();
 
     //chiede al player dove collocare la tessera nella shelf
     //TO-DO: capire in che formato fornire l'elenco delle posizioni libere nella shelf
@@ -75,7 +75,12 @@ public interface View {
     void setNickname(String nickname);
 
 
-    void setIsTurn(boolean isTurn);
+    void setEndGame();
+
+    void setIsTurn();
+
+
+    void setTurnTiles(ArrayList<PlayableItemTile> turnTiles);
 
     void riprendiEsecuzione();
 

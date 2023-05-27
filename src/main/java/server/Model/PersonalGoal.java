@@ -27,10 +27,6 @@ public class PersonalGoal extends PersonalGoalObservable implements Serializable
         this.point = point;
 
     }
-
-
-
-
     public PersonalGoalType getPersonalGoalType(){
         return this.personalGoalType;
     }

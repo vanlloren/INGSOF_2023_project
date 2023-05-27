@@ -20,7 +20,7 @@ public class Player extends PlayerObservable implements Serializable, SimplePlay
     private int maxTiles = 6;
     private Integer points=0;
     private final Shelf personalShelf;
-    private RuleShelf ruleShelf;
+
     private GameModel gameModel;
     private final PersonalGoal personalGoal;
     private boolean hasCommonGoal1;
@@ -28,11 +28,12 @@ public class Player extends PlayerObservable implements Serializable, SimplePlay
 
     private boolean endgame = false;
 
-    // costruttore player in cui passo i parametri principali passati dal controller che chiamerà dopo la ricezione di tutti i nickname da lato client
+
     public Player (String nickname, RemoteClientInterface client, GameModel gameModel){
         this.nickname = nickname;
         this.gameModel = gameModel;
         this.personalShelf = new Shelf(gameModel);
+        this.personalShelf.setUp();
         this.personalShelf.addObserver(client);
         this.personalGoal = new PersonalGoal(gameModel);
         this.personalGoal.addObserver(client);
@@ -96,9 +97,7 @@ public class Player extends PlayerObservable implements Serializable, SimplePlay
             }
         });
     }
-    public boolean getEndgame(){
-        return this.endgame;
-    }
+
 
     public boolean getHasCommonGoal1(){
         return this.hasCommonGoal1;
@@ -106,15 +105,7 @@ public class Player extends PlayerObservable implements Serializable, SimplePlay
     public boolean getHasCommonGoal2(){
         return this.hasCommonGoal2;
     }
-/*
-    public void insertTile(int x, int y, PlayableItemTile tile) {
-        int i = 0;
-        Vector<Integer> position= new Vector<>();
-        this.personalShelf.putTile(x,y,tile);
-        maxTiles = ruleShelf.freeCellsInShelf(personalShelf.getStructure());
-        //chiedi alfi come funziona questo metodo
-        //metodo che gestisce inserimento in libreria
-    }*/
+
 }
 
 

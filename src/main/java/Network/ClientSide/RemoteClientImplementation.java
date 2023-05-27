@@ -99,11 +99,6 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
             case FULL_LOBBY -> {
                 this.userInterface.fullLobbyTerminateUI();
             }
-
-            case START_PUTTING_TILE_REQUEST -> { //alf questo è esattamente uguale al tuo toPutFirstTile, quindi l'ho tolto
-                StartPuttingTileRequestMessage newMessage = (StartPuttingTileRequestMessage) message;
-                this.userInterface.askTileToPut(newMessage.getTilesArray());
-            }
             case CHOICE_BEGIN -> {
                 onUpdateChoiceBegin();
             }
@@ -335,6 +330,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
             if(message.isTileAccepted().equals(PickTileResponse.MAX_TILE_PICKED)){
                 out.println("Massimo numero di tessere scelte. Ora ti verrà chiesto di collocare le tessere nella tua Shelf");
                 this.turnTiles=helperList;
+                this.userInterface.setTurnTiles(turnTiles);
                 return;
             } else if (message.isTileAccepted().equals(PickTileResponse.INVALID_TILE)) {
                 out.println("Tessera scelta non disponibile, scegli un'altra tessera");
@@ -486,9 +482,79 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
         this.turnTiles=helperList;
     }
 
-    public void onUpdateToPutTile( int xPos, int yPos , PlayableItemTile tile , ArrayList<Integer> columnPosition , int numOfTiles , ArrayList<PlayableItemTile> playableItemTiles) throws RemoteException {
-        server.onMessage(new ToPutTileRequestMessage( xPos, yPos , tile , columnPosition , numOfTiles , playableItemTiles));
+    public void onUpdateToStartPutting() throws RemoteException {
+        int numOfTiles = turnTiles.size();
+        int xPos;
+        int yPos;
+        int index;
+        InsertionReplyMessage message;
+        do {
+            for (int i = 0; i < turnTiles.size(); i++) {
+                out.println("Tile picked: {[" + turnTiles.get(i) + "],");
+            }
+
+            out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 0 , 1 , 2 ])");
+            index = scanner.nextInt();
+            do {
+                out.println("The index of the tile is not valid!\n");
+                out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 0 , 1 , 2 ])");
+                index = scanner.nextInt();
+            } while (index < 0 || index > turnTiles.size());
+            out.println("Choose the x_coordinate where you want to put the tile in the shelf(Valid insert:[ 0 , 1 , 2 , 3 , 4 , 5 ])");
+            xPos = scanner.nextInt();
+            while (xPos < 0 || xPos > 5) {
+                out.println("The position x for the the insertion of the tile is not valid!\n");
+                out.println("Choose the x_coordinate where you want to put the tile in the shelf(Valid insert:[ 0 , 1 , 2 , 3 , 4 , 5 ])");
+                xPos = scanner.nextInt();
+            }
+            out.println("Choose the position y where you want to put the tile(Valid insert: [ 0 , 1 , 2 , 3 , 4 ])!\n");
+            yPos = scanner.nextInt();
+            while (yPos < 0 || yPos > 4) {
+                out.println("The position y for the the insertion of the tile is not valid!\n");
+                out.println("Choose the position y where you want to put the tile(Valid insert: [ 0 , 1 , 2 , 3 , 4 ])!\n");
+                yPos = scanner.nextInt();
+            }
+
+            message = server.ToPutTileRequestMessage(xPos, yPos, turnTiles.get(index), numOfTiles, turnTiles);
+            if (!message.isValid())
+                out.println("Error in the insertion: coordinates not valid");
+
+
+        } while (!message.isValid());
+
+
+        turnTiles.remove(index - 1);
+
+
+        while (turnTiles.size() > 0) {
+            out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 1 , 2 ])");
+            index = scanner.nextInt();
+            while (index < 1 || index > numOfTiles) {
+                out.println("The index of the tile is not valid!\n");
+                out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 1 , 2  ])");
+                index = scanner.nextInt();
+            }
+            out.println("Choose the x_coordinate in the shelf(Valid insert:[ 0 , 1 , 2 , 3 , 4 , 5 ])");
+            xPos = scanner.nextInt();
+            while (xPos < 0 || xPos > 5) {
+                out.println("The position x for the the insertion of the tile is not valid!\n");
+                out.println("Choose the x_coordinate in the shelf(Valid insert:[ 0 , 1 , 2 , 3 , 4 , 5 ])");
+                xPos = scanner.nextInt();
+            }
+            int finalIndex = index - 1;
+            message = server.ToPutTileRequestMessage(xPos, turnTiles.get(finalIndex), numOfTiles, turnTiles);
+        }
+        if (message.isLastTurn())
+            this.userInterface.setIsTurn();
+
     }
+
+
+
+
+
+
+
 
     public void onUpdateToPut2or3Tile(int finalXPos,PlayableItemTile tile , ArrayList<PlayableItemTile> playableItemTiles) throws RemoteException {
         server.onMessage(new ToPut2Or3TileRequestMessage(finalXPos , tile , playableItemTiles));

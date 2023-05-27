@@ -46,7 +46,7 @@ public class Shelf extends ShelfObservable implements Serializable, SimpleShelf 
     }
 
 
-    public PlayableItemTile[][] setUpPersonalShelf(){
+    public PlayableItemTile[][] setUp(){
         for (int i= 0;i<6;i++){
             for ( int j=0;j<5;j++){
                 this.structure[i][j] = new PlayableItemTile("VOID", -1);
