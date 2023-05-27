@@ -79,23 +79,6 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
                 this.userInterface.setNickname(this.nickname);
                 this.userInterface.askPlayersNumber();
             }
-
-            case TO_PUT_TILE_REPLY_ERROR-> {
-                ToPutTileReplyMessage newMessage = (ToPutTileReplyMessage) message;
-                ArrayList<PlayableItemTile> tilesInPlayerHand = newMessage.getPlayableItemTile();
-                this.userInterface.showNegativePutTileResults(tilesInPlayerHand);
-            }
-
-            case TO_PUT_TILE_2_OR_3_REPLY_ERROR ->{
-                ToPutTile2Or3ReplyMessage newMessage = (ToPutTile2Or3ReplyMessage) message;
-                ArrayList<PlayableItemTile> tilesInPlayerHand = newMessage.getPlayableItemTile();
-                this.userInterface.showNegativePut2Or3TileResults(tilesInPlayerHand);
-            }
-            case KEEP_PUTTING_REQUEST -> {
-                ToKeepPuttingMessage newMessage = (ToKeepPuttingMessage) message;
-                ArrayList<PlayableItemTile> tilesInPlayerHand = newMessage.getPlayableItemTiles();
-                this.userInterface.askTileToPut2or3tile(tilesInPlayerHand);
-            }
             case FULL_LOBBY -> {
                 this.userInterface.fullLobbyTerminateUI();
             }
@@ -556,9 +539,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
 
 
 
-    public void onUpdateToPut2or3Tile(int finalXPos,PlayableItemTile tile , ArrayList<PlayableItemTile> playableItemTiles) throws RemoteException {
-        server.onMessage(new ToPut2Or3TileRequestMessage(finalXPos , tile , playableItemTiles));
-    }
+
 
 
     @Override

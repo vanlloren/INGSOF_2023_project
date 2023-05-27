@@ -157,10 +157,4 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
     }
 
 
-
-    public void onUpdateToPutTile(boolean errorInTheInsertion, String errorType , ArrayList<PlayableItemTile> tilesInPlayerHand) throws RemoteException{
-        client.onMessage((new ToPutTileReplyMessage(tilesInPlayerHand)));
-    }
-
-
 }
