@@ -44,8 +44,6 @@ public class GameBoardController {
 
     public PlayableItemTile PickManager(int x, int y){
 
-        controlledLivingRoom.updateAvailability();
-
         if(controlledGameBoard.getPickedTilesNum()==0){
             if(checkTileAvailability(x,y)){
                 controlledGameBoard.setToPlayerFirstTile(x,y);
