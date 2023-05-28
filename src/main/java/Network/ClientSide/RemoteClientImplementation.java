@@ -226,17 +226,17 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
 
     @Override
     public void UpdateAllClientOnModelStatusCommonGoal1(String nickNameCurrentPlayer) {
-        System.out.println("...NEW UPDATE:"+nickNameCurrentPlayer+"has satisfied CommonGoal1");
+        System.out.println("....NEW UPDATE:"+nickNameCurrentPlayer+"has satisfied CommonGoal1");
     }
 
     @Override
     public void UpdateAllClientOnModelStatusCommonGoal2(String nickNameCurrentPlayer) {
-        System.out.println("...NEW UPDATE:"+nickNameCurrentPlayer+"has satisfied CommonGoal2");
+        System.out.println("....NEW UPDATE:"+nickNameCurrentPlayer+"has satisfied CommonGoal2");
     }
 
     @Override
     public void UpdateAllClientOnChairOwner(Player player) {
-        System.out.println("...NEW UPDATE: The chair owner is "+player.getNickname());
+        System.out.println("....NEW UPDATE: The chair owner is "+player.getNickname());
     }
 
     @Override
