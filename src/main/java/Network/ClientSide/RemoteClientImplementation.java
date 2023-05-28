@@ -221,7 +221,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
 
     @Override
     public void UpdateAllClientOnModelPlayerPoint(String nickNameCurrentPlayer, Integer points) {
-        System.out.println("....NEW UPDATE:"+nickNameCurrentPlayer+"has now"+points+"points");
+        System.out.println("....NEW UPDATE:" +nickNameCurrentPlayer+" has now"+points+" points");
     }
 
     @Override
@@ -455,11 +455,16 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
         int index;
         InsertionReplyMessage message;
         do {
+            int i = 0;
             for (PlayableItemTile turnTile : turnTiles) {
-                out.println("Tile picked: {[" + turnTile.getColour() + "],");
+                out.println("Tile picked: {[" + turnTile.getColour() + "],"+" in positions : i");
+                i++;
             }
-
-            out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 0 , 1 , 2 ])");
+            switch (turnTiles.size()){
+                case 1-> out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 0 ])");
+                case 2-> out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 0 , 1 ])");
+                case 3-> out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 0 , 1 , 2 ])");
+            }
             index = scanner.nextInt();
             do {
                 if(index < 0 || index > turnTiles.size()-1)
@@ -467,7 +472,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
                 out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 0 , 1 , 2 ])");
                 index = scanner.nextInt();
                 }
-            } while (index < 0 || index > turnTiles.size());
+            } while (index < 0 || index > turnTiles.size()-1);
             out.println("Choose the x_coordinate where you want to put the tile in the shelf(Valid insert:[ 0 , 1 , 2 , 3 , 4 , 5 ])");
             xPos = scanner.nextInt();
             while (xPos < 0 || xPos > 5) {
@@ -489,12 +494,15 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
 
         } while (!message.isValid());
 
-        turnTiles.remove(index - 1);
+        turnTiles.remove(index);
         while (turnTiles.size() > 0) {
             for (PlayableItemTile turnTile : turnTiles) {
                 out.println("Tile picked: {[" + turnTile.getColour() + "],");
             }
-            out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 0 , 1 ])");
+            switch (turnTiles.size()){
+                case 1-> out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 0 ])");
+                case 2-> out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 0 , 1 ])");
+            }
             index = scanner.nextInt();
             do {
                 if(index < 0 || index > turnTiles.size()-1)
@@ -502,17 +510,19 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
                     out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 0 , 1 , 2 ])");
                     index = scanner.nextInt();
                 }
-            } while (index < 0 || index > turnTiles.size());
+            } while (index < 0 || index > turnTiles.size()-1);
             out.println("Choose the x_coordinate in the shelf(Valid insert:[ 0 , 1 , 2 , 3 , 4 , 5 ])");
             xPos = scanner.nextInt();
             while (xPos < 0 || xPos > 5) {
-                out.println("The position x for the the insertion of the tile is not valid!\n");
+                out.println("The position x for the the insertion of the tile is not valid!");
                 out.println("Choose the x_coordinate in the shelf(Valid insert:[ 0 , 1 , 2 , 3 , 4 , 5 ])");
                 xPos = scanner.nextInt();
             }
-            int finalIndex = index - 1;
-            message = server.ToPutTileRequestMessage(xPos, turnTiles.get(finalIndex), turnTiles.size());
 
+            message = server.ToPutTileRequestMessage(xPos, turnTiles.get(index), turnTiles.size());
+            if (!message.isValid())
+                out.println("Error in the insertion: coordinates not valid");
+            else turnTiles.remove(index);
         }
         if (message.isLastTurn())
             this.userInterface.setIsTurn();
