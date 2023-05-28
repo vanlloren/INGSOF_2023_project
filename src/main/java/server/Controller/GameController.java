@@ -8,6 +8,7 @@ import server.Model.*;
 import server.enumerations.PickTileResponse;
 
 
+import java.awt.*;
 import java.util.*;
 
 public class GameController {
@@ -63,7 +64,7 @@ public class GameController {
     public TileReplyMessage pickTile(int x, int y) {  //restituisce le 1/2/3 tiles prese dalla livingRoom dal player nel suo turno
         PlayableItemTile tile;
         moveOn = false;
-
+        full=false;
 
         //controllo su max 3 pick
         if (gameBoardController.checkPickedTilesNum()) {
@@ -77,7 +78,7 @@ public class GameController {
                             gameBoardController.livingRoomFiller();
                             gameBoardController.getControlledLivingRoom().updateAvailability();
                         }
-                        gameBoardController.toPlayerTilesResetter();
+                        gameBoardController.getControlledGameBoard().getToPlayerTiles().clear();
                         return new TileReplyMessage(null, PickTileResponse.MAX_TILE_PICKED);
                     } else {
                         return new TileReplyMessage(tile, PickTileResponse.INVALID_TILE);
@@ -91,7 +92,7 @@ public class GameController {
                     gameBoardController.livingRoomFiller();
                     gameBoardController.getControlledLivingRoom().updateAvailability();
                 }
-                gameBoardController.toPlayerTilesResetter();
+                gameBoardController.getControlledGameBoard().getToPlayerTiles().clear();
                 return new TileReplyMessage(null, PickTileResponse.MAX_TILE_PICKED);
             }
         } else {
@@ -100,7 +101,7 @@ public class GameController {
                 gameBoardController.livingRoomFiller();
                 gameBoardController.getControlledLivingRoom().updateAvailability();
             }
-            gameBoardController.toPlayerTilesResetter();
+            gameBoardController.getControlledGameBoard().getToPlayerTiles().clear();
             return new TileReplyMessage(null, PickTileResponse.MAX_TILE_PICKED);
         }
 

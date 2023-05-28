@@ -259,9 +259,5 @@ public class GameBoardController {
         //invoco metodo di playerController che assegna le tessere al player
     }
 
-    public void toPlayerTilesResetter(){
-        ArrayList<PlayableItemTile> list = new ArrayList<PlayableItemTile>();
-        controlledGameBoard.resetToPlayerTiles(list);
-    }
 
 }

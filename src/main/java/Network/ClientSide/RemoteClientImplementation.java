@@ -354,6 +354,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
         onUpdateShowLivingRoom();
         onUpdateShowAvailableTiles();
         if(turnView.getLivingRoom().getAvailableTiles().size()==0) {
+            server.onMessage(new StopPickingMessage(nickname));
             out.println("Non ci sono altre tessere disponibili, mi spiace!");
             out.println("Massimo numero di tessere scelte. Ora ti verrà chiesto di collocare le tessere nella tua Shelf");
             this.turnTiles = helperList;
@@ -425,6 +426,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
         onUpdateShowLivingRoom();
         onUpdateShowAvailableTiles();
         if(turnView.getLivingRoom().getAvailableTiles().size()==0) {
+            server.onMessage(new StopPickingMessage(nickname));
             out.println("Non ci sono altre tessere disponibili, mi spiace!");
             out.println("Massimo numero di tessere scelte. Ora ti verrà chiesto di collocare le tessere nella tua Shelf");
             this.turnTiles = helperList;
@@ -475,7 +477,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
             }
         }
         helperList.add(message.getTile());
-
+        server.onMessage(new StopPickingMessage(nickname));
         out.println("Massimo numero di tessere scelte. Ora ti verrà chiesto di collocare le tessere nella tua Shelf");
         this.turnTiles=helperList;
     }
@@ -609,6 +611,9 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
 
     @Override
     public void onUpdateShowAvailableTiles(){
+        if(turnView.getLivingRoom().getAvailableTiles().size()==0) {
+            out.println("Non ci sono altre tessere disponibili, mi spiace!");
+        }
         for (PlayableItemTile tile: turnView.getLivingRoom().getAvailableTiles()){
             System.out.println("La tessera in posizione x=" + tile.getPosition().toArray()[0] + " y=" + tile.getPosition().toArray()[1] + " é disponibile!\n");
         }

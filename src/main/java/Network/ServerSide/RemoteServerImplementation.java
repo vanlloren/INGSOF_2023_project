@@ -146,7 +146,7 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
                     gameController.getGameBoardController().livingRoomFiller();
                     gameController.getGameBoardController().getControlledLivingRoom().updateAvailability();
                 }
-                gameController.getGameBoardController().toPlayerTilesResetter();
+                gameController.getGameBoardController().getControlledGameBoard().getToPlayerTiles().clear();
             }
         }
     }
