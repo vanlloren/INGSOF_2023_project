@@ -4,6 +4,7 @@ import Network.Events.*;
 import Network.ServerSide.RemoteServerInterface;
 import Network.message.*;
 import Observer.*;
+import Util.Colour;
 import Util.CommonGoalType;
 import Util.PersonalGoalType;
 import client.view.TurnView;
@@ -449,70 +450,109 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
     }
 
     public void onUpdateToStartPutting() throws RemoteException {
-
+        int numOfTiles = turnTiles.size();
         int xPos;
         int yPos;
         int index;
+        String colore;
         InsertionReplyMessage message;
         do {
             for (PlayableItemTile turnTile : turnTiles) {
-                out.println("Tile picked: {[" + turnTile.getColour() + "],");
+                Colour colour = turnTile.getColour();
+                switch (colour) {
+                    case GREEN -> {colore = "\u001B[32m";}
+                    case WHITE -> { colore = "\u001B[37m";}
+                    case YELLOW -> { colore = "\u001B[33m";}
+                    case BLUE -> { colore = "\u001B[34m";}
+                    case CYAN -> { colore = "\u001B[36m";}
+                    case PINK -> { colore = "\u001B[35m";}
+                    case VOID -> { colore = "\u001B[0m";}
+                    default -> {colore = "\u001B[0m";}
+                }
+                int ID = turnTile.getIdCode();
+                out.println("Tile picked [ Color and ID ]: " + colore + "███" + ID);
+                out.println("\u001B[0m");
+            }
+            String validInsertion = "Valid insertions: ";
+            switch (numOfTiles) {
+                case 1 -> {
+                    validInsertion = validInsertion + "[ 0 ]";
+                }
+                case 2 -> {
+                    validInsertion = validInsertion + "[ 0 , 1 ]";
+                }
+                case 3 -> {
+                    validInsertion = validInsertion + "[ 0 , 1 , 2  ]";
+                }
+                default -> {
+                    validInsertion = validInsertion + "[ 0 , 1 , 2 ]";
+                }
             }
 
-            out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 0 , 1 , 2 ])");
-            index = scanner.nextInt();
             do {
-                if(index < 0 || index > turnTiles.size()-1)
-                {out.println("The index of the tile is not valid!\n");
-                out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 0 , 1 , 2 ])");
+                out.println("Choose the tile that you want to put in the shelf(" + validInsertion + ")");
                 index = scanner.nextInt();
-                }
+                if (index < 0 || index > turnTiles.size())
+                    out.println("The index of the tile is not valid!\n");
             } while (index < 0 || index > turnTiles.size());
-            out.println("Choose the x_coordinate where you want to put the tile in the shelf(Valid insert:[ 0 , 1 , 2 , 3 , 4 , 5 ])");
-            xPos = scanner.nextInt();
-            while (xPos < 0 || xPos > 5) {
-                out.println("The position x for the the insertion of the tile is not valid!\n");
+
+            do {
                 out.println("Choose the x_coordinate where you want to put the tile in the shelf(Valid insert:[ 0 , 1 , 2 , 3 , 4 , 5 ])");
                 xPos = scanner.nextInt();
-            }
-            out.println("Choose the position y where you want to put the tile(Valid insert: [ 0 , 1 , 2 , 3 , 4 ])!\n");
-            yPos = scanner.nextInt();
-            while (yPos < 0 || yPos > 4) {
-                out.println("The position y for the the insertion of the tile is not valid!\n");
+                if (xPos < 0 || xPos > 5) {
+                    out.println("The position x for the the insertion of the tile is not valid!\n");
+                }
+            }while (xPos < 0 || xPos > 5);
+
+            do{
                 out.println("Choose the position y where you want to put the tile(Valid insert: [ 0 , 1 , 2 , 3 , 4 ])!\n");
                 yPos = scanner.nextInt();
-            }
-            message = server.ToPutTileRequestMessage(xPos, yPos, turnTiles.get(index), turnTiles.size());
+                if (yPos < 0 || yPos > 4) {
+                    out.println("The position y for the the insertion of the tile is not valid!\n");
+                }
+            }while (yPos < 0 || yPos > 4);
+
+            message = server.ToPutTileRequestMessage(xPos, yPos, turnTiles.get(index), numOfTiles);
             if (!message.isValid())
                 out.println("Error in the insertion: coordinates not valid");
 
 
         } while (!message.isValid());
 
+
         turnTiles.remove(index - 1);
+
+
         while (turnTiles.size() > 0) {
-            for (PlayableItemTile turnTile : turnTiles) {
-                out.println("Tile picked: {[" + turnTile.getColour() + "],");
-            }
-            out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 0 , 1 ])");
-            index = scanner.nextInt();
-            do {
-                if(index < 0 || index > turnTiles.size()-1)
-                {out.println("The index of the tile is not valid!\n");
-                    out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 0 , 1 , 2 ])");
-                    index = scanner.nextInt();
+            String validInsertion = "Valid insertions: ";
+            switch (turnTiles.size()) {
+                case 1 -> {
+                    validInsertion = validInsertion + "[ 1 ]";
                 }
-            } while (index < 0 || index > turnTiles.size());
-            out.println("Choose the x_coordinate in the shelf(Valid insert:[ 0 , 1 , 2 , 3 , 4 , 5 ])");
-            xPos = scanner.nextInt();
-            while (xPos < 0 || xPos > 5) {
-                out.println("The position x for the the insertion of the tile is not valid!\n");
+                default -> {
+                    validInsertion = validInsertion + "[ 1 , 2 ]";
+                }
+            }
+
+            out.println("Choose the tile that you want to put in the shelf(" + validInsertion + ")");
+            do{
+                out.println("Choose the tile that you want to put in the shelf(" + validInsertion + ")");
+                index = scanner.nextInt();
+                if (index < 1 || index > turnTiles.size()) {
+                    out.println("The index of the tile is not valid!\n");
+                }
+            }while (index < 1 || index > turnTiles.size());
+
+            do{
                 out.println("Choose the x_coordinate in the shelf(Valid insert:[ 0 , 1 , 2 , 3 , 4 , 5 ])");
                 xPos = scanner.nextInt();
-            }
+                if (xPos < 0 || xPos > 5) {
+                    out.println("The position x for the the insertion of the tile is not valid!\n");
+                }
+            }while (xPos < 0 || xPos > 5);
             int finalIndex = index - 1;
-            message = server.ToPutTileRequestMessage(xPos, turnTiles.get(finalIndex), turnTiles.size());
 
+            message = server.ToPutTileRequestMessage(xPos, turnTiles.get(finalIndex), numOfTiles);
         }
         if (message.isLastTurn())
             this.userInterface.setIsTurn();
