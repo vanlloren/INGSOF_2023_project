@@ -17,26 +17,9 @@ public class GameController {
     private final GameBoardController gameBoardController; // gameBoardController è il tramite tra GameController e le classi GameBoard, LivingRoom e ItemBag
 
     private RemoteServerImplementation remoteServer;
-    /*
-    Il comando dichiara un campo della classe come transient,
-    il che significa che il campo non sarà incluso nella serializzazione
-    dell'oggetto.
-    In questo caso, il campo virtualViewMap è una mappa che associa un nickname a una vista virtuale (VirtualView)
-    e viene utilizzato dal controller per comunicare con le viste dei singoli giocatori.
-    Poiché le viste devono essere ricreate ad
-    ogni avvio del gioco e non devono essere incluse nella serializzazione,
-     il campo viene dichiarato come transient.
-     */
-
-    boolean stopPicking = false;
     boolean moveOn = false;
-    boolean stillGoing = true;
-
     boolean full = false;
-    boolean invalidTile = false;
 
-    private int xPosCurrTile;
-    private int yPosCurrTile;
 
 
     public GameController(GameModel game) {
@@ -56,35 +39,7 @@ public class GameController {
         this.full = true;
     }
 
-    public void setInvalidTile() {
-        this.invalidTile = true;
-    }
 
-    public void resetInvalidTile() {
-        this.invalidTile = false;
-    }
-
-    public void resetStillGoing() {
-        this.stillGoing = false;
-    }
-
-    public void setStillGoing() {
-        this.stillGoing = true;
-    }
-
-    public void setPosCurrTile(int x, int y) {
-        this.xPosCurrTile = x;
-        this.yPosCurrTile = y;
-    }
-
-
-    public void setStopPicking() {
-        stopPicking = true;
-    }
-
-    public void setMoveOn() {
-        moveOn = true;
-    }
 
     public GameBoardController getGameBoardController() {
         return this.gameBoardController;
@@ -106,9 +61,7 @@ public class GameController {
 
 
     public TileReplyMessage pickTile(int x, int y) {  //restituisce le 1/2/3 tiles prese dalla livingRoom dal player nel suo turno
-        boolean finish = false;
         PlayableItemTile tile;
-        PickTileResponse response;
         moveOn = false;
 
 
@@ -154,7 +107,7 @@ public class GameController {
 
     }
 
-    public InsertionReplyMessage putTile(int xPos, int yPos, PlayableItemTile selectedTile, int numOfTilesOnPutting, ArrayList<PlayableItemTile> playableItemTiles) {
+    public InsertionReplyMessage putTile(int xPos, int yPos, PlayableItemTile selectedTile, int numOfTilesOnPutting) {
 
         int x = xPos;
         int y = yPos;
@@ -174,13 +127,19 @@ public class GameController {
 
             if (shelfIsFull && !game.getEndGame()) {
                 game.setEndGame();
-                nextTurn();
+                if(numOfTilesOnPutting==1) {
+                    nextTurn();
+                }
                 return new InsertionReplyMessage(true, true);
-            } else if (game.getEndGame()) {
-                nextTurn();
+            }  if (game.getEndGame()) {
+                if(numOfTilesOnPutting==1) {
+                    nextTurn();
+                }
                 return new InsertionReplyMessage(true, true);
-            } else if (!game.getEndGame()) {
-                nextTurn();
+            } else{
+                if(numOfTilesOnPutting==1) {
+                    nextTurn();
+                }
                 return new InsertionReplyMessage(true, false);
             }
         }
@@ -188,7 +147,7 @@ public class GameController {
     }
 
 
-    public InsertionReplyMessage putTile(int xPos, PlayableItemTile selectedTile, int numOfTilesOnPutting, ArrayList<PlayableItemTile> playableItemTiles) {
+    public InsertionReplyMessage putTile(int xPos, PlayableItemTile selectedTile, int numOfTilesOnPutting) {
 
         int yPos = game.getCurrPlayer().getPersonalShelf().getColumnChosen();
 
@@ -202,13 +161,19 @@ public class GameController {
 
             if (shelfIsFull && !game.getEndGame()) {
                 game.setEndGame();
-                nextTurn();
+                if(numOfTilesOnPutting==1) {
+                    nextTurn();
+                }
                 return new InsertionReplyMessage(true, true);
-            } else if (game.getEndGame()) {
-                nextTurn();
+            }  if (game.getEndGame()) {
+                if(numOfTilesOnPutting==1) {
+                    nextTurn();
+                }
                 return new InsertionReplyMessage(true, true);
-            } else if (!game.getEndGame()) {
-                nextTurn();
+            } else {
+                if(numOfTilesOnPutting==1) {
+                    nextTurn();
+                }
                 return new InsertionReplyMessage(true, false);
             }
         }
@@ -258,7 +223,7 @@ public class GameController {
         }
         if (Winners.size() == 1) {
             game.setMatchWinner(Winners.get(0));
-        } else //caso di parità multiple
+        } else
         {
             Player Winner;
             Player chairOwner = game.getChairOwner();
@@ -284,8 +249,6 @@ public class GameController {
     public static HashMap<Colour, ArrayList<Integer>> findAdjGroups(PlayableItemTile[][] shelf) {
         HashMap<Colour, ArrayList<Integer>> adjGroups = new HashMap<>();
 
-        PlayableItemTile[][] helperShelf = shelf;
-
         boolean[][] visited = new boolean[6][5];
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 5; j++) {
@@ -295,11 +258,11 @@ public class GameController {
 
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 5; j++) {
-                if (helperShelf[i][j] != null) {
+                if (shelf[i][j] != null) {
                     if (!visited[i][j]) {
-                        Colour colore = helperShelf[i][j].getColour();
+                        Colour colore = shelf[i][j].getColour();
                         ArrayList<Integer> dimensioni = new ArrayList<>();
-                        int dimension = findAdjGroupDim(helperShelf, visited, i, j, colore, dimensioni);
+                        int dimension = findAdjGroupDim(shelf, visited, i, j, colore, dimensioni);
 
 
                         if (adjGroups.containsKey(colore)) {

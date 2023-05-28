@@ -33,17 +33,12 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
     private RemoteServerInterface server;
     private TurnView turnView;
     private String nickname;
-    private boolean gameBegin=false;
     private ArrayList<PlayableItemTile> turnTiles = null;
 
 
 
     public RemoteClientImplementation(String address, int port, View userInterface) throws RemoteException {
         super(address, port, userInterface);
-    }
-
-    private void setGameBegin(){
-        gameBegin=true;
     }
     @Override
     public void connectionInit() throws Exception {
@@ -79,12 +74,12 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
                 this.userInterface.setNickname(this.nickname);
                 this.userInterface.askPlayersNumber();
             }
-            case FULL_LOBBY -> {
+            case FULL_LOBBY ->
                 this.userInterface.fullLobbyTerminateUI();
-            }
-            case CHOICE_BEGIN -> {
+
+            case CHOICE_BEGIN ->
                 onUpdateChoiceBegin();
-            }
+
 
 
         }
@@ -112,13 +107,9 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
 
 
             }
-            case UPDATE_GAME_BOARD -> {
-                UpdateGameBoardEvent newEvent = (UpdateGameBoardEvent) event;
-                UpdateAllClientOnModelGameBoard(newEvent.getGameBoard());
-            }
-            case UPDATE_GAME_HAS_STARTED -> {
+            case UPDATE_GAME_HAS_STARTED ->
                 UpdateAllClientOnModelGameHasStarted();
-            }
+
             case UPDATE_CURR_PLAYER -> {
                 UpdateCurrPlayerEvent newEvent = (UpdateCurrPlayerEvent) event;
                 UpdateAllClientOnModelCurrPlayer(newEvent.getCurrPlayer());
@@ -127,9 +118,9 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
                 UpdateMatchWinnerEvent newEvent = (UpdateMatchWinnerEvent) event;
                 UpdateAllClientOnModelMatchWinner(newEvent.getMatchWinner());
             }
-            case UPDATE_GAME_HAS_ENDED -> {
+            case UPDATE_GAME_HAS_ENDED ->
                 UpdateAllClientOnModelGameHasEnd();
-            }
+
             case UPDATE_PICKED_LIVINGROOM_TILE -> {
                 UpdatePickedLivingRoomTileEvent newEvent = (UpdatePickedLivingRoomTileEvent) event;
                 UpdateAllClientOnPickedTileFromLivingRoom(newEvent.getCurrPlayer(), newEvent.getXPos(), newEvent.getYPos());
@@ -168,12 +159,13 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
     @Override
     public void UpdateAllClientOnModelGameHasEnd(){
         this.userInterface.resetGameOn();
-        System.out.println(".......................\n" +
-                           ".......................\n" +
-                           ".......................\n" +
-                           ".......................\n" +
-                           ".......................\n" +
-                           ".......GAME OVER......."
+        System.out.println("""
+                .......................
+                .......................
+                .......................
+                .......................
+                .......................
+                .......GAME OVER......."""
                );
 
     }
@@ -253,13 +245,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
 
     }
 
-    @Override
-    public void onUpdateAllClientOnCurrentPlayer(Player currPlayer) {
-        System.out.println("...NEW UPDATE: Now it's"+currPlayer.getNickname()+" turn");
-        //this.userInterface.setCurrPlayer(currPlayer.getNickname());
 
-        //this.userInterface.askPlayerNextMove();
-    }
 
     public void onUpdateChoiceBegin(){
         this.userInterface.riprendiEsecuzione();
@@ -275,10 +261,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
 
     }
 
-    @Override
-    public void UpdateAllClientOnModelGameBoard(GameBoard gameBoard) {
 
-    }
 
     @Override
     public void UpdateAllClientOnNewMessageChat(String Nickname, String chatMessage) {
@@ -313,7 +296,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
             if(message.isTileAccepted().equals(PickTileResponse.MAX_TILE_PICKED)){
                 out.println("Massimo numero di tessere scelte. Ora ti verrà chiesto di collocare le tessere nella tua Shelf");
                 this.turnTiles=helperList;
-                this.userInterface.setTurnTiles(turnTiles);
+
                 return;
             } else if (message.isTileAccepted().equals(PickTileResponse.INVALID_TILE)) {
                 out.println("Tessera scelta non disponibile, scegli un'altra tessera");
@@ -472,16 +455,18 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
         int index;
         InsertionReplyMessage message;
         do {
-            for (int i = 0; i < turnTiles.size(); i++) {
-                out.println("Tile picked: {[" + turnTiles.get(i) + "],");
+            for (PlayableItemTile turnTile : turnTiles) {
+                out.println("Tile picked: {[" + turnTile.getColour() + "],");
             }
 
             out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 0 , 1 , 2 ])");
             index = scanner.nextInt();
             do {
-                out.println("The index of the tile is not valid!\n");
+                if(index < 0 || index > turnTiles.size()-1)
+                {out.println("The index of the tile is not valid!\n");
                 out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 0 , 1 , 2 ])");
                 index = scanner.nextInt();
+                }
             } while (index < 0 || index > turnTiles.size());
             out.println("Choose the x_coordinate where you want to put the tile in the shelf(Valid insert:[ 0 , 1 , 2 , 3 , 4 , 5 ])");
             xPos = scanner.nextInt();
@@ -497,18 +482,14 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
                 out.println("Choose the position y where you want to put the tile(Valid insert: [ 0 , 1 , 2 , 3 , 4 ])!\n");
                 yPos = scanner.nextInt();
             }
-
-            message = server.ToPutTileRequestMessage(xPos, yPos, turnTiles.get(index), numOfTiles, turnTiles);
+            message = server.ToPutTileRequestMessage(xPos, yPos, turnTiles.get(index), numOfTiles);
             if (!message.isValid())
                 out.println("Error in the insertion: coordinates not valid");
 
 
         } while (!message.isValid());
 
-
         turnTiles.remove(index - 1);
-
-
         while (turnTiles.size() > 0) {
             out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 1 , 2 ])");
             index = scanner.nextInt();
@@ -525,7 +506,8 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
                 xPos = scanner.nextInt();
             }
             int finalIndex = index - 1;
-            message = server.ToPutTileRequestMessage(xPos, turnTiles.get(finalIndex), numOfTiles, turnTiles);
+            message = server.ToPutTileRequestMessage(xPos, turnTiles.get(finalIndex), numOfTiles);
+
         }
         if (message.isLastTurn())
             this.userInterface.setIsTurn();

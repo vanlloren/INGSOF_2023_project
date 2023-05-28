@@ -24,10 +24,6 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
     private boolean isLastTurn = false;
 
 
-
-    private ArrayList<PlayableItemTile> turnTiles = null;
-
-
     private boolean goOnPicking=true;
     private boolean moveOn;
     private String currPlayer;
@@ -37,7 +33,7 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
     private Semaphore semaphore= new Semaphore(0);
 
     private boolean checker = false;
-    private boolean endGame;
+
 
     public TUI(){
         this.out = System.out;
@@ -48,10 +44,7 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
 
     }
 
-   @Override
-   public void setEndGame(){
-        this.endGame = true;
-   }
+
     @Override
     public void setIsTurn() {
 this.isLastTurn = true;
@@ -61,10 +54,6 @@ this.isLastTurn = true;
         this.needNick = false;
     }
 
-    @Override
-    public void setTurnTiles(ArrayList<PlayableItemTile> turnTiles){
-        this.turnTiles = turnTiles;
-    }
 
     //Implementando il metodo Runnable ereditiamo tutte le sue classi e oggetti
     //Run è un costruttore basilare costruito direttamente dal metodo Runnable al posto di init
@@ -156,33 +145,34 @@ this.isLastTurn = true;
                         out.println();
 
                     }
+                    break;
                 case 2:
                     notifyObserver(obs -> {
                         obs.onUpdateShowLivingRoom();
                     });
-                    out.println();
+                    break;
 
                 case 3:
                     notifyObserver(obs -> obs.onUpdateShowPlayersList());
-                    out.println();
+                    break;
 
                 case 4:
                     notifyObserver(obs -> obs.onUpdateShowPlayerShelf(nickname));
-                    out.println();
+                    break;
 
                 case 5:
                     final int[] points = new int[1];
                     notifyObserver(obs -> points[0] = obs.onUpdateShowPartialPoint(nickname));
                     showPartialPoint(points[0]);
-                    out.println();
+                    break;
 
                 case 6:
                     notifyObserver(obs -> obs.onUpdateShowNickCurrPlayer());
-                    out.println();
+                    break;
 
                 case 7:
                     WriteInChat();
-                    out.println();
+                    break;
             }
 
     }
@@ -389,17 +379,7 @@ this.isLastTurn = true;
 
     }
 
-    public void showNegativePutTileResults (  ArrayList<PlayableItemTile> tilesInPlayerHand){
-            out.println("Error in the insertion!\n");
-            out.println("Please retry the insertion\n");
-           // askTileToPut(tilesInPlayerHand);
-    }
 
-    public void showNegativePut2Or3TileResults ( ArrayList<PlayableItemTile> tilesInPlayerHand){
-        out.println("Error in the insertion!\n");
-        out.println("Please retry the insertion\n");
-        askTileToPut2or3tile(tilesInPlayerHand);
-    }
 
     @Override
     public void invalidTileHandler() {
@@ -423,10 +403,6 @@ this.isLastTurn = true;
 
     }
 
-    @Override
-    public void showWinMessage(String stringWinning) {
-
-    }
 
 
 
@@ -520,10 +496,7 @@ this.isLastTurn = true;
 
     }
 
-    @Override
-    public void showMatchSituation(List<String> actualPlayers, List<Shelf> actualShelf, String actualPlayerNickname) {
 
-    }
 
     public void resetTUI(){
         out.println("Cleaning of the textual interface...");

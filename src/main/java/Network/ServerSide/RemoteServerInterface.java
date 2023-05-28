@@ -7,7 +7,7 @@ import server.Model.PlayableItemTile;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
-import java.util.ArrayList;
+
 
 //interfaccia inviata al client per comunicare col server
 
@@ -22,7 +22,7 @@ public interface RemoteServerInterface extends Remote {
 
     TileReplyMessage onTilePickMessage(String nickname, int x, int y) throws RemoteException;
 
-    InsertionReplyMessage ToPutTileRequestMessage(int xPos, int yPos, PlayableItemTile tile, int numOfTiles, ArrayList<PlayableItemTile> turnTiles) throws  RemoteException;
-    InsertionReplyMessage ToPutTileRequestMessage(int xPos, PlayableItemTile tile, int numOfTiles, ArrayList<PlayableItemTile> turnTiles) throws  RemoteException;
+    InsertionReplyMessage ToPutTileRequestMessage(int xPos, int yPos, PlayableItemTile tile, int numOfTiles) throws  RemoteException;
+    InsertionReplyMessage ToPutTileRequestMessage(int xPos, PlayableItemTile tile, int numOfTiles) throws  RemoteException;
 
 }

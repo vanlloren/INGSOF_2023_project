@@ -47,12 +47,12 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
 
         return message;
     }
-    public InsertionReplyMessage ToPutTileRequestMessage(int xPos, int yPos , PlayableItemTile tile , int numOfTiles , ArrayList<PlayableItemTile> playableItemTiles){
-       InsertionReplyMessage message = gameController.putTile(xPos,yPos,tile,numOfTiles,playableItemTiles);
+    public InsertionReplyMessage ToPutTileRequestMessage(int xPos, int yPos , PlayableItemTile tile , int numOfTiles){
+       InsertionReplyMessage message = gameController.putTile(xPos,yPos,tile,numOfTiles);
        return message;
     }
-    public InsertionReplyMessage ToPutTileRequestMessage(int xPos, PlayableItemTile tile , int numOfTiles , ArrayList<PlayableItemTile> playableItemTiles){
-        InsertionReplyMessage message = gameController.putTile(xPos,tile,numOfTiles,playableItemTiles);
+    public InsertionReplyMessage ToPutTileRequestMessage(int xPos, PlayableItemTile tile , int numOfTiles){
+        InsertionReplyMessage message = gameController.putTile(xPos,tile,numOfTiles);
         return message;
     }
 
