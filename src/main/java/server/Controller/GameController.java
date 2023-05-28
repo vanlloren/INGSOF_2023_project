@@ -109,21 +109,15 @@ public class GameController {
 
     public InsertionReplyMessage putTile(int xPos, int yPos, PlayableItemTile selectedTile, int numOfTilesOnPutting) {
 
-        int x = xPos;
-        int y = yPos;
-        PlayableItemTile tile = selectedTile;
+        if (RuleShelf.isColumnAvailable(yPos, numOfTilesOnPutting, game.getCurrPlayer().getPersonalShelf().getStructure()) &&
+                RuleShelf.commandPutTileCheckValidity(xPos, yPos,game.getCurrPlayer().getPersonalShelf().getStructure())) {
 
-        int numOfTiles = numOfTilesOnPutting;
-
-        if (RuleShelf.iscolumnAvailable(y, numOfTiles, game.getCurrPlayer().getPersonalShelf().getStructure()) &&
-                RuleShelf.commandPutTileCheckValidity(x, y,game.getCurrPlayer().getPersonalShelf().getStructure())) {
-
-            game.getCurrPlayer().getPersonalShelf().putTile(x, y, tile);
+            game.getCurrPlayer().getPersonalShelf().putTile(xPos, yPos, selectedTile);
             Player currPlayer = game.getCurrPlayer();
             LivingRoom livingRoom = game.getMyShelfie().getLivingRoom();
             calculatePoint(currPlayer, livingRoom);
             boolean shelfIsFull = game.getCurrPlayer().getPersonalShelf().isFull();
-            game.getCurrPlayer().getPersonalShelf().setColumnChosen(y);
+            game.getCurrPlayer().getPersonalShelf().setColumnChosen(yPos);
 
             if (shelfIsFull && !game.getEndGame()) {
                 game.setEndGame();
@@ -143,7 +137,9 @@ public class GameController {
                 return new InsertionReplyMessage(true, false);
             }
         }
-        return new InsertionReplyMessage(false, false);
+        else {
+            return new InsertionReplyMessage(false, false);
+        }
     }
 
 

@@ -97,7 +97,7 @@ public class RuleCommonGoal {
         }
 
         public static boolean checkSquare(PlayableItemTile[][] structure) {
-            int k = 0;
+            int k;
             for (int i = 0; i <= 4; i++) {
                 for (int j = 0; j <= 3; j++) {
                     if (structure[i][j].getColour() != Colour.VOID) {
@@ -150,7 +150,7 @@ public class RuleCommonGoal {
             else if (structure[0][0].getColour() != Colour.VOID) {
                 Colour value = structure[0][0].getColour();
                 for (int i = 1; i <= 4; i++) {
-                    if ((structure[i][i].getColour()!=Colour.VOID&&structure[i][i].getColour() != value)||structure[i][i].getColour()==Colour.VOID){
+                    if (structure[i][i].getColour() == Colour.VOID || structure[i][i].getColour() != value){
                         checker = false;
                         break;}
                 }
@@ -158,7 +158,7 @@ public class RuleCommonGoal {
             else if (structure[1][0] != null) {
                 Colour value = structure[1][0].getColour();
                 for (int i = 2; i <= 5; i++) {
-                    if ((structure[i][i-1].getColour()!=Colour.VOID&&structure[i][i-1].getColour() != value)||structure[i][i-1].getColour()==Colour.VOID){
+                    if (structure[i][i - 1].getColour() == Colour.VOID || structure[i][i - 1].getColour() != value){
                         checker = false;
                         break;}
                 }
@@ -289,13 +289,13 @@ public class RuleCommonGoal {
 
 
         public static boolean checkEight(PlayableItemTile[][] structure) {
-            for (int i = 0; i < structure.length; i++) {
-                for (int j = 0; j < structure.length; j++) {
+            for (int i = 0; i < 6; i++) {
+                for (int j = 0; j < 5; j++) {
                     int count = 0;
                     if (structure[i][j].getColour() != Colour.VOID) {
                         Colour value = structure[i][j].getColour();
-                        for (int k = 0; k < structure.length; k++) {
-                            for (int l = 0; l < structure.length; l++) {
+                        for (int k = 0; k < 6; k++) {
+                            for (int l = 0; l < 5; l++) {
                                 if (structure[k][l].getColour() != Colour.VOID && structure[k][l].getColour().equals(value)) {
                                     count++;
                                 }

@@ -449,7 +449,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
     }
 
     public void onUpdateToStartPutting() throws RemoteException {
-        int numOfTiles = turnTiles.size();
+
         int xPos;
         int yPos;
         int index;
@@ -482,7 +482,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
                 out.println("Choose the position y where you want to put the tile(Valid insert: [ 0 , 1 , 2 , 3 , 4 ])!\n");
                 yPos = scanner.nextInt();
             }
-            message = server.ToPutTileRequestMessage(xPos, yPos, turnTiles.get(index), numOfTiles);
+            message = server.ToPutTileRequestMessage(xPos, yPos, turnTiles.get(index), turnTiles.size());
             if (!message.isValid())
                 out.println("Error in the insertion: coordinates not valid");
 
@@ -491,13 +491,18 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
 
         turnTiles.remove(index - 1);
         while (turnTiles.size() > 0) {
-            out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 1 , 2 ])");
-            index = scanner.nextInt();
-            while (index < 1 || index > numOfTiles) {
-                out.println("The index of the tile is not valid!\n");
-                out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 1 , 2  ])");
-                index = scanner.nextInt();
+            for (PlayableItemTile turnTile : turnTiles) {
+                out.println("Tile picked: {[" + turnTile.getColour() + "],");
             }
+            out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 0 , 1 ])");
+            index = scanner.nextInt();
+            do {
+                if(index < 0 || index > turnTiles.size()-1)
+                {out.println("The index of the tile is not valid!\n");
+                    out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 0 , 1 , 2 ])");
+                    index = scanner.nextInt();
+                }
+            } while (index < 0 || index > turnTiles.size());
             out.println("Choose the x_coordinate in the shelf(Valid insert:[ 0 , 1 , 2 , 3 , 4 , 5 ])");
             xPos = scanner.nextInt();
             while (xPos < 0 || xPos > 5) {
@@ -506,7 +511,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
                 xPos = scanner.nextInt();
             }
             int finalIndex = index - 1;
-            message = server.ToPutTileRequestMessage(xPos, turnTiles.get(finalIndex), numOfTiles);
+            message = server.ToPutTileRequestMessage(xPos, turnTiles.get(finalIndex), turnTiles.size());
 
         }
         if (message.isLastTurn())
