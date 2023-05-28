@@ -8,6 +8,7 @@ import server.Model.*;
 import server.enumerations.PickTileResponse;
 
 
+import java.awt.*;
 import java.util.*;
 
 public class GameController {
@@ -63,6 +64,8 @@ public class GameController {
     public TileReplyMessage pickTile(int x, int y) {  //restituisce le 1/2/3 tiles prese dalla livingRoom dal player nel suo turno
         PlayableItemTile tile;
         moveOn = false;
+        full=false;
+
         //controllo su max 3 pick
         if (gameBoardController.checkPickedTilesNum()) {
             //controllo su max numero caselle libere shelf
@@ -75,7 +78,7 @@ public class GameController {
                             gameBoardController.livingRoomFiller();
                             gameBoardController.getControlledLivingRoom().updateAvailability();
                         }
-                        gameBoardController.toPlayerTilesResetter();
+                        gameBoardController.getControlledGameBoard().getToPlayerTiles().clear();
                         return new TileReplyMessage(null, PickTileResponse.MAX_TILE_PICKED);
                     } else {
                         return new TileReplyMessage(tile, PickTileResponse.INVALID_TILE);
@@ -89,7 +92,7 @@ public class GameController {
                     gameBoardController.livingRoomFiller();
                     gameBoardController.getControlledLivingRoom().updateAvailability();
                 }
-                gameBoardController.toPlayerTilesResetter();
+                gameBoardController.getControlledGameBoard().getToPlayerTiles().clear();
                 return new TileReplyMessage(null, PickTileResponse.MAX_TILE_PICKED);
             }
         } else {
@@ -98,7 +101,7 @@ public class GameController {
                 gameBoardController.livingRoomFiller();
                 gameBoardController.getControlledLivingRoom().updateAvailability();
             }
-            gameBoardController.toPlayerTilesResetter();
+            gameBoardController.getControlledGameBoard().getToPlayerTiles().clear();
             return new TileReplyMessage(null, PickTileResponse.MAX_TILE_PICKED);
         }
 
@@ -252,7 +255,7 @@ public class GameController {
 
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 5; j++) {
-                if (shelf[i][j]!=null) {
+                if (shelf[i][j] != null) {
                     if (!visited[i][j]) {
                         Colour colore = shelf[i][j].getColour();
                         ArrayList<Integer> dimensioni = new ArrayList<>();
@@ -307,17 +310,16 @@ public class GameController {
             if(colour != Colour.VOID) {
                 ArrayList<Integer> counter = adjacencyGroups.get(colour);
                 for (Integer integer : counter) {
-                    if (integer.equals(3)) {
+                    if (integer == 3) {
                         point = point + 2;
-                    } else if (integer.equals(4)) {
+                    } else if (integer == 4) {
                         point = point + 3;
-                    } else if (integer.equals(5)) {
+                    } else if (integer == 5) {
                         point = point + 5;
-                    } else if (integer >= 6) {
+                    } else if (integer > 6) {
                         point = point + 8;
                     }
                 }
-
             }
         }
 
