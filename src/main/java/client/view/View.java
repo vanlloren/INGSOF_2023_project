@@ -3,7 +3,7 @@ package client.view;
 import server.Model.*;
 
 import java.util.ArrayList;
-import java.util.List;
+
 
 public interface View {
 
@@ -28,13 +28,8 @@ public interface View {
     //chiede al player se desidera smettere di prendere tiles dalla livingRoom volontariamente
 
     //chiede al player quale tessera della sua mano collocare nella shelf
-    void askTileToPut(ArrayList<PlayableItemTile> tilesInPlayerHand);
+    void askTileToPut();
 
-    //chiede al player dove collocare la tessera nella shelf
-    //TO-DO: capire in che formato fornire l'elenco delle posizioni libere nella shelf
-    void showNegativePutTileResults( ArrayList<PlayableItemTile> tilesInPlayerHand);
-    //void WriteInChat();
-    //mostra il risultato della richiesta di login, con il nome scelto dal player
     void showLoginResults(boolean nicknameAccepted, String chosenNickname);
 
     void showPlayersList(ArrayList<Player> playerList);
@@ -44,8 +39,6 @@ public interface View {
 
     void fullLobbyTerminateUI();
 
-    //mostra un messaggio che indica la fine della partita e il vincitore
-    void showWinMessage(String winnerNickname);
 
     void showLivingRoom(SimpleLivingRoom livingRoom);
 
@@ -70,12 +63,15 @@ public interface View {
 
     void showDefaultMessage( String defaultMessage);
 
-    void showMatchSituation(List<String> actualPlayers, List<Shelf> actualShelf, String actualPlayerNickname);
-
     void setNickname(String nickname);
 
 
-    void setIsTurn(boolean isTurn);
+
+
+    void setIsTurn();
+
+
+
 
     void riprendiEsecuzione();
 
@@ -85,9 +81,6 @@ public interface View {
 
     void maxTilesPicked();
 
-    void askTileToPut2or3tile(ArrayList<PlayableItemTile> tilesInPlayerHand);
-
-    void showNegativePut2Or3TileResults(ArrayList<PlayableItemTile> tilesInPlayerHand);
 
     void invalidTileHandler();
 

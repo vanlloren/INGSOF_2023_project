@@ -12,7 +12,7 @@ import java.rmi.RemoteException;
 public class PersonalGoal extends PersonalGoalObservable implements Serializable {
     @Serial
     private static final long serialVersionUID = -1257488172741056944L;
-    public Integer point;
+    public Integer point = 0;
     public GameModel gameModel;
     public PersonalGoalType personalGoalType;
 
@@ -27,10 +27,6 @@ public class PersonalGoal extends PersonalGoalObservable implements Serializable
         this.point = point;
 
     }
-
-
-
-
     public PersonalGoalType getPersonalGoalType(){
         return this.personalGoalType;
     }

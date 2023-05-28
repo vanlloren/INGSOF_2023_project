@@ -14,18 +14,11 @@ public enum MessageEnumeration {
         PLAYERNUMBER_REQUEST,
 
 
-
+        INSERTION_REPLY,
 
         START_PUTTING_TILE_REQUEST,
 
-        TO_PUT_FIRST_TILE,
-        TO_PUT_TILE_REQUEST,
-        TO_PUT_TILE_REPLY_ERROR,
 
-        TO_PUT_TILE_2_OR_3_REQUEST,
-
-        TO_PUT_TILE_2_OR_3_REPLY_ERROR,
-        KEEP_PUTTING_REQUEST,
 
         ERROR_MESSAGE,
         INVALID_TILE,
@@ -33,5 +26,5 @@ public enum MessageEnumeration {
 
 
         FULL_LOBBY,
-        TO_PICK_TILE_REPLY, TO_PICK_TILE_REQUEST, PLAYERNUMBER_REPLY,
+        TO_PICK_TILE_REQUEST, PLAYERNUMBER_REPLY,
 }

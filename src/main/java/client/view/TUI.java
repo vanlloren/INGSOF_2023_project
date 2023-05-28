@@ -21,6 +21,8 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
 
     private boolean gameOn=true;
 
+    private boolean isLastTurn = false;
+
 
     private boolean goOnPicking=true;
     private boolean moveOn;
@@ -31,6 +33,8 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
     private Semaphore semaphore= new Semaphore(0);
 
     private boolean checker = false;
+
+
     public TUI(){
         this.out = System.out;
     }
@@ -40,14 +44,16 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
 
     }
 
-    @Override
-    public void setIsTurn(boolean isTurn) {
 
+    @Override
+    public void setIsTurn() {
+this.isLastTurn = true;
     }
 
     public void resetNeedNick(){
         this.needNick = false;
     }
+
 
     //Implementando il metodo Runnable ereditiamo tutte le sue classi e oggetti
     //Run è un costruttore basilare costruito direttamente dal metodo Runnable al posto di init
@@ -68,11 +74,15 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
 
         try {
             semaphore.acquire();
+            do{
             askPlayerNextMove();
+            }while (!isLastTurn);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-
+        out.println("it was your last turn please wait for final results");
+     while (gameOn){
+     }
     }
 
     @Override
@@ -103,7 +113,7 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
     @Override
     public void askPlayerNextMove(){
         int picking;
-        if(gameOn) {
+
             do {
                 out.println("""
                         Press 1 if you want to PICK A TILE FROM LIVING ROOM\s
@@ -133,39 +143,38 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
                     else {
                         System.out.println("IT IS NOT YOUR TURN YET: PLEASE WAIT ");
                         out.println();
-                        askPlayerNextMove();
+
                     }
+                    break;
                 case 2:
                     notifyObserver(obs -> {
                         obs.onUpdateShowLivingRoom();
                     });
-                    out.println();
-                    askPlayerNextMove();
+                    break;
+
                 case 3:
                     notifyObserver(obs -> obs.onUpdateShowPlayersList());
-                    out.println();
-                    askPlayerNextMove();
+                    break;
+
                 case 4:
                     notifyObserver(obs -> obs.onUpdateShowPlayerShelf(nickname));
-                    out.println();
-                    askPlayerNextMove();
+                    break;
+
                 case 5:
                     final int[] points = new int[1];
                     notifyObserver(obs -> points[0] = obs.onUpdateShowPartialPoint(nickname));
                     showPartialPoint(points[0]);
-                    out.println();
-                    askPlayerNextMove();
+                    break;
+
                 case 6:
                     notifyObserver(obs -> obs.onUpdateShowNickCurrPlayer());
-                    out.println();
-                    askPlayerNextMove();
+                    break;
+
                 case 7:
                     WriteInChat();
-                    out.println();
-                    askPlayerNextMove();
-
+                    break;
             }
-        }
+
     }
 
     public void setMoveOn(){
@@ -333,85 +342,24 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
                 throw new RuntimeException(e);
             }
         });
-    }
+            askTileToPut();
+        };
+
 
 
     @Override
-    public void askTileToPut(ArrayList<PlayableItemTile> tilesInPlayerHand) {
-        int numOfTiles = tilesInPlayerHand.size();
-        int xPos; int yPos; int index;
-        for (PlayableItemTile tile: tilesInPlayerHand
-        ) {
-            out.println("Tiles picked: {["+tilesInPlayerHand.get(1)+"]," + "["+tilesInPlayerHand.get(2)+"]," +"["+tilesInPlayerHand.get(3)+"]}");
-        }
-        {   out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 1 , 2 , 3 ])");
-            index = scanner.nextInt();
-            while(index<1 || index>3){
-                out.println("The index of the tile is not valid!\n");
-                out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 1 , 2 , 3 ])");
-                index = scanner.nextInt();
+    public void askTileToPut() {
+        notifyObserver(obs -> {
+            try {
+                obs.onUpdateToStartPutting();
+            } catch (RemoteException e) {
+                throw new RuntimeException(e);
             }
-            out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 0 , 1 , 2 , 3 , 4 , 5 ])");
-            xPos = scanner.nextInt();
-            while(xPos<0 || xPos>5){
-                out.println("The position x for the the insertion of the tile is not valid!\n");
-                out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 0 , 1 , 2 , 3 , 4 , 5 ])");
-                xPos = scanner.nextInt();
-            }
-            out.println("Choose the position y where you want to put the tile(Valid insert: [ 0 , 1 , 2 , 3 , 4 ])!\n");
-            yPos = scanner.nextInt();
-            while(yPos<0 || yPos>4){
-                out.println("The position y for the the insertion of the tile is not valid!\n");
-                out.println("Choose the position y where you want to put the tile(Valid insert: [ 0 , 1 , 2 , 3 , 4 ])!\n");
-                yPos = scanner.nextInt();
-            }
-            ArrayList<Integer> columnPosition = new ArrayList<>();
-            columnPosition.add(yPos);
-            int finalIndex = index;
-            int finalYPos = yPos;
-            int finalXPos = xPos;
-            notifyObserver(obs -> {
-                try {
-                    obs.onUpdateToPutTile(finalXPos, finalYPos, tilesInPlayerHand.get(finalIndex), columnPosition , numOfTiles , tilesInPlayerHand);
-
-                } catch (RemoteException e) {
-                    throw new RuntimeException(e);
-                }
-            });
-        }
-
+        });
     }
     public void askTileToPut2or3tile(ArrayList<PlayableItemTile> tilesInPlayerHand) {
         int numOfTiles = tilesInPlayerHand.size();
-        int xPos;
-        int index;
-        {
-            out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 1 , 2 ])");
-            index = scanner.nextInt();
-            while (index < 1 || index > numOfTiles) {
-                out.println("The index of the tile is not valid!\n");
-                out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 1 , 2  ])");
-                index = scanner.nextInt();
-            }
-            out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 0 , 1 , 2 , 3 , 4 , 5 ])");
-            xPos = scanner.nextInt();
-            while (xPos < 0 || xPos > 5) {
-                out.println("The position x for the the insertion of the tile is not valid!\n");
-                out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 0 , 1 , 2 , 3 , 4 , 5 ])");
-                xPos = scanner.nextInt();
-            }
-            ArrayList<Integer> columnPosition = new ArrayList<>();
-            int finalIndex = index;
-            int finalXPos = xPos;
-            notifyObserver(obs -> {
-                try {
-                    obs.onUpdateToPut2or3Tile(finalXPos, tilesInPlayerHand.get(finalIndex), tilesInPlayerHand);
 
-                } catch (RemoteException e) {
-                    throw new RuntimeException(e);
-                }
-            });
-        }
     }
 
     public void maxTilesPicked(){
@@ -431,17 +379,7 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
 
     }
 
-    public void showNegativePutTileResults (  ArrayList<PlayableItemTile> tilesInPlayerHand){
-            out.println("Error in the insertion!\n");
-            out.println("Please retry the insertion\n");
-            askTileToPut(tilesInPlayerHand);
-    }
 
-    public void showNegativePut2Or3TileResults ( ArrayList<PlayableItemTile> tilesInPlayerHand){
-        out.println("Error in the insertion!\n");
-        out.println("Please retry the insertion\n");
-        askTileToPut2or3tile(tilesInPlayerHand);
-    }
 
     @Override
     public void invalidTileHandler() {
@@ -465,10 +403,6 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
 
     }
 
-    @Override
-    public void showWinMessage(String stringWinning) {
-
-    }
 
 
 
@@ -562,10 +496,7 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
 
     }
 
-    @Override
-    public void showMatchSituation(List<String> actualPlayers, List<Shelf> actualShelf, String actualPlayerNickname) {
 
-    }
 
     public void resetTUI(){
         out.println("Cleaning of the textual interface...");

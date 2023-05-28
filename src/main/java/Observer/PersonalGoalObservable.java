@@ -29,7 +29,7 @@ public class PersonalGoalObservable {
 
     public void notifyObservers(Consumer<PersonalGoalObserver> lambda) {
         for (PersonalGoalObserver observer : observers) {
-            lambda.accept(observer);
+                lambda.accept(observer);
         }
     }
 }

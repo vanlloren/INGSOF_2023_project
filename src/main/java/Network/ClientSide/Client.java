@@ -7,7 +7,7 @@ import Util.PersonalGoalType;
 import client.view.TurnView;
 import client.view.View;
 import Observer.*;
-import server.Model.GameBoard;
+
 import server.Model.PlayableItemTile;
 import server.Model.Player;
 
@@ -69,7 +69,6 @@ public abstract class Client extends UnicastRemoteObject implements ViewObserver
 
     abstract void UpdateAllClientOnPlayersNumber(int playersNumber);
 
-    abstract void UpdateAllClientOnModelGameBoard(GameBoard gameBoard);
 
     abstract void UpdateAllClientOnModelPersonalGoal(String Nickname, PersonalGoalType personalGoalType);
 
@@ -84,8 +83,6 @@ public abstract class Client extends UnicastRemoteObject implements ViewObserver
     abstract void UpdateAllClientOnChairOwner(Player player);
 
     abstract void UpdateAllClientOnModelGameHasStarted();
-
-    abstract void onUpdateAllClientOnCurrentPlayer(Player currPlayer);
 
     abstract void UpdateAllClientOnStructureShelf(int x, int y, PlayableItemTile Tile);
 
