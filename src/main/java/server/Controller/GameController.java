@@ -307,16 +307,18 @@ public class GameController {
         Set<Colour> keys = adjacencyGroups.keySet();
         int point = 0;
         for (Colour colour : keys) {
-            ArrayList<Integer> counter = adjacencyGroups.get(colour);
-            for (Integer integer : counter) {
-                if (integer == 3) {
-                    point = point + 2;
-                } else if (integer == 4) {
-                    point = point + 3;
-                } else if (integer == 5) {
-                    point = point + 5;
-                } else if (integer > 6) {
-                    point = point + 8;
+            if(colour != Colour.VOID) {
+                ArrayList<Integer> counter = adjacencyGroups.get(colour);
+                for (Integer integer : counter) {
+                    if (integer == 3) {
+                        point = point + 2;
+                    } else if (integer == 4) {
+                        point = point + 3;
+                    } else if (integer == 5) {
+                        point = point + 5;
+                    } else if (integer > 6) {
+                        point = point + 8;
+                    }
                 }
             }
         }
