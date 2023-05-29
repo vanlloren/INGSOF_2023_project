@@ -29,7 +29,7 @@ public class GameControllerTest {
     @Test
     public void singleobjtest(){
         PlayableItemTile[][] structure1 = new PlayableItemTile[6][5];
-        structure1[0][0] = new PlayableItemTile("PINK", 1);
+        structure1[5][4] = new PlayableItemTile("PINK", 1);
         HashMap<Colour, ArrayList<Integer>> result = findAdjGroups(structure1);
         HashMap<Colour, ArrayList<Integer>> compare = new HashMap<>();
         ArrayList<Integer> list = new ArrayList<>();

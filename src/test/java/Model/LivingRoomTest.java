@@ -72,10 +72,10 @@ public class LivingRoomTest {
                     }
                 }
             }
-            //metto null Tiles in [5][1] e [5][8] e [5][7]
+            //metto null Tiles in [5][] e [5][8] e [5][7]
             if(i==5) {
                 for(int j=0; j<9; j++){
-                    if(j==7 || j==1 || j==8){
+                    if(j==7 || j==0 || j==8){
                         Assert.assertTrue(livingRoom.nullTileDetection(i,j));
                     }else{
                         Assert.assertTrue(livingRoom.nullDetection(i,j));

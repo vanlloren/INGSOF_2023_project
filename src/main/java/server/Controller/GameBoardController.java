@@ -46,6 +46,7 @@ public class GameBoardController {
 
         if(controlledGameBoard.getPickedTilesNum()==0){
             if(checkTileAvailability(x,y)){
+                controlledGameBoard.getLivingRoom().resetAdjacentAvailability();
                 controlledGameBoard.setToPlayerFirstTile(x,y);
                 return controlledGameBoard.getToPlayerTiles().get(0);
             }else{

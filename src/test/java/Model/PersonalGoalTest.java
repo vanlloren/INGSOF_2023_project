@@ -19,11 +19,11 @@ public class PersonalGoalTest {
     @Before
     public void initialize() {
         structure[0][0] = new PlayableItemTile("PINK", 1);
-        structure[2][0] = new PlayableItemTile("BLUE", 1);
-        structure[4][1] = new PlayableItemTile("GREEN", 1);
-        structure[3][2] = new PlayableItemTile("WHITE", 1);
-        structure[1][3] = new PlayableItemTile("YELLOW", 1);
-        structure[2][5] = new PlayableItemTile("CYAN", 1);
+        structure[0][2] = new PlayableItemTile("BLUE", 1);
+        structure[1][4] = new PlayableItemTile("GREEN", 1);
+        structure[2][3] = new PlayableItemTile("WHITE", 1);
+        structure[3][1] = new PlayableItemTile("YELLOW", 1);
+        structure[5][2] = new PlayableItemTile("CYAN", 1);
     }
     @Test
     public void testPersonal_goal_1() {
@@ -34,11 +34,11 @@ public class PersonalGoalTest {
     @Before
     public void inizialized2(){
         structure[1][1]= new PlayableItemTile("PINK",1);
-        structure[4][5]= new PlayableItemTile("BLUE",1);
-        structure[0][2]= new PlayableItemTile("GREEN",1);
-        structure[4][3]= new PlayableItemTile("WHITE",1);
+        structure[5][4]= new PlayableItemTile("BLUE",1);
+        structure[2][0]= new PlayableItemTile("GREEN",1);
+        structure[3][4]= new PlayableItemTile("WHITE",1);
         structure[2][2]= new PlayableItemTile("YELLOW",1);
-        structure[3][4]= new PlayableItemTile("CYAN",1);
+        structure[4][3]= new PlayableItemTile("CYAN",1);
     }
 
     @Test
@@ -48,11 +48,11 @@ public class PersonalGoalTest {
     @Before
     public void inizialize3(){
         structure[2][2]= new PlayableItemTile("PINK",1);
-        structure[0][1]= new PlayableItemTile("BLUE",1);
-        structure[1][3]= new PlayableItemTile("GREEN",1);
-        structure[0][5]= new PlayableItemTile("WHITE",1);
-        structure[3][1]= new PlayableItemTile("YELLOW",1);
-        structure[4][3]= new PlayableItemTile("CYAN",1);
+        structure[1][0]= new PlayableItemTile("BLUE",1);
+        structure[3][1]= new PlayableItemTile("GREEN",1);
+        structure[5][0]= new PlayableItemTile("WHITE",1);
+        structure[1][3]= new PlayableItemTile("YELLOW",1);
+        structure[3][4]= new PlayableItemTile("CYAN",1);
     }
 
 
@@ -64,10 +64,10 @@ public class PersonalGoalTest {
     public void inizialize4(){
         structure[3][3]= new PlayableItemTile("PINK",1);
         structure[2][2]= new PlayableItemTile("BLUE",1);
-        structure[2][4]= new PlayableItemTile("GREEN",1);
-        structure[1][4]= new PlayableItemTile("WHITE",1);
-        structure[4][0]= new PlayableItemTile("YELLOW",1);
-        structure[0][2]= new PlayableItemTile("CYAN",1);
+        structure[4][2]= new PlayableItemTile("GREEN",1);
+        structure[4][1]= new PlayableItemTile("WHITE",1);
+        structure[0][4]= new PlayableItemTile("YELLOW",1);
+        structure[2][0]= new PlayableItemTile("CYAN",1);
     }
 
     @Test
@@ -77,10 +77,10 @@ public class PersonalGoalTest {
     @Before
     public void inizialize5(){
         structure[4][4]= new PlayableItemTile("PINK",1);
-        structure[1][3]= new PlayableItemTile("BLUE",1);
-        structure[3][5]= new PlayableItemTile("GREEN",1);
-        structure[2][3]= new PlayableItemTile("WHITE",1);
-        structure[1][3]= new PlayableItemTile("YELLOW",1);
+        structure[3][1]= new PlayableItemTile("BLUE",1);
+        structure[5][3]= new PlayableItemTile("GREEN",1);
+        structure[3][2]= new PlayableItemTile("WHITE",1);
+        structure[3][1]= new PlayableItemTile("YELLOW",1);
         structure[1][1]= new PlayableItemTile("CYAN",1);
     }
 
@@ -91,12 +91,12 @@ public class PersonalGoalTest {
     }
     @Before
     public void inizialize6(){
-        structure[0][5]= new PlayableItemTile("PINK",1);
-        structure[3][4]= new PlayableItemTile("BLUE",1);
-        structure[4][0]= new PlayableItemTile("GREEN",1);
-        structure[3][2]= new PlayableItemTile("WHITE",1);
-        structure[1][4]= new PlayableItemTile("YELLOW",1);
-        structure[2][0]= new PlayableItemTile("CYAN",1);
+        structure[5][0]= new PlayableItemTile("PINK",1);
+        structure[4][3]= new PlayableItemTile("BLUE",1);
+        structure[0][4]= new PlayableItemTile("GREEN",1);
+        structure[2][3]= new PlayableItemTile("WHITE",1);
+        structure[4][1]= new PlayableItemTile("YELLOW",1);
+        structure[0][2]= new PlayableItemTile("CYAN",1);
     }
 
 
@@ -106,12 +106,12 @@ public class PersonalGoalTest {
     }
     @Before
     public void inizialize7(){
-        structure[0][2]= new PlayableItemTile("PINK",1);
-        structure[3][1]= new PlayableItemTile("BLUE",1);
+        structure[2][1]= new PlayableItemTile("PINK",1);
+        structure[1][3]= new PlayableItemTile("BLUE",1);
         structure[0][0]= new PlayableItemTile("GREEN",1);
-        structure[2][5]= new PlayableItemTile("WHITE",1);
+        structure[5][2]= new PlayableItemTile("WHITE",1);
         structure[4][4]= new PlayableItemTile("YELLOW",1);
-        structure[0][3]= new PlayableItemTile("CYAN",1);
+        structure[3][0]= new PlayableItemTile("CYAN",1);
     }
 
 
@@ -121,11 +121,11 @@ public class PersonalGoalTest {
     }
     @Before
     public void inizialize8(){
-        structure[0][3]= new PlayableItemTile("PINK",1);
-        structure[4][0]= new PlayableItemTile("BLUE",1);
+        structure[3][0]= new PlayableItemTile("PINK",1);
+        structure[0][4]= new PlayableItemTile("BLUE",1);
         structure[1][1]= new PlayableItemTile("GREEN",1);
-        structure[3][4]= new PlayableItemTile("WHITE",1);
-        structure[3][5]= new PlayableItemTile("YELLOW",1);
+        structure[4][3]= new PlayableItemTile("WHITE",1);
+        structure[5][3]= new PlayableItemTile("YELLOW",1);
         structure[2][2]= new PlayableItemTile("CYAN",1);
     }
 
@@ -136,11 +136,11 @@ public class PersonalGoalTest {
     @Before
     public void inizialize9(){
         structure[4][4]= new PlayableItemTile("PINK",1);
-        structure[0][5]= new PlayableItemTile("BLUE",1);
+        structure[5][0]= new PlayableItemTile("BLUE",1);
         structure[2][2]= new PlayableItemTile("GREEN",1);
-        structure[4][3]= new PlayableItemTile("WHITE",1);
-        structure[2][0]= new PlayableItemTile("YELLOW",1);
-        structure[1][4]= new PlayableItemTile("CYAN",1);
+        structure[3][4]= new PlayableItemTile("WHITE",1);
+        structure[0][2]= new PlayableItemTile("YELLOW",1);
+        structure[4][1]= new PlayableItemTile("CYAN",1);
 
     }
 
@@ -151,12 +151,12 @@ public class PersonalGoalTest {
     }
     @Before
     public void inizialize10(){
-        structure[3][5]= new PlayableItemTile("PINK",1);
-        structure[1][4]= new PlayableItemTile("BLUE",1);
+        structure[5][3]= new PlayableItemTile("PINK",1);
+        structure[4][1]= new PlayableItemTile("BLUE",1);
         structure[3][3]= new PlayableItemTile("GREEN",1);
-        structure[0][2]= new PlayableItemTile("WHITE",1);
+        structure[2][0]= new PlayableItemTile("WHITE",1);
         structure[1][1]= new PlayableItemTile("YELLOW",1);
-        structure[4][0]= new PlayableItemTile("CYAN",1);
+        structure[0][4]= new PlayableItemTile("CYAN",1);
     }
 
     @Test
@@ -165,12 +165,12 @@ public class PersonalGoalTest {
     }
     @Before
     public void inizialize11(){
-        structure[2][0]= new PlayableItemTile("PINK",1);
-        structure[2][3]= new PlayableItemTile("BLUE",1);
+        structure[0][2]= new PlayableItemTile("PINK",1);
+        structure[3][2]= new PlayableItemTile("BLUE",1);
         structure[4][4]= new PlayableItemTile("GREEN",1);
         structure[1][1]= new PlayableItemTile("WHITE",1);
-        structure[0][2]= new PlayableItemTile("YELLOW",1);
-        structure[3][5]= new PlayableItemTile("CYAN",1);
+        structure[2][0]= new PlayableItemTile("YELLOW",1);
+        structure[5][3]= new PlayableItemTile("CYAN",1);
     }
 
 
@@ -182,8 +182,8 @@ public class PersonalGoalTest {
     public void inizialize12 (){
         structure[1][1]= new PlayableItemTile("PINK",1);
         structure[2][2]= new PlayableItemTile("BLUE",1);
-        structure[0][5]= new PlayableItemTile("GREEN",1);
-        structure[2][0]= new PlayableItemTile("WHITE",1);
+        structure[5][0]= new PlayableItemTile("GREEN",1);
+        structure[0][2]= new PlayableItemTile("WHITE",1);
         structure[4][4]= new PlayableItemTile("YELLOW",1);
         structure[3][3]= new PlayableItemTile("CYAN",1);
     }
