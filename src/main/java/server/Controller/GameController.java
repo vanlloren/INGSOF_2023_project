@@ -4,11 +4,13 @@ import Network.message.*;
 import Util.Colour;
 import Util.RandCommonGoal;
 
+import client.view.TurnView;
 import server.Model.*;
 import server.enumerations.PickTileResponse;
 
 
 import java.awt.*;
+import java.rmi.RemoteException;
 import java.util.*;
 
 public class GameController {
@@ -90,6 +92,13 @@ public class GameController {
                 gameBoardController.getControlledLivingRoom().updateAvailability();
                 if (!gameBoardController.checkIfAdjacentTiles()) {
                     gameBoardController.livingRoomFiller();
+                    gameBoardController.getControlledLivingRoom().notifyObservers(obs -> {
+                        try {
+                            obs.onUpdateRefillLivingRoom(new TurnView(game));
+                        } catch (RemoteException e) {
+                            throw new RuntimeException(e);
+                        }
+                    });
                     gameBoardController.getControlledLivingRoom().updateAvailability();
                 }
                 gameBoardController.getControlledGameBoard().getToPlayerTiles().clear();

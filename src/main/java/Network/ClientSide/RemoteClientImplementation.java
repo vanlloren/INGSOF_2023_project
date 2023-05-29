@@ -89,6 +89,8 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
     public void onModelModify(TurnView turnView, Event event){
         this.turnView=turnView;
         switch (event.getEventType()){
+            case UPDATE_REFILL_LIVINGROOM ->
+                UpdateAllClientOnRefillLivingRoom();
             case UPDATE_PLAYERS_LIST -> {
                 UpdatePlayersListEvent newEvent = (UpdatePlayersListEvent) event;
                 UpdateAllClientOnModelListPlayers(newEvent.getPlayer());
@@ -156,6 +158,13 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
             }
         }
     }
+
+    private void UpdateAllClientOnRefillLivingRoom() {
+        System.out.println("NEW UPDATE: LivingRoom has been refilled!");
+        System.out.println("New LivingRoom will now be printed");
+        this.userInterface.showLivingRoom(turnView.getLivingRoom());
+    }
+
     @Override
     public void UpdateAllClientOnModelGameHasEnd(){
         this.userInterface.resetGameOn();
@@ -666,6 +675,11 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
 
     public void onUpdateTilesAvailability(TurnView turnView){
         onModelModify(turnView, new UpdateTileAvailabilityEvent());
+    }
+
+    @Override
+    public void onUpdateRefillLivingRoom(TurnView turnView) throws RemoteException {
+        onModelModify(turnView, new UpdateRefillLivingRoomEvent());
     }
 
     @Override
