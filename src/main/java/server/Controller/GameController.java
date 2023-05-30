@@ -264,7 +264,7 @@ public class GameController {
 
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 5; j++) {
-                if (shelf[i][j] != null) {
+                if (shelf[i][j].getColour()!=Colour.VOID) {
                     if (!visited[i][j]) {
                         Colour colore = shelf[i][j].getColour();
                         ArrayList<Integer> dimensioni = new ArrayList<>();
@@ -316,18 +316,16 @@ public class GameController {
         Set<Colour> keys = adjacencyGroups.keySet();
         int point = 0;
         for (Colour colour : keys) {
-            if(colour != Colour.VOID) {
-                ArrayList<Integer> counter = adjacencyGroups.get(colour);
-                for (Integer integer : counter) {
-                    if (integer == 3) {
-                        point = point + 2;
-                    } else if (integer == 4) {
-                        point = point + 3;
-                    } else if (integer == 5) {
-                        point = point + 5;
-                    } else if (integer > 6) {
-                        point = point + 8;
-                    }
+            ArrayList<Integer> counter = adjacencyGroups.get(colour);
+            for (Integer integer : counter) {
+                if (integer == 3) {
+                    point = point + 2;
+                } else if (integer == 4) {
+                    point = point + 3;
+                } else if (integer == 5) {
+                    point = point + 5;
+                } else if (integer > 6) {
+                    point = point + 8;
                 }
             }
         }
