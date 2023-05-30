@@ -65,6 +65,7 @@ public class RuleCommonGoal {
                     if (structure[i][j].getColour() != Colour.VOID) {
                         matrix[i][j] = structure[i][j].getColour();
                     }
+                    else matrix[i][j] = Colour.VOID;
                 }
             }
             for (int i = 5; i > 0; i--) {
