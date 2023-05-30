@@ -7,6 +7,8 @@ import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 //
 public class RMIServer {
@@ -25,6 +27,18 @@ public class RMIServer {
             Registry registry = LocateRegistry.createRegistry(serverRMIPort);
             registry.bind("MyShelfieServer", remoteServer);
             System.out.println("Server RMI pronto");
+
+            try {
+                InetAddress localhost = InetAddress.getLocalHost();
+                String hostname = localhost.getHostName();
+                String ipAddress = localhost.getHostAddress();
+
+                System.out.println("Hostname: " + hostname);
+                System.out.println("Indirizzo IP: " + ipAddress);
+            } catch (UnknownHostException e) {
+                e.printStackTrace();
+            }
+
             return remoteServer;
         }catch (AlreadyBoundException e) {
             throw new RuntimeException(e);
