@@ -44,7 +44,6 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
 
     }
 
-
     @Override
     public void setIsTurn() {
 this.isLastTurn = true;
@@ -191,12 +190,16 @@ this.isLastTurn = true;
     @Override
     public void WriteInChat(){
         String chatMessage;
-        scanner.nextLine();
         out.println("Write in the following line the content of your message");
         chatMessage = scanner.nextLine();
+        while(chatMessage.equals("")) {
+            chatMessage = scanner.nextLine();
+        }
+
+        String finalChatMessage = chatMessage;
         notifyObserver(obs -> {
             try {
-                obs.onUpdateChat(this.nickname,chatMessage);
+                obs.onUpdateChat(this.nickname, finalChatMessage);
             } catch (RemoteException e) {
                 throw new RuntimeException(e);
             }

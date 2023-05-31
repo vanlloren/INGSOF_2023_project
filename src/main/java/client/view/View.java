@@ -77,6 +77,8 @@ public interface View {
 
     void resetGameOn();
 
+
+
     void askPlayerNextMove();
 
     void maxTilesPicked();
