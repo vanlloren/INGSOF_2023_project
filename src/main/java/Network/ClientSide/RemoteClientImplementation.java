@@ -298,21 +298,58 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
         int y;
         String buffer;
 
+        System.out.println("In qualsiasi momento dell'esecuzione della sequenza di pesca/inserimento delle tile, scrivere 'chat' permetterà di inviare un messaggio nella chat del gioco!");
         //pesca prima tessera
         do {
             System.out.println("Scegli la posizione x della prima tessera che vuoi pescare!");
+            while(!scanner.hasNextInt()){
+                if(scanner.nextLine().equals("chat")) {
+                    ChatThread thread = new ChatThread(userInterface, this);
+                    thread.start();
+                    try {
+                        thread.join();
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                    System.out.println("Scegli la posizione x della prima tessera che vuoi pescare!");
+                }else{
+                    if (!scanner.nextLine().equals("")) {
+                        out.println("Input non valido, scrivi 'chat' per usare la chat oppure indica un intero");
+                    }
+                }
+            }
             x = scanner.nextInt();
+            scanner.nextLine();
             if(x<0 || x>8){
                 out.println("Coordinata non valida, riprova!");
             }
         }while(x<0 || x>8);
         do {
             out.println("Scegli la posizione y della prima tessera che vuoi pescare!");
+            while(!scanner.hasNextInt()){
+                if(scanner.nextLine().equals("chat")) {
+                    ChatThread thread = new ChatThread(userInterface, this);
+                    thread.start();
+                    try {
+                        thread.join();
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                    System.out.println("Scegli la posizione y della prima tessera che vuoi pescare!");
+                }else{
+                    if (!scanner.nextLine().equals("")) {
+                        out.println("Input non valido, scrivi 'chat' per usare la chat oppure indica un intero");
+                    }
+                }
+            }
             y = scanner.nextInt();
+            scanner.nextLine();
             if (y < 0 || y > 8) {
                 out.println("Coordinata non valida, riprova!");
             }
         }while(y<0 || y>8);
+
+        /*
         buffer = scanner.nextLine();
         while(buffer.equals("chat")){
             ChatThread thread = new ChatThread(userInterface, this);
@@ -324,6 +361,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
             }
             buffer = scanner.nextLine();
         }
+        */
         TileReplyMessage message = server.onTilePickMessage(nickname, x, y);
         while (message.isTileAccepted().equals(PickTileResponse.MAX_TILE_PICKED) || message.isTileAccepted().equals(PickTileResponse.INVALID_TILE)){
             if(message.isTileAccepted().equals(PickTileResponse.MAX_TILE_PICKED)){
@@ -337,7 +375,24 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
                 onUpdateShowAvailableTiles();
                 do {
                     System.out.println("Scegli la posizione x della prima tessera che vuoi pescare!");
+                    while(!scanner.hasNextInt()){
+                        if(scanner.nextLine().equals("chat")) {
+                            ChatThread thread = new ChatThread(userInterface, this);
+                            thread.start();
+                            try {
+                                thread.join();
+                            } catch (InterruptedException e) {
+                                throw new RuntimeException(e);
+                            }
+                            System.out.println("Scegli la posizione x della prima tessera che vuoi pescare!");
+                        }else{
+                            if (!scanner.nextLine().equals("")) {
+                                out.println("Input non valido, scrivi 'chat' per usare la chat oppure indica un intero");
+                            }
+                        }
+                    }
                     x = scanner.nextInt();
+                    scanner.nextLine();
                     if(x<0 || x>8){
                         out.println("Coordinata non valida, riprova!");
                     }
@@ -345,7 +400,24 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
 
                 do {
                     out.println("Scegli la posizione y della prima tessera che vuoi pescare!");
+                    while(!scanner.hasNextInt()){
+                        if(scanner.nextLine().equals("chat")) {
+                            ChatThread thread = new ChatThread(userInterface, this);
+                            thread.start();
+                            try {
+                                thread.join();
+                            } catch (InterruptedException e) {
+                                throw new RuntimeException(e);
+                            }
+                            System.out.println("Scegli la posizione y della prima tessera che vuoi pescare!");
+                        }else{
+                            if (!scanner.nextLine().equals("")) {
+                                out.println("Input non valido, scrivi 'chat' per usare la chat oppure indica un intero");
+                            }
+                        }
+                    }
                     y = scanner.nextInt();
+                    scanner.nextLine();
                     if (y < 0 || y > 8) {
                         out.println("Coordinata non valida, riprova!");
                     }
@@ -422,7 +494,24 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
         //pesca seconda tessera
         do {
             System.out.println("Scegli la posizione x della seconda tessera che vuoi pescare!");
+            while(!scanner.hasNextInt()){
+                if(scanner.nextLine().equals("chat")) {
+                    ChatThread thread = new ChatThread(userInterface, this);
+                    thread.start();
+                    try {
+                        thread.join();
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                    System.out.println("Scegli la posizione x della seconda tessera che vuoi pescare!");
+                }else{
+                    if (!scanner.nextLine().equals("")) {
+                        out.println("Input non valido, scrivi 'chat' per usare la chat oppure indica un intero");
+                    }
+                }
+            }
             x = scanner.nextInt();
+            scanner.nextLine();
             if(x<0 || x>8){
                 out.println("Coordinata non valida, riprova!");
             }
@@ -430,7 +519,24 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
 
         do {
             out.println("Scegli la posizione y della seconda tessera che vuoi pescare!");
+            while(!scanner.hasNextInt()){
+                if(scanner.nextLine().equals("chat")) {
+                    ChatThread thread = new ChatThread(userInterface, this);
+                    thread.start();
+                    try {
+                        thread.join();
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                    System.out.println("Scegli la posizione y della seconda tessera che vuoi pescare!");
+                }else {
+                    if (!scanner.nextLine().equals("")) {
+                        out.println("Input non valido, scrivi 'chat' per usare la chat oppure indica un intero");
+                    }
+                }
+            }
             y = scanner.nextInt();
+            scanner.nextLine();
             if (y < 0 || y > 8) {
                 out.println("Coordinata non valida, riprova!");
             }
@@ -447,14 +553,48 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
                 onUpdateShowAvailableTiles();
                 do {
                     System.out.println("Scegli la posizione x della seconda tessera che vuoi pescare!");
+                    while(!scanner.hasNextInt()){
+                        if(scanner.nextLine().equals("chat")) {
+                            ChatThread thread = new ChatThread(userInterface, this);
+                            thread.start();
+                            try {
+                                thread.join();
+                            } catch (InterruptedException e) {
+                                throw new RuntimeException(e);
+                            }
+                            System.out.println("Scegli la posizione x della seconda tessera che vuoi pescare!");
+                        }else{
+                            if (!scanner.nextLine().equals("")) {
+                                out.println("Input non valido, scrivi 'chat' per usare la chat oppure indica un intero");
+                            }
+                        }
+                    }
                     x = scanner.nextInt();
+                    scanner.nextLine();
                     if(x<0 || x>8){
                         out.println("Coordinata non valida, riprova!");
                     }
                 }while(x<0 || x>8);
                 do {
                     out.println("Scegli la posizione y della seconda tessera che vuoi pescare!");
+                    while(!scanner.hasNextInt()){
+                        if(scanner.nextLine().equals("chat")) {
+                            ChatThread thread = new ChatThread(userInterface, this);
+                            thread.start();
+                            try {
+                                thread.join();
+                            } catch (InterruptedException e) {
+                                throw new RuntimeException(e);
+                            }
+                            System.out.println("Scegli la posizione y della seconda tessera che vuoi pescare!");
+                        }else{
+                            if (!scanner.nextLine().equals("")) {
+                                out.println("Input non valido, scrivi 'chat' per usare la chat oppure indica un intero");
+                            }
+                        }
+                    }
                     y = scanner.nextInt();
+                    scanner.nextLine();
                     if (y < 0 || y > 8) {
                         out.println("Coordinata non valida, riprova!");
                     }
@@ -464,7 +604,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
         }
         helperList.add(message.getTile());
 
-        buffer = scanner.nextLine();
+        /*buffer = scanner.nextLine();
         while(buffer.equals("chat")){
             ChatThread thread = new ChatThread(userInterface, this);
             thread.start();
@@ -474,7 +614,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
                 throw new RuntimeException(e);
             }
             buffer = scanner.nextLine();
-        }
+        }*/
         out.println("Due tessere pescate, vuoi pescare altre tessere? [Y/N]");
         test = scanner.nextLine();
         while(test.equals("chat")){
@@ -538,7 +678,24 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
         //pesca terza tessera
         do {
             System.out.println("Scegli la posizione x della terza tessera che vuoi pescare!");
+            while(!scanner.hasNextInt()){
+                if(scanner.nextLine().equals("chat")) {
+                    ChatThread thread = new ChatThread(userInterface, this);
+                    thread.start();
+                    try {
+                        thread.join();
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                    System.out.println("Scegli la posizione x della terza tessera che vuoi pescare!");
+                }else{
+                    if (!scanner.nextLine().equals("")) {
+                        out.println("Input non valido, scrivi 'chat' per usare la chat oppure indica un intero");
+                    }
+                }
+            }
             x = scanner.nextInt();
+            scanner.nextLine();
             if(x<0 || x>8){
                 out.println("Coordinata non valida, riprova!");
             }
@@ -546,7 +703,24 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
 
         do {
             out.println("Scegli la posizione y della terza tessera che vuoi pescare!");
+            while(!scanner.hasNextInt()){
+                if(scanner.nextLine().equals("chat")) {
+                    ChatThread thread = new ChatThread(userInterface, this);
+                    thread.start();
+                    try {
+                        thread.join();
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                    System.out.println("Scegli la posizione y della terza tessera che vuoi pescare!");
+                }else{
+                    if (!scanner.nextLine().equals("")) {
+                        out.println("Input non valido, scrivi 'chat' per usare la chat oppure indica un intero");
+                    }
+                }
+            }
             y = scanner.nextInt();
+            scanner.nextLine();
             if (y < 0 || y > 8) {
                 out.println("Coordinata non valida, riprova!");
             }
@@ -563,14 +737,48 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
                 onUpdateShowAvailableTiles();
                 do {
                     System.out.println("Scegli la posizione x della terza tessera che vuoi pescare!");
+                    while(!scanner.hasNextInt()){
+                        if(scanner.nextLine().equals("chat")) {
+                            ChatThread thread = new ChatThread(userInterface, this);
+                            thread.start();
+                            try {
+                                thread.join();
+                            } catch (InterruptedException e) {
+                                throw new RuntimeException(e);
+                            }
+                            System.out.println("Scegli la posizione x della terza tessera che vuoi pescare!");
+                        }else{
+                            if (!scanner.nextLine().equals("")) {
+                                out.println("Input non valido, scrivi 'chat' per usare la chat oppure indica un intero");
+                            }
+                        }
+                    }
                     x = scanner.nextInt();
+                    scanner.nextLine();
                     if(x<0 || x>8){
                         out.println("Coordinata non valida, riprova!");
                     }
                 }while(x<0 || x>8);
                 do {
                     out.println("Scegli la posizione y della terza tessera che vuoi pescare!");
+                    while(!scanner.hasNextInt()){
+                        if(scanner.nextLine().equals("chat")) {
+                            ChatThread thread = new ChatThread(userInterface, this);
+                            thread.start();
+                            try {
+                                thread.join();
+                            } catch (InterruptedException e) {
+                                throw new RuntimeException(e);
+                            }
+                            System.out.println("Scegli la posizione y della terza tessera che vuoi pescare!");
+                        }else{
+                            if (!scanner.nextLine().equals("")) {
+                                out.println("Input non valido, scrivi 'chat' per usare la chat oppure indica un intero");
+                            }
+                        }
+                    }
                     y = scanner.nextInt();
+                    scanner.nextLine();
                     if (y < 0 || y > 8) {
                         out.println("Coordinata non valida, riprova!");
                     }
@@ -590,69 +798,277 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
         int yPos;
         int index;
         InsertionReplyMessage message;
+        String buffer;
+
+        int i = 0;
+        for (PlayableItemTile turnTile : turnTiles) {
+            out.println("Tile picked: {[" + turnTile.getColour() + ", " + turnTile.getIdCode() + "]," + " in position : " + i + "}");
+            i++;
+        }
+        switch (turnTiles.size()) {
+            case 1 -> out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 0 ])");
+            case 2 -> out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 0 , 1 ])");
+            case 3 -> out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 0 , 1 , 2 ])");
+        }
+        while (!scanner.hasNextInt()) {
+            buffer = scanner.nextLine();
+            if (buffer.equals("chat")) {
+                ChatThread thread = new ChatThread(userInterface, this);
+                thread.start();
+                try {
+                    thread.join();
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                switch (turnTiles.size()) {
+                    case 1 -> out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 0 ])");
+                    case 2 -> out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 0 , 1 ])");
+                    case 3 -> out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 0 , 1 , 2 ])");
+                }
+            } else {
+                if (!buffer.equals("")) {
+                    out.println("Input non valido, scrivi 'chat' per usare la chat oppure indica un intero");
+                }
+            }
+        }
+
+        index = scanner.nextInt();
+        scanner.nextLine();
         do {
-            int i = 0;
+            if(index < 0 || index > turnTiles.size()-1) {
+                out.println("The index of the tile is not valid!\n");
+                switch (turnTiles.size()) {
+                    case 1 -> out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 0 ])");
+                    case 2 -> out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 0 , 1 ])");
+                    case 3 -> out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 0 , 1 , 2 ])");
+                }
+                while(!scanner.hasNextInt()) {
+                    buffer = scanner.nextLine();
+                    if(buffer.equals("chat")) {
+                        ChatThread thread = new ChatThread(userInterface, this);
+                        thread.start();
+                        try {
+                            thread.join();
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
+                        switch (turnTiles.size()) {
+                            case 1 -> out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 0 ])");
+                            case 2 -> out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 0 , 1 ])");
+                            case 3 -> out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 0 , 1 , 2 ])");
+                        }
+                    }else{
+                        if (!buffer.equals("")) {
+                            out.println("Input non valido, scrivi 'chat' per usare la chat oppure indica un intero");
+                        }
+                    }
+                }
+                index = scanner.nextInt();
+                scanner.nextLine();
+            }
+        } while (index < 0 || index > turnTiles.size()-1);
+
+        do {
+            out.println("Choose the x_coordinate where you want to put the tile in the shelf(Valid insert:[ 0 , 1 , 2 , 3 , 4 , 5 ])");
+            while (!scanner.hasNextInt()) {
+                buffer = scanner.nextLine();
+                if (buffer.equals("chat")) {
+                    ChatThread thread = new ChatThread(userInterface, this);
+                    thread.start();
+                    try {
+                        thread.join();
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                    out.println("Choose the x_coordinate where you want to put the tile in the shelf(Valid insert:[ 0 , 1 , 2 , 3 , 4 , 5 ])");
+                } else {
+                    if (!buffer.equals("")) {
+                        out.println("Input non valido, scrivi 'chat' per usare la chat oppure indica un intero");
+                    }
+                }
+            }
+            xPos = scanner.nextInt();
+            scanner.nextLine();
+            while (xPos < 0 || xPos > 5) {
+                out.println("The position x for the the insertion of the tile is not valid!\n");
+                out.println("Choose the x_coordinate where you want to put the tile in the shelf(Valid insert:[ 0 , 1 , 2 , 3 , 4 , 5 ])");
+                while (!scanner.hasNextInt()) {
+                    buffer = scanner.nextLine();
+                    if (buffer.equals("chat")) {
+                        ChatThread thread = new ChatThread(userInterface, this);
+                        thread.start();
+                        try {
+                            thread.join();
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
+                        out.println("Choose the x_coordinate where you want to put the tile in the shelf(Valid insert:[ 0 , 1 , 2 , 3 , 4 , 5 ])");
+                    } else {
+                        if (!buffer.equals("")) {
+                            out.println("Input non valido, scrivi 'chat' per usare la chat oppure indica un intero");
+                        }
+                    }
+                }
+                xPos = scanner.nextInt();
+                scanner.nextLine();
+            }
+            out.println("Choose the position y where you want to put the tile(Valid insert: [ 0 , 1 , 2 , 3 , 4 ])!\n");
+            while (!scanner.hasNextInt()) {
+                buffer = scanner.nextLine();
+                if (buffer.equals("chat")) {
+                    ChatThread thread = new ChatThread(userInterface, this);
+                    thread.start();
+                    try {
+                        thread.join();
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                    out.println("Choose the position y where you want to put the tile(Valid insert: [ 0 , 1 , 2 , 3 , 4 ])!\n");
+                } else {
+                    if (!buffer.equals("")) {
+                        out.println("Input non valido, scrivi 'chat' per usare la chat oppure indica un intero");
+                    }
+                }
+            }
+            yPos = scanner.nextInt();
+            scanner.nextLine();
+            while (yPos < 0 || yPos > 4) {
+                out.println("The position y for the the insertion of the tile is not valid!\n");
+                out.println("Choose the position y where you want to put the tile(Valid insert: [ 0 , 1 , 2 , 3 , 4 ])!\n");
+                while (!scanner.hasNextInt()) {
+                    buffer = scanner.nextLine();
+                    if (buffer.equals("chat")) {
+                        ChatThread thread = new ChatThread(userInterface, this);
+                        thread.start();
+                        try {
+                            thread.join();
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
+                        out.println("Choose the position y where you want to put the tile(Valid insert: [ 0 , 1 , 2 , 3 , 4 ])!\n");
+                    } else {
+                        if (!buffer.equals("")) {
+                            out.println("Input non valido, scrivi 'chat' per usare la chat oppure indica un intero");
+                        }
+                    }
+                }
+                yPos = scanner.nextInt();
+                scanner.nextLine();
+            }
+            message = server.ToPutTileRequestMessage(xPos, yPos, turnTiles.get(index), turnTiles.size());
+            if (!message.isValid()) {
+                out.println("Error in the insertion: coordinates not valid");
+            }
+        } while (!message.isValid());
+
+        turnTiles.remove(index);
+
+        while (turnTiles.size() > 0) {
+            i=0;
             for (PlayableItemTile turnTile : turnTiles) {
-                out.println("Tile picked: {[" + turnTile.getColour() + "],"+" in positions : i");
+                out.println("Tile picked: {[" + turnTile.getColour() + ", " + turnTile.getIdCode() + "]," + " in position : " + i + "}");
                 i++;
             }
             switch (turnTiles.size()){
                 case 1-> out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 0 ])");
                 case 2-> out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 0 , 1 ])");
-                case 3-> out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 0 , 1 , 2 ])");
             }
-            index = scanner.nextInt();
-            do {
-                if(index < 0 || index > turnTiles.size()-1)
-                {out.println("The index of the tile is not valid!\n");
-                out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 0 , 1 , 2 ])");
-                index = scanner.nextInt();
+            while (!scanner.hasNextInt()) {
+                buffer = scanner.nextLine();
+                if (buffer.equals("chat")) {
+                    ChatThread thread = new ChatThread(userInterface, this);
+                    thread.start();
+                    try {
+                        thread.join();
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                    switch (turnTiles.size()) {
+                        case 1 -> out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 0 ])");
+                        case 2 -> out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 0 , 1 ])");
+                    }
+                } else {
+                    if (!buffer.equals("")) {
+                        out.println("Input non valido, scrivi 'chat' per usare la chat oppure indica un intero");
+                    }
                 }
-            } while (index < 0 || index > turnTiles.size()-1);
-            out.println("Choose the x_coordinate where you want to put the tile in the shelf(Valid insert:[ 0 , 1 , 2 , 3 , 4 , 5 ])");
-            xPos = scanner.nextInt();
-            while (xPos < 0 || xPos > 5) {
-                out.println("The position x for the the insertion of the tile is not valid!\n");
-                out.println("Choose the x_coordinate where you want to put the tile in the shelf(Valid insert:[ 0 , 1 , 2 , 3 , 4 , 5 ])");
-                xPos = scanner.nextInt();
-            }
-            out.println("Choose the position y where you want to put the tile(Valid insert: [ 0 , 1 , 2 , 3 , 4 ])!\n");
-            yPos = scanner.nextInt();
-            while (yPos < 0 || yPos > 4) {
-                out.println("The position y for the the insertion of the tile is not valid!\n");
-                out.println("Choose the position y where you want to put the tile(Valid insert: [ 0 , 1 , 2 , 3 , 4 ])!\n");
-                yPos = scanner.nextInt();
-            }
-            message = server.ToPutTileRequestMessage(xPos, yPos, turnTiles.get(index), turnTiles.size());
-            if (!message.isValid())
-                out.println("Error in the insertion: coordinates not valid");
-
-
-        } while (!message.isValid());
-
-        turnTiles.remove(index);
-        while (turnTiles.size() > 0) {
-            for (PlayableItemTile turnTile : turnTiles) {
-                out.println("Tile picked: {[" + turnTile.getColour() + "],");
-            }
-            switch (turnTiles.size()){
-                case 1-> out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 0 ])");
-                case 2-> out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 0 , 1 ])");
             }
             index = scanner.nextInt();
+            scanner.nextLine();
             do {
                 if(index < 0 || index > turnTiles.size()-1)
                 {out.println("The index of the tile is not valid!\n");
-                    out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 0 , 1 , 2 ])");
+                    switch (turnTiles.size()) {
+                        case 1 -> out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 0 ])");
+                        case 2 -> out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 0 , 1 ])");
+                    }
+                    while(!scanner.hasNextInt()) {
+                        buffer = scanner.nextLine();
+                        if(buffer.equals("chat")) {
+                            ChatThread thread = new ChatThread(userInterface, this);
+                            thread.start();
+                            try {
+                                thread.join();
+                            } catch (InterruptedException e) {
+                                throw new RuntimeException(e);
+                            }
+                            switch (turnTiles.size()) {
+                                case 1 -> out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 0 ])");
+                                case 2 -> out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 0 , 1 ])");
+                            }
+                        }else{
+                            if (!buffer.equals("")) {
+                                out.println("Input non valido, scrivi 'chat' per usare la chat oppure indica un intero");
+                            }
+                        }
+                    }
                     index = scanner.nextInt();
+                    scanner.nextLine();
                 }
             } while (index < 0 || index > turnTiles.size()-1);
+
             out.println("Choose the x_coordinate in the shelf(Valid insert:[ 0 , 1 , 2 , 3 , 4 , 5 ])");
+            while (!scanner.hasNextInt()) {
+                buffer = scanner.nextLine();
+                if (buffer.equals("chat")) {
+                    ChatThread thread = new ChatThread(userInterface, this);
+                    thread.start();
+                    try {
+                        thread.join();
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                    out.println("Choose the x_coordinate where you want to put the tile in the shelf(Valid insert:[ 0 , 1 , 2 , 3 , 4 , 5 ])");
+                } else {
+                    if (!buffer.equals("")) {
+                        out.println("Input non valido, scrivi 'chat' per usare la chat oppure indica un intero");
+                    }
+                }
+            }
             xPos = scanner.nextInt();
+            scanner.nextLine();
             while (xPos < 0 || xPos > 5) {
                 out.println("The position x for the the insertion of the tile is not valid!");
                 out.println("Choose the x_coordinate in the shelf(Valid insert:[ 0 , 1 , 2 , 3 , 4 , 5 ])");
+                while (!scanner.hasNextInt()) {
+                    buffer = scanner.nextLine();
+                    if (buffer.equals("chat")) {
+                        ChatThread thread = new ChatThread(userInterface, this);
+                        thread.start();
+                        try {
+                            thread.join();
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
+                        out.println("Choose the x_coordinate where you want to put the tile in the shelf(Valid insert:[ 0 , 1 , 2 , 3 , 4 , 5 ])");
+                    } else {
+                        if (!buffer.equals("")) {
+                            out.println("Input non valido, scrivi 'chat' per usare la chat oppure indica un intero");
+                        }
+                    }
+                }
                 xPos = scanner.nextInt();
+                scanner.nextLine();
             }
 
             message = server.ToPutTileRequestMessage(xPos, turnTiles.get(index), turnTiles.size());
@@ -664,15 +1080,6 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
             this.userInterface.setIsTurn();
 
     }
-
-
-
-
-
-
-
-
-
 
 
     @Override
@@ -713,9 +1120,6 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
 
     @Override
     public void onUpdateShowAvailableTiles(){
-        if(turnView.getLivingRoom().getAvailableTiles().size()==0) {
-            out.println("Non ci sono altre tessere disponibili, mi spiace!");
-        }
         for (PlayableItemTile tile: turnView.getLivingRoom().getAvailableTiles()){
             System.out.println("La tessera in posizione x=" + tile.getPosition().toArray()[0] + " y=" + tile.getPosition().toArray()[1] + " é disponibile!\n");
         }
