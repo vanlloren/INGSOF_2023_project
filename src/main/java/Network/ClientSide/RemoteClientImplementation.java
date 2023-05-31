@@ -296,6 +296,8 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
         ArrayList<PlayableItemTile> helperList = new ArrayList<>();
         int x;
         int y;
+        String buffer;
+
         //pesca prima tessera
         do {
             System.out.println("Scegli la posizione x della prima tessera che vuoi pescare!");
@@ -311,7 +313,17 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
                 out.println("Coordinata non valida, riprova!");
             }
         }while(y<0 || y>8);
-        scanner.nextLine();
+        buffer = scanner.nextLine();
+        while(buffer.equals("chat")){
+            ChatThread thread = new ChatThread(userInterface, this);
+            thread.start();
+            try {
+                thread.join();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            buffer = scanner.nextLine();
+        }
         TileReplyMessage message = server.onTilePickMessage(nickname, x, y);
         while (message.isTileAccepted().equals(PickTileResponse.MAX_TILE_PICKED) || message.isTileAccepted().equals(PickTileResponse.INVALID_TILE)){
             if(message.isTileAccepted().equals(PickTileResponse.MAX_TILE_PICKED)){
@@ -347,6 +359,18 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
 
         out.println("Una tessera pescata, vuoi pescare altre tessere? [Y/N]");
         String test = scanner.nextLine();
+        while(test.equals("chat")){
+            ChatThread thread = new ChatThread(userInterface, this);
+            thread.start();
+            try {
+                thread.join();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            out.println("Una tessera pescata, vuoi pescare altre tessere? [Y/N]");
+            test = scanner.nextLine();
+        }
+
         while(!test.equals("Y")){
             if(test.equals("N")){
                 this.turnTiles=helperList;
@@ -355,9 +379,33 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
                 return;
             }
             out.println("Simbolo errato!");
-            scanner.nextLine();
+            buffer = scanner.nextLine();
+            while(buffer.equals("chat")){
+                ChatThread thread = new ChatThread(userInterface, this);
+                thread.start();
+                try {
+                    thread.join();
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                buffer = scanner.nextLine();
+            }
             out.println("Una tessera pescata, vuoi pescare altre tessere? [Y/N]");
             test = scanner.nextLine();
+            while(test.equals("chat")){
+                ChatThread thread = new ChatThread(userInterface, this);
+                thread.start();
+                try {
+                    thread.join();
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                out.println("Una tessera pescata, vuoi pescare altre tessere? [Y/N]");
+                test = scanner.nextLine();
+                while(test.equals("")) {
+                    test = scanner.nextLine();
+                }
+            }
         }
 
         onUpdateShowLivingRoom();
@@ -416,9 +464,30 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
         }
         helperList.add(message.getTile());
 
-        scanner.nextLine();
+        buffer = scanner.nextLine();
+        while(buffer.equals("chat")){
+            ChatThread thread = new ChatThread(userInterface, this);
+            thread.start();
+            try {
+                thread.join();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            buffer = scanner.nextLine();
+        }
         out.println("Due tessere pescate, vuoi pescare altre tessere? [Y/N]");
         test = scanner.nextLine();
+        while(test.equals("chat")){
+            ChatThread thread = new ChatThread(userInterface, this);
+            thread.start();
+            try {
+                thread.join();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            out.println("Due tessere pescate, vuoi pescare altre tessere? [Y/N]");
+            test = scanner.nextLine();
+        }
         while(!test.equals("Y")){
             if(test.equals("N")){
                 this.turnTiles=helperList;
@@ -427,9 +496,33 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
                 return;
             }
             out.println("Simbolo errato!");
-            scanner.nextLine();
+            buffer = scanner.nextLine();
+            while(buffer.equals("chat")){
+                ChatThread thread = new ChatThread(userInterface, this);
+                thread.start();
+                try {
+                    thread.join();
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                buffer = scanner.nextLine();
+            }
             out.println("Due tessere pescate, vuoi pescare altre tessere? [Y/N]");
             test = scanner.nextLine();
+            while(test.equals("chat")){
+                ChatThread thread = new ChatThread(userInterface, this);
+                thread.start();
+                try {
+                    thread.join();
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                out.println("Due tessere pescate, vuoi pescare altre tessere? [Y/N]");
+                test = scanner.nextLine();
+                while(test.equals("")) {
+                    test = scanner.nextLine();
+                }
+            }
         }
 
         onUpdateShowLivingRoom();
