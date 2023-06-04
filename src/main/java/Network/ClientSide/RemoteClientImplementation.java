@@ -463,7 +463,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
                 buffer = scanner.nextLine();
             }
             out.println("Una tessera pescata, vuoi pescare altre tessere? [Y/N]");
-            test = scanner.nextLine();
+            test = buffer;
             while(test.equals("chat")){
                 ChatThread thread = new ChatThread(userInterface, this);
                 thread.start();

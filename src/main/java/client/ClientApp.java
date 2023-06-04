@@ -2,11 +2,19 @@ package client;
 
 import client.view.TUI;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 public class ClientApp {
     public static void main(String[] args) {
 
         boolean cliSelector = true; // defualt è true, se vogliamo usare anche gui si può cambiare
 
+        try{
+            System.setProperty("java.rmi.server.hostname", InetAddress.getLocalHost().getHostAddress());
+        } catch (UnknownHostException e) {
+            throw new RuntimeException(e);
+        }
         for (String arg : args) {
             if (arg.equals("--cli")) {
                 cliSelector = true;

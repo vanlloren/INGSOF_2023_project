@@ -24,9 +24,29 @@ public class RMIServer {
     public RemoteServerImplementation startRMIServer(){
         try{
             RemoteServerImplementation remoteServer = new RemoteServerImplementation(this, gameController);
+            System.setProperty("java.rmi.server.hostname", InetAddress.getLocalHost().getHostAddress());
             Registry registry = LocateRegistry.createRegistry(serverRMIPort);
+
             registry.bind("MyShelfieServer", remoteServer);
             System.out.println("Server RMI pronto");
+            try {
+                // Ottieni il riferimento al Registro RMI
+                Registry registry2 = LocateRegistry.getRegistry(1099);
+
+                // Ottieni la lista dei nomi registrati nel Registro RMI
+                String[] registeredNames = registry.list();
+
+                if (registeredNames.length > 0) {
+                    System.out.println("Nomi registrati nel Registro RMI:");
+                    for (String name : registeredNames) {
+                        System.out.println(name);
+                    }
+                } else {
+                    System.out.println("Nessun nome registrato nel Registro RMI.");
+                }
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
 
             try {
                 InetAddress localhost = InetAddress.getLocalHost();
@@ -43,6 +63,8 @@ public class RMIServer {
         }catch (AlreadyBoundException e) {
             throw new RuntimeException(e);
         } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        } catch (UnknownHostException e) {
             throw new RuntimeException(e);
         }
     }
