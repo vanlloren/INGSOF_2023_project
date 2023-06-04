@@ -1,7 +1,10 @@
 package Controller;
 
 
+import Util.Colour;
 import server.Controller.RuleCommonGoal;
+
+
 import static org.junit.Assert.*;
 
 import org.junit.Test;
@@ -20,11 +23,22 @@ public class RuleCommonGoalTest  {
 @BeforeEach
 public void setUp(){
      structure = new PlayableItemTile[6][5];
+     for (int i=0; i<6;i++){
+         for (int j=0; j<6;j++){
+             structure[i][j] = new PlayableItemTile("VOID",1);
+         }
+     }
 }
 
     @Test
     public void TestCheckCrux(){
+
         structure = new PlayableItemTile[6][5];
+        for (int x=0; x<6;x++){
+            for (int y=0; y<5;y++) {
+                structure[x][y] = new PlayableItemTile("VOID", 1);
+            }
+        }
         int i = 1;
         int j = 1;
         structure[i][j] = new PlayableItemTile("GREEN", 1);
@@ -32,49 +46,45 @@ public void setUp(){
         structure[i-1][j-1] = new PlayableItemTile("GREEN", 1);
         structure[i+1][j-1] = new PlayableItemTile("GREEN", 1);
         structure[i-1][j+1] = new PlayableItemTile("GREEN", 1);
-        assertEquals(true,RuleCommonGoal.checkCrux(structure));
+        assertTrue(RuleCommonGoal.checkCrux(structure));
+
+
 
         structure = new PlayableItemTile[6][5];
-        i = 1;
-        j = 1;
-        structure[i][j] = new PlayableItemTile("GREEN", 1);
-        structure[i+1][j+1] = new PlayableItemTile("GREEN", 1);
-        structure[i-1][j-1] = new PlayableItemTile("GREEN", 1);
-        structure[i+1][j-1] = new PlayableItemTile("GREEN", 1);
-        structure[i-1][j+1] = new PlayableItemTile("GREEN", 1);
-        assertEquals(true,RuleCommonGoal.checkCrux(structure));
-
-        structure = new PlayableItemTile[6][5];
-        i = 1;
+        for (int x=0; x<6;x++){
+            for (int y=0; y<5;y++) {
+                structure[x][y] = new PlayableItemTile("VOID", 1);
+            }
+        }
         j = 2;
         structure[i][j] = new PlayableItemTile("GREEN", 1);
         structure[i+1][j+1] = new PlayableItemTile("GREEN", 1);
         structure[i-1][j-1] = new PlayableItemTile("GREEN", 1);
         structure[i+1][j-1] = new PlayableItemTile("GREEN", 1);
         structure[i-1][j+1] = new PlayableItemTile("GREEN", 1);
-        assertEquals(true,RuleCommonGoal.checkCrux(structure));
+        assertTrue(RuleCommonGoal.checkCrux(structure));
 
         structure = new PlayableItemTile[6][5];
-        i = 1;
+        for (int x=0; x<6;x++){
+            for (int y=0; y<5;y++) {
+                structure[x][y] = new PlayableItemTile("VOID", 1);
+            }
+        }
         j = 3;
         structure[i][j] = new PlayableItemTile("GREEN", 1);
         structure[i+1][j+1] = new PlayableItemTile("GREEN",1 );
         structure[i-1][j-1] = new PlayableItemTile("GREEN", 1);
         structure[i+1][j-1] = new PlayableItemTile("GREEN", 1);
         structure[i-1][j+1] = new PlayableItemTile("GREEN", 1);
-        assertEquals(true,RuleCommonGoal.checkCrux(structure));
+        assertTrue(RuleCommonGoal.checkCrux(structure));
+
 
         structure = new PlayableItemTile[6][5];
-        i = 1;
-        j = 1;
-        structure[i][j] = new PlayableItemTile("GREEN", 1);
-        structure[i+1][j+1] = new PlayableItemTile("GREEN", 1);
-        structure[i-1][j-1] = new PlayableItemTile("GREEN", 1);
-        structure[i+1][j-1] = new PlayableItemTile("GREEN", 1);
-        structure[i-1][j+1] = new PlayableItemTile("GREEN", 1);
-        assertEquals(true,RuleCommonGoal.checkCrux(structure));
-
-        structure = new PlayableItemTile[6][5];
+        for (int x=0; x<6;x++){
+            for (int y=0; y<5;y++) {
+                structure[x][y] = new PlayableItemTile("VOID", 1);
+            }
+        }
         i = 2;
         j = 1;
         structure[i][j] = new PlayableItemTile("GREEN", 1);
@@ -82,29 +92,44 @@ public void setUp(){
         structure[i-1][j-1] = new PlayableItemTile("GREEN", 1);
         structure[i+1][j-1] = new PlayableItemTile("GREEN", 1);
         structure[i-1][j+1] = new PlayableItemTile("GREEN", 1);
+        assertTrue(RuleCommonGoal.checkCrux(structure));
 
-        assertEquals(true,RuleCommonGoal.checkCrux(structure));
         structure = new PlayableItemTile[6][5];
-        i = 2;
+        for (int x=0; x<6;x++){
+            for (int y=0; y<5;y++) {
+                structure[x][y] = new PlayableItemTile("VOID", 1);
+            }
+        }
         j = 2;
         structure[i][j] = new PlayableItemTile("GREEN", 1);
         structure[i+1][j+1] = new PlayableItemTile("GREEN", 1);
         structure[i-1][j-1] = new PlayableItemTile("GREEN", 1);
         structure[i+1][j-1] = new PlayableItemTile("GREEN", 1);
         structure[i-1][j+1] = new PlayableItemTile("GREEN", 1);
+        assertTrue(RuleCommonGoal.checkCrux(structure));
 
-        assertEquals(true,RuleCommonGoal.checkCrux(structure));
         structure = new PlayableItemTile[6][5];
-        i = 2;
+        for (int x=0; x<6;x++){
+            for (int y=0; y<5;y++) {
+                structure[x][y] = new PlayableItemTile("VOID", 1);
+            }
+        }
+
         j = 3;
         structure[i][j] = new PlayableItemTile("GREEN", 1);
         structure[i+1][j+1] = new PlayableItemTile("GREEN", 1);
         structure[i-1][j-1] = new PlayableItemTile("GREEN", 1);
         structure[i+1][j-1] = new PlayableItemTile("GREEN", 1);
         structure[i-1][j+1] = new PlayableItemTile("GREEN", 1);
+        assertTrue(RuleCommonGoal.checkCrux(structure));
 
-        assertEquals(true,RuleCommonGoal.checkCrux(structure));
         structure = new PlayableItemTile[6][5];
+        for (int x=0; x<6;x++){
+            for (int y=0; y<5;y++) {
+                structure[x][y] = new PlayableItemTile("VOID", 1);
+            }
+        }
+
         i = 3;
         j = 1;
         structure[i][j] = new PlayableItemTile("GREEN", 1);
@@ -112,29 +137,42 @@ public void setUp(){
         structure[i-1][j-1] = new PlayableItemTile("GREEN", 1);
         structure[i+1][j-1] = new PlayableItemTile("GREEN", 1);
         structure[i-1][j+1] = new PlayableItemTile("GREEN", 1);
+        assertTrue(RuleCommonGoal.checkCrux(structure));
 
-        assertEquals(true,RuleCommonGoal.checkCrux(structure));
         structure = new PlayableItemTile[6][5];
-        i = 3;
+        for (int x=0; x<6;x++){
+            for (int y=0; y<5;y++) {
+                structure[x][y] = new PlayableItemTile("VOID", 1);
+            }
+        }
         j = 2;
         structure[i][j] = new PlayableItemTile("GREEN", 1);
         structure[i+1][j+1] = new PlayableItemTile("GREEN", 1);
         structure[i-1][j-1] = new PlayableItemTile("GREEN", 1);
         structure[i+1][j-1] = new PlayableItemTile("GREEN", 1);
         structure[i-1][j+1] = new PlayableItemTile("GREEN", 1);
+        assertTrue(RuleCommonGoal.checkCrux(structure));
 
-        assertEquals(true,RuleCommonGoal.checkCrux(structure));
         structure = new PlayableItemTile[6][5];
-         i = 3;
+        for (int x=0; x<6;x++){
+            for (int y=0; y<5;y++) {
+                structure[x][y] = new PlayableItemTile("VOID", 1);
+            }
+        }
          j = 3;
         structure[i][j] = new PlayableItemTile("GREEN", 1);
         structure[i+1][j+1] = new PlayableItemTile("GREEN", 1);
         structure[i-1][j-1] = new PlayableItemTile("GREEN", 1);
         structure[i+1][j-1] = new PlayableItemTile("GREEN", 1);
         structure[i-1][j+1] = new PlayableItemTile("GREEN", 1);
-        assertEquals(true,RuleCommonGoal.checkCrux(structure));
+        assertTrue(RuleCommonGoal.checkCrux(structure));
 
         structure = new PlayableItemTile[6][5];
+        for (int x=0; x<6;x++){
+            for (int y=0; y<5;y++) {
+                structure[x][y] = new PlayableItemTile("VOID", 1);
+            }
+        }
         i = 4;
         j = 1;
         structure[i][j] = new PlayableItemTile("GREEN", 1);
@@ -142,37 +180,37 @@ public void setUp(){
         structure[i-1][j-1] = new PlayableItemTile("GREEN", 1);
         structure[i+1][j-1] = new PlayableItemTile("GREEN", 1);
         structure[i-1][j+1] = new PlayableItemTile("GREEN", 1);
-        assertEquals(true,RuleCommonGoal.checkCrux(structure));
+        assertTrue(RuleCommonGoal.checkCrux(structure));
+
 
         structure = new PlayableItemTile[6][5];
-        i = 4;
-        j = 1;
-        structure[i][j] = new PlayableItemTile("GREEN", 1);
-        structure[i+1][j+1] = new PlayableItemTile("GREEN", 1);
-        structure[i-1][j-1] = new PlayableItemTile("GREEN", 1);
-        structure[i+1][j-1] = new PlayableItemTile("GREEN", 1);
-        structure[i-1][j+1] = new PlayableItemTile("GREEN", 1);
-        assertEquals(true,RuleCommonGoal.checkCrux(structure));
+        for (int x=0; x<6;x++){
+            for (int y=0; y<5;y++) {
+                structure[x][y] = new PlayableItemTile("VOID", 1);
+            }
+        }
 
-        structure = new PlayableItemTile[6][5];
-        i = 4;
         j = 2;
         structure[i][j] = new PlayableItemTile("GREEN", 1);
         structure[i+1][j+1] = new PlayableItemTile("GREEN", 1);
         structure[i-1][j-1] = new PlayableItemTile("GREEN", 1);
         structure[i+1][j-1] = new PlayableItemTile("GREEN", 1);
         structure[i-1][j+1] = new PlayableItemTile("GREEN", 1);
-        assertEquals(true,RuleCommonGoal.checkCrux(structure));
+        assertTrue(RuleCommonGoal.checkCrux(structure));
 
         structure = new PlayableItemTile[6][5];
-        i = 4;
+        for (int x=0; x<6;x++){
+            for (int y=0; y<5;y++) {
+                structure[x][y] = new PlayableItemTile("VOID", 1);
+            }
+        }
         j = 3;
         structure[i][j] = new PlayableItemTile("GREEN", 1);
         structure[i+1][j+1] = new PlayableItemTile("GREEN", 1);
         structure[i-1][j-1] = new PlayableItemTile("GREEN", 1);
         structure[i+1][j-1] = new PlayableItemTile("GREEN", 1);
         structure[i-1][j+1] = new PlayableItemTile("GREEN",1 );
-        assertEquals(true,RuleCommonGoal.checkCrux(structure));
+        assertTrue(RuleCommonGoal.checkCrux(structure));
 
     }
     @Test
@@ -203,7 +241,7 @@ public void setUp(){
         assertNotEquals(true,RuleCommonGoal.CheckColumn1(structure));
 
         structure[2][0] = new PlayableItemTile("BLUE", 1);
-        assertEquals(true,RuleCommonGoal.CheckColumn1(structure));
+        assertTrue(RuleCommonGoal.CheckColumn1(structure));
 
 
         structure[0][4]= null;
@@ -255,17 +293,26 @@ public void setUp(){
     @Test
     public void TestCheckDiagonal(){
         structure = new PlayableItemTile[6][5];
+        for (int x=0; x<6;x++){
+            for (int y=0; y<5;y++) {
+                structure[x][y] = new PlayableItemTile("VOID", 1);
+            }
+        }
 
         for(int i =0;i<5;i++){
             structure[i][i] = new PlayableItemTile("BLUE", 1);
         }
-        assertEquals(true,RuleCommonGoal.checkDiagonal(structure));
+        assertTrue(RuleCommonGoal.checkDiagonal(structure));
         structure = new PlayableItemTile[6][5];
-        structure[1][0] = new PlayableItemTile("RED", 1);
-        for(int i =2;i<6;i++){
-            structure[i][i-1] = new PlayableItemTile("RED", 1);
+        for (int x=0; x<6;x++){
+            for (int y=0; y<5;y++) {
+                structure[x][y] = new PlayableItemTile("VOID", 1);
+            }
         }
-        assertEquals(true,RuleCommonGoal.checkDiagonal(structure));
+        for(int i =0;i<5;i++){
+            structure[i+1][i] = new PlayableItemTile("BLUE", 1);
+        }
+        assertTrue(RuleCommonGoal.checkDiagonal(structure));
 
 
     }
@@ -273,20 +320,65 @@ public void setUp(){
 
     @Test
     public void TestCheckEight(){
+        structure = new PlayableItemTile[6][5];
 
+        for(int i =0;i<5;i++){
+            structure[i][i] = new PlayableItemTile("BLUE", 1);
+        }
         assertEquals(true,RuleCommonGoal.checkEight(structure));
     }
 
     @Test
     public void TestCheckFourGroups(){
 
-        assertEquals(true,RuleCommonGoal.checkFourGroups(structure));
+        structure = new PlayableItemTile[6][5];
+        for (int x=0; x<6;x++){
+            for (int y=0; y<5;y++) {
+                structure[x][y] = new PlayableItemTile("VOID", 1);
+            }
+        }
+        structure[5][0] = new PlayableItemTile("BLUE",1);
+        structure[5][1] = new PlayableItemTile("BLUE",1);
+        structure[5][2] = new PlayableItemTile("BLUE",1);
+        structure[5][3] = new PlayableItemTile("BLUE",1);
+        structure[4][0] = new PlayableItemTile("YELLOW",1);
+        structure[4][1] = new PlayableItemTile("YELLOW",1);
+        structure[4][2] = new PlayableItemTile("YELLOW",1);
+        structure[4][3] = new PlayableItemTile("YELLOW",1);
+        structure[3][0] = new PlayableItemTile("CYAN",1);
+        structure[2][0] = new PlayableItemTile("CYAN",1);
+        structure[1][0] = new PlayableItemTile("CYAN",1);
+        structure[0][0] = new PlayableItemTile("CYAN",1);
+        structure[3][1] = new PlayableItemTile("BLUE",1);
+        structure[2][1] = new PlayableItemTile("BLUE",1);
+        structure[1][1] = new PlayableItemTile("BLUE",1);
+        structure[0][1] = new PlayableItemTile("BLUE",1);
+        assertTrue(RuleCommonGoal.checkFourGroups(structure));
     }
 
     @Test
     public void TestCheckSixCouples(){
+        structure = new PlayableItemTile[6][5];
+        for (int x=0; x<6;x++){
+            for (int y=0; y<5;y++) {
+                structure[x][y] = new PlayableItemTile("VOID", 1);
+            }
+        }
+        structure[2][3] = new PlayableItemTile("BLUE",1);
+        structure[2][4] = new PlayableItemTile("BLUE",1);
+        structure[3][3] = new PlayableItemTile("GREEN",1);
+        structure[3][4] = new PlayableItemTile("GREEN",1);
+        structure[1][3] = new PlayableItemTile("BLUE",1);
+        structure[1][4] = new PlayableItemTile("BLUE",1);
+        structure[5][0] = new PlayableItemTile("YELLOW",1);
+        structure[5][1] = new PlayableItemTile("YELLOW",1);
+        structure[0][0] = new PlayableItemTile("BLUE",1);
+        structure[0][1] = new PlayableItemTile("BLUE",1);
+        structure[5][4] = new PlayableItemTile("BLUE",1);
+        structure[4][4] = new PlayableItemTile("BLUE",1);
+        assertTrue(RuleCommonGoal.checkSixCouples(structure));
 
-        assertEquals(true,RuleCommonGoal.checkSixCouples(structure));
+
     }
 
     @Test
@@ -298,12 +390,18 @@ public void setUp(){
     @Test
     public void TestCheckStair(){
         structure = new PlayableItemTile[6][5];
+        for (int x=0; x<6;x++){
+            for (int y=0; y<5;y++) {
+                structure[x][y] = new PlayableItemTile("VOID", 1);
+            }
+        }
+
         structure[1][0] = new PlayableItemTile("RED", 1);
         structure[2][1] = new PlayableItemTile("GREEN", 1);
         structure[3][2] = new PlayableItemTile("BLUE", 1);
         structure[4][3] = new PlayableItemTile("RED", 1);
         structure[5][4] = new PlayableItemTile("RED", 1);
-        assertEquals(true,RuleCommonGoal.checkStair(structure));
+        assertTrue(RuleCommonGoal.checkStair(structure));
 
         structure[0][0] = new PlayableItemTile("RED", 1);
         assertNotEquals(true,RuleCommonGoal.checkStair(structure));
@@ -314,7 +412,7 @@ public void setUp(){
         structure[3][2] = new PlayableItemTile("BLUE", 1);
         structure[4][1] = new PlayableItemTile("RED", 1);
         structure[5][0] = new PlayableItemTile("RED", 1);
-        assertEquals(true,RuleCommonGoal.checkStair(structure));
+        assertTrue(RuleCommonGoal.checkStair(structure));
 
         structure[4][0] = new PlayableItemTile("RED", 1);
         assertNotEquals(true,RuleCommonGoal.checkStair(structure));
