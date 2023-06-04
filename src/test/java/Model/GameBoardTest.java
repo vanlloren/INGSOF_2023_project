@@ -77,4 +77,9 @@ public class GameBoardTest {
 
         Assert.assertEquals(0, checker);
     }
+
+    @Test
+    public void testGetPickedTilesNumber(){
+        Assert.assertTrue(board.getPickedTilesNum()==0);
+    }
 }

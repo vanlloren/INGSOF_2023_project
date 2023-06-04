@@ -8,6 +8,8 @@ import Util.*;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+
 
 public class NullItemTileTest {
 
@@ -40,6 +42,7 @@ public class NullItemTileTest {
 
     @Test
     public void testGetAdjacency() {
+        nullItemTile.setAdjacency();
         Assert.assertFalse(nullItemTile.getAdjacency());
     }
 
@@ -47,6 +50,21 @@ public class NullItemTileTest {
     public void testResetAdjacency() {
         nullItemTile.resetAdjacency();
         Assert.assertFalse(nullItemTile.getAdjacency());
+    }
+
+    @Test
+    public void testModifyAvailability(){
+        nullItemTile.makeAvailable();
+        Assert.assertTrue(nullItemTile.getAvailability()==false);
+        nullItemTile.makeUnavailable();
+        Assert.assertTrue(nullItemTile.getAvailability()==false);
+    }
+
+    @Test
+    public void testGetAndSetPosition(){
+        nullItemTile.setPosition(1,1);
+        ArrayList<Integer> noPos = new ArrayList<Integer>();
+        Assert.assertEquals(noPos, nullItemTile.getPosition());
     }
 }
 

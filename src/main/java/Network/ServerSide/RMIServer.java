@@ -24,7 +24,7 @@ public class RMIServer {
     public RemoteServerImplementation startRMIServer(){
         try{
             RemoteServerImplementation remoteServer = new RemoteServerImplementation(this, gameController);
-            System.setProperty("java.rmi.server.hostname", InetAddress.getLocalHost().getHostAddress());
+
             Registry registry = LocateRegistry.createRegistry(serverRMIPort);
 
             registry.bind("MyShelfieServer", remoteServer);
@@ -63,8 +63,6 @@ public class RMIServer {
         }catch (AlreadyBoundException e) {
             throw new RuntimeException(e);
         } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        } catch (UnknownHostException e) {
             throw new RuntimeException(e);
         }
     }

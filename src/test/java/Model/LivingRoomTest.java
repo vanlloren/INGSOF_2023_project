@@ -586,6 +586,115 @@ public class LivingRoomTest {
 
     }
 
+    @Test
+    public void testGetTileAvailabilityNullTile(){
+
+        ItemTile[][] gameTable;
+        livingRoom.createGameTable(2);
+        gameTable = livingRoom.getGameTable();
+
+        gameTable[3][3] = null;
+
+        livingRoom.setGameTable(gameTable);
+
+
+        Assert.assertFalse(livingRoom.getTileAvailability(3,3));
+    }
+
+
+    @Test
+    public void testUpdateAvailability3And4(){
+        livingRoom.createGameTable(3);
+
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                if (!livingRoom.nullTileDetection(i,j) && !livingRoom.nullDetection(i,j)) {
+                    //metto available tutti i corner cases
+                    //1° tessere [0][3] e [0][4]
+                    if (i == 0) {
+                        if (j == 3) {
+                            Assert.assertTrue(livingRoom.getTileAvailability(i,j));
+                        }else if (j == 4) {
+                            Assert.assertTrue(livingRoom.getTileAvailability(i,j));
+                        }
+                    }
+                    //2° tessere  [4][0] e [5][0]
+                    else if (j == 0) {
+                        if (i == 4) {
+                            Assert.assertTrue(livingRoom.getTileAvailability(i,j));
+                        }
+                        if (i == 5) {
+                            Assert.assertTrue(livingRoom.getTileAvailability(i,j));
+                        }
+                    }
+                    //3° tessere [8][4] e [8][5]
+                    else if (i == 8) {
+                        if (j == 4) {
+                            Assert.assertTrue(livingRoom.getTileAvailability(i,j));
+                        }
+                        if (j == 5) {
+                            Assert.assertTrue(livingRoom.getTileAvailability(i,j));
+                        }
+                    }
+                    //4° tessere [3][8] e [4][8]
+                    else if (j == 8) {
+                        if (i == 3) {
+                            Assert.assertTrue(livingRoom.getTileAvailability(i,j));
+                        }
+                        if (i == 4) {
+                            Assert.assertTrue(livingRoom.getTileAvailability(i,j));
+                        }
+                    }
+                }
+            }
+        }
+
+        livingRoom.createGameTable(4);
+
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                if (!livingRoom.nullTileDetection(i,j) && !livingRoom.nullDetection(i,j)) {
+                    //metto available tutti i corner cases
+                    //1° tessere [0][3] e [0][4]
+                    if (i == 0) {
+                        if (j == 3) {
+                            Assert.assertTrue(livingRoom.getTileAvailability(i,j));
+                        }else if (j == 4) {
+                            Assert.assertTrue(livingRoom.getTileAvailability(i,j));
+                        }
+                    }
+                    //2° tessere  [4][0] e [5][0]
+                    else if (j == 0) {
+                        if (i == 4) {
+                            Assert.assertTrue(livingRoom.getTileAvailability(i,j));
+                        }
+                        if (i == 5) {
+                            Assert.assertTrue(livingRoom.getTileAvailability(i,j));
+                        }
+                    }
+                    //3° tessere [8][4] e [8][5]
+                    else if (i == 8) {
+                        if (j == 4) {
+                            Assert.assertTrue(livingRoom.getTileAvailability(i,j));
+                        }
+                        if (j == 5) {
+                            Assert.assertTrue(livingRoom.getTileAvailability(i,j));
+                        }
+                    }
+                    //4° tessere [3][8] e [4][8]
+                    else if (j == 8) {
+                        if (i == 3) {
+                            Assert.assertTrue(livingRoom.getTileAvailability(i,j));
+                        }
+                        if (i == 4) {
+                            Assert.assertTrue(livingRoom.getTileAvailability(i,j));
+                        }
+                    }
+
+                }
+            }
+        }
+    }
 
 
 }

@@ -197,7 +197,7 @@ public class GameModel extends GameModelObservable implements Serializable, Simp
         }
 
 
-    public void setmyShelfie(GameBoard myShelfie) {
+    /*public void setmyShelfie(GameBoard myShelfie) {
         this.myShelfie = myShelfie;
         notifyObservers(obs -> {
             try {
@@ -206,18 +206,18 @@ public class GameModel extends GameModelObservable implements Serializable, Simp
                 throw new RuntimeException(e);
             }
         });
-    }
+    }*/
     public GameBoard getMyShelfie(){
         return myShelfie;
     }
 
-    public void reset() {
+    /*public void reset() {
         chosenChairOwner = null;
         currPlayer= null;
         playersInGame = null;
         myShelfie = null;
         endGame= false;
-    }
+    }*/
 
     public boolean isNicknameAvailable(String nickname) {
         for (Player p: playersInGame

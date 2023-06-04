@@ -103,8 +103,7 @@ public class GameBoard implements Serializable {
     public ArrayList<PlayableItemTile> getToPlayerTiles(){
         return toPlayerTiles;
     }
-    public void resetToPlayerTiles(){
-        toPlayerTiles = new ArrayList<>();
-    }
+
 }
+
 

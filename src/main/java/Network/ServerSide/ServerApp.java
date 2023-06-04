@@ -5,6 +5,8 @@ import server.Controller.GameController;
 import server.Model.GameModel;
 
 import java.io.PrintStream;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.Scanner;
 
 //classe che rappresenta il server vero e proprio: gestisce i client e dialoga direttamente con model e controller
@@ -17,6 +19,11 @@ public class ServerApp {
     public static void main(String[] args){
         //qui ci sarà il SocketServer
 
+        try {
+            System.setProperty("java.rmi.server.hostname", InetAddress.getLocalHost().getHostAddress());
+        } catch (UnknownHostException e) {
+            throw new RuntimeException(e);
+        }
         out.println("Welcome to MyShelfie, you're about to create a new Server which will run MyShelfie!");
         out.println("Please, decide on which port you would like to run the RMIServer:");
         int serverPort = scanner.nextInt();

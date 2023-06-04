@@ -44,7 +44,7 @@ public class PlayableItemTile extends ItemTile {
         }else{
             Colour helperColour = Colour.VOID;
             this.colour = helperColour;
-            this.idCode = 0;
+            this.idCode = -1;
         }
     }
 

@@ -10,11 +10,6 @@ public class ClientApp {
 
         boolean cliSelector = true; // defualt è true, se vogliamo usare anche gui si può cambiare
 
-        try{
-            System.setProperty("java.rmi.server.hostname", InetAddress.getLocalHost().getHostAddress());
-        } catch (UnknownHostException e) {
-            throw new RuntimeException(e);
-        }
         for (String arg : args) {
             if (arg.equals("--cli")) {
                 cliSelector = true;

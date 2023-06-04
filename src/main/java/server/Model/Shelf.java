@@ -31,11 +31,11 @@ public class Shelf extends ShelfObservable implements Serializable, SimpleShelf 
         return this.structure;
     }
 
-    public PlayableItemTile getShelfTile(int x ,int y){
+    /*public PlayableItemTile getShelfTile(int x ,int y){
         return this.structure[x][y];
-    }
+    }*/
 
-    public PlayableItemTile[][] getShelfie() {return this.structure;}
+    //public PlayableItemTile[][] getShelfie() {return this.structure;}
 
     public int getPointsAdj() {
         return this.pointsAdj;
@@ -65,7 +65,7 @@ public class Shelf extends ShelfObservable implements Serializable, SimpleShelf 
             }
         });
     }
-    public int freeCellsInShelf(){
+    /*public int freeCellsInShelf(){
         //Useful method to check also the maximum number of tiles that could be picked in the livingRoom
         List<Integer> list = new Vector<Integer>();
         int count=0;
@@ -85,7 +85,7 @@ public class Shelf extends ShelfObservable implements Serializable, SimpleShelf 
             }
         }
         return max;
-    }
+    }*/
     public boolean isFull() {
         for (int j = 0; j < 5; j++) {
             if (this.structure[0][j].getColour() == Colour.VOID) {

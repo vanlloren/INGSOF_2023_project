@@ -28,41 +28,17 @@ public class ItemBag {
 
         for (int i = 0; i < 132; i++) {
             if (i < 22) {
-                try {
-                    bag.add(factory.createPlayableItemTile("GREEN", i + 1));
-                } catch (InvalidPlayableItemTileColourException exc) {
-
-                }
+                bag.add(factory.createPlayableItemTile("GREEN", i + 1));
             } else if (i < 44) {
-                try {
-                    bag.add(factory.createPlayableItemTile("WHITE", i + 1));
-                } catch (InvalidPlayableItemTileColourException exc) {
-
-                }
+                bag.add(factory.createPlayableItemTile("WHITE", i + 1));
             } else if (i < 66) {
-                try {
-                    bag.add(factory.createPlayableItemTile("YELLOW", i + 1));
-                } catch (InvalidPlayableItemTileColourException exc) {
-
-                }
+                bag.add(factory.createPlayableItemTile("YELLOW", i + 1));
             } else if (i < 88) {
-                try {
-                    bag.add(factory.createPlayableItemTile("BLUE", i + 1));
-                } catch (InvalidPlayableItemTileColourException exc) {
-
-                }
+                bag.add(factory.createPlayableItemTile("BLUE", i + 1));
             } else if (i < 110) {
-                try {
-                    bag.add(factory.createPlayableItemTile("CYAN", i + 1));
-                } catch (InvalidPlayableItemTileColourException exc) {
-
-                }
+                bag.add(factory.createPlayableItemTile("CYAN", i + 1));
             } else if (i < 132) {
-                try {
-                    bag.add(factory.createPlayableItemTile("PINK", i + 1));
-                } catch (InvalidPlayableItemTileColourException exc) {
-
-                }
+                bag.add(factory.createPlayableItemTile("PINK", i + 1));
             }
         }
     }

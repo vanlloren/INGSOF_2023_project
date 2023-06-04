@@ -10,6 +10,8 @@ import org.junit.jupiter.api.Test;
 import server.Model.PlayableItemTile;
 import Util.*;
 
+import java.util.ArrayList;
+
 public class PlayableItemTileTest {
 
     @Test
@@ -58,6 +60,19 @@ public class PlayableItemTileTest {
         playableItemTile.setAdjacency();
         playableItemTile.resetAdjacency();
         Assert.assertFalse(playableItemTile.getAdjacency());
+    }
+
+    @Test
+    public void testGetPosition(){
+        PlayableItemTile tile = new PlayableItemTile("BLUE", 1);
+
+        tile.setPosition(1,3);
+
+        ArrayList<Integer> tilePosition = new ArrayList<Integer>();
+        tilePosition.add(1);
+        tilePosition.add(3);
+
+        Assert.assertEquals(tilePosition, tile.getPosition());
     }
 
 }
