@@ -34,7 +34,7 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
     private Semaphore semaphore= new Semaphore(0);
 
     private boolean checker = false;
-    private boolean connectionTerminator = false;
+
 
 
     public TUI(){
@@ -165,7 +165,6 @@ this.isLastTurn = true;
                 notifyObserver(obs -> obs.onUpdateShowCurrPlayer());
                 if (currPlayer.equals(this.nickname)) {
                     askMovingTilePosition();
-                    //qua ci va la chiamata a quello che inserisce le tiles nella shelf
                 } else {
                     System.out.println("IT IS NOT YOUR TURN YET: PLEASE WAIT ");
                     out.println();

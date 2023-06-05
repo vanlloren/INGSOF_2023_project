@@ -1,15 +1,10 @@
 package client;
 
 import client.view.TUI;
-
-import java.net.InetAddress;
-import java.net.SocketException;
-import java.net.UnknownHostException;
-
 public class ClientApp {
     public static void main(String[] args) throws InterruptedException {
 
-        boolean cliSelector = true; // defualt è true, se vogliamo usare anche gui si può cambiare
+        boolean cliSelector = true; // default è true, se vogliamo usare anche gui si può cambiare
 
         for (String arg : args) {
             if (arg.equals("--cli")) {
@@ -20,8 +15,6 @@ public class ClientApp {
 
         if (cliSelector) {
             TUI view = new TUI();
-            // ClientController clientcontroller = new ClientController(view);
-            // view.addObserver(clientcontroller);
             view.init();
         } else {
             //eventuale gestione apertura GUI
