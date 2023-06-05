@@ -92,48 +92,37 @@ public class RuleCommonGoal {
         }
 
         public static boolean checkSquare(PlayableItemTile[][] structure) {
-            int k;
-            for (int i = 0; i <= 4; i++) {
-                for (int j = 0; j <= 3; j++) {
-                    if (structure[i][j].getColour() != Colour.VOID) {
+            for (int i = 5; i > 0; i--) {
+                for (int j = 0; j < 4; j++) {
+                    if (structure[i][j].getColour() != Colour.VOID&&structure[i][j].getColour()==structure[i][j+1].getColour()&&
+                        structure[i][j].getColour()==structure[i-1][j].getColour()&&structure[i][j].getColour()==structure[i-1][j+1].getColour()) {
                         Colour value = structure[i][j].getColour();
-                        if (structure[i][j + 1].getColour() != Colour.VOID && structure[i + 1][j].getColour() != Colour.VOID && structure[i + 1][j + 1].getColour() != Colour.VOID && structure[i][j + 1].getColour() == value &&
-                                structure[i + 1][j].getColour() == value && structure[i + 1][j + 1].getColour() == value) {
-                            k = i;
-                            while (k < i + 2) {
-                                int l = j + 2;
-                                Colour val = structure[k][l].getColour();
-                                while (l < 4) {
-                                    if (structure[k][l + 1].getColour() != Colour.VOID && structure[k + 1][l].getColour() != Colour.VOID && structure[k + 1][l + 1].getColour() != Colour.VOID && structure[k][l + 1].getColour() == val &&
-                                            structure[k + 1][l].getColour() == val && structure[k + 1][l + 1].getColour() == val) {
-                                        return true;
-                                    }
-                                    l++;
+                        if(j<2) {
+                            for (int l = j + 2; j < 4; j++) {
+                                if (structure[i][l].getColour() == value && structure[i - 1][l].getColour() == value &&
+                                        structure[i][l + 1].getColour() == value && structure[i - 1][l + 1].getColour() == value) {
+                                    return true;
                                 }
-                                k++;
-                            }
-
-                            k = i + 2;
-                            while (k < 5) {
-                                int l = j;
-                                while (l < 5) {
-                                    Colour val = structure[k][j].getColour();
-
-                                    if (structure[k][l + 1].getColour() != Colour.VOID && structure[k + 1][l].getColour() != Colour.VOID && structure[k + 1][l + 1].getColour() != Colour.VOID && structure[k][l + 1].getColour() == val &&
-                                            structure[k + 1][l].getColour() == val && structure[k + 1][l + 1].getColour() == val) {
-                                        return true;
-                                    }
-                                    l++;
-                                }
-                                k++;
                             }
                         }
+                            for (int k = i - 2; k > 0; k--) {
+                                for (int x = 0; x < 4; x++) {
+                                    if (structure[k][x].getColour() == value && structure[k - 1][x].getColour() == value &&
+                                            structure[k][x + 1].getColour() == value && structure[k - 1][x + 1].getColour() == value) {
+                                        return true;
+                                    }
+                                }
+                            }
 
                     }
                 }
             }
             return false;
+
         }
+
+
+
 
 
         public static boolean checkDiagonal(PlayableItemTile[][] structure) {
