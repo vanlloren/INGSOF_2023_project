@@ -21,7 +21,6 @@ public enum MessageEnumeration {
 
 
         ERROR_MESSAGE,
-        INVALID_TILE,
         WRITE_IN_CHAT,
 
 

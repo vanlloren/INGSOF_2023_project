@@ -1,11 +1,15 @@
 package Model;
 
+import Network.ClientSide.RemoteClientImplementation;
 import Util.Colour;
+import client.view.TUI;
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.Test;
 
 import server.Model.*;
+
+import java.rmi.RemoteException;
 
 public class LivingRoomTest {
     private LivingRoom livingRoom;
@@ -13,7 +17,17 @@ public class LivingRoomTest {
     @BeforeEach
     public void setup() {
         GameModel gameModel = new GameModel();
-        livingRoom = new LivingRoom(gameModel);
+        gameModel.getMyShelfie().setItemBag();
+        gameModel.getMyShelfie().setLivingRoom(2);
+        livingRoom = gameModel.getMyShelfie().getLivingRoom();
+        try {
+            RemoteClientImplementation client = new RemoteClientImplementation("localhost", 1099, new TUI());
+            livingRoom.addObserver(client);
+            gameModel.setCurrPlayer(new Player("lorenzo", client, gameModel));
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     @Test
@@ -286,7 +300,6 @@ public class LivingRoomTest {
 
     @Test
     public void testPickTile() {
-        livingRoom.createGameTable(2);
         ItemBag bag = new ItemBag();
         bag.putTiles();
         PlayableItemTile testTile = bag.randPickTile();

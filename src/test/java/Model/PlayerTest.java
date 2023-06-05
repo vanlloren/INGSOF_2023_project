@@ -26,8 +26,12 @@ public class PlayerTest {
 
         try {
             RemoteClientImplementation client = new RemoteClientImplementation("localhost", 1099, new TUI());
-            Player player = new Player("lorenzo1", client, new GameModel());
+            GameModel gameModel = new GameModel();
+            Player player = new Player("lorenzo1", client, gameModel);
+            player.addObserver(client);
 
+
+            gameModel.setCurrPlayer(player);
             player.setStatusCommonGoal2();
             player.setStatusCommonGoal1();
             Assert.assertTrue(player.getHasCommonGoal1());

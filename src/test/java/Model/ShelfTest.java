@@ -69,4 +69,45 @@ public class ShelfTest {
 
         Assert.assertTrue(shelf.isFull());
     }
+
+    @Test
+    public void testCountMaxVoidTilesShelfColumns(){
+        shelf.setUp();
+        Assert.assertTrue(shelf.countMaxVoidTilesShelfColumns() == 6);
+
+        shelf.putTile(5,0, new PlayableItemTile("GREEN", 4));
+        Assert.assertTrue(shelf.countMaxVoidTilesShelfColumns() == 6);
+
+
+        shelf.putTile(4,0, new PlayableItemTile("GREEN", 4));
+        Assert.assertTrue(shelf.countMaxVoidTilesShelfColumns() == 6);
+
+
+        shelf.putTile(3,0, new PlayableItemTile("GREEN", 4));
+        Assert.assertTrue(shelf.countMaxVoidTilesShelfColumns() == 6);
+
+        shelf.putTile(2,0, new PlayableItemTile("GREEN", 4));
+        Assert.assertTrue(shelf.countMaxVoidTilesShelfColumns() == 6);
+
+        for(int j=1;j<5;j++){
+            for(int i=0;i<6;i++){
+                shelf.putTile(i, j, new PlayableItemTile("GREEN", 10));
+            }
+        }
+        shelf.putTile(0,1, new PlayableItemTile("VOID", -1));
+        Assert.assertTrue(shelf.countMaxVoidTilesShelfColumns() == 2);
+
+        for(int j=1;j<5;j++){
+            for(int i=0;i<6;i++){
+                shelf.putTile(i, j, new PlayableItemTile("GREEN", 10));
+            }
+        }
+        Assert.assertTrue(shelf.countMaxVoidTilesShelfColumns() == 2);
+
+        shelf.putTile(1,0, new PlayableItemTile("GREEN", 4));
+        Assert.assertTrue(shelf.countMaxVoidTilesShelfColumns() == 1);
+
+        shelf.putTile(0,0, new PlayableItemTile("GREEN", 4));
+        Assert.assertTrue(shelf.countMaxVoidTilesShelfColumns() == 0);
+    }
 }

@@ -57,7 +57,7 @@ public class TurnView implements Serializable {
     }
 
     public SimpleShelf getShelfTable(String nickname){
-        return getPlayer(nickname).getPersonalShelf();
+        return currPlayer.getPersonalShelf();
     }
 
     public int getPartialPoint(String nickName){

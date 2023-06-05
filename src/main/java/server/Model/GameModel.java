@@ -31,7 +31,13 @@ public class GameModel extends GameModelObservable implements Serializable, Simp
         this.playersInGame = new ArrayList<>();
     }
 
+    public String getMatchWinner(){
+        return this.matchWinner;
+    }
 
+    public void resetEndgame(){ //solo per i test
+        this.endGame = false;
+    }
 
     public boolean getEndGame(){
         return endGame;
