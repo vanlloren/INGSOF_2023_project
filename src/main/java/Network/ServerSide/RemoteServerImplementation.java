@@ -156,5 +156,7 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
     public void disconnect() throws RemoteException {
     }
 
-
+    @Override
+    public void verifyStillConnected() throws RemoteException{
+    }
 }

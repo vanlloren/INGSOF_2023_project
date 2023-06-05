@@ -2,6 +2,7 @@ package client.view;
 
 import server.Model.*;
 
+import java.net.SocketException;
 import java.util.ArrayList;
 
 
@@ -79,7 +80,7 @@ public interface View {
 
 
 
-    void askPlayerNextMove();
+    void askPlayerNextMove() throws SocketException;
 
     void maxTilesPicked();
 

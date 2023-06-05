@@ -1080,6 +1080,11 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
             this.userInterface.setIsTurn();
     }
 
+    @Override
+    public void onConnectionVerify() throws RemoteException {
+        server.verifyStillConnected();
+    }
+
 
     @Override
     public void onUpdateNickname(String nickname) throws RemoteException {

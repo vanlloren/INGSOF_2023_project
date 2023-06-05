@@ -62,4 +62,6 @@ public interface ViewObserver {
     void onUpdateChat(String Nickname, String chat) throws RemoteException;
 
     void onUpdateToStartPutting() throws RemoteException;
+
+    void onConnectionVerify() throws RemoteException;
 }

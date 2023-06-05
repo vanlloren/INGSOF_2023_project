@@ -5,6 +5,7 @@ import server.Model.*;
 
 
 import java.io.PrintStream;
+import java.net.SocketException;
 import java.rmi.RemoteException;
 import java.util.Scanner;
 import java.util.*;
@@ -33,6 +34,7 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
     private Semaphore semaphore= new Semaphore(0);
 
     private boolean checker = false;
+    private boolean connectionTerminator = false;
 
 
     public TUI(){
@@ -56,7 +58,7 @@ this.isLastTurn = true;
 
     //Implementando il metodo Runnable ereditiamo tutte le sue classi e oggetti
     //Run è un costruttore basilare costruito direttamente dal metodo Runnable al posto di init
-    public void init() {
+    public void init() throws InterruptedException {
         out.println("╔════════════════════════════════════════╗");
         out.println("║    --------------------------------    ║");
         out.println("║    |*****WELCOME TO MYSHELFIE*****|    ║");
@@ -68,24 +70,42 @@ this.isLastTurn = true;
         connectToServerFromTUI(serverAddress, portNum);
         scanner.nextLine();
         while (needNick) {
-            askNickname();
+
+                new Thread(() -> {
+                    while(true){
+                        try{
+                            OnVerifyConnection();
+                        }
+                        catch (RuntimeException e){
+                            out.println("ci sono stati problemi di connessione, partita cancellata");
+                            System.exit(0);
+                        }
+                    }
+                }).start();
+                askNickname();
         }
 
-        try {
+
             semaphore.acquire();
             do{
             askPlayerNextMove();
             }while (!isLastTurn);
-        } catch (InterruptedException e) {
-            out.println("ci sono stati problemi di connessione, partita cancellata");
-            throw new RuntimeException(e);
-        }
-        catch (RuntimeException e){
-            out.println("ci sono stati problemi di connessione, partita cancellata");
-        }
+
+
         out.println("it was your last turn please wait for final results");
      while (gameOn){
      }
+    }
+
+    private void OnVerifyConnection() {
+        notifyObserver(obs -> {
+            try {
+                obs.onConnectionVerify();
+            } catch (RemoteException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
     }
 
     @Override
@@ -109,6 +129,7 @@ this.isLastTurn = true;
 
     @Override
     public void askPlayerNextMove(){
+
         String choose;
         int picking = -1;
             do {
@@ -129,6 +150,7 @@ this.isLastTurn = true;
                         out.println("Symbol not recognized, please try again...\n");
                         askPlayerNextMove();
                     }
+
                 }
                 catch (NumberFormatException ex) {
                    out.println( "Not valid string please write only a number in the string format");
@@ -139,6 +161,7 @@ this.isLastTurn = true;
 
         switch (picking) {
             case 1 -> {
+
                 notifyObserver(obs -> obs.onUpdateShowCurrPlayer());
                 if (currPlayer.equals(this.nickname)) {
                     askMovingTilePosition();
@@ -149,7 +172,12 @@ this.isLastTurn = true;
 
                 }
             }
-            case 2 -> notifyObserver(obs -> obs.onUpdateShowLivingRoom());
+            case 2 -> {
+                try{notifyObserver(obs -> obs.onUpdateShowLivingRoom());}
+                catch (RuntimeException e){
+                    System.exit(0);
+                }
+            }
             case 3 -> notifyObserver(obs -> obs.onUpdateShowPlayersList());
             case 4 -> notifyObserver(obs -> obs.onUpdateShowPlayerShelf(nickname));
             case 5 -> {
@@ -272,9 +300,9 @@ this.isLastTurn = true;
             try {
                 obs.onUpdateNickname(nickName);
             } catch (RemoteException e) {
-                out.println("errore");
                 throw new RuntimeException(e);
             }
+
         });
 
 
@@ -335,7 +363,7 @@ this.isLastTurn = true;
             }
         });
             askTileToPut();
-        };
+        }
 
 
 
@@ -495,20 +523,33 @@ this.isLastTurn = true;
 
     public void connectToServerFromTUI(String address, int port){
         //se implementiamo socket si deve anche definire tipo di connessione
+        boolean isValid = false;
+        String connection;
+         int connectionType;
+        do{
+            out.println("Per favore, indica il tipo di connessione desiderata [0=RMI, 1=Socket]: ");
+            connection = scanner.next();
+            try{
+               connectionType = Integer.parseInt(connection);
 
-        out.println("Per favore, indica il tipo di connessione desiderata [0=RMI, 1=Socket]: ");
-        int connectionType = scanner.nextInt();
+                if(connectionType==0){
+                    isValid = true;
+                }
+                else {
+                    out.println("Numero non valido");
+                }
+            }
+            catch (NumberFormatException e){
+                out.println("Errore! per favore inserisci stringa numerica");
+            }
+        }while(!isValid);
 
-        if (connectionType == 0) {
             try {
                 observers.add(viewManager.connectRMI(address, port, this));
+                out.println("Connessione col Server riuscita!");
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
-            out.println("Connessione col Server riuscita!");
-        } else {
-            //observers.add(viewManager.connectSocket(address, port, this));
-        }
     }
 }
 
