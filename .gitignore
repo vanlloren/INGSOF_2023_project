@@ -9,4 +9,4 @@
 .idea/*
 *.iml
 *.iws
-/target/**
+target/**
