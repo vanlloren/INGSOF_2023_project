@@ -326,6 +326,7 @@ this.isLastTurn = true;
         notifyObserver(obs -> obs.onUpdateShowAvailableTiles());
 
 
+
         notifyObserver(obs -> {
             try {
                 obs.onUpdateToPickTile();
@@ -340,6 +341,7 @@ this.isLastTurn = true;
 
     @Override
     public void askTileToPut() {
+        notifyObserver(obs -> obs.onUpdateShowPlayerShelf(nickname));
         notifyObserver(obs -> {
             try {
                 obs.onUpdateToStartPutting();
