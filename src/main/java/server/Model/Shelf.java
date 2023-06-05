@@ -70,7 +70,7 @@ public class Shelf extends ShelfObservable implements Serializable, SimpleShelf 
         List<Integer> list = new Vector<Integer>();
         int count=0;
         for(int j= 0; j<5; j++){
-            for(int i= 0; j<6; j++){
+            for(int i= 0; i<6; i++){
                 if(this.structure[i][j].getIdCode() == -1){
                     count++;
                 }
