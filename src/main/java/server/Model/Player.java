@@ -16,8 +16,6 @@ public class Player extends PlayerObservable implements Serializable, SimplePlay
     @Serial
     private static final long serialVersionUID = 1303503671022200446L;
     private String nickname;
-
-    private int maxTiles = 6;
     private Integer points=0;
     private final Shelf personalShelf;
 
@@ -40,7 +38,7 @@ public class Player extends PlayerObservable implements Serializable, SimplePlay
     }
 
     public int getMaxTiles(){
-        return this.maxTiles;
+        return personalShelf.countMaxVoidTilesShelfColumns();
     }
 
 

@@ -65,13 +65,13 @@ public class Shelf extends ShelfObservable implements Serializable, SimpleShelf 
             }
         });
     }
-    /*public int freeCellsInShelf(){
+    public int countMaxVoidTilesShelfColumns(){
         //Useful method to check also the maximum number of tiles that could be picked in the livingRoom
         List<Integer> list = new Vector<Integer>();
         int count=0;
         for(int j= 0; j<5; j++){
             for(int i= 0; j<6; j++){
-                if(this.structure[i][j].getIdCode() !=0){
+                if(this.structure[i][j].getIdCode() == -1){
                     count++;
                 }
             }
@@ -85,7 +85,7 @@ public class Shelf extends ShelfObservable implements Serializable, SimpleShelf 
             }
         }
         return max;
-    }*/
+    }
     public boolean isFull() {
         for (int j = 0; j < 5; j++) {
             if (this.structure[0][j].getColour() == Colour.VOID) {
