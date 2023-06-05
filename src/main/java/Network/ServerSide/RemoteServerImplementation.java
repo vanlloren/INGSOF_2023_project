@@ -5,11 +5,8 @@ import Network.ClientSide.RemoteClientInterface;
 
 import Network.message.*;
 import Util.RandChairOwner;
-import Util.RandCommonGoal;
 import Util.RandPersonalGoal;
 import server.Controller.GameController;
-import server.Controller.RuleShelf;
-import server.Model.LivingRoom;
 import server.Model.PlayableItemTile;
 import server.Model.Player;
 
@@ -31,7 +28,6 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
 
     private HashMap<String, RemoteClientInterface> clientNickCombinations;
     private final GameController gameController;
-    private ArrayList<PlayableItemTile> availableTiles;
 
     RemoteServerImplementation(RMIServer server, GameController gameController) throws RemoteException {
         this.server = server;
@@ -75,9 +71,6 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
                         RandPersonalGoal.setType(newPlayer, gameController.getGame().getPlayersInGame());
                         Message newMessage2 = new PlayersNumberRequestMessage(message.getNickname());
                         newMessage.getClient().onMessage(newMessage2);
-
-
-
                         while (stop) {
                         }
                         gameController.initGameBoard();
@@ -148,6 +141,7 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
                 }
                 gameController.getGameBoardController().getControlledGameBoard().getToPlayerTiles().clear();
             }
+
         }
     }
 
@@ -156,5 +150,7 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
     public void disconnect() throws RemoteException {
     }
 
-
+    @Override
+    public void verifyStillConnected() throws RemoteException{
+    }
 }

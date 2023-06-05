@@ -1,17 +1,10 @@
 package Observer;
-import server.Model.PlayableItemTile;
+
 
 import java.rmi.RemoteException;
-import java.util.ArrayList;
-import java.util.Map;
+
 public interface ViewObserver {
 
-    /**
-     * Create a new connection to the server with the updated info.
-     *
-     * @param serverInfo a map of server address and server port.
-     */
-    void onUpdateServerInfo(Map<String, String> serverInfo) throws RemoteException;
 
     /**
      * Sends a message to the server with the updated nickname.
@@ -28,12 +21,6 @@ public interface ViewObserver {
      */
      void onUpdatePlayersNumber(int playersNumber) throws RemoteException;
 
-    /**
-     * Sends a message to the server with the nickname of the first player chosen by the user.
-     *
-     * @param nickname the nickname of the first player.
-     */
-    void onUpdateFirstPlayer(String nickname) throws RemoteException;
 
     /**
      * Handles a disconnection wanted by the user.
@@ -42,8 +29,6 @@ public interface ViewObserver {
     void onDisconnection();
 
     void onUpdateToPickTile() throws RemoteException;
-
-     void onUpdateIsGameOn();
 
     void onUpdateShowLivingRoom() ;
 
@@ -62,4 +47,6 @@ public interface ViewObserver {
     void onUpdateChat(String Nickname, String chat) throws RemoteException;
 
     void onUpdateToStartPutting() throws RemoteException;
+
+    void onConnectionVerify() throws RemoteException;
 }

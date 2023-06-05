@@ -20,7 +20,7 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
-import java.util.Map;
+
 import java.util.Scanner;
 
 
@@ -287,10 +287,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
     }
 
     //
-    @Override
-    public void onUpdateServerInfo(Map<String, String> serverInfo) {
 
-    }
 
     public void onUpdateToPickTile() throws RemoteException{
         ArrayList<PlayableItemTile> helperList = new ArrayList<>();
@@ -1080,6 +1077,11 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
             this.userInterface.setIsTurn();
     }
 
+    @Override
+    public void onConnectionVerify() throws RemoteException {
+        server.verifyStillConnected();
+    }
+
 
     @Override
     public void onUpdateNickname(String nickname) throws RemoteException {
@@ -1097,10 +1099,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
         server.onMessage(new WriteInChatMessage(Nickname, chat));
     }
 
-    @Override
-    public void onUpdateFirstPlayer(String nickname) throws RemoteException {
 
-    }
 
     public void onUpdateIsGameOn(){
         if(turnView.getIsGameOn()){
