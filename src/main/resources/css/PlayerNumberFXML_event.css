@@ -1,0 +1,68 @@
+@font-face {
+    font-family: 'BerkshireSwash-Regular';
+    src: url("../Fonts/BerkshireSwash-Regular.ttf");
+}
+.rootPane {
+    -fx-background-image: url("../images/SfondoPparquet.png");
+    -fx-background-size: stretch;
+}
+.menuBackground {
+    -fx-background-image: url("../images/SfondoPparquet.png");
+    -fx-background-size: stretch;
+    -fx-position: relative;
+}
+.enterLobbyButton {
+    -fx-font-family: 'BerkshireSwash-Regular';
+    -fx-font-size: 16;
+    -fx-text-fill: #451616;
+    -fx-alignment: top-center;
+    -fx-background-image: url("../images/EnterButton.png");
+    -fx-background-size: cover;
+    -fx-background-repeat: no-repeat;
+
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+    -fx-background-radius: 0;
+    -fx-background-color: transparent;
+}
+
+.enterLobbyButton:hover {
+    -fx-effect: dropshadow(gaussian, #f2e0d6, 20, 0.3, 0, 0);
+    -fx-font-size: 16;
+    -fx-alignment: center;
+    -fx-cursor: hand;
+}
+.returnButton {
+    -fx-font-family: 'BerkshireSwash-Regular';
+    -fx-font-size: 16;
+    -fx-text-fill: #451616;
+    -fx-background-image: url("../images/ReturnButton.png");
+    -fx-background-size: cover;
+    -fx-background-repeat: no-repeat;
+    -fx-label-padding: -3px 0 0 0;
+
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+    -fx-background-radius: 0;
+    -fx-background-color: transparent;
+
+    -fx-cursor: hand;
+    -fx-opacity: 1;
+}
+
+.returnButton:hover {
+    -fx-effect: dropshadow(gaussian, #f2e0d6, 20, 0.3, 0, 0);
+    -fx-font-size: 14;
+    -fx-label-padding: 0px 0 0 0;
+
+    -fx-background-size: cover;
+    -fx-background-repeat: no-repeat;
+
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+    -fx-background-radius: 0;
+    -fx-background-color: transparent;
+
+    -fx-cursor: hand;
+    -fx-opacity: 1;
+}
