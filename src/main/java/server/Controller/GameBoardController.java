@@ -137,8 +137,8 @@ public class GameBoardController {
         //la cui funzione nullDetection restituisce false
         int adjCounter = 0;
 
-        for(int i=0; i<9 && adjCounter==0; i++){
-            for(int j = 0; j < 9 && adjCounter == 0; j++){
+        for(int i=0; i<9; i++){
+            for(int j = 0; j < 9; j++){
                 if (controlledLivingRoom.nullDetection(i, j) != true && controlledLivingRoom.nullTileDetection(i, j) != true){
                     //controllo corner cases
                     //1° tessere [0][3] e [0][4]
@@ -249,16 +249,16 @@ public class GameBoardController {
 
 
     //----->ITEM BAG
-    public PlayableItemTile getNextInGameTile(){
+    /*public PlayableItemTile getNextInGameTile(){
         return controlledGameBoard.getNextInGameTile();
-    }
+    }*/
 
 
 
-    public ArrayList<PlayableItemTile> giveTileToPlayer(){
+    /*public ArrayList<PlayableItemTile> giveTileToPlayer(){
         return controlledGameBoard.getToPlayerTiles();
         //invoco metodo di playerController che assegna le tessere al player
-    }
+    }*/
 
 
 }

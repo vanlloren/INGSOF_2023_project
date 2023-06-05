@@ -31,7 +31,7 @@ public class GameBoard implements Serializable {
         this.bag = helperBag;
     }
 
-    public ItemBag getBag(){
+    public ItemBag getItemBag(){
         return this.bag;
     }
 
@@ -53,7 +53,6 @@ public class GameBoard implements Serializable {
             for (int j = 0; j < 9; j++) {
                 isVoid = livingRoom.searchVoid(i, j);
                 if (isVoid) {
-                    bag.putTiles();
                     helperTile = bag.randPickTile();
                     if (helperTile.getColour() != Colour.VOID) {
                         livingRoom.fillVoid(i, j, helperTile);

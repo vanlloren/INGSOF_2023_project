@@ -199,14 +199,19 @@ public class RuleCommonGoal {
 
             for (int j = 0; j < 5; j++) {
                 if (structure[0][j].getColour() !=Colour.VOID ) {
-                    HashSet<Colour> list = new HashSet<>();
+                    HashSet<Colour> distinctColour;
+                    distinctColour = new HashSet<>();
+                    ArrayList<Colour> colourArrayList = new ArrayList<>();
                     for (int i = 0; i < 6; i++) {
-                        if(structure[i][j].getColour()!=Colour.VOID) {
-                            list.add(structure[i][j].getColour());
+                        if(structure[i][j].getColour()!=Colour.VOID){
+                            colourArrayList.add(structure[i][j].getColour());
                         }
                     }
-                    if (list.size() <= 3)
-                        columnCount++;
+                    if(colourArrayList.size()==6){
+                        distinctColour.addAll(colourArrayList);
+                        if(distinctColour.size()<=3)
+                            columnCount++;
+                    }
                 }
             }
             if (columnCount >= 3)

@@ -19,12 +19,13 @@ public class GameBoardTest {
     public void setUp() {
         GameModel model = new GameModel();
         board = new GameBoard(model);
+        board.setItemBag();
     }
 
     @Test
     public void testSetItemBag() {
         board.setItemBag();
-        assertNotNull(board.getBag());
+        assertNotNull(board.getItemBag());
     }
 
     @Test

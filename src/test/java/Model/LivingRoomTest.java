@@ -1,5 +1,6 @@
 package Model;
 
+import Util.Colour;
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.Test;
@@ -605,6 +606,24 @@ public class LivingRoomTest {
     @Test
     public void testUpdateAvailability3And4(){
         livingRoom.createGameTable(3);
+        ItemBag bag = new ItemBag();
+        bag.putTiles();
+        boolean isVoid;
+        PlayableItemTile helperTile;
+
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                isVoid = livingRoom.searchVoid(i, j);
+                if (isVoid) {
+                    helperTile = bag.randPickTile();
+                    if (helperTile.getColour() != Colour.VOID) {
+                        livingRoom.fillVoid(i, j, helperTile);
+                    }
+                }
+            }
+        }
+
+        livingRoom.updateAvailability();
 
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
@@ -615,13 +634,13 @@ public class LivingRoomTest {
                         if (j == 3) {
                             Assert.assertTrue(livingRoom.getTileAvailability(i,j));
                         }else if (j == 4) {
-                            Assert.assertTrue(livingRoom.getTileAvailability(i,j));
+                            Assert.assertFalse(livingRoom.getTileAvailability(i,j));
                         }
                     }
                     //2° tessere  [4][0] e [5][0]
                     else if (j == 0) {
                         if (i == 4) {
-                            Assert.assertTrue(livingRoom.getTileAvailability(i,j));
+                            Assert.assertFalse(livingRoom.getTileAvailability(i,j));
                         }
                         if (i == 5) {
                             Assert.assertTrue(livingRoom.getTileAvailability(i,j));
@@ -630,7 +649,7 @@ public class LivingRoomTest {
                     //3° tessere [8][4] e [8][5]
                     else if (i == 8) {
                         if (j == 4) {
-                            Assert.assertTrue(livingRoom.getTileAvailability(i,j));
+                            Assert.assertFalse(livingRoom.getTileAvailability(i,j));
                         }
                         if (j == 5) {
                             Assert.assertTrue(livingRoom.getTileAvailability(i,j));
@@ -642,7 +661,7 @@ public class LivingRoomTest {
                             Assert.assertTrue(livingRoom.getTileAvailability(i,j));
                         }
                         if (i == 4) {
-                            Assert.assertTrue(livingRoom.getTileAvailability(i,j));
+                            Assert.assertFalse(livingRoom.getTileAvailability(i,j));
                         }
                     }
                 }
@@ -650,6 +669,24 @@ public class LivingRoomTest {
         }
 
         livingRoom.createGameTable(4);
+        bag = new ItemBag();
+        bag.putTiles();
+        Boolean isVoid2;
+        PlayableItemTile helperTile2;
+
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                isVoid2 = livingRoom.searchVoid(i, j);
+                if (isVoid2) {
+                    helperTile2 = bag.randPickTile();
+                    if (helperTile2.getColour() != Colour.VOID) {
+                        livingRoom.fillVoid(i, j, helperTile2);
+                    }
+                }
+            }
+        }
+
+        livingRoom.updateAvailability();
 
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {

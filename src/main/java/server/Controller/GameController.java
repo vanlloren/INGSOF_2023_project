@@ -56,7 +56,7 @@ public class GameController {
     public void initGameBoard() {
         gameBoardController.gameBoardInit();  //inizializza itemBag e livingRoom
         game.setMyShelfie(gameBoardController.getControlledGameBoard());
-        RandCommonGoal.setType(game.getMyShelfie().getLivingRoom().getCommonGoal1(), game.getMyShelfie().getLivingRoom().getCommonGoal2());
+        RandCommonGoal.setType(game.getMyShelfie().getLivingRoom().getCommonGoal1(), game.getMyShelfie().getLivingRoom().getCommonGoal2(), 0, 0);
         game.getMyShelfie().getLivingRoom().getCommonGoal1().setTokens(game.getPlayersNumber());
         game.getMyShelfie().getLivingRoom().getCommonGoal2().setTokens(game.getPlayersNumber());
 

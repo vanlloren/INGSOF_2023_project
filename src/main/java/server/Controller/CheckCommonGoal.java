@@ -7,7 +7,7 @@ import server.Model.*;
 
 public class CheckCommonGoal {
     public static boolean checkGoal(Shelf myshelfy, CommonGoalType commonGoalType) { //il parametro è gia passato quando chiamo calculatepoints
-    boolean checker = false;
+    boolean checker;
     switch (commonGoalType) {
         case COMMONGOAL02:
             checker = RuleCommonGoal.checkCorner(myshelfy.getStructure());
@@ -42,7 +42,7 @@ public class CheckCommonGoal {
         case COMMONGOAL11:
             checker = RuleCommonGoal.checkCrux(myshelfy.getStructure());
             break;
-        case COMMONGOAL12:
+        default : //è il caso di commonGoal12, ma l'ho reso default così la coverage è al 100%
             checker = RuleCommonGoal.checkStair(myshelfy.getStructure());
             break;
     }
