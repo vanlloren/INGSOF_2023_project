@@ -285,9 +285,21 @@ public class GameControllerTest {
     @Test
     public void testPickTileV1(){
         GameModel gameModel = new GameModel();
+        try {
+            gameModel.addObserver(new RemoteClientImplementation("localhost", 1099, new TUI()));
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
         GameController gameController = new GameController(gameModel);
         gameController.getGameBoardController().setPlayerNum(2);
-        gameController.getGameBoardController().gameBoardInit();
+        gameController.initGameBoard();
+
+        try {
+            gameController.getGameBoardController().getControlledLivingRoom().addObserver(new RemoteClientImplementation("localhost", 1099, new TUI()));
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+
         try {
             Player player = new Player("lorenzo", new RemoteClientImplementation("localhost", 1099, new TUI()), new GameModel());
             gameController.getGame().setCurrPlayer(player);
@@ -331,9 +343,13 @@ public class GameControllerTest {
         gameModel.setChat("lorenzo1", "ciao");
         GameController gameController = new GameController(gameModel);
         gameController.getGameBoardController().setPlayerNum(2);
-        gameController.getGameBoardController().gameBoardInit();
+        gameController.initGameBoard();
 
-
+        try {
+            gameController.getGameBoardController().getControlledLivingRoom().addObserver(new RemoteClientImplementation("localhost", 1099, new TUI()));
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
 
         try {
             Player player = new Player("lorenzo", new RemoteClientImplementation("localhost", 1099, new TUI()), new GameModel());
@@ -465,9 +481,13 @@ public class GameControllerTest {
         }
         GameController gameController = new GameController(gameModel);
         gameController.getGameBoardController().setPlayerNum(2);
-        gameController.getGameBoardController().gameBoardInit();
+        gameController.initGameBoard();
 
-
+        try {
+            gameController.getGameBoardController().getControlledLivingRoom().addObserver(new RemoteClientImplementation("localhost", 1099, new TUI()));
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
 
         try {
             Player player = new Player("lorenzo", new RemoteClientImplementation("localhost", 1099, new TUI()), new GameModel());
