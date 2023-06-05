@@ -1078,7 +1078,6 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
         }
         if (message.isLastTurn())
             this.userInterface.setIsTurn();
-
     }
 
 

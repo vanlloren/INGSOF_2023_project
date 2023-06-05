@@ -77,7 +77,11 @@ this.isLastTurn = true;
             askPlayerNextMove();
             }while (!isLastTurn);
         } catch (InterruptedException e) {
+            out.println("ci sono stati problemi di connessione, partita cancellata");
             throw new RuntimeException(e);
+        }
+        catch (RuntimeException e){
+            out.println("ci sono stati problemi di connessione, partita cancellata");
         }
         out.println("it was your last turn please wait for final results");
      while (gameOn){
@@ -101,18 +105,12 @@ this.isLastTurn = true;
         this.isPaused=false;
     }
 
-    public void getGoing(){
-        while(true){
-            if(!isPaused){
-                askPlayerNextMove();
-            }
-        }
-    }
+
 
     @Override
     public void askPlayerNextMove(){
-        int picking;
-
+        String choose;
+        int picking = -1;
             do {
                 out.println("""
                         Press 1 if you want to PICK A TILE FROM LIVING ROOM\s
@@ -124,55 +122,44 @@ this.isLastTurn = true;
                         Press 7 if you want to write in the chat"""
                 );
 
-                picking = scanner.nextInt();
-                if (picking != 1 && picking != 2 && picking != 3 && picking != 4 && picking != 5 && picking != 6 && picking != 7) {
-                    out.println("Symbol not recognized, please try again...\n");
+                choose = scanner.next();
+                try {
+                    picking = Integer.parseInt(choose);
+                    if (picking != 1 && picking != 2 && picking != 3 && picking != 4 && picking != 5 && picking != 6 && picking != 7) {
+                        out.println("Symbol not recognized, please try again...\n");
+                        askPlayerNextMove();
+                    }
                 }
-
+                catch (NumberFormatException ex) {
+                   out.println( "Not valid string please write only a number in the string format");
+                   askPlayerNextMove();
+                }
             }
             while (picking != 1 && picking != 2 && picking != 3 && picking != 4 && picking != 5 && picking != 6 && picking != 7);
 
-            switch (picking) {
-                case 1:
-                    notifyObserver(obs -> obs.onUpdateShowCurrPlayer());
-                    if (currPlayer.equals(this.nickname)) {
-                        askMovingTilePosition();
-                        //qua ci va la chiamata a quello che inserisce le tiles nella shelf
-                    }
-                    else {
-                        System.out.println("IT IS NOT YOUR TURN YET: PLEASE WAIT ");
-                        out.println();
+        switch (picking) {
+            case 1 -> {
+                notifyObserver(obs -> obs.onUpdateShowCurrPlayer());
+                if (currPlayer.equals(this.nickname)) {
+                    askMovingTilePosition();
+                    //qua ci va la chiamata a quello che inserisce le tiles nella shelf
+                } else {
+                    System.out.println("IT IS NOT YOUR TURN YET: PLEASE WAIT ");
+                    out.println();
 
-                    }
-                    break;
-                case 2:
-                    notifyObserver(obs -> {
-                        obs.onUpdateShowLivingRoom();
-                    });
-                    break;
-
-                case 3:
-                    notifyObserver(obs -> obs.onUpdateShowPlayersList());
-                    break;
-
-                case 4:
-                    notifyObserver(obs -> obs.onUpdateShowPlayerShelf(nickname));
-                    break;
-
-                case 5:
-                    final int[] points = new int[1];
-                    notifyObserver(obs -> points[0] = obs.onUpdateShowPartialPoint(nickname));
-                    showPartialPoint(points[0]);
-                    break;
-
-                case 6:
-                    notifyObserver(obs -> obs.onUpdateShowNickCurrPlayer());
-                    break;
-
-                case 7:
-                    WriteInChat();
-                    break;
+                }
             }
+            case 2 -> notifyObserver(obs -> obs.onUpdateShowLivingRoom());
+            case 3 -> notifyObserver(obs -> obs.onUpdateShowPlayersList());
+            case 4 -> notifyObserver(obs -> obs.onUpdateShowPlayerShelf(nickname));
+            case 5 -> {
+                final int[] points = new int[1];
+                notifyObserver(obs -> points[0] = obs.onUpdateShowPartialPoint(nickname));
+                showPartialPoint(points[0]);
+            }
+            case 6 -> notifyObserver(obs -> obs.onUpdateShowNickCurrPlayer());
+            case 7 -> WriteInChat();
+        }
 
     }
 
@@ -180,11 +167,6 @@ this.isLastTurn = true;
         moveOn=true;
     }
 
-    public void askIsGameOn(){
-        notifyObserver(obs -> {
-            obs.onUpdateIsGameOn();
-        });
-    }
 
 
     @Override
@@ -272,11 +254,7 @@ this.isLastTurn = true;
     }
 
     public boolean checkPortValidity(int portNum) {
-        if(portNum<1024){
-            return false;
-        }
-
-        return true;
+        return portNum >= 1024;
     }
 
     public void fullLobbyTerminateUI(){
@@ -310,18 +288,28 @@ this.isLastTurn = true;
 
     @Override
     public void askPlayersNumber() {
-        int playersNum;
-
+        String num;
+        int playersNum = -1;
+        boolean isValid = false;
         out.println("Nickname accepted!");
         out.println("Il nickname scelto è: " + this.nickname);
         resetNeedNick();
-        out.println("You are the first player of the game! Please, insert the number of total player for the match [min=2, max=4]:");
-        playersNum = scanner.nextInt();
-        while(playersNum<2 || playersNum>4){
-            out.println("The number of player is not valid!");
-            out.println("Insert the number of total players [min=2, max=4]:");
-            playersNum = scanner.nextInt();
-        }
+           out.println("You are the first player of the game! Please, insert the number of total player for the match [min=2, max=4]:");
+     do{ out.println("Insert the number of total players [min=2, max=4]:");
+         num = scanner.next();
+
+        try {
+            playersNum = Integer.parseInt(num);
+            if (playersNum<2 || playersNum>4)
+                out.println("The number of player is not valid!");
+                else isValid = true;
+            }
+        catch (NumberFormatException ex) {
+            out.println( "Not valid string please write only a number in the string format");
+
+        }}
+        while(!isValid);
+
             int finalPlayersNum = playersNum;
             notifyObserver(obs -> {
                 try {
@@ -360,10 +348,7 @@ this.isLastTurn = true;
             }
         });
     }
-    public void askTileToPut2or3tile(ArrayList<PlayableItemTile> tilesInPlayerHand) {
-        int numOfTiles = tilesInPlayerHand.size();
 
-    }
 
     public void maxTilesPicked(){
         out.println("Numero massimo di tessere raccolte dalla LivingRoom, procedi ora a inserirle nella Shelf");
