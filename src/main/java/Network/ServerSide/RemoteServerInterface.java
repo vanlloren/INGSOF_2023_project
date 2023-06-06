@@ -20,6 +20,8 @@ public interface RemoteServerInterface extends Remote {
 
     void disconnect() throws RemoteException;
 
+    void verifyStillConnected() throws RemoteException;
+
     TileReplyMessage onTilePickMessage(String nickname, int x, int y) throws RemoteException;
 
     InsertionReplyMessage ToPutTileRequestMessage(int xPos, int yPos, PlayableItemTile tile, int numOfTiles) throws  RemoteException;

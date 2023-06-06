@@ -21,8 +21,8 @@ public class Player extends PlayerObservable implements Serializable, SimplePlay
 
     private GameModel gameModel;
     private final PersonalGoal personalGoal;
-    private boolean hasCommonGoal1;
-    private boolean hasCommonGoal2;
+    private boolean hasCommonGoal1 = false;
+    private boolean hasCommonGoal2 = false;
 
     private boolean endgame = false;
 
@@ -73,6 +73,7 @@ public class Player extends PlayerObservable implements Serializable, SimplePlay
         return this.personalGoal;
     }
 
+
     public String getNickname(){
         return this.nickname;}
 
@@ -105,9 +106,6 @@ public class Player extends PlayerObservable implements Serializable, SimplePlay
     }
 
 }
-
-
-
 
 
 

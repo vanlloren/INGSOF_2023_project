@@ -5,6 +5,7 @@ import server.Model.*;
 
 
 import java.io.PrintStream;
+import java.net.SocketException;
 import java.rmi.RemoteException;
 import java.util.Scanner;
 import java.util.*;
@@ -35,10 +36,11 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
     private boolean checker = false;
 
 
+
     public TUI(){
         this.out = System.out;
     }
-  @Override
+    @Override
     public void setNickname(String nickname) {
         this.nickname = nickname;
 
@@ -46,7 +48,7 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
 
     @Override
     public void setIsTurn() {
-this.isLastTurn = true;
+        this.isLastTurn = true;
     }
 
     public void resetNeedNick(){
@@ -56,7 +58,7 @@ this.isLastTurn = true;
 
     //Implementando il metodo Runnable ereditiamo tutte le sue classi e oggetti
     //Run è un costruttore basilare costruito direttamente dal metodo Runnable al posto di init
-    public void init() {
+    public void init() throws InterruptedException {
         out.println("╔════════════════════════════════════════╗");
         out.println("║    --------------------------------    ║");
         out.println("║    |*****WELCOME TO MYSHELFIE*****|    ║");
@@ -68,24 +70,42 @@ this.isLastTurn = true;
         connectToServerFromTUI(serverAddress, portNum);
         scanner.nextLine();
         while (needNick) {
+
+            new Thread(() -> {
+                while(true){
+                    try{
+                        OnVerifyConnection();
+                    }
+                    catch (RuntimeException e){
+                        out.println("ci sono stati problemi di connessione, partita cancellata");
+                        System.exit(0);
+                    }
+                }
+            }).start();
             askNickname();
         }
 
-        try {
-            semaphore.acquire();
-            do{
+
+        semaphore.acquire();
+        do{
             askPlayerNextMove();
-            }while (!isLastTurn);
-        } catch (InterruptedException e) {
-            out.println("ci sono stati problemi di connessione, partita cancellata");
-            throw new RuntimeException(e);
-        }
-        catch (RuntimeException e){
-            out.println("ci sono stati problemi di connessione, partita cancellata");
-        }
+        }while (!isLastTurn);
+
+
         out.println("it was your last turn please wait for final results");
-     while (gameOn){
-     }
+        while (gameOn){
+        }
+    }
+
+    private void OnVerifyConnection() {
+        notifyObserver(obs -> {
+            try {
+                obs.onConnectionVerify();
+            } catch (RemoteException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
     }
 
     @Override
@@ -109,10 +129,11 @@ this.isLastTurn = true;
 
     @Override
     public void askPlayerNextMove(){
+
         String choose;
         int picking = -1;
-            do {
-                out.println("""
+        do {
+            out.println("""
                         Press 1 if you want to PICK A TILE FROM LIVING ROOM\s
                         Press 2 if you want to SEE THE LIVINGROOM\s
                         Press 3 if you want to SEE THE PLAYERS IN YOUR GAMELOBBY\s
@@ -120,36 +141,42 @@ this.isLastTurn = true;
                         Press 5 if you want to SEE YOUR CURRENT SCORING\s
                         Press 6 if you want to SEE THE NICKNAME OF THE PLAYER WHO'S PLAYING\s
                         Press 7 if you want to write in the chat"""
-                );
+            );
 
-                choose = scanner.next();
-                try {
-                    picking = Integer.parseInt(choose);
-                    if (picking != 1 && picking != 2 && picking != 3 && picking != 4 && picking != 5 && picking != 6 && picking != 7) {
-                        out.println("Symbol not recognized, please try again...\n");
-                        askPlayerNextMove();
-                    }
+            choose = scanner.next();
+            try {
+                picking = Integer.parseInt(choose);
+                if (picking != 1 && picking != 2 && picking != 3 && picking != 4 && picking != 5 && picking != 6 && picking != 7) {
+                    out.println("Symbol not recognized, please try again...\n");
+                    askPlayerNextMove();
                 }
-                catch (NumberFormatException ex) {
-                   out.println( "Not valid string please write only a number in the string format");
-                   askPlayerNextMove();
-                }
+
             }
-            while (picking != 1 && picking != 2 && picking != 3 && picking != 4 && picking != 5 && picking != 6 && picking != 7);
+            catch (NumberFormatException ex) {
+                out.println( "Not valid string please write only a number in the string format");
+                askPlayerNextMove();
+            }
+        }
+        while (picking != 1 && picking != 2 && picking != 3 && picking != 4 && picking != 5 && picking != 6 && picking != 7);
 
         switch (picking) {
             case 1 -> {
+
                 notifyObserver(obs -> obs.onUpdateShowCurrPlayer());
                 if (currPlayer.equals(this.nickname)) {
                     askMovingTilePosition();
-                    //qua ci va la chiamata a quello che inserisce le tiles nella shelf
                 } else {
                     System.out.println("IT IS NOT YOUR TURN YET: PLEASE WAIT ");
                     out.println();
 
                 }
             }
-            case 2 -> notifyObserver(obs -> obs.onUpdateShowLivingRoom());
+            case 2 -> {
+                try{notifyObserver(obs -> obs.onUpdateShowLivingRoom());}
+                catch (RuntimeException e){
+                    System.exit(0);
+                }
+            }
             case 3 -> notifyObserver(obs -> obs.onUpdateShowPlayersList());
             case 4 -> notifyObserver(obs -> obs.onUpdateShowPlayerShelf(nickname));
             case 5 -> {
@@ -272,9 +299,9 @@ this.isLastTurn = true;
             try {
                 obs.onUpdateNickname(nickName);
             } catch (RemoteException e) {
-                out.println("errore");
                 throw new RuntimeException(e);
             }
+
         });
 
 
@@ -294,30 +321,30 @@ this.isLastTurn = true;
         out.println("Nickname accepted!");
         out.println("Il nickname scelto è: " + this.nickname);
         resetNeedNick();
-           out.println("You are the first player of the game! Please, insert the number of total player for the match [min=2, max=4]:");
-     do{ out.println("Insert the number of total players [min=2, max=4]:");
-         num = scanner.next();
+        out.println("You are the first player of the game! Please, insert the number of total player for the match [min=2, max=4]:");
+        do{ out.println("Insert the number of total players [min=2, max=4]:");
+            num = scanner.next();
 
-        try {
-            playersNum = Integer.parseInt(num);
-            if (playersNum<2 || playersNum>4)
-                out.println("The number of player is not valid!");
+            try {
+                playersNum = Integer.parseInt(num);
+                if (playersNum<2 || playersNum>4)
+                    out.println("The number of player is not valid!");
                 else isValid = true;
             }
-        catch (NumberFormatException ex) {
-            out.println( "Not valid string please write only a number in the string format");
+            catch (NumberFormatException ex) {
+                out.println( "Not valid string please write only a number in the string format");
 
-        }}
+            }}
         while(!isValid);
 
-            int finalPlayersNum = playersNum;
-            notifyObserver(obs -> {
-                try {
-                    obs.onUpdatePlayersNumber(finalPlayersNum);
-                } catch (RemoteException e) {
-                    throw new RuntimeException(e);
-                }
-            });
+        int finalPlayersNum = playersNum;
+        notifyObserver(obs -> {
+            try {
+                obs.onUpdatePlayersNumber(finalPlayersNum);
+            } catch (RemoteException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
     @Override
@@ -334,8 +361,8 @@ this.isLastTurn = true;
                 throw new RuntimeException(e);
             }
         });
-            askTileToPut();
-        };
+        askTileToPut();
+    }
 
 
 
@@ -386,7 +413,7 @@ this.isLastTurn = true;
         String j = String.valueOf(playerList.size());
         out.println("In the current Game we have "+j+"players whose Names are:\n");
         while(i<playerList.size()){
-             nickName = playerList.get(i).getNickname();
+            nickName = playerList.get(i).getNickname();
             out.println(nickName+" , ");
             i++;
         }
@@ -398,7 +425,7 @@ this.isLastTurn = true;
 
     @Override
     public void showNickCurrentPlayer(String Nickname){
-    out.println("The current player is:  "+Nickname);
+        out.println("The current player is:  "+Nickname);
     }
 
     @Override
@@ -468,7 +495,7 @@ this.isLastTurn = true;
 
     @Override
     public void showPartialPoint(int point) {
-    out.println("Your total point so far is :"+point);
+        out.println("Your total point so far is :"+point);
     }
 
     @Override
@@ -495,20 +522,32 @@ this.isLastTurn = true;
 
     public void connectToServerFromTUI(String address, int port){
         //se implementiamo socket si deve anche definire tipo di connessione
+        boolean isValid = false;
+        String connection;
+        int connectionType;
+        do{
+            out.println("Per favore, indica il tipo di connessione desiderata [0=RMI, 1=Socket]: ");
+            connection = scanner.next();
+            try{
+                connectionType = Integer.parseInt(connection);
 
-        out.println("Per favore, indica il tipo di connessione desiderata [0=RMI, 1=Socket]: ");
-        int connectionType = scanner.nextInt();
-
-        if (connectionType == 0) {
-            try {
-                observers.add(viewManager.connectRMI(address, port, this));
-            } catch (Exception e) {
-                throw new RuntimeException(e);
+                if(connectionType==0){
+                    isValid = true;
+                }
+                else {
+                    out.println("Numero non valido");
+                }
             }
+            catch (NumberFormatException e){
+                out.println("Errore! per favore inserisci stringa numerica");
+            }
+        }while(!isValid);
+
+        try {
+            observers.add(viewManager.connectRMI(address, port, this));
             out.println("Connessione col Server riuscita!");
-        } else {
-            //observers.add(viewManager.connectSocket(address, port, this));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 }
-

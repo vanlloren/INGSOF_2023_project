@@ -78,6 +78,13 @@ public class GameController {
                         gameBoardController.getControlledLivingRoom().updateAvailability();
                         if (!gameBoardController.checkIfAdjacentTiles()) {
                             gameBoardController.livingRoomFiller();
+                            gameBoardController.getControlledLivingRoom().notifyObservers(obs -> {
+                                try {
+                                    obs.onUpdateRefillLivingRoom(new TurnView(game));
+                                } catch (RemoteException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            });
                             gameBoardController.getControlledLivingRoom().updateAvailability();
                         }
                         gameBoardController.getControlledGameBoard().getToPlayerTiles().clear();
@@ -108,6 +115,13 @@ public class GameController {
             gameBoardController.getControlledLivingRoom().updateAvailability();
             if (!gameBoardController.checkIfAdjacentTiles()) {
                 gameBoardController.livingRoomFiller();
+                gameBoardController.getControlledLivingRoom().notifyObservers(obs -> {
+                    try {
+                        obs.onUpdateRefillLivingRoom(new TurnView(game));
+                    } catch (RemoteException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
                 gameBoardController.getControlledLivingRoom().updateAvailability();
             }
             gameBoardController.getControlledGameBoard().getToPlayerTiles().clear();
@@ -185,9 +199,9 @@ public class GameController {
         }
 
 
-     return new InsertionReplyMessage(false,false);
+        return new InsertionReplyMessage(false,false);
 
-}
+    }
 
 
 
@@ -206,7 +220,7 @@ public class GameController {
             if (game.getPlayersInGame().indexOf(game.getCurrPlayer()) == game.getPlayersInGame().indexOf(game.getChairOwner()) - 1) {
                 CalculateWinner(game.getPlayersInGame());
             } else {
-                if (game.getPlayersInGame().indexOf(game.getCurrPlayer()) == game.getPlayersInGame().size()) {
+                if (game.getPlayersInGame().indexOf(game.getCurrPlayer()) == game.getPlayersInGame().size() - 1) {
                     game.setCurrPlayer(listPLayer.get(0));
                 } else game.setCurrPlayer(listPLayer.get(index + 1));
             }
@@ -324,7 +338,7 @@ public class GameController {
                     point = point + 3;
                 } else if (integer == 5) {
                     point = point + 5;
-                } else if (integer > 6) {
+                } else if (integer >= 6) {
                     point = point + 8;
                 }
             }

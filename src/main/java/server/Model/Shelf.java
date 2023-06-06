@@ -31,6 +31,10 @@ public class Shelf extends ShelfObservable implements Serializable, SimpleShelf 
         return this.structure;
     }
 
+    public void setStructure(PlayableItemTile[][] structure){ //da usare solo nei test!!!!!!!
+        this.structure = structure;
+    }
+
     /*public PlayableItemTile getShelfTile(int x ,int y){
         return this.structure[x][y];
     }*/
@@ -68,8 +72,9 @@ public class Shelf extends ShelfObservable implements Serializable, SimpleShelf 
     public int countMaxVoidTilesShelfColumns(){
         //Useful method to check also the maximum number of tiles that could be picked in the livingRoom
         List<Integer> list = new Vector<Integer>();
-        int count=0;
+
         for(int j= 0; j<5; j++){
+            int count=0;
             for(int i= 0; i<6; i++){
                 if(this.structure[i][j].getIdCode() == -1){
                     count++;

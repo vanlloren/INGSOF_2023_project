@@ -57,7 +57,7 @@ public class TurnView implements Serializable {
     }
 
     public SimpleShelf getShelfTable(String nickname){
-        return getPlayer(nickname).getPersonalShelf();
+        return currPlayer.getPersonalShelf();
     }
 
     public int getPartialPoint(String nickName){
@@ -74,10 +74,11 @@ public class TurnView implements Serializable {
         }
         return point;
     }
-   // public void WriteToAllClient(String Nickname, String chatMessage){
-        //notifyObservers(obs -> obs.UpdateAllClientonNewMessageChat(Nickname,chatMessage));
+    // public void WriteToAllClient(String Nickname, String chatMessage){
+    //notifyObservers(obs -> obs.UpdateAllClientonNewMessageChat(Nickname,chatMessage));
 
-    }
+}
+
 
 
 

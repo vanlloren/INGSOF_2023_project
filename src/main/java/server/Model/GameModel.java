@@ -31,7 +31,13 @@ public class GameModel extends GameModelObservable implements Serializable, Simp
         this.playersInGame = new ArrayList<>();
     }
 
+    public String getMatchWinner(){
+        return this.matchWinner;
+    }
 
+    public void resetEndgame(){ //solo per i test
+        this.endGame = false;
+    }
 
     public boolean getEndGame(){
         return endGame;
@@ -130,7 +136,7 @@ public class GameModel extends GameModelObservable implements Serializable, Simp
     }
 
     public void setChairOwner(Player player) {
-      this.chosenChairOwner = player;
+        this.chosenChairOwner = player;
         notifyObservers(obs -> {
             try {
                 obs.onUpdateModelChairOwner(new TurnView(this), player);
@@ -158,7 +164,7 @@ public class GameModel extends GameModelObservable implements Serializable, Simp
                     throw new RuntimeException(e);
                 }
             });
-                }
+        }
         else if (!chosenPlayersNumber.equals(-1)&&playersInGame.size()<chosenPlayersNumber-1){
             this.playersInGame.add(newPlayer);
             notifyObservers(obs -> {
@@ -194,7 +200,7 @@ public class GameModel extends GameModelObservable implements Serializable, Simp
             });
 
         }
-        }
+    }
 
 
     /*public void setmyShelfie(GameBoard myShelfie) {
@@ -221,7 +227,7 @@ public class GameModel extends GameModelObservable implements Serializable, Simp
 
     public boolean isNicknameAvailable(String nickname) {
         for (Player p: playersInGame
-             ) {
+        ) {
             if(p.getNickname().equals(nickname)){
                 return false;
             }
@@ -232,6 +238,5 @@ public class GameModel extends GameModelObservable implements Serializable, Simp
 
 
 }
-
 
 

@@ -1,3 +1,4 @@
+
 package Network.message;
 /**
  * This enum contains all the message type available and used by the server and clients.
@@ -21,7 +22,6 @@ public enum MessageEnumeration {
 
 
         ERROR_MESSAGE,
-        INVALID_TILE,
         WRITE_IN_CHAT,
 
 
