@@ -191,7 +191,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
 
     @Override
     public void disconnect() throws RemoteException {
-
+    System.out.println("ciao dal server");
     }
 
     @Override
@@ -1172,6 +1172,8 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
         onModelModify(turnView, new UpdateTileAvailabilityEvent());
     }
 
+
+
     @Override
     public void onUpdateRefillLivingRoom(TurnView turnView) throws RemoteException {
         onModelModify(turnView, new UpdateRefillLivingRoomEvent());
@@ -1248,5 +1250,8 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
     @Override
     public void onUpdatePuttedTileIntoShelf(TurnView turnView, int x, int y, PlayableItemTile tile){
         onModelModify(turnView, new UpdatePutShelfTileEvent(x, y, tile));
+    }
+    @Override
+    public void pingReply () throws RemoteException{
     }
 }

@@ -1,6 +1,6 @@
 package Network.ServerSide;
 
-import client.view.TurnView;
+
 import server.Controller.GameController;
 
 import java.rmi.AlreadyBoundException;
@@ -13,7 +13,7 @@ import java.net.UnknownHostException;
 //
 public class RMIServer {
     private final int serverRMIPort;
-    private GameController gameController;
+    private final GameController gameController;
 
 
     RMIServer(int port, GameController gameController){
@@ -60,9 +60,7 @@ public class RMIServer {
             }
 
             return remoteServer;
-        }catch (AlreadyBoundException e) {
-            throw new RuntimeException(e);
-        } catch (RemoteException e) {
+        }catch (AlreadyBoundException | RemoteException e) {
             throw new RuntimeException(e);
         }
     }

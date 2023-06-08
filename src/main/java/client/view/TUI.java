@@ -5,7 +5,6 @@ import server.Model.*;
 
 
 import java.io.PrintStream;
-import java.net.SocketException;
 import java.rmi.RemoteException;
 import java.util.Scanner;
 import java.util.*;
@@ -69,20 +68,23 @@ this.isLastTurn = true;
         int portNum = askServerPort();
         connectToServerFromTUI(serverAddress, portNum);
         scanner.nextLine();
+        new Thread(() -> {
+            while(true){
+                try{
+                    OnVerifyConnection();
+                }
+                catch (RuntimeException e){
+                    out.println("ci sono stati problemi di connessione, partita cancellata");
+                    System.exit(0);
+                }
+            }
+        }).start();
         while (needNick) {
-
-                new Thread(() -> {
-                    while(true){
-                        try{
-                            OnVerifyConnection();
-                        }
-                        catch (RuntimeException e){
-                            out.println("ci sono stati problemi di connessione, partita cancellata");
-                            System.exit(0);
-                        }
-                    }
-                }).start();
-                askNickname();
+                try {
+                    askNickname();
+                }catch (RuntimeException e){
+                    return;
+                }
         }
 
 
@@ -107,6 +109,7 @@ this.isLastTurn = true;
         });
 
     }
+
 
     @Override
     public void riprendiEsecuzione() {
@@ -301,6 +304,7 @@ this.isLastTurn = true;
             } catch (RemoteException e) {
                 throw new RuntimeException(e);
             }
+
 
         });
 

@@ -6,6 +6,7 @@ import server.Model.GameModel;
 import java.io.PrintStream;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.rmi.RemoteException;
 import java.util.Scanner;
 
 //classe che rappresenta il server vero e proprio: gestisce i client e dialoga direttamente con model e controller
@@ -31,7 +32,15 @@ public class ServerApp {
         RMIServer RMIServerCreator = new RMIServer(serverPort, gameController);
         RemoteServerImplementation remoteServer = RMIServerCreator.startRMIServer();
         gameController.setRemoteServer(remoteServer);
-
+        new Thread(() -> {
+            while (true) {
+                try {
+                    remoteServer.pingAllClient();
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }).start();
 
 
 

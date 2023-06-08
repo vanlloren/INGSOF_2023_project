@@ -73,7 +73,6 @@ public interface View {
 
 
 
-
     void riprendiEsecuzione();
 
     void resetGameOn();

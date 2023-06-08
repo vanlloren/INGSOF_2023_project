@@ -1,6 +1,8 @@
 package Network.ServerSide;
 
 
+import Network.ClientSide.Client;
+import Network.ClientSide.RemoteClientImplementation;
 import Network.ClientSide.RemoteClientInterface;
 
 import Network.message.*;
@@ -15,6 +17,8 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 
 
 public class RemoteServerImplementation extends UnicastRemoteObject implements RemoteServerInterface {
@@ -22,8 +26,6 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
 
     private final Object lock = new Object();
     private volatile boolean stop = false;
-    private RemoteClientInterface client;
-
     private ArrayList<RemoteClientInterface> clientList = new ArrayList<>();
 
     private HashMap<String, RemoteClientInterface> clientNickCombinations;
@@ -32,24 +34,23 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
     RemoteServerImplementation(RMIServer server, GameController gameController) throws RemoteException {
         this.server = server;
         this.gameController = gameController;
-    }
+        }
+
+
 
     public void resetStop() {
         stop = false;
     }
 
     public TileReplyMessage onTilePickMessage(String nickname, int x, int y){
-        TileReplyMessage message = gameController.pickTile(x, y);
 
-        return message;
+        return gameController.pickTile(x, y);
     }
     public InsertionReplyMessage ToPutTileRequestMessage(int xPos, int yPos , PlayableItemTile tile , int numOfTiles){
-       InsertionReplyMessage message = gameController.putTile(xPos,yPos,tile,numOfTiles);
-       return message;
+        return gameController.putTile(xPos,yPos,tile,numOfTiles);
     }
     public InsertionReplyMessage ToPutTileRequestMessage(int xPos, PlayableItemTile tile , int numOfTiles){
-        InsertionReplyMessage message = gameController.putTile(xPos,tile,numOfTiles);
-        return message;
+        return gameController.putTile(xPos,tile,numOfTiles);
     }
 
     @Override
@@ -149,6 +150,22 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
     @Override
     public void disconnect() throws RemoteException {
     }
+
+    @Override
+    public void pingAllClient() throws RemoteException {
+        List<RemoteClientInterface> clientsCopy = new ArrayList<>(clientList);
+        for (RemoteClientInterface client : clientsCopy) {
+            try {
+                client.pingReply();
+            } catch (RemoteException e) {
+               System.exit(0);
+            }
+        }
+    }
+
+
+
+
 
     @Override
     public void verifyStillConnected() throws RemoteException{

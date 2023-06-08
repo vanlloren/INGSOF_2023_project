@@ -38,6 +38,8 @@ public interface RemoteClientInterface extends Remote, LivingRoomObserver, Shelf
 
     void onUpdateModelChat(TurnView turnView, String nickname, String chat) throws RemoteException;
 
+
+
     void onUpdateRefillLivingRoom(TurnView turnView) throws RemoteException;
 
     void onUpdateModelCurrentPlayer(TurnView turnView, Player currPlayer) throws RemoteException;
@@ -62,4 +64,6 @@ public interface RemoteClientInterface extends Remote, LivingRoomObserver, Shelf
     void onUpdateModelGameHasStarted(TurnView turnView) throws RemoteException;
     void onUpdateTilesAvailability(TurnView turnView) throws RemoteException;
 
+
+    void pingReply() throws RemoteException;
 }
