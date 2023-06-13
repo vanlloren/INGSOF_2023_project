@@ -1,10 +1,22 @@
 package Util;
 
 import server.Model.ItemTile;
+import server.Model.LivingRoom;
 import server.Model.NullItemTile;
 import server.Model.PlayableItemTile;
 
+/**
+ * This Class extends {@link LivingRoomFactory LivingRoomFactory} and is used in case the number of {@link server.Model.Player Players} in the game is 2.
+ */
 public class TwoLivingRoomFactory extends LivingRoomFactory {
+
+    /**
+     * This method generates the {@link LivingRoom LivingRoom} for 2 {@link server.Model.Player Players} using the
+     * specified pattern in the rules of the game.
+     *
+     * @return the structure of the new {@link LivingRoom LivingRoom} with the {@link server.Model.NullItemTile NullItemTile} placed in
+     * the right positions
+     */
     @Override
     public ItemTile[][] create() {
         ItemTile[][] helperTable = new ItemTile[9][9];

@@ -2,9 +2,19 @@ package Util;
 import server.Model.CommonGoal;
 import java.util.Random;
 
+/**
+ * Class which sets the {@link CommonGoalType CommonGoalTypes} of the 2 {@link CommonGoal CommonGoals} of the match
+ */
 public class RandCommonGoal {
 
-
+    /**
+     * Static method to assign randomly the {@link CommonGoalType CommonGoalTypes} of the 2 {@link CommonGoal CommonGoals} of the match
+     *
+     * @param commonGoal1 the first {@link CommonGoal CommonGoal} of the match
+     * @param commonGoal2 the second {@link CommonGoal CommonGoal} of the match
+     * @param i first check value, useful for testing
+     * @param j second check value, useful for testing
+     */
     public static void setType(CommonGoal commonGoal1,CommonGoal commonGoal2, int i, int j){
         //i e j sono sempre diversi perché non vengono mai realmente inseriti, sono solo utili ai fini dei test
 

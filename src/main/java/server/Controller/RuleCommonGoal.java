@@ -7,56 +7,74 @@ import server.Model.PlayableItemTile;
 import java.util.ArrayList;
 import java.util.HashSet;
 
+/**
+ * Static Class that checks the completion of a {@link server.Model.CommonGoal CommonGoal} by a {@link server.Model.Player Player}
+ */
 public class RuleCommonGoal {
-        public static boolean checkCorner(PlayableItemTile[][] structure) {
-            return structure[0][0].getColour() != Colour.VOID && structure[0][0].getColour() == structure[0][4].getColour()
-                    && structure[0][0].getColour() == structure[5][0].getColour() && structure[0][0].getColour() == structure[5][4].getColour();
 
+    /**
+     * Method that check the completion of {@link server.Model.CommonGoal CommonGoal2}
+     *
+     * @param structure the structure on which the check will be made
+     * @return {@code true} if the {@link server.Model.CommonGoal CommonGoal} is completed, {@code false} otherwise
+     */
+    public static boolean checkCorner(PlayableItemTile[][] structure) {
+        return structure[0][0].getColour() != Colour.VOID && structure[0][0].getColour() == structure[0][4].getColour()
+                && structure[0][0].getColour() == structure[5][0].getColour() && structure[0][0].getColour() == structure[5][4].getColour();
+    }
+
+    /**
+     * Method that check the completion of {@link server.Model.CommonGoal CommonGoal1}
+     *
+     * @param structure the structure on which the check will be made
+     * @return {@code true} if the {@link server.Model.CommonGoal CommonGoal} is completed, {@code false} otherwise
+     */
+    public static boolean checkSixCouples(PlayableItemTile[][] structure) {
+        Colour[][] matrix = new Colour[6][5];
+        int count = 0;
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 5; j++) {
+                if (structure[i][j].getColour() != Colour.VOID) {
+                    matrix[i][j] = structure[i][j].getColour();
+                }
+                else
+                    matrix[i][j] = Colour.VOID;
+            }
         }
 
-        public static boolean checkSixCouples(PlayableItemTile[][] structure) {
-            Colour[][] matrix = new Colour[6][5];
-            int count = 0;
-
-            for (int i = 0; i < 6; i++) {
-                for (int j = 0; j < 5; j++) {
-                    if (structure[i][j].getColour() != Colour.VOID) {
-                        matrix[i][j] = structure[i][j].getColour();
-                    }
-                    else
-                        matrix[i][j] = Colour.VOID;
+        for (int i = 5; i >= 0; i--) {
+            for (int j = 0; j < 4; j++) {
+                if (matrix[i][j] != Colour.VOID && matrix[i][j + 1] != Colour.VOID &&
+                        matrix[i][j + 1] == matrix[i][j]) {
+                    count++;
+                    matrix[i][j] = Colour.VOID;
+                    matrix[i][j + 1] = Colour.VOID;
                 }
-            }
-
-            for (int i = 5; i >= 0; i--) {
-                for (int j = 0; j < 4; j++) {
-                    if (matrix[i][j] != Colour.VOID && matrix[i][j + 1] != Colour.VOID &&
-                            matrix[i][j + 1] == matrix[i][j]) {
+                if (i > 0) {
+                    if (matrix[i][j] != Colour.VOID && matrix[i - 1][j] != Colour.VOID &&
+                            matrix[i][j] == matrix[i - 1][j]) {
                         count++;
                         matrix[i][j] = Colour.VOID;
-                        matrix[i][j + 1] = Colour.VOID;
+                        matrix[i - 1][j] = Colour.VOID;
                     }
-                    if (i > 0) {
-                        if (matrix[i][j] != Colour.VOID && matrix[i - 1][j] != Colour.VOID &&
-                                matrix[i][j] == matrix[i - 1][j]) {
-                            count++;
-                            matrix[i][j] = Colour.VOID;
-                            matrix[i - 1][j] = Colour.VOID;
-                        }
-                            if(j==3&&matrix[i][j+1] != Colour.VOID && matrix[i - 1][j+1] != Colour.VOID &&
-                                    matrix[i][j+1] == matrix[i - 1][j+1]){
-                                count++;
-                                matrix[i][j+1] = Colour.VOID;
-                                matrix[i - 1][j+1] = Colour.VOID;
-                            }
-
+                    if (j == 3 && matrix[i][j + 1] != Colour.VOID && matrix[i - 1][j + 1] != Colour.VOID &&
+                            matrix[i][j + 1] == matrix[i - 1][j + 1]) {
+                        count++;
+                        matrix[i][j + 1] = Colour.VOID;
+                        matrix[i - 1][j + 1] = Colour.VOID;
                     }
                 }
             }
-            return count >= 6;
         }
+        return count >= 6;
+    }
 
-
+    /**
+     * Method that check the completion of {@link server.Model.CommonGoal CommonGoal3}
+     *
+     * @param structure the structure on which the check will be made
+     * @return {@code true} if the {@link server.Model.CommonGoal CommonGoal} is completed, {@code false} otherwise
+     */
         public static boolean checkFourGroups(PlayableItemTile[][] structure) {
             Colour[][] matrix= new Colour[6][5];
             int count = 0;
@@ -91,6 +109,12 @@ public class RuleCommonGoal {
             return count >= 4;
         }
 
+    /**
+     * Method that check the completion of {@link server.Model.CommonGoal CommonGoal4}
+     *
+     * @param structure the structure on which the check will be made
+     * @return {@code true} if the {@link server.Model.CommonGoal CommonGoal} is completed, {@code false} otherwise
+     */
         public static boolean checkSquare(PlayableItemTile[][] structure) {
             for (int i = 5; i > 0; i--) {
                 for (int j = 0; j < 4; j++) {
@@ -124,7 +148,12 @@ public class RuleCommonGoal {
 
 
 
-
+    /**
+     * Method that check the completion of {@link server.Model.CommonGoal CommonGoal7}
+     *
+     * @param structure the structure on which the check will be made
+     * @return {@code true} if the {@link server.Model.CommonGoal CommonGoal} is completed, {@code false} otherwise
+     */
         public static boolean checkDiagonal(PlayableItemTile[][] structure) {
 
           return((structure[0][0].getColour()!=Colour.VOID&&structure[0][0].getColour()==structure[1][1].getColour()
@@ -135,6 +164,12 @@ public class RuleCommonGoal {
 
         }
 
+    /**
+     * Method that check the completion of {@link server.Model.CommonGoal CommonGoal11}
+     *
+     * @param structure the structure on which the check will be made
+     * @return {@code true} if the {@link server.Model.CommonGoal CommonGoal} is completed, {@code false} otherwise
+     */
         public static boolean checkCrux(PlayableItemTile[][] structure) {
             for (int i = 1; i <= 4; i++) {
                 for (int j = 1; j <= 3; j++) {
@@ -151,6 +186,12 @@ public class RuleCommonGoal {
             return false;
         }
 
+    /**
+     * Method that check the completion of {@link server.Model.CommonGoal CommonGoal12}
+     *
+     * @param structure the structure on which the check will be made
+     * @return {@code true} if the {@link server.Model.CommonGoal CommonGoal} is completed, {@code false} otherwise
+     */
         public static boolean checkStair(PlayableItemTile[][] structure) {
 
             if (structure[0][0].getColour() == Colour.VOID && structure[1][0].getColour() != Colour.VOID &&
@@ -181,7 +222,12 @@ public class RuleCommonGoal {
         }
 
 
-
+    /**
+     * Method that check the completion of {@link server.Model.CommonGoal CommonGoal5}
+     *
+     * @param structure the structure on which the check will be made
+     * @return {@code true} if the {@link server.Model.CommonGoal CommonGoal} is completed, {@code false} otherwise
+     */
         public static boolean CheckColumn1(PlayableItemTile[][] structure) {//scorro colonne e uso algoritmo che controlla un max di 3 tipi diversi tramite un counter
             int columnCount = 0;
             boolean checker = false;
@@ -209,7 +255,12 @@ public class RuleCommonGoal {
 
         }
 
-
+    /**
+     * Method that check the completion of {@link server.Model.CommonGoal CommonGoal9}
+     *
+     * @param structure the structure on which the check will be made
+     * @return {@code true} if the {@link server.Model.CommonGoal CommonGoal} is completed, {@code false} otherwise
+     */
         public static boolean CheckColumn2(PlayableItemTile[][] structure) {//due colonne di 6 tipi diversi una cazzata basta fare controllo delle colonne con due per considerare le 6 righe e scorro avanti di colonne quindi usa un while con dentro un for e usa un counter
             int columnCount = 0;
             boolean checker = false;
@@ -232,6 +283,12 @@ public class RuleCommonGoal {
 
         }
 
+    /**
+     * Method that check the completion of {@link server.Model.CommonGoal CommonGoal8}
+     *
+     * @param structure the structure on which the check will be made
+     * @return {@code true} if the {@link server.Model.CommonGoal CommonGoal} is completed, {@code false} otherwise
+     */
         public static boolean CheckLine1(PlayableItemTile[][] structure) { //uguale a column 1 ma sviluppato per righe
         int count = 0;
             for(int i=0;i<6;i++){
@@ -253,7 +310,12 @@ public class RuleCommonGoal {
         }
 
 
-
+    /**
+     * Method that check the completion of {@link server.Model.CommonGoal CommonGoal10}
+     *
+     * @param structure the structure on which the check will be made
+     * @return {@code true} if the {@link server.Model.CommonGoal CommonGoal} is completed, {@code false} otherwise
+     */
         public static boolean CheckLine2(PlayableItemTile[][] structure) { //uguale a column 2 ma sviluppato per le righe
             int count = 0;
             for(int i=0;i<6;i++){
@@ -273,7 +335,12 @@ public class RuleCommonGoal {
             return count >= 2;
         }
 
-
+    /**
+     * Method that check the completion of {@link server.Model.CommonGoal CommonGoal6}
+     *
+     * @param structure the structure on which the check will be made
+     * @return {@code true} if the {@link server.Model.CommonGoal CommonGoal} is completed, {@code false} otherwise
+     */
         public static boolean checkEight(PlayableItemTile[][] structure) {
             for (int i = 0; i < 6; i++) {
                 for (int j = 0; j < 5; j++) {

@@ -1,5 +1,8 @@
 package Util;
 
+/**
+ * This enum contains all possible types of a {@link server.Model.PersonalGoal PersonalGoal}.
+ */
 public enum PersonalGoalType {
     PERSONALGOAL1,
     PERSONALGOAL2,

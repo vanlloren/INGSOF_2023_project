@@ -14,11 +14,6 @@ import server.Model.Player;
 import server.Model.Shelf;
 
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
-import static server.Controller.GameController.findAdjGroupDim;
-import static server.Controller.GameController.findAdjGroups;
 
 public class RuleShelfTest {
     @Test
