@@ -266,7 +266,7 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
         int portNum;
         do {
             scanner.nextLine();
-            out.println("Inserisci la porta del Server [default = ??]:");
+            out.println("Inserisci la porta del Server [default = 1099]:");
             //effettuo check validità su in.nextLine();
             portNum = scanner.nextInt();
             if (checkPortValidity(portNum)) {
@@ -526,7 +526,7 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
         String connection;
         int connectionType;
         do{
-            out.println("Per favore, indica il tipo di connessione desiderata [0=RMI, 1=Socket]: ");
+            out.println("Per favore, indica il tipo di connessione desiderata [0=RMI]: ");
             connection = scanner.next();
             try{
                 connectionType = Integer.parseInt(connection);
