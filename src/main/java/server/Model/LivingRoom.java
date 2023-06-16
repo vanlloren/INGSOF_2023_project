@@ -142,6 +142,21 @@ public class LivingRoom extends LivingRoomObservable implements Serializable, Si
     }
 
     /**
+     * This method is used to verify if a cell into the {@link LivingRoom LivingRoom} contains a {@link ItemTile ItemTile}
+     * or not
+     *
+     * @param x the 'x' position in the {@link LivingRoom LivingRoom} to check
+     * @param y the 'y' position in the {@link LivingRoom LivingRoom} to check
+     * @return {@code true} if the cell is empty, {@code false} otherwise
+     */
+    public boolean nullDetection(int x, int y){
+        if (gameTable[x][y] == null){
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * Checks whether the {@link ItemTile ItemTile} in the selected position of the {@link LivingRoom LivingRoom}
      * is available or not.
      *
