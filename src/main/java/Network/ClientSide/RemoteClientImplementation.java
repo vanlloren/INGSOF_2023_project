@@ -1183,11 +1183,6 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
     }
 
     @Override
-    public void onUpdateGameBoard(TurnView turnView, GameBoard gameBoard) {
-        onModelModify(turnView, new UpdateGameBoardEvent(gameBoard));
-    }
-
-    @Override
     public void onUpdateModelGameHasStarted(TurnView turnView) {
         onModelModify(turnView, new UpdateGameHasStartedEvent());
     }
