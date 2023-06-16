@@ -13,6 +13,10 @@ import java.awt.*;
 import java.rmi.RemoteException;
 import java.util.*;
 
+/**
+ * This Class is the controller for the {@link GameBoard GameModel} and also for the {@link GameBoardController GameBoardController}.
+ * It also has a bind with the {@link RemoteServerImplementation RemoteServer} that runs the game.
+ */
 public class GameController {
 
     private final GameModel game;
@@ -24,34 +28,56 @@ public class GameController {
     boolean full = false;
 
 
-
+    /**
+     * Creates an instance of {@link GameController GameController} binding it with {@link GameModel GameModel} which is the main Class of the Model of the Game.
+     * Also creates a new {@link GameBoardController GameBoardController}.
+     *
+     * @param game the instance of {@link GameModel GameController} to bind
+     */
     public GameController(GameModel game) {
         this.game = game;
         this.gameBoardController = new GameBoardController(this);
     }
 
+    /**
+     *
+     * @return the controlled {@link GameModel GameModel}
+     */
     public GameModel getGame() {
         return this.game;
     }
 
+
+    /**
+     * Creates the bind between the {@link GameController GameController} and the {@link RemoteServerImplementation RemoteServer} which runs the match
+     *
+     * @param remoteServer the {@link RemoteServerImplementation RemoteServer} to bind
+     */
     public void setRemoteServer(RemoteServerImplementation remoteServer) {
         this.remoteServer = remoteServer;
     }
 
+    /**
+     * Sets to {@code true} the variable {@code full} of the {@link GameController GameController}
+     */
     public void setFull() {
         this.full = true;
     }
 
 
-
+    /**
+     *
+     * @return the corresponding {@link GameBoardController GameBoardController}
+     */
     public GameBoardController getGameBoardController() {
         return this.gameBoardController;
     }
 
 
-    /*
-    the following method is called when the number of player has reached the requested number
-    and as a consequence a game board with the right livingRoom (based on numOfPlayers) is created and the commonGoals are being set and prepared for the game
+    /**
+     * Method called when the number of {@link Player Players} has reached the requested number.
+     * Creates a {@link GameBoard GameBoard}, binds it with a {@link LivingRoom LivingRoom}
+     * and sets the {@link CommonGoal CommonGoals} for the game.
      */
     public void initGameBoard() {
         gameBoardController.gameBoardInit();  //inizializza itemBag e livingRoom
@@ -62,7 +88,19 @@ public class GameController {
 
     }
 
-
+    /**
+     * Method to pick a {@link PlayableItemTile PlayableItemTile} from the {@link LivingRoom LivingRoom}
+     *
+     * @param x the 'x' position of the {@link PlayableItemTile PlayableItemTile} to pick
+     * @param y the 'y' position of the {@link PlayableItemTile PlayableItemTile} to pick
+     * @return a {@link TileReplyMessage TileReplyMessage} containing the results of the procedure. The results could be the following:
+     * (1) if the field {@code tile} in {@link TileReplyMessage TileReplyMessage} is {@code null} the procedure failed:
+     * if the field {@link PickTileResponse PickTileResponse} in {@link TileReplyMessage TileReplyMessage} is {@code MAX_TILE_PICKED} it means that the {@link Player Player}
+     * has already picked the maximum number of {@link PlayableItemTile PlayableItemTiles} for this turn,
+     * otherwise if the field {@link PickTileResponse PickTileResponse} in {@link TileReplyMessage TileReplyMessage} is {@code INVALID_TILE} it means that the {@link Player Player}
+     * tried to pick an invalid {@link ItemTile ItemTile} and the pick procedure needs to be redone.
+     * (2) if the field {@code tile} in {@link TileReplyMessage TileReplyMessage} is not {@code null} the procedure has been completed correctly.
+     */
     public TileReplyMessage pickTile(int x, int y) {  //restituisce le 1/2/3 tiles prese dalla livingRoom dal player nel suo turno
         PlayableItemTile tile;
         moveOn = false;
@@ -78,12 +116,19 @@ public class GameController {
                         gameBoardController.getControlledLivingRoom().updateAvailability();
                         if (!gameBoardController.checkIfAdjacentTiles()) {
                             gameBoardController.livingRoomFiller();
+                            gameBoardController.getControlledLivingRoom().notifyObservers(obs -> {
+                                try {
+                                    obs.onUpdateRefillLivingRoom(new TurnView(game));
+                                } catch (RemoteException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            });
                             gameBoardController.getControlledLivingRoom().updateAvailability();
                         }
                         gameBoardController.getControlledGameBoard().getToPlayerTiles().clear();
                         return new TileReplyMessage(null, PickTileResponse.MAX_TILE_PICKED);
                     } else {
-                        return new TileReplyMessage(tile, PickTileResponse.INVALID_TILE);
+                        return new TileReplyMessage(null, PickTileResponse.INVALID_TILE);
                     }
                 } else {
                     return new TileReplyMessage(tile, PickTileResponse.CORRECT_TILE);
@@ -108,6 +153,13 @@ public class GameController {
             gameBoardController.getControlledLivingRoom().updateAvailability();
             if (!gameBoardController.checkIfAdjacentTiles()) {
                 gameBoardController.livingRoomFiller();
+                gameBoardController.getControlledLivingRoom().notifyObservers(obs -> {
+                    try {
+                        obs.onUpdateRefillLivingRoom(new TurnView(game));
+                    } catch (RemoteException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
                 gameBoardController.getControlledLivingRoom().updateAvailability();
             }
             gameBoardController.getControlledGameBoard().getToPlayerTiles().clear();
@@ -116,6 +168,20 @@ public class GameController {
 
 
     }
+
+    /**
+     * Method to put the first {@link PlayableItemTile PlayableItemTile} in the {@link Shelf Shelf}
+     *
+     * @param xPos the 'x' position of the {@link PlayableItemTile PlayableItemTile} to put
+     * @param yPos the 'y' position of the {@link PlayableItemTile PlayableItemTile} to put
+     * @param selectedTile the {@link PlayableItemTile PlayableItemTile} to put
+     * @param numOfTilesOnPutting the number of {@link PlayableItemTile PlayableItemTiles} to put during this turn
+     *
+     * @return a {@link InsertionReplyMessage InsertionReplyMessage} containing the results of the procedure. The results could be the
+     * following:
+     * (1) if the field {@code isValid} is {@code false} then the procedure has failed.
+     * (2) if the field {@code isValid} is {@code true} the procedure has been successful.
+     */
 
     public InsertionReplyMessage putTile(int xPos, int yPos, PlayableItemTile selectedTile, int numOfTilesOnPutting) {
 
@@ -152,7 +218,18 @@ public class GameController {
         }
     }
 
-
+    /**
+     * Method to put the next {@link PlayableItemTile PlayableItemTiles} in the {@link Shelf Shelf}
+     *
+     * @param xPos the 'x' position of the {@link PlayableItemTile PlayableItemTile} to put
+     * @param selectedTile the {@link PlayableItemTile PlayableItemTile} to put
+     * @param numOfTilesOnPutting the number of {@link PlayableItemTile PlayableItemTiles} to put during this turn
+     *
+     * @return a {@link InsertionReplyMessage InsertionReplyMessage} containing the results of the procedure. The results could be the
+     * following:
+     * (1) if the field {@code isValid} is {@code false} then the procedure has failed.
+     * (2) if the field {@code isValid} is {@code true} the procedure has been successful.
+     */
     public InsertionReplyMessage putTile(int xPos, PlayableItemTile selectedTile, int numOfTilesOnPutting) {
 
         int yPos = game.getCurrPlayer().getPersonalShelf().getColumnChosen();
@@ -185,13 +262,14 @@ public class GameController {
         }
 
 
-     return new InsertionReplyMessage(false,false);
+        return new InsertionReplyMessage(false,false);
 
-}
-
-
+    }
 
 
+    /**
+     * Method that determines the beginning of a new game turn and sets the new {@code currPlayer}
+     */
     public void nextTurn() {
 
         ArrayList<Player> listPLayer = game.getPlayersInGame();
@@ -206,7 +284,7 @@ public class GameController {
             if (game.getPlayersInGame().indexOf(game.getCurrPlayer()) == game.getPlayersInGame().indexOf(game.getChairOwner()) - 1) {
                 CalculateWinner(game.getPlayersInGame());
             } else {
-                if (game.getPlayersInGame().indexOf(game.getCurrPlayer()) == game.getPlayersInGame().size()) {
+                if (game.getPlayersInGame().indexOf(game.getCurrPlayer()) == game.getPlayersInGame().size() - 1) {
                     game.setCurrPlayer(listPLayer.get(0));
                 } else game.setCurrPlayer(listPLayer.get(index + 1));
             }
@@ -216,6 +294,15 @@ public class GameController {
 
     }
 
+    /**
+     * Method that determines the winner of the game and sets the new {@code matchWinner}.
+     * The winner is the {@link Player Player} with more points.
+     * If there is more than one {@link Player Player} with the highest total of points they are put in an {@link ArrayList ArrayList},
+     * the method chooses from this {@link ArrayList ArrayList} the matchWinner by finding the farthest {@link Player Player} from the {@code chairOwner} according
+     * to the order in which the {@link Player Players} are inside the {@code playerArrayList}.
+     *
+     * @param playerArrayList the {@link ArrayList ArrayList} of the {@link Player Players} in the game
+     */
     public void CalculateWinner(ArrayList<Player> playerArrayList) {
         ArrayList<Integer> pointsList = new ArrayList<>();
         ArrayList<Player> Winners = new ArrayList<>();
@@ -251,7 +338,15 @@ public class GameController {
         }
     }
 
-
+    /**
+     * Static method to find the dimensions of the groups of adjacent {@link PlayableItemTile PlayableItemTiles} of the same {@link Colour Colour}
+     * in the {@link Shelf Shelf}
+     *
+     * @param shelf the {@link Shelf Shelf} on which the method will search the groups of adjacent {@link PlayableItemTile PlayableItemTiles}
+     * @return an {@link HashMap Hashmap} in which the keys are the possible {@link Colour Colours} of the {@link PlayableItemTile PlayableItemTiles}
+     * and the elements associated to the keys, which are stored in {@link ArrayList ArrayLists}, are counters which indicates the size of the group/groups of
+     * adjacent {@link PlayableItemTile PlayableItemTiles}
+     */
     public static HashMap<Colour, ArrayList<Integer>> findAdjGroups(PlayableItemTile[][] shelf) {
         HashMap<Colour, ArrayList<Integer>> adjGroups = new HashMap<>();
 
@@ -286,7 +381,7 @@ public class GameController {
         return adjGroups;
     }
 
-    public static int findAdjGroupDim(PlayableItemTile[][] structure, boolean[][] visitated, int i, int j, Colour colour, ArrayList<Integer> dimension) {
+    private static int findAdjGroupDim(PlayableItemTile[][] structure, boolean[][] visitated, int i, int j, Colour colour, ArrayList<Integer> dimension) {
         if (i < 0 || i >= structure.length || j < 0 || j >= structure[0].length || structure[i][j] == null || visitated[i][j] || structure[i][j].getColour() != colour) {
             return 0;
         }
@@ -312,7 +407,7 @@ public class GameController {
         return dimensione;
     }
 
-    public Integer AddAdjacencyPoint(HashMap<Colour, ArrayList<Integer>> adjacencyGroups) {
+    private Integer AddAdjacencyPoint(HashMap<Colour, ArrayList<Integer>> adjacencyGroups) {
         Set<Colour> keys = adjacencyGroups.keySet();
         int point = 0;
         for (Colour colour : keys) {
@@ -324,7 +419,7 @@ public class GameController {
                     point = point + 3;
                 } else if (integer == 5) {
                     point = point + 5;
-                } else if (integer > 6) {
+                } else if (integer >= 6) {
                     point = point + 8;
                 }
             }
@@ -333,6 +428,14 @@ public class GameController {
         return point;
     }
 
+    /**
+     * This method computes the new amount of points to award to a {@link Player Player}.
+     * The checks are done on the completion status of the {@link Player Player} {@link PersonalGoal PersonalGoal}, of the {@link CommonGoal CommonGoals}
+     * and of the presence of groups of adjacent {@link PlayableItemTile PlayableItemTiles} of the same {@link Colour Colour}.
+     *
+     * @param player the {@link Player Player} to whom the points will be awarded
+     * @param livingRoom the {@link LivingRoom LivingRoom} on which the checks will be made
+     */
     public void calculatePoint(Player player, LivingRoom livingRoom) {
         if (!player.getHasCommonGoal1() && CheckCommonGoal.checkGoal(player.getPersonalShelf(), livingRoom.getCommonGoal1().getCommonGoalType())) {
             Integer i;
@@ -372,7 +475,13 @@ public class GameController {
         }
     }
 
-
+    /**
+     *
+     *
+     * @param commonGoal the {@link CommonGoal CommonGoal} which has been completed
+     * @return the amount of points awarded to the {@link Player Player} that has completed it.
+     * This value depends on the number of {@link Player Players} that already completed such {@link CommonGoal CommonGoal}.
+     */
     public Integer addPoint(CommonGoal commonGoal) {
         ArrayList<Integer> token_list = commonGoal.getToken_list();
         Integer i = 0;

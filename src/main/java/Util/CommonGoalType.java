@@ -1,5 +1,8 @@
 package Util;
 
+/**
+ * This enum contains all possible types of a {@link server.Model.CommonGoal CommonGoal}.
+ */
 public enum CommonGoalType {
     COMMONGOAL01,
     COMMONGOAL02,

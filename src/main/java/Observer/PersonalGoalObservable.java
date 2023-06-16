@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
+/**
+ * This Class represents the adaptation of the standard {@link java.util.Observable Observable} Class
+ * to the methods and objects in use inside the {@link server.Model.PersonalGoal PersonalGoal} Class
+ */
 public class PersonalGoalObservable {
     private final List<PersonalGoalObserver> observers = new ArrayList<>();
 

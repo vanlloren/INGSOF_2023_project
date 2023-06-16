@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
+/**
+ * This Class represents the adaptation of the standard {@link java.util.Observable Observable} Class
+ * to the methods and objects in use inside the {@link server.Model.Shelf Shelf} Class
+ */
 public abstract class ShelfObservable {
     private final List<ShelfObserver> observers = new ArrayList<>();
 

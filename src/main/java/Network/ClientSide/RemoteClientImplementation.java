@@ -75,10 +75,10 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
                 this.userInterface.askPlayersNumber();
             }
             case FULL_LOBBY ->
-                this.userInterface.fullLobbyTerminateUI();
+                    this.userInterface.fullLobbyTerminateUI();
 
             case CHOICE_BEGIN ->
-                onUpdateChoiceBegin();
+                    onUpdateChoiceBegin();
 
 
 
@@ -90,7 +90,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
         this.turnView=turnView;
         switch (event.getEventType()){
             case UPDATE_REFILL_LIVINGROOM ->
-                UpdateAllClientOnRefillLivingRoom();
+                    UpdateAllClientOnRefillLivingRoom();
             case UPDATE_PLAYERS_LIST -> {
                 UpdatePlayersListEvent newEvent = (UpdatePlayersListEvent) event;
                 UpdateAllClientOnModelListPlayers(newEvent.getPlayer());
@@ -110,7 +110,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
 
             }
             case UPDATE_GAME_HAS_STARTED ->
-                UpdateAllClientOnModelGameHasStarted();
+                    UpdateAllClientOnModelGameHasStarted();
 
             case UPDATE_CURR_PLAYER -> {
                 UpdateCurrPlayerEvent newEvent = (UpdateCurrPlayerEvent) event;
@@ -121,7 +121,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
                 UpdateAllClientOnModelMatchWinner(newEvent.getMatchWinner());
             }
             case UPDATE_GAME_HAS_ENDED ->
-                UpdateAllClientOnModelGameHasEnd();
+                    UpdateAllClientOnModelGameHasEnd();
 
             case UPDATE_PICKED_LIVINGROOM_TILE -> {
                 UpdatePickedLivingRoomTileEvent newEvent = (UpdatePickedLivingRoomTileEvent) event;
@@ -175,7 +175,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
                 .......................
                 .......................
                 .......GAME OVER......."""
-               );
+        );
 
     }
     @Override
@@ -196,13 +196,13 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
 
     @Override
     public void UpdateAllClientOnModelListPlayers(Player player) {
-       System.out.println("...NEW UPDATE: We have a new player: "+player.getNickname()+" has joined this lobby");
+        System.out.println("...NEW UPDATE: We have a new player: "+player.getNickname()+" has joined this lobby");
     }
 
     @Override
     public void UpdateAllClientOnModelEndGame(String Nickname,boolean endGame) {
         System.out.println(Nickname+" HAS FILLED ALL HIS SHELF FOR FIRST :" +
-                           "lAST TURN IN GAME....");
+                "lAST TURN IN GAME....");
     }
     // gestisci un booleano per quando sei arrivato all'ultimo giocatore del turno finale
     // dal controller si determina il vincitore si comunica e a quel punto lancio
@@ -211,7 +211,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
     public void UpdateAllClientOnPlayersNumber(int playersNumber) {
 
         System.out.println("Your request of playerNumber for this game has been accepted\n" +
-                           "This game will have "+playersNumber+" players");
+                "This game will have "+playersNumber+" players");
 
     }
 
@@ -219,7 +219,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
 
     @Override
     public void UpdateAllClientOnModelPersonalGoal(String Nickname,PersonalGoalType personalGoalType) {
-    System.out.println("....NEW UPDATE:The PersonalGoal assigned to player "+Nickname+" is "+personalGoalType);
+        System.out.println("....NEW UPDATE:The PersonalGoal assigned to player "+Nickname+" is "+personalGoalType);
     }
 
     @Override
@@ -263,7 +263,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
     @Override
     public void UpdateAllClientOnStructureShelf(int x, int y, PlayableItemTile Tile) {
         System.out.println("Il giocatore " + turnView.getNicknameCurrentPlayer() + " ha posizionato la tessera "
-        + Tile.getColour() + " " + Tile.getIdCode() + " nella posizione x=" + x + ", y=" + y);
+                + Tile.getColour() + " " + Tile.getIdCode() + " nella posizione x=" + x + ", y=" + y);
 
         System.out.println("A seguire verrà stampata la PlayerShelf aggiornata");
         this.userInterface.showPlayerShelf(turnView.getShelfTable(turnView.getNicknameCurrentPlayer()));
@@ -274,7 +274,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
 
     @Override
     public void UpdateAllClientOnNewMessageChat(String Nickname, String chatMessage) {
-       System.out.println(Nickname+": "+chatMessage+".");
+        System.out.println(Nickname+": "+chatMessage+".");
     }
 
     @Override
@@ -1085,8 +1085,8 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
 
     @Override
     public void onUpdateNickname(String nickname) throws RemoteException {
-            LoginRequestMessage loginRequestMessage = new LoginRequestMessage(this,nickname);
-            server.onMessage(loginRequestMessage);
+        LoginRequestMessage loginRequestMessage = new LoginRequestMessage(this,nickname);
+        server.onMessage(loginRequestMessage);
     }
 
     @Override
@@ -1182,11 +1182,6 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
     @Override
     public void onUpdateModelChairOwner(TurnView turnView, Player player) {
         onModelModify(turnView, new UpdateChairOwnerEvent(player));
-    }
-
-    @Override
-    public void onUpdateGameBoard(TurnView turnView, GameBoard gameBoard) {
-        onModelModify(turnView, new UpdateGameBoardEvent(gameBoard));
     }
 
     @Override

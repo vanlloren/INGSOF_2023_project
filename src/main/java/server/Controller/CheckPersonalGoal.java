@@ -4,9 +4,22 @@ import Util.Colour;
 
 import server.Model.PersonalGoal;
 import server.Model.PlayableItemTile;
+import server.Model.Player;
 
+/**
+ * Static Class used by the controllers to launch the necessary checks regarding the completion of a {@link PersonalGoal PersonalGoal} by a {@link Player Player}
+ */
 public class CheckPersonalGoal {
-
+    /**
+     * Static method which checks the completion of the {@link PersonalGoal PersonalGoal1}.
+     * The method checks that, for every meaningful position in the PersonalGoal1 card,
+     * there is a match between the expected colour of the {@link server.Model.ItemTile ItemTile} and
+     * the actual colour of the {@link server.Model.ItemTile ItemTile} in the given structure.
+     *
+     * @param structure the specific structure of a {@link server.Model.Shelf Shelf} on which the check must be done
+     *
+     * @return the number of points to add to the {@link Player Player} points as established by the scores written on the PersonalGoal1 card
+     */
     public static int Personal_goal_1(PlayableItemTile[][] structure) {
         int count = 0;
         if (structure[0][0].getColour() == Colour.PINK) {
@@ -29,6 +42,17 @@ public class CheckPersonalGoal {
         }
        return addPoint(count);
     }
+
+    /**
+     * Static method which checks the completion of the {@link PersonalGoal PersonalGoal2}.
+     * The method checks that, for every meaningful position in the PersonalGoal2 card,
+     * there is a match between the expected colour of the {@link server.Model.ItemTile ItemTile} and
+     * the actual colour of the {@link server.Model.ItemTile ItemTile} in the given structure.
+     *
+     * @param structure the specific structure of a {@link server.Model.Shelf Shelf} on which the check must be done
+     *
+     * @return the number of points to add to the {@link Player Player} points as established by the scores written on the PersonalGoal2 card
+     */
     public static int Personal_goal_2(PlayableItemTile[][] structure) {
         int count = 0;
 
@@ -52,6 +76,17 @@ public class CheckPersonalGoal {
         }
         return addPoint(count);
     }
+
+    /**
+     * Static method which checks the completion of the {@link PersonalGoal PersonalGoal3}.
+     * The method checks that, for every meaningful position in the PersonalGoal3 card,
+     * there is a match between the expected colour of the {@link server.Model.ItemTile ItemTile} and
+     * the actual colour of the {@link server.Model.ItemTile ItemTile} in the given structure.
+     *
+     * @param structure the specific structure of a {@link server.Model.Shelf Shelf} on which the check must be done
+     *
+     * @return the number of points to add to the {@link Player Player} points as established by the scores written on the PersonalGoal3 card
+     */
     public static int Personal_goal_3(PlayableItemTile[][] structure) {
         int count = 0;
 
@@ -75,6 +110,17 @@ public class CheckPersonalGoal {
         }
         return addPoint(count);
     }
+
+    /**
+     * Static method which checks the completion of the {@link PersonalGoal PersonalGoal4}.
+     * The method checks that, for every meaningful position in the PersonalGoal4 card,
+     * there is a match between the expected colour of the {@link server.Model.ItemTile ItemTile} and
+     * the actual colour of the {@link server.Model.ItemTile ItemTile} in the given structure.
+     *
+     * @param structure the specific structure of a {@link server.Model.Shelf Shelf} on which the check must be done
+     *
+     * @return the number of points to add to the {@link Player Player} points as established by the scores written on the PersonalGoal4 card
+     */
     public static int Personal_goal_4(PlayableItemTile[][] structure) {
         int count = 0;
 
@@ -98,6 +144,17 @@ public class CheckPersonalGoal {
         }
         return addPoint(count);
     }
+
+    /**
+     * Static method which checks the completion of the {@link PersonalGoal PersonalGoal5}.
+     * The method checks that, for every meaningful position in the PersonalGoal5 card,
+     * there is a match between the expected colour of the {@link server.Model.ItemTile ItemTile} and
+     * the actual colour of the {@link server.Model.ItemTile ItemTile} in the given structure.
+     *
+     * @param structure the specific structure of a {@link server.Model.Shelf Shelf} on which the check must be done
+     *
+     * @return the number of points to add to the {@link Player Player} points as established by the scores written on the PersonalGoal5 card
+     */
     public static int Personal_goal_5(PlayableItemTile[][] structure) {
         int count = 0;
 
@@ -121,6 +178,17 @@ public class CheckPersonalGoal {
         }
         return addPoint(count);
     }
+
+    /**
+     * Static method which checks the completion of the {@link PersonalGoal PersonalGoal6}.
+     * The method checks that, for every meaningful position in the PersonalGoal6 card,
+     * there is a match between the expected colour of the {@link server.Model.ItemTile ItemTile} and
+     * the actual colour of the {@link server.Model.ItemTile ItemTile} in the given structure.
+     *
+     * @param structure the specific structure of a {@link server.Model.Shelf Shelf} on which the check must be done
+     *
+     * @return the number of points to add to the {@link Player Player} points as established by the scores written on the PersonalGoal6 card
+     */
     public static int Personal_goal_6(PlayableItemTile[][] structure) {
         int count = 0;
 
@@ -144,6 +212,17 @@ public class CheckPersonalGoal {
         }
         return addPoint(count);
     }
+
+    /**
+     * Static method which checks the completion of the {@link PersonalGoal PersonalGoal7}.
+     * The method checks that, for every meaningful position in the PersonalGoal7 card,
+     * there is a match between the expected colour of the {@link server.Model.ItemTile ItemTile} and
+     * the actual colour of the {@link server.Model.ItemTile ItemTile} in the given structure.
+     *
+     * @param structure the specific structure of a {@link server.Model.Shelf Shelf} on which the check must be done
+     *
+     * @return the number of points to add to the {@link Player Player} points as established by the scores written on the PersonalGoal7 card
+     */
     public static int Personal_goal_7(PlayableItemTile[][] structure) {
         int count = 0;
 
@@ -167,6 +246,17 @@ public class CheckPersonalGoal {
         }
         return addPoint(count);
     }
+
+    /**
+     * Static method which checks the completion of the {@link PersonalGoal PersonalGoal8}.
+     * The method checks that, for every meaningful position in the PersonalGoal8 card,
+     * there is a match between the expected colour of the {@link server.Model.ItemTile ItemTile} and
+     * the actual colour of the {@link server.Model.ItemTile ItemTile} in the given structure.
+     *
+     * @param structure the specific structure of a {@link server.Model.Shelf Shelf} on which the check must be done
+     *
+     * @return the number of points to add to the {@link Player Player} points as established by the scores written on the PersonalGoal8 card
+     */
     public static int Personal_goal_8(PlayableItemTile[][] structure) {
         int count = 0;
 
@@ -190,6 +280,17 @@ public class CheckPersonalGoal {
         }
         return addPoint(count);
     }
+
+    /**
+     * Static method which checks the completion of the {@link PersonalGoal PersonalGoal9}.
+     * The method checks that, for every meaningful position in the PersonalGoal9 card,
+     * there is a match between the expected colour of the {@link server.Model.ItemTile ItemTile} and
+     * the actual colour of the {@link server.Model.ItemTile ItemTile} in the given structure.
+     *
+     * @param structure the specific structure of a {@link server.Model.Shelf Shelf} on which the check must be done
+     *
+     * @return the number of points to add to the {@link Player Player} points as established by the scores written on the PersonalGoal9 card
+     */
     public static int Personal_goal_9(PlayableItemTile[][] structure) {
         int count = 0;
 
@@ -213,6 +314,17 @@ public class CheckPersonalGoal {
         }
         return addPoint(count);
     }
+
+    /**
+     * Static method which checks the completion of the {@link PersonalGoal PersonalGoal10}.
+     * The method checks that, for every meaningful position in the PersonalGoal10 card,
+     * there is a match between the expected colour of the {@link server.Model.ItemTile ItemTile} and
+     * the actual colour of the {@link server.Model.ItemTile ItemTile} in the given structure.
+     *
+     * @param structure the specific structure of a {@link server.Model.Shelf Shelf} on which the check must be done
+     *
+     * @return the number of points to add to the {@link Player Player} points as established by the scores written on the PersonalGoal10 card
+     */
     public static int Personal_goal_10(PlayableItemTile[][] structure) {
         int count = 0;
 
@@ -236,6 +348,17 @@ public class CheckPersonalGoal {
         }
         return addPoint(count);
     }
+
+    /**
+     * Static method which checks the completion of the {@link PersonalGoal PersonalGoal11}.
+     * The method checks that, for every meaningful position in the PersonalGoal11 card,
+     * there is a match between the expected colour of the {@link server.Model.ItemTile ItemTile} and
+     * the actual colour of the {@link server.Model.ItemTile ItemTile} in the given structure.
+     *
+     * @param structure the specific structure of a {@link server.Model.Shelf Shelf} on which the check must be done
+     *
+     * @return the number of points to add to the {@link Player Player} points as established by the scores written on the PersonalGoal11 card
+     */
     public static int Personal_goal_11(PlayableItemTile[][] structure) {
         int count = 0;
 
@@ -259,6 +382,17 @@ public class CheckPersonalGoal {
         }
         return addPoint(count);
     }
+
+    /**
+     * Static method which checks the completion of the {@link PersonalGoal PersonalGoal12}.
+     * The method checks if, for every meaningful position in the PersonalGoal12 card,
+     * there is a match between the expected colour of the {@link server.Model.ItemTile ItemTile} and
+     * the actual colour of the {@link server.Model.ItemTile ItemTile} in the given structure.
+     *
+     * @param structure the specific structure of a {@link server.Model.Shelf Shelf} on which the check must be done
+     *
+     * @return the number of points to add to the {@link Player Player} points as established by the scores written on the PersonalGoal12 card
+     */
     public static int Personal_goal_12(PlayableItemTile[][] structure) {
         int count = 0;
 
@@ -284,9 +418,15 @@ public class CheckPersonalGoal {
     }
 
 
-
-
-
+    /**
+     * Method that invokes the specific method of {@link CheckPersonalGoal CheckPersonalGoal} depending on the {@link Util.PersonalGoalType PersonalGoalType}
+     * taken into account
+     *
+     * @param personalGoal the {@link PersonalGoal PersonalGoal}  which completion has to be checked
+     * @param structure the specific structure on which the check must be done
+     *
+     * @return the number of points to add to the {@link Player Player} points
+     */
     public static Integer calculatePoints(PersonalGoal personalGoal, PlayableItemTile[][] structure) {
         int point = 0;
 
@@ -307,7 +447,8 @@ public class CheckPersonalGoal {
         return point;
     }
 
-    public static int addPoint(int count){
+
+    private static int addPoint(int count){
         int point = 0;
         switch (count){
             case 1 -> point = 1;

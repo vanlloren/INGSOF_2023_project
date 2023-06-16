@@ -4,6 +4,10 @@ import java.util.function.Consumer;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This Class represents the adaptation of the standard {@link java.util.Observable Observable} Class
+ * to the methods and objects in use inside the {@link server.Model.GameModel GameModel} Class
+ */
 public abstract class GameModelObservable {
     private final List<GameModelObserver> observers = new ArrayList<>();
 

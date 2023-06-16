@@ -7,6 +7,9 @@ import server.Model.PlayableItemTile;
 
 import java.util.ArrayList;
 
+/**
+ * This Class is the controller for the {@link GameBoard GameBoard} and its components {@link LivingRoom LivingRoom} and {@link server.Model.ItemBag ItemBag}
+ */
 public class GameBoardController {
     private GameBoard controlledGameBoard;
 
@@ -16,22 +19,45 @@ public class GameBoardController {
     private GameController gameController;
 
 
-
+    /**
+     * Creates an instance of {@link GameBoardController GameBoardController} binding it with {@link GameController GameController} which is the main controller
+     *
+     * @param gameController the instance of {@link GameController GameController} to bind
+     */
     public GameBoardController(GameController gameController){
         this.gameController=gameController;
     }
+
+    /**
+     * Method that sets the number of players in the game
+     *
+     * @param playerNum a number between 2 and 4
+     */
     public void setPlayerNum(int playerNum){
         this.playerNum = playerNum;
     }
 
+    /**
+     *
+     * @return the controlled {@link GameBoard GameBoard}
+     */
     public GameBoard getControlledGameBoard(){
         return this.controlledGameBoard;
     }
 
+    /**
+     *
+     * @return the controlled {@link LivingRoom LivingRoom}
+     */
     public LivingRoom getControlledLivingRoom(){
         return this.controlledLivingRoom;
     }
 
+    /**
+     * Begins the initialization of the {@link GameBoard GameBoard}. Creates and binds a new instance of {@link GameBoard GameBoard},
+     * creates and fills the {@link server.Model.ItemBag ItemBag}, sets the {@link LivingRoom LivingRoom} also invoking the
+     * filling procedure and the first availability update on the {@link LivingRoom LivingRoom}'s tiles.
+     */
     public void gameBoardInit(){
         this.controlledGameBoard = new GameBoard(gameController.getGame());
         this.controlledGameBoard.setItemBag();
@@ -41,7 +67,20 @@ public class GameBoardController {
     }
 
 
-
+    /**
+     * Launches and controls the steps of the procedure that allows a {@link server.Model.Player Player} to pick
+     * a {@link server.Model.PlayableItemTile PlayableItemTile} from the {@link LivingRoom LivingRoom}
+     *
+     * @param x the "x" position of the {@link server.Model.PlayableItemTile PlayableItemTile} to pick from the {@link LivingRoom LivingRoom}
+     * @param y the "y" position of the {@link server.Model.PlayableItemTile PlayableItemTile} to pick from the {@link LivingRoom LivingRoom}
+     * @return the chosen {@link server.Model.PlayableItemTile PlayableItemTile} if the procedure is correct, otherwise <strong>null</strong>.
+     *     The procedure is <strong>not correct</strong> when:
+     *     (1) the chosen {@link server.Model.PlayableItemTile PlayableItemTile} is <strong>not available</strong>
+     *     (2) the chosen {@link server.Model.PlayableItemTile PlayableItemTile} is <strong>available but not adjacent</strong> to a {@link server.Model.PlayableItemTile PlayableItemTile}
+     *     picked during the same turn by the same {@link server.Model.Player Player}
+     *     (3) there are no more {@link server.Model.PlayableItemTile PlayableItemTiles} adjacent to a {@link server.Model.PlayableItemTile PlayableItemTile}
+     *     picked during the same turn by the same {@link server.Model.Player Player}
+     */
     public PlayableItemTile PickManager(int x, int y){
 
         if(controlledGameBoard.getPickedTilesNum()==0){
@@ -50,7 +89,6 @@ public class GameBoardController {
                 controlledGameBoard.setToPlayerFirstTile(x,y);
                 return controlledGameBoard.getToPlayerTiles().get(0);
             }else{
-                //messaggio/eccezione che indichi che la tessera scelta non è disponibile e ne va scelta un'altra
                 return null;
             }
         }else if(controlledGameBoard.getPickedTilesNum()==1){
@@ -59,11 +97,9 @@ public class GameBoardController {
                     controlledGameBoard.setToPlayerAnotherTile(x, y);
                     return controlledGameBoard.getToPlayerTiles().get(1);
                 }else {
-                    //messaggio/eccezione che indichi che la tessera scelta non è disponibile e ne va scelta un'altra
                     return null;
                 }
             }else{
-                //messaggio/eccezione che indichi che non posso più scegliere altre tessere
                 gameController.setFull();
                 return null;
             }
@@ -73,7 +109,6 @@ public class GameBoardController {
                     controlledGameBoard.setToPlayerAnotherTile(x, y);
                     return controlledGameBoard.getToPlayerTiles().get(2);
                 }else{
-                    //messaggio/eccezione che indichi che la tessera scelta non è disponibile e ne va scelta un'altra
                     return null;
                 }
             }else{
@@ -84,22 +119,47 @@ public class GameBoardController {
 
     }
     //----->LIVING ROOM
-    public boolean checkTileAvailability(int x, int y){
+
+    /**
+     * Launches the procedure to check if an {@link server.Model.ItemTile ItemTile} is available
+     *
+     * @param x the "x" position of the {@link server.Model.ItemTile ItemTile}
+     * @param y the "y" position of the {@link server.Model.ItemTile ItemTile}
+     * @return {@code true} if it is available, {@code false} otherwise
+     */
+    private boolean checkTileAvailability(int x, int y){
         //determina se una tessera sulla LivingRoom è available o no
         //da lanciare prima di ogni getPlayerXTile
         return controlledLivingRoom.getTileAvailability(x, y);
     }
 
-    public boolean checkTileAdjacency(int x, int y){
+    /**
+     * Launches the procedure to check if an {@link server.Model.ItemTile ItemTile} is adjacent to a previously picked {@link PlayableItemTile PlayableItemTile}
+     *
+     * @param x the "x" position of the {@link server.Model.ItemTile ItemTile}
+     * @param y the "y" position of the {@link server.Model.ItemTile ItemTile}
+     * @return {@code true} if it is available, {@code false} otherwise
+     */
+    private boolean checkTileAdjacency(int x, int y){
         return controlledLivingRoom.getTileAdjacency(x,y);
     }
 
+    /**
+     * Checks the number of {@link PlayableItemTile PlayableItemTiles} picked in the current turn
+     *
+     * @return {@code true} if the number is smaller than 3, {@code false} otherwise
+     */
     public boolean checkPickedTilesNum() {//tiene conto del numero d' ItemTiles pescate ogni turno
         return controlledGameBoard.getPickedTilesNum() <3;
     }
 
+    /**
+     * Method that fills the controlled {@link LivingRoom LivingRoom} with {@link PlayableItemTile PlayableItemTiles} picked from the {@link server.Model.ItemBag Itembag}.
+     * For every pair (x,y) checks if the corresponding cell in the {@link LivingRoom LivingRoom} is equal to {@code null}. If it is, picks a
+     * {@link PlayableItemTile PlayableItemTile} from the {@link server.Model.ItemBag Itembag} and puts it in the empty cell of the {@link LivingRoom LivingRoom}.
+     */
     public void livingRoomFiller(){
-        //riempie la LivingRoom di tessere usando getNextInGameTile e putNextInGameTile
+
         boolean isVoid;
         PlayableItemTile helperTile;
 
@@ -117,8 +177,7 @@ public class GameBoardController {
         }
     }
 
-    public boolean checkAdjacentAvailability() {//controlla se almeno una delle tessere adiacenti è
-        // disponibile
+    private boolean checkAdjacentAvailability() {
 
         for(int i =0; i<9; i++){
             for(int j=0; j<9; j++) {
@@ -132,9 +191,16 @@ public class GameBoardController {
         return false;
     }
 
+    /**
+     * Method that is executed at the beginning of every turn. It checks the presence of at least 2 adjacent {@link PlayableItemTile PlayableItemTiles}
+     * in the {@link LivingRoom LivingRoom}
+     *
+     * @return {@code true} if there is at least one PlayableItemTile with an adjacent {@link server.Model.ItemTile ItemTile} which is <strong>not null</strong>
+     * and which is not a {@link server.Model.NullItemTile NullItemTile}, {@code false} otherwise
+     */
+
     public boolean checkIfAdjacentTiles() {//check a inizio round su tessere adiacenti
-        //ritorna true se almeno una PlayableItemTile ha una tessera adiacente != null e
-        //la cui funzione nullDetection restituisce false
+        //ritorna
         int adjCounter = 0;
 
         for(int i=0; i<9; i++){
@@ -246,19 +312,5 @@ public class GameBoardController {
         return false;
 
     }
-
-
-    //----->ITEM BAG
-    /*public PlayableItemTile getNextInGameTile(){
-        return controlledGameBoard.getNextInGameTile();
-    }*/
-
-
-
-    /*public ArrayList<PlayableItemTile> giveTileToPlayer(){
-        return controlledGameBoard.getToPlayerTiles();
-        //invoco metodo di playerController che assegna le tessere al player
-    }*/
-
 
 }

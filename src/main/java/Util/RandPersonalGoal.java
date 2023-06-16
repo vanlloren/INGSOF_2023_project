@@ -1,13 +1,24 @@
 package Util;
 
 
+import server.Model.CommonGoal;
+import server.Model.PersonalGoal;
 import server.Model.Player;
 
 import java.util.ArrayList;
 import java.util.Random;
 
-
+/**
+ * Class which sets the {@link PersonalGoalType PersonalGoalType} of the {@link PersonalGoal PersonalGoal} of the {@link Player Player}
+ */
 public class RandPersonalGoal {
+
+    /**
+     * Static method to assign randomly the {@link PersonalGoalType PersonalGoalType} of the {@link PersonalGoal PersonalGoal} of the {@link Player Player}
+     *
+     * @param player the {@link Player Player} who possess the {@link PersonalGoal PersonalGoal}
+     * @param playersInGame {@link ArrayList ArrayList} that contains the {@link Player Players} in the match
+     */
     public static void setType(Player player, ArrayList<Player> playersInGame) {
         boolean isOK;
 

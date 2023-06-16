@@ -1,8 +1,6 @@
 package Network.ServerSide;
 
 
-import Network.ClientSide.Client;
-import Network.ClientSide.RemoteClientImplementation;
 import Network.ClientSide.RemoteClientInterface;
 
 import Network.message.*;
@@ -26,6 +24,8 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
 
     private final Object lock = new Object();
     private volatile boolean stop = false;
+    private RemoteClientInterface client;
+
     private ArrayList<RemoteClientInterface> clientList = new ArrayList<>();
 
     private HashMap<String, RemoteClientInterface> clientNickCombinations;
