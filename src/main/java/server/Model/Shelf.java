@@ -3,8 +3,6 @@ package server.Model;
 
 import Observer.ShelfObservable;
 import client.view.TurnView;
-import server.Controller.RuleShelf;
-
 import java.io.Serial;
 import java.io.Serializable;
 import java.rmi.RemoteException;
@@ -16,18 +14,16 @@ import Util.Colour;
  * This Class represents the {@link Shelf Shelf} of a single {@link Player Player} as described in the game rules.
  * The {@link Shelf Shelf} consists in a bi-dimensional array of {@link PlayableItemTile PlayableItemTiles}
  * which generates a matrix with 6 rows and 5 columns.
- *
  * <i>Have a look at MyShelfie RuleBook for further information</i>
  */
 public class Shelf extends ShelfObservable implements Serializable, SimpleShelf {
     private int columnChosen;
     private int pointsAdj = 0;
-    private GameModel gameModel;
+    private final GameModel gameModel;
 
 
     @Serial
     private static final long serialVersionUID = -5591053634616843792L;
-    private RuleShelf ruleShelf = new RuleShelf();
     private PlayableItemTile[][] structure = new PlayableItemTile[6][5];
 
     /**
@@ -124,7 +120,7 @@ public class Shelf extends ShelfObservable implements Serializable, SimpleShelf 
      */
     public int countMaxVoidTilesShelfColumns(){
         //Useful method to check also
-        List<Integer> list = new Vector<Integer>();
+        List<Integer> list = new Vector<>();
 
         for(int j= 0; j<5; j++){
             int count=0;

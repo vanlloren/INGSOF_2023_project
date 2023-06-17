@@ -16,7 +16,6 @@ import java.rmi.RemoteException;
  * Every {@link PersonalGoal PersonalGoal} possesses a unique scheme requiring that
  * {@link PlayableItemTile PlayableItemTiles} with a specific {@link Util.Colour Colour} must be placed
  * in specific positions in the {@link Shelf Shelf} in order to collect points.
- *
  * <i>Have a look at MyShelfie RuleBook for further information</i>
  */
 public class PersonalGoal extends PersonalGoalObservable implements Serializable {
@@ -46,7 +45,7 @@ public class PersonalGoal extends PersonalGoalObservable implements Serializable
 
     /**
      * Sets the new amount of points achieved for a {@link PersonalGoal PersonalGoal}
-     * @param point
+     * @param point the {@link int point} to assign
      */
     public void setPoint(Integer point) {
         this.point = point;

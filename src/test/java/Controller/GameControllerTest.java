@@ -339,7 +339,7 @@ public class GameControllerTest {
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
-        gameModel.setChat("lorenzo1", "ciao");
+        gameModel.setChat("lorenzo1", "ciao","io");
         GameController gameController = new GameController(gameModel);
         gameController.getGameBoardController().setPlayerNum(2);
         gameController.initGameBoard();

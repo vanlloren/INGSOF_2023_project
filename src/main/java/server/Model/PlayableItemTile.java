@@ -15,14 +15,13 @@ import java.util.*;
  * A {@link PlayableItemTile PlayableItemTile} is <strong>adjacent</strong> when at least one of
  * its four sides touches the side of another {@link PlayableItemTile PlayableItemTile}
  * picked in the same turn.
- *
  * <i>Have a look at MyShelfie RuleBook for further information</i>
  */
 public class PlayableItemTile extends ItemTile {
     @Serial
     private static final long serialVersionUID = -8977350255435956841L;
-    private Colour colour;
-    private int idCode;
+    private final Colour colour;
+    private final int idCode;
     private boolean availability;
     private boolean adjacency = false;
     private int xPos;
@@ -37,34 +36,35 @@ public class PlayableItemTile extends ItemTile {
      * @param id the {@code idCode} to assign to the {@link PlayableItemTile PlayableItemTile}
      */
     public PlayableItemTile(String colour, int id) {
-        if (colour.equals("GREEN")) {
-            Colour helperColour = Colour.GREEN;
-            this.colour = helperColour;
-            this.idCode = id;
-        } else if (colour.equals("WHITE")) {
-            Colour helperColour = Colour.WHITE;
-            this.colour = helperColour;
-            this.idCode = id;
-        } else if (colour.equals("YELLOW")) {
-            Colour helperColour = Colour.YELLOW;
-            this.colour = helperColour;
-            this.idCode = id;
-        } else if (colour.equals("BLUE")) {
-            Colour helperColour = Colour.BLUE;
-            this.colour = helperColour;
-            this.idCode = id;
-        } else if (colour.equals("CYAN")) {
-            Colour helperColour = Colour.CYAN;
-            this.colour = helperColour;
-            this.idCode = id;
-        } else if (colour.equals("PINK")){
-            Colour helperColour = Colour.PINK;
-            this.colour = helperColour;
-            this.idCode = id;
-        }else{
-            Colour helperColour = Colour.VOID;
-            this.colour = helperColour;
-            this.idCode = -1;
+        switch (colour) {
+            case "GREEN" -> {
+                this.colour = Colour.GREEN;
+                this.idCode = id;
+            }
+            case "WHITE" -> {
+                this.colour = Colour.WHITE;
+                this.idCode = id;
+            }
+            case "YELLOW" -> {
+                this.colour = Colour.YELLOW;
+                this.idCode = id;
+            }
+            case "BLUE" -> {
+                this.colour = Colour.BLUE;
+                this.idCode = id;
+            }
+            case "CYAN" -> {
+                this.colour = Colour.CYAN;
+                this.idCode = id;
+            }
+            case "PINK" -> {
+                this.colour = Colour.PINK;
+                this.idCode = id;
+            }
+            default -> {
+                this.colour = Colour.VOID;
+                this.idCode = -1;
+            }
         }
     }
 
@@ -161,7 +161,7 @@ public class PlayableItemTile extends ItemTile {
      */
     @Override
     public ArrayList<Integer> getPosition() {
-        ArrayList<Integer> tilePosition = new ArrayList<Integer>();
+        ArrayList<Integer> tilePosition = new ArrayList<>();
         tilePosition.add(xPos);
         tilePosition.add(yPos);
 

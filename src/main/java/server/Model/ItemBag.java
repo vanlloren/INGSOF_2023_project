@@ -4,13 +4,13 @@ package server.Model;
 import java.util.ArrayList;
 import java.util.Random;
 import Util.*;
-import Exceptions.*;
+
 
 /**
  * This Class represents the {@link ItemBag ItemBag} as described in the game rules.
  * The {@link ItemBag ItemBag} is an {@link ArrayList ArrayList} of {@link PlayableItemTile PlayableItemTile}
  * that are used to fill the blank spaces inside the {@link LivingRoom LivingRoom} during the game.
- *
+
  * <i>Have a look at MyShelfie RuleBook for further information</i>
  */
 public class ItemBag {
@@ -29,7 +29,7 @@ public class ItemBag {
     }
 
     public ArrayList<PlayableItemTile> getBagForTest(){
-        bag = new ArrayList<PlayableItemTile>();
+        bag = new ArrayList<>();
         return bag;
     }
 
@@ -41,7 +41,7 @@ public class ItemBag {
      * using a progressive index to determine their {@code idCode}.
      */
     public void putTiles() {
-        bag = new ArrayList<PlayableItemTile>();
+        bag = new ArrayList<>();
         PlayableItemTileFactory factory = new PlayableItemTileFactory();
 
         for (int i = 0; i < 132; i++) {
@@ -55,13 +55,11 @@ public class ItemBag {
                 bag.add(factory.createPlayableItemTile("BLUE", i + 1));
             } else if (i < 110) {
                 bag.add(factory.createPlayableItemTile("CYAN", i + 1));
-            } else if (i < 132) {
+            } else if (i < 131) {
                 bag.add(factory.createPlayableItemTile("PINK", i + 1));
             }
         }
     }
-
-    //dovrebbe effettuare pick random di ItemTile da ItemBag
 
     /**
      * This method picks a {@link PlayableItemTile PlayableItemTile} randomly from the {@link ItemBag ItemBag}

@@ -4,10 +4,8 @@ import server.Controller.GameController;
 import server.Model.GameModel;
 
 import java.io.PrintStream;
-import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
-import java.net.UnknownHostException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -50,7 +48,7 @@ public class ServerApp {
                     Enumeration<java.net.InetAddress> inetAddresses = networkInterface.getInetAddresses();
                     int count = 0;
                     ArrayList<String> address = new ArrayList<>();
-                    java.net.InetAddress inetAddress = null;
+                    java.net.InetAddress inetAddress;
                     while (inetAddresses.hasMoreElements()) {
                         inetAddress = inetAddresses.nextElement();
 
@@ -89,7 +87,6 @@ public class ServerApp {
         GameController gameController = new GameController(gameModel);
         RMIServer RMIServerCreator = new RMIServer(serverPort, gameController);
         RemoteServerImplementation remoteServer = RMIServerCreator.startRMIServer();
-        gameController.setRemoteServer(remoteServer);
         new Thread(() -> {
             while (true) {
                 try {

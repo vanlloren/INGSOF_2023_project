@@ -18,9 +18,6 @@ public interface RemoteServerInterface extends Remote {
 
     void onMessage(Message message) throws RemoteException;
 
-    void disconnect() throws RemoteException;
-
-
     void pingAllClient() throws RemoteException;
 
     void verifyStillConnected() throws RemoteException;

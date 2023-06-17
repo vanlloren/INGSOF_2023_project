@@ -11,7 +11,6 @@ import java.util.ArrayList;
  * This Class resembles the actual structure of the game with all its components.
  * It provides the methods to create and manipulate the meaningful parts of the Model such as
  * {@link LivingRoom LivingRoom} and {@link ItemBag ItemBag}.
- *
  * <i>Have a look at MyShelfie RuleBook for further information</i>
  */
 public class GameBoard implements Serializable {
@@ -21,15 +20,10 @@ public class GameBoard implements Serializable {
     private final GameModel gameModel;
     private transient ItemBag bag = new ItemBag();
     private LivingRoom livingRoom;
-    private PlayableItemTile nextInGameTile;//é la tessera "da mettere in gioco" ovvero quella che dalla bag sta venendo piazzata sulla plancia
-
-    private ArrayList<PlayableItemTile> toPlayerTiles = new ArrayList<>();//sono le tessere che il giocatore ha raccolto dalla plancia, forse si può fare meglio
-
-    //servono per regolare correttamente le adiacenze
+    private PlayableItemTile nextInGameTile;
+    private ArrayList<PlayableItemTile> toPlayerTiles = new ArrayList<>();
     private int firstX;
     private int firstY;
-
-    //MODEL
 
     /**
      * This method provide an instance of {@link GameBoard GameBoard}.
@@ -149,7 +143,7 @@ public class GameBoard implements Serializable {
      */
     public void setToPlayerFirstTile(int x, int y){ //prende tessera 1 dalla LivingRoom
 
-        toPlayerTiles = new ArrayList<PlayableItemTile>();
+        toPlayerTiles = new ArrayList<>();
 
         toPlayerTiles.add(livingRoom.pickTile(x, y));
         livingRoom.updateAdjacentAvailabilityV1(x, y);

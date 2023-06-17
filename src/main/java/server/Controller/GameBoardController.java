@@ -16,7 +16,7 @@ public class GameBoardController {
     private LivingRoom controlledLivingRoom;
 
     private int playerNum;
-    private GameController gameController;
+    private final GameController gameController;
 
 
     /**

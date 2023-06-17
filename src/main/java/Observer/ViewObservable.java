@@ -1,6 +1,4 @@
 package Observer;
-import server.Model.LivingRoom;
-import server.Model.Shelf;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,33 +20,6 @@ public abstract class ViewObservable {
      */
     public void addObserver(ViewObserver obs) {
         observers.add(obs);
-    }
-
-    /**
-     * Adds a list of observers.
-     *
-     * @param observerList the list of observers to be added.
-     */
-    public void addAllObservers(List<ViewObserver> observerList) {
-        observers.addAll(observerList);
-    }
-
-    /**
-     * Removes an observer.
-     *
-     * @param obs the observer to be removed.
-     */
-    public void removeObserver(ViewObserver obs) {
-        observers.remove(obs);
-    }
-
-    /**
-     * Removes a list of observers.
-     *
-     * @param observerList the list of observers to be removed.
-     */
-    public void removeAllObservers(List<ViewObserver> observerList) {
-        observers.removeAll(observerList);
     }
 
     /**

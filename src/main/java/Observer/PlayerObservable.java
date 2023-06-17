@@ -19,13 +19,6 @@ public abstract class PlayerObservable {
     public void addObserver(PlayerObserver obs){ observers.add(obs);}
 
     /**
-     * Removes an observer.
-     *
-     * @param obs the observer to be removed.
-     */
-    public void deleteObserver(PlayerObserver obs){ observers.remove(obs);}
-
-    /**
      * Notifies all the current observers through the lambda argument.
      *
      * @param lambda the lambda to be called on the observers.

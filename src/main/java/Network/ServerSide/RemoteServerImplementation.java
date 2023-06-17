@@ -15,7 +15,6 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 
 
@@ -24,9 +23,7 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
 
     private final Object lock = new Object();
     private volatile boolean stop = false;
-    private RemoteClientInterface client;
-
-    private ArrayList<RemoteClientInterface> clientList = new ArrayList<>();
+    private final ArrayList<RemoteClientInterface> clientList = new ArrayList<>();
 
     private HashMap<String, RemoteClientInterface> clientNickCombinations;
     private final GameController gameController;
@@ -72,7 +69,8 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
                         RandPersonalGoal.setType(newPlayer, gameController.getGame().getPlayersInGame());
                         Message newMessage2 = new PlayersNumberRequestMessage(message.getNickname());
                         newMessage.getClient().onMessage(newMessage2);
-                        while (stop) {
+                        while (true) {
+                            if (!stop) break;
                         }
                         gameController.initGameBoard();
                         gameController.getGame().getMyShelfie().getLivingRoom().addObserver(newMessage.getClient());
@@ -144,11 +142,6 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
             }
 
         }
-    }
-
-
-    @Override
-    public void disconnect() throws RemoteException {
     }
 
     @Override

@@ -14,7 +14,6 @@ import java.util.ArrayList;
  * depending on the number of {@link Player Players} in the match. Every token has its score
  * which is added to the point total of the {@link Player Player} that completes the {@link CommonGoal CommonGoal}
  * depending on the number of {@link Player Players} that already completed it.
- *
  * <i>Have a look at MyShelfie RuleBook for further information</i>
  */
 
@@ -22,7 +21,7 @@ public class CommonGoal implements Serializable {
     @Serial
     private static final long serialVersionUID = 6744912126943243456L;
     CommonGoalType commonGoalType;
-    private ArrayList<Integer> token_list = new ArrayList<>();
+    private final ArrayList<Integer> token_list = new ArrayList<>();
     private GameModel gameModel;
 
     /**

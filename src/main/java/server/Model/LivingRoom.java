@@ -1,15 +1,14 @@
 package server.Model;
 
 import Observer.LivingRoomObservable;
-
 import Util.*;
 import client.view.TurnView;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
-import java.util.Observable;
-import java.util.function.Consumer;
+
 
 /**
  * This Class represents the {@link LivingRoom LivingRoom} as described in the Game Rules.
@@ -19,15 +18,16 @@ import java.util.function.Consumer;
  * in the match.
  * The {@link LivingRoom LivingRoom} also contains the 2 {@link CommonGoal CommonGoals} chosen randomly
  * at the beginning of the match.
- *
+
  * <i>Have a look at MyShelfie RuleBook for further information</i>
  */
 public class LivingRoom extends LivingRoomObservable implements Serializable, SimpleLivingRoom {
+    @Serial
     private static final long serialVersionUID = 44051L;
     private ItemTile[][] gameTable;
-    private CommonGoal commonGoal1;
-    private CommonGoal commonGoal2;
-    private GameModel gameModel;
+    private final CommonGoal commonGoal1;
+    private final CommonGoal commonGoal2;
+    private final GameModel gameModel;
 
     /**
      * This method creates an instance of {@link LivingRoom LivingRoom} also binding it with
@@ -150,10 +150,7 @@ public class LivingRoom extends LivingRoomObservable implements Serializable, Si
      * @return {@code true} if the cell is empty, {@code false} otherwise
      */
     public boolean nullDetection(int x, int y){
-        if (gameTable[x][y] == null){
-            return true;
-        }
-        return false;
+        return gameTable[x][y] == null;
     }
 
     /**
@@ -222,11 +219,7 @@ public class LivingRoom extends LivingRoomObservable implements Serializable, Si
      * @return {@code true} if the selected cell is empty, {@code false} otherwise
      */
     public boolean searchVoid(int x, int y) {
-        if(gameTable[x][y] == null) {
-            return true;
-        }else {
-            return false;
-        }
+        return gameTable[x][y] == null;
     }
 
     //MODEL

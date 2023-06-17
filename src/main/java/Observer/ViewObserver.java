@@ -30,13 +30,6 @@ public interface ViewObserver {
      */
     void onUpdatePlayersNumber(int playersNumber) throws RemoteException;
 
-
-    /**
-     * Handles a disconnection wanted by the user.
-     * (e.g. a click on the back button into the GUI).
-     */
-    void onDisconnection();
-
     /**
      * Tells the {@link Network.ServerSide.RemoteServerImplementation RemoteServer} that a
      * {@link Player Player} wants to begin picking {@link server.Model.PlayableItemTile PlayableItemTiles}

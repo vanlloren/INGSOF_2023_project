@@ -3,9 +3,9 @@ package server.Model;
 
 import Network.message.Message;
 import Observer.GameModelObservable;
-import Util.RandChairOwner;
 import client.view.TurnView;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -14,24 +14,22 @@ import java.util.ArrayList;
  * This Class contains all the components of the Model of the Game.
  * It is the Class tha receives direct orders from the {@link Network.ServerSide.RemoteServerImplementation RemoteServer}
  * and which is in charge of beginning almost every process that modifies the Model of the Game.
- *
  * <i>Have a look at MyShelfie RuleBook for further information</i>
  */
 public class GameModel extends GameModelObservable implements Serializable, SimpleGameModel {
+    @Serial
     private static final long serialVersionUID = 44051L;
 
 
     private Player chosenChairOwner;
     private Integer chosenPlayersNumber = -1;
-
-    public static final String Server_Nick = "Server";//C'è un collegamento al server per ogni giocatore.
     private Player currPlayer ;
     private String matchWinner;
     private GameBoard myShelfie ;
-    private ArrayList<Player> playersInGame;
+    private final ArrayList<Player> playersInGame;
     private boolean endGame=false;
     private boolean GameOn = true;
-    private String Chat;
+
 
     /**
      * This method creates an instance of {@link GameModel GameModel}.
@@ -109,17 +107,15 @@ public class GameModel extends GameModelObservable implements Serializable, Simp
      * @param chat the {@link String String} containing the text of the {@link Network.message.Message Message}
      */
     public void setChat(String Nickname,String chat,String receiver) {
-        this.Chat = chat;
         notifyObservers(obs -> {
             try {
-                obs.onUpdateModelChat(new TurnView(this), Nickname, chat,receiver);
+                obs.onUpdateModelChat(new TurnView(this),Nickname,chat,receiver);
             } catch (RemoteException e) {
                 throw new RuntimeException(e);
             }
         });
 
     }
-
 
     /**
      * Sets the variable {@code gameOn} causing the termination of the

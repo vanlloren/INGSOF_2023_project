@@ -11,15 +11,15 @@ import java.util.ArrayList;
  * of the {@link LivingRoom LivingRoom} at its boards.
  * For this reason, a {@link NullItemTile NullItemTile} is always <strong>not available</strong>,
  * <strong>not adjacent</strong>, has {@link Colour Colour} {@code VOID} and {@code idCode} 0.
- *
+
  * <i>Have a look at MyShelfie RuleBook for further information</i>
  */
 public class NullItemTile extends ItemTile {
     @Serial
     private static final long serialVersionUID = -8726544593745400731L;
-    private Colour colour;
-    private int idCode;
-    private boolean availability;
+    private final Colour colour;
+    private final int idCode;
+    private final boolean availability;
     private boolean adjacency;
 
     private int xPos;

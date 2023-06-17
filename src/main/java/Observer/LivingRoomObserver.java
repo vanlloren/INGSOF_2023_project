@@ -1,8 +1,6 @@
 package Observer;
 
-import Util.CommonGoalType;
 import client.view.TurnView;
-
 import java.rmi.RemoteException;
 
 /**

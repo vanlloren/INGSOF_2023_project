@@ -41,16 +41,13 @@ public class RMIServer {
      */
     public RemoteServerImplementation startRMIServer(){
         try{
-            RemoteServerImplementation remoteServer = new RemoteServerImplementation(this, gameController);
+            RemoteServerImplementation remoteServer = new RemoteServerImplementation(this,gameController);
 
             Registry registry = LocateRegistry.createRegistry(serverRMIPort);
 
             registry.bind("MyShelfieServer", remoteServer);
             System.out.println("Server RMI pronto");
             try {
-                // Ottieni il riferimento al Registro RMI
-                Registry registry2 = LocateRegistry.getRegistry(1099);
-
                 // Ottieni la lista dei nomi registrati nel Registro RMI
                 String[] registeredNames = registry.list();
 

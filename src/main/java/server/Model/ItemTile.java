@@ -6,26 +6,17 @@ import Util.Colour;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
+
 
 /**
  * This abstract Class represents a generic single {@link ItemTile ItemTile} in the {@link LivingRoom LivingRoom}.
  * There are two different types of {@link ItemTile} with theirs specific characteristics:
  * (1) {@link PlayableItemTile PlayableItemTile} (2) {@link NullItemTile NullItemTile}.
- *
  * <i>Have a look at MyShelfie RuleBook for further information</i>
  */
 public abstract class ItemTile implements Serializable {
-
         @Serial
         private static final long serialVersionUID = 3141006218010219600L;
-        private Colour colour;
-        private int idCode;
-        private boolean availability;
-        private boolean adjacency;
-        private int xPos;
-        private int yPos;
-
         /**
          *
          * @return the {@link Colour Colour} of a {@link ItemTile ItemTile}

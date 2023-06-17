@@ -4,6 +4,7 @@ public class UpdateChatEvent extends Event {
     private final String Nickname;
     private final String chat;
     private final String receiver;
+
     public UpdateChatEvent(String Nickname,String chat,String receiver) {
         super(EventEnum.UPDATE_CHAT);
         this.Nickname = Nickname;

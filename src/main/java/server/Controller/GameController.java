@@ -7,9 +7,6 @@ import Util.RandCommonGoal;
 import client.view.TurnView;
 import server.Model.*;
 import server.enumerations.PickTileResponse;
-
-
-import java.awt.*;
 import java.rmi.RemoteException;
 import java.util.*;
 
@@ -20,10 +17,7 @@ import java.util.*;
 public class GameController {
 
     private final GameModel game;
-    //  private boolean timeOut;
     private final GameBoardController gameBoardController; // gameBoardController è il tramite tra GameController e le classi GameBoard, LivingRoom e ItemBag
-
-    private RemoteServerImplementation remoteServer;
     boolean moveOn = false;
     boolean full = false;
 
@@ -45,16 +39,6 @@ public class GameController {
      */
     public GameModel getGame() {
         return this.game;
-    }
-
-
-    /**
-     * Creates the bind between the {@link GameController GameController} and the {@link RemoteServerImplementation RemoteServer} which runs the match
-     *
-     * @param remoteServer the {@link RemoteServerImplementation RemoteServer} to bind
-     */
-    public void setRemoteServer(RemoteServerImplementation remoteServer) {
-        this.remoteServer = remoteServer;
     }
 
     /**

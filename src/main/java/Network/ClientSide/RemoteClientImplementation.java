@@ -314,10 +314,12 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
                 }
             }
             y = scanner.nextInt();
+            scanner.nextLine();
             if (y < 0 || y > 8) {
                 out.println("Coordinata non valida, riprova!");
             }
         }while(y<0 || y>8);
+
         TileReplyMessage message = server.onTilePickMessage(nickname, x, y);
         while (message.isTileAccepted().equals(PickTileResponse.MAX_TILE_PICKED) || message.isTileAccepted().equals(PickTileResponse.INVALID_TILE)){
             if(message.isTileAccepted().equals(PickTileResponse.MAX_TILE_PICKED)){
@@ -506,17 +508,6 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
         }
         helperList.add(message.getTile());
 
-        /*buffer = scanner.nextLine();
-        while(buffer.equals("chat")){
-            ChatThread thread = new ChatThread(userInterface, this);
-            thread.start();
-            try {
-                thread.join();
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-            buffer = scanner.nextLine();
-        }*/
         out.println("Due tessere pescate, vuoi pescare altre tessere? [Y/N]");
         test = scanner.nextLine();
         while(test.equals("chat")){
@@ -559,7 +550,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
             return;
         }
 
-        //pesca terza tessera
+
         do {
             System.out.println("Scegli la posizione x della terza tessera che vuoi pescare!");
             while(!scanner.hasNextInt()){
@@ -941,15 +932,6 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
     public void onUpdateShowNickCurrPlayer() {
         this.userInterface.showNickCurrentPlayer(turnView.getNicknameCurrentPlayer());
     }
-
-
-
-
-    @Override
-    public void onDisconnection() {
-
-    }
-
 
     //---------------------------------//
     @Override

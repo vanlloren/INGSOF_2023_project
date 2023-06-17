@@ -1,9 +1,7 @@
 package server.Controller;
 
 import Util.Colour;
-import server.Model.ItemTile;
 import server.Model.PlayableItemTile;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 
@@ -319,7 +317,6 @@ public class RuleCommonGoal {
         public static boolean CheckLine2(PlayableItemTile[][] structure) { //uguale a column 2 ma sviluppato per le righe
             int count = 0;
             for(int i=0;i<6;i++){
-                HashSet<Colour> distinctColour = new HashSet<>();
                 ArrayList<Colour> colourArrayList = new ArrayList<>();
                 for(int j=0;j<5;j++){
                     if(structure[i][j].getColour()!=Colour.VOID){
@@ -327,7 +324,7 @@ public class RuleCommonGoal {
                     }
                 }
                 if(colourArrayList.size()==5){
-                    distinctColour.addAll(colourArrayList);
+                    HashSet<Colour> distinctColour = new HashSet<>(colourArrayList);
                     if(distinctColour.size()==5)
                         count++;
                 }

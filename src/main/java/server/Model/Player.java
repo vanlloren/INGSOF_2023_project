@@ -3,12 +3,8 @@ package server.Model;
 
 import Network.ClientSide.RemoteClientInterface;
 import Observer.PlayerObservable;
-
-import Observer.PlayerObserver;
 import Util.Colour;
 import client.view.TurnView;
-import server.Controller.RuleShelf;
-
 import java.io.Serial;
 import java.io.Serializable;
 import java.rmi.RemoteException;
@@ -18,7 +14,6 @@ import java.rmi.RemoteException;
  * There can be 2 to 4 players in a game. Each player, identified with a unique {@code nickname}
  * within the game, has a {@link Shelf Shelf} assigned to him to be filled with {@link PlayableItemTile PlayableItemTiles}
  * and a specific {@link PersonalGoal PersonalGoal} that he will have to try to complete.
- *
  * <i>Have a look at MyShelfie RuleBook for further information</i>
  */
 public class Player extends PlayerObservable implements Serializable, SimplePlayer {
@@ -28,13 +23,10 @@ public class Player extends PlayerObservable implements Serializable, SimplePlay
     private Integer points=0;
     private final Shelf personalShelf;
 
-    private GameModel gameModel;
+    private final GameModel gameModel;
     private final PersonalGoal personalGoal;
     private boolean hasCommonGoal1 = false;
     private boolean hasCommonGoal2 = false;
-
-    private boolean endgame = false;
-
     /**
      * This method creates an instance of {@link Player Player} also binding it with the
      * actual {@link GameModel GameModel}

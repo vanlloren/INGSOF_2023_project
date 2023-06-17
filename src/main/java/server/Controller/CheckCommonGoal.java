@@ -18,45 +18,20 @@ public class CheckCommonGoal {
      * @return boolean which indicates if the specified {@link CommonGoal CommonGoal} has been completed or not
      */
     public static boolean checkGoal(Shelf myShelfy, CommonGoalType commonGoalType) { //il parametro è gia passato quando chiamo calculatepoints
-    boolean checker;
-    switch (commonGoalType) {
-        case COMMONGOAL02:
-            checker = RuleCommonGoal.checkCorner(myShelfy.getStructure());
-            break;
-        case COMMONGOAL01:
-            checker = RuleCommonGoal.checkSixCouples(myShelfy.getStructure());
-            break;
-        case COMMONGOAL03:
-            checker = RuleCommonGoal.checkFourGroups(myShelfy.getStructure());
-            break;
-        case COMMONGOAL04:
-            checker = RuleCommonGoal.checkSquare(myShelfy.getStructure());
-            break;
-        case COMMONGOAL05:
-            checker = RuleCommonGoal.CheckColumn1(myShelfy.getStructure());
-            break;
-        case COMMONGOAL06:
-            checker = RuleCommonGoal.checkEight(myShelfy.getStructure());
-            break;
-        case COMMONGOAL07:
-            checker = RuleCommonGoal.checkDiagonal(myShelfy.getStructure());
-            break;
-        case COMMONGOAL08:
-            checker = RuleCommonGoal.CheckLine1(myShelfy.getStructure());
-            break;
-        case COMMONGOAL09:
-            checker = RuleCommonGoal.CheckColumn2(myShelfy.getStructure());
-            break;
-        case COMMONGOAL10:
-            checker = RuleCommonGoal.CheckLine2(myShelfy.getStructure());
-            break;
-        case COMMONGOAL11:
-            checker = RuleCommonGoal.checkCrux(myShelfy.getStructure());
-            break;
-        default : //è il caso di commonGoal12, ma l'ho reso default così la coverage è al 100%
-            checker = RuleCommonGoal.checkStair(myShelfy.getStructure());
-            break;
-    }
-    return checker;
+        return switch (commonGoalType) {
+            case COMMONGOAL02 -> RuleCommonGoal.checkCorner(myShelfy.getStructure());
+            case COMMONGOAL01 -> RuleCommonGoal.checkSixCouples(myShelfy.getStructure());
+            case COMMONGOAL03 -> RuleCommonGoal.checkFourGroups(myShelfy.getStructure());
+            case COMMONGOAL04 -> RuleCommonGoal.checkSquare(myShelfy.getStructure());
+            case COMMONGOAL05 -> RuleCommonGoal.CheckColumn1(myShelfy.getStructure());
+            case COMMONGOAL06 -> RuleCommonGoal.checkEight(myShelfy.getStructure());
+            case COMMONGOAL07 -> RuleCommonGoal.checkDiagonal(myShelfy.getStructure());
+            case COMMONGOAL08 -> RuleCommonGoal.CheckLine1(myShelfy.getStructure());
+            case COMMONGOAL09 -> RuleCommonGoal.CheckColumn2(myShelfy.getStructure());
+            case COMMONGOAL10 -> RuleCommonGoal.CheckLine2(myShelfy.getStructure());
+            case COMMONGOAL11 -> RuleCommonGoal.checkCrux(myShelfy.getStructure());
+            default -> //è il caso di commonGoal12, ma l'ho reso default così la coverage è al 100%
+                    RuleCommonGoal.checkStair(myShelfy.getStructure());
+        };
 }
 }
