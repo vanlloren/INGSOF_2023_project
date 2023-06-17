@@ -1,5 +1,7 @@
 package Network.message;
 
+import server.Model.Player;
+
 import java.io.Serial;
 import java.io.Serializable;
 
@@ -16,18 +18,42 @@ public abstract class Message implements Serializable {
     private  String nickname;
     private final MessageEnumeration messageEnum;
 
+    /**
+     * This method creates an instance of {@link Message Message}
+     *
+     * @param nickname a {@link String String} containing the {@code nickname} of the {@link Player Player}
+     *                 who sent the {@link Message Message}
+     * @param messageEnum the {@link MessageEnumeration MessageEnumeration} specifying the type
+     *                    of the {@link Message Message}
+     */
     Message(String nickname, MessageEnumeration messageEnum) {
         this.nickname = nickname;
         this.messageEnum = messageEnum;
     }
+
+    /**
+     * This method creates an instance of {@link Message Message}
+     *
+     * @param messageEnum the {@link MessageEnumeration MessageEnumeration} specifying the type
+     *                    of the {@link Message Message}
+     */
     Message(MessageEnumeration messageEnum){
         this.messageEnum = messageEnum;
     }
 
+    /**
+     *
+     * @return a {@link String String} containing the {@code nickname} of the sender of the
+     * {@link Message Message}
+     */
     public String getNickname() {
         return nickname;
     }
 
+    /**
+     *
+     * @return the {@link MessageEnumeration MessageEnumeration} of the {@link Message Message}
+     */
     public MessageEnumeration getMessageEnumeration() {
         return messageEnum;
     }

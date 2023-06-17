@@ -18,7 +18,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-
+/**
+ * This Class contains the implementation of all the Remote Methods provided by {@link RemoteServerInterface RemoteServerInterface}
+ * and also other methods used by the RemoteServer to access and give orders to the {@link GameController GameController}
+ */
 public class RemoteServerImplementation extends UnicastRemoteObject implements RemoteServerInterface {
     @Serial
     private static final long serialVersionUID = 5472205342096385232L;
@@ -30,12 +33,20 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
     private HashMap<String, RemoteClientInterface> clientNickCombinations;
     private final GameController gameController;
 
+    /**
+     * This method provides an instance of {@link RemoteServerImplementation RemoteServer} and binds it
+     * with the {@link GameController GameController} of the respecitive {@link server.Model.GameModel GameModel}
+     *
+     * @param gameController the {@link GameController GameController} to bind
+     * @throws RemoteException exception that underlines problems with the RMI Connection
+     */
     RemoteServerImplementation(GameController gameController) throws RemoteException {
         this.gameController = gameController;
-        }
+    }
 
-
-
+    /**
+     * This method sets the variable {@code stop} value to {@code false}
+     */
     public void resetStop() {
         stop = false;
     }
@@ -44,6 +55,7 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
 
         return gameController.pickTile(x, y);
     }
+
     public InsertionReplyMessage ToPutTileRequestMessage(int xPos, int yPos , PlayableItemTile tile , int numOfTiles){
         return gameController.putTile(xPos,yPos,tile,numOfTiles);
     }
@@ -145,7 +157,13 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
         }
     }
 
-    @Override
+    /**
+     * This method allows the {@link RemoteServerImplementation RemoteServer} to ping all the
+     * {@link Network.ClientSide.RemoteClientImplementation RemoteClients} to verify if the connection
+     * with them is still on and running
+     *
+     * @throws RemoteException exception that underlines problems with the RMI Connection
+     */
     public void pingAllClient() throws RemoteException {
         List<RemoteClientInterface> clientsCopy = new ArrayList<>(clientList);
         for (RemoteClientInterface client : clientsCopy) {
@@ -156,11 +174,6 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
             }
         }
     }
-
-
-
-
-
     @Override
     public void verifyStillConnected() throws RemoteException{
     }
