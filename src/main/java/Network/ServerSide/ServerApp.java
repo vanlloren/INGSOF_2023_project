@@ -20,6 +20,9 @@ public class ServerApp {
 
     private static final PrintStream out = System.out;
     private static final Scanner scanner = new Scanner(System.in);
+    private static RemoteServerImplementation remoteServer;
+    private static int serverPort;
+    private static boolean isValid = false;
 
     /**
      * The root method of the process that has the responsibility of creating and realizing the correct
@@ -35,7 +38,6 @@ public class ServerApp {
      * @param args an Array {@link String String} containing the eventual arguments
      */
     public static void main(String[] args){
-        //qui ci sarà il SocketServer
 
         try {
             boolean found = false;
@@ -51,42 +53,38 @@ public class ServerApp {
                     java.net.InetAddress inetAddress;
                     while (inetAddresses.hasMoreElements()) {
                         inetAddress = inetAddresses.nextElement();
-
                         address.add(inetAddress.getHostAddress());
-
-
-
-
                         if (count == 1) {
                             System.setProperty("java.rmi.server.hostname", address.get(0));
                             System.out.println("Indirizzo IP: " + address.get(0));
                             System.out.println("Indirizzo IP: " + address.get(1));
                             found = true;
                         }
-
                         count++;
                     }
                 }
-
-
-
-
-
             }
-
-
         } catch (SocketException e) {
             throw new RuntimeException(e);
         }
 
 
-        out.println("Welcome to MyShelfie, you're about to create a new Server which will run MyShelfie!");
-        out.println("Please, decide on which port you would like to run the RMIServer:");
-        int serverPort = scanner.nextInt();
+        out.println("Benvenuto su MyShelfie! Stai per creare il server per la gestione della partita....");
+        out.println("Inserisci il numero di porta da usare per il server:");
+        do {
+            String serverPortString = scanner.next();
+            try {
+                serverPort = Integer.parseInt(serverPortString);
+                isValid = true;
+            } catch (NumberFormatException ex) {
+                out.println("Stringa non valida per favore inserisci valore numerico per il numero di porta");
+            }
+        }while (!isValid);
         GameModel gameModel = new GameModel();
         GameController gameController = new GameController(gameModel);
         RMIServer RMIServerCreator = new RMIServer(serverPort, gameController);
-        RemoteServerImplementation remoteServer = RMIServerCreator.startRMIServer();
+        remoteServer = RMIServerCreator.startRMIServer();
+
         new Thread(() -> {
             while (true) {
                 try {
@@ -96,13 +94,6 @@ public class ServerApp {
                 }
             }
         }).start();
-
-
-
-
-
-
-        //stessa cosa per creare il SocketServer
     }
 
 }

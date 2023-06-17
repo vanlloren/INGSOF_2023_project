@@ -103,7 +103,7 @@ this.isLastTurn = true;
         }while (!isLastTurn);
 
 
-        out.println("it was your last turn please wait for final results");
+        out.println("E' stato il tuo ultimo turno...attendi risultati finali");
      while (true){
          if (!gameOn) break;
      }
@@ -142,26 +142,26 @@ this.isLastTurn = true;
         int picking = -1;
             do {
                 out.println("""
-                        Press 1 if you want to PICK A TILE FROM LIVING ROOM\s
-                        Press 2 if you want to SEE THE LIVINGROOM\s
-                        Press 3 if you want to SEE THE PLAYERS IN YOUR GAMELOBBY\s
-                        Press 4 if you want to SEE YOUR PERSONAL SHELF\s
-                        Press 5 if you want to SEE YOUR CURRENT SCORING\s
-                        Press 6 if you want to SEE THE NICKNAME OF THE PLAYER WHO'S PLAYING\s
-                        Press 7 if you want to write in the chat"""
+                        Premi 1 se vuoi entrare nel tuo turno di gioco\s
+                        Premi 2 se vuoi vedere la LivingRoom\s
+                        Premi 3 per vedere i giocatori in partita\s
+                        Premi 4 per vedere la tua PersonalShelf\s
+                        Premi 5 per vedere il tuo punteggio\s
+                        Premi 6 per vedere il giocatore di turno\s
+                        Premi 7 per scrivere in chat"""
                 );
 
                 choose = scanner.next();
                 try {
                     picking = Integer.parseInt(choose);
                     if (picking != 1 && picking != 2 && picking != 3 && picking != 4 && picking != 5 && picking != 6 && picking != 7) {
-                        out.println("Symbol not recognized, please try again...\n");
+                        out.println("Simbolo non riconosciuto...riprova");
                         askPlayerNextMove();
                     }
 
                 }
                 catch (NumberFormatException ex) {
-                   out.println( "Not valid string please write only a number in the string format");
+                   out.println("Stringa non valida per favore inserisci valore numerico per la scelta tra le opzioni");
                    askPlayerNextMove();
                 }
             }
@@ -174,7 +174,7 @@ this.isLastTurn = true;
                 if (currPlayer.equals(this.nickname)) {
                     askMovingTilePosition();
                 } else {
-                    System.out.println("IT IS NOT YOUR TURN YET: PLEASE WAIT ");
+                    System.out.println("Non è ancora il tuo turno aspetta!");
                     out.println();
 
                 }
@@ -327,7 +327,7 @@ this.isLastTurn = true;
     @Override
     public void askNickname() {
 
-        out.println("Enter nickname please: ");
+        out.println("Scrivi il tuo Nickname: ");
         String nickName = scanner.nextLine();
         notifyObserver(obs -> {
             try {
@@ -353,21 +353,21 @@ this.isLastTurn = true;
         String num;
         int playersNum = -1;
         boolean isValid = false;
-        out.println("Nickname accepted!");
+        out.println("Nickname accettato!");
         out.println("Il nickname scelto è: " + this.nickname);
         resetNeedNick();
-           out.println("You are the first player of the game! Please, insert the number of total player for the match [min=2, max=4]:");
-     do{ out.println("Insert the number of total players [min=2, max=4]:");
+           out.println("Sei il primo giocatore entrato sul server!");
+     do{ out.println("Inserisci il numero di giocatori per questa partita [min=2, max=4]:");
          num = scanner.next();
 
         try {
             playersNum = Integer.parseInt(num);
             if (playersNum<2 || playersNum>4)
-                out.println("The number of player is not valid!");
+                out.println("Numero di giocatori non valido...!");
                 else isValid = true;
             }
         catch (NumberFormatException ex) {
-            out.println( "Not valid string please write only a number in the string format");
+            out.println("Stringa non valida per favore inserisci valore numerico per il numero di giocatori");
 
         }}
         while(!isValid);
@@ -386,9 +386,6 @@ this.isLastTurn = true;
     public void askMovingTilePosition(){
         notifyObserver(obs -> obs.onUpdateShowLivingRoom());
         notifyObserver(obs -> obs.onUpdateShowAvailableTiles());
-
-
-
         notifyObserver(obs -> {
             try {
                 obs.onUpdateToPickTile();
@@ -416,7 +413,7 @@ this.isLastTurn = true;
     @Override
     public void showLoginResults(boolean nickAccepted, String chosenNickname) {
         if(nickAccepted){
-            out.println("Login successful, nickname accepted!");
+            out.println("Login avvenuto con successo!");
             out.println("Il nickname scelto è: " + this.nickname);
             resetNeedNick();
         }else{
@@ -516,16 +513,14 @@ this.isLastTurn = true;
 
     @Override
     public void showPartialPoint(int point) {
-    out.println("Your total point so far is :"+point);
+    out.println("Il tuo punteggio corrente :"+point);
     }
 
     public void resetTUI(){
         out.println("Cleaning of the textual interface...");
-        //out.flush();
     }
 
     public void connectToServerFromTUI(String address, int port){
-        //se implementiamo socket si deve anche definire tipo di connessione
         boolean isValid = false;
         String connection;
          int connectionType;

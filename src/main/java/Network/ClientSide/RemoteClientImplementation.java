@@ -648,23 +648,22 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
 
         int i = 0;
         for (PlayableItemTile turnTile : turnTiles) {
-            out.println("Tile picked: {[" + turnTile.getColour() + ", " + turnTile.getIdCode() + "]," + " in position : " + i + "}");
+            out.println("Tile pescate dalla LivingRoom: {[" + turnTile.getColour() + ", " + turnTile.getIdCode() + "]," + " in posizione : " + i + "}");
             i++;
         }
         switch (turnTiles.size()) {
-            case 1 -> out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 0 ])");
-            case 2 -> out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 0 , 1 ])");
-            case 3 -> out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 0 , 1 , 2 ])");
+            case 1 -> out.println("Scegli la tile da inserire nella Shelf(Inserimento valido:[ 0 ])");
+            case 2 -> out.println("Scegli la tile da inserire nella Shelf(Inserimento valido:[ 0 , 1 ])");
+            case 3 -> out.println("Scegli la tile da inserire nella Shelf(Inserimento valido:[ 0 , 1 , 2 ])");
         }
         while (!scanner.hasNextInt()) {
             buffer = scanner.nextLine();
             if (buffer.equals("chat")) {
                 chatThread();
                 switch (turnTiles.size()) {
-                    case 1 -> out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 0 ])");
-                    case 2 -> out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 0 , 1 ])");
-                    case 3 -> out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 0 , 1 , 2 ])");
-                }
+                    case 1 -> out.println("Scegli la tile da inserire nella Shelf(Inserimento valido:[ 0 ])");
+                    case 2 -> out.println("Scegli la tile da inserire nella Shelf(Inserimento valido:[ 0 , 1 ])");
+                    case 3 -> out.println("Scegli la tile da inserire nella Shelf(Inserimento valido:[ 0 , 1 , 2 ])");        }
             } else {
                 if (!buffer.equals("")) {
                     out.println("Input non valido, scrivi 'chat' per usare la chat oppure indica un intero");
@@ -676,21 +675,20 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
         scanner.nextLine();
         do {
             if(index < 0 || index > turnTiles.size()-1) {
-                out.println("The index of the tile is not valid!\n");
+                out.println("Indice non valido!");
                 switch (turnTiles.size()) {
-                    case 1 -> out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 0 ])");
-                    case 2 -> out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 0 , 1 ])");
-                    case 3 -> out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 0 , 1 , 2 ])");
+                    case 1 -> out.println("Scegli la tile da inserire nella Shelf(Inserimento valido:[ 0 ])");
+                    case 2 -> out.println("Scegli la tile da inserire nella Shelf(Inserimento valido:[ 0 , 1 ])");
+                    case 3 -> out.println("Scegli la tile da inserire nella Shelf(Inserimento valido:[ 0 , 1 , 2 ])");
                 }
                 while(!scanner.hasNextInt()) {
                     buffer = scanner.nextLine();
                     if(buffer.equals("chat")) {
                         chatThread();
                         switch (turnTiles.size()) {
-                            case 1 -> out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 0 ])");
-                            case 2 -> out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 0 , 1 ])");
-                            case 3 -> out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 0 , 1 , 2 ])");
-                        }
+                            case 1 -> out.println("Scegli la tile da inserire nella Shelf(Inserimento valido:[ 0 ])");
+                            case 2 -> out.println("Scegli la tile da inserire nella Shelf(Inserimento valido:[ 0 , 1 ])");
+                            case 3 -> out.println("Scegli la tile da inserire nella Shelf(Inserimento valido:[ 0 , 1 , 2 ])");    }
                     }else{
                         if (!buffer.equals("")) {
                             out.println("Input non valido, scrivi 'chat' per usare la chat oppure indica un intero");
@@ -780,16 +778,16 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
                 i++;
             }
             switch (turnTiles.size()){
-                case 1-> out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 0 ])");
-                case 2-> out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 0 , 1 ])");
+                case 1 -> out.println("Scegli la tile da inserire nella Shelf(Inserimento valido:[ 0 ])");
+                case 2 -> out.println("Scegli la tile da inserire nella Shelf(Inserimento valido:[ 0 , 1 ])");
             }
             while (!scanner.hasNextInt()) {
                 buffer = scanner.nextLine();
                 if (buffer.equals("chat")) {
                     chatThread();
                     switch (turnTiles.size()) {
-                        case 1 -> out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 0 ])");
-                        case 2 -> out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 0 , 1 ])");
+                        case 1 -> out.println("Scegli la tile da inserire nella Shelf(Inserimento valido:[ 0 ])");
+                        case 2 -> out.println("Scegli la tile da inserire nella Shelf(Inserimento valido:[ 0 , 1 ])");
                     }
                 } else {
                     if (!buffer.equals("")) {
@@ -803,16 +801,16 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
                 if(index < 0 || index > turnTiles.size()-1)
                 {out.println("The index of the tile is not valid!\n");
                     switch (turnTiles.size()) {
-                        case 1 -> out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 0 ])");
-                        case 2 -> out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 0 , 1 ])");
+                        case 1 -> out.println("Scegli la tile da inserire nella Shelf(Inserimento valido:[ 0 ])");
+                        case 2 -> out.println("Scegli la tile da inserire nella Shelf(Inserimento valido:[ 0 , 1 ])");
                     }
                     while(!scanner.hasNextInt()) {
                         buffer = scanner.nextLine();
                         if(buffer.equals("chat")) {
                             chatThread();
                             switch (turnTiles.size()) {
-                                case 1 -> out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 0 ])");
-                                case 2 -> out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 0 , 1 ])");
+                                case 1 -> out.println("Scegli la tile da inserire nella Shelf(Inserimento valido:[ 0 ])");
+                                case 2 -> out.println("Scegli la tile da inserire nella Shelf(Inserimento valido:[ 0 , 1 ])");
                             }
                         }else{
                             if (!buffer.equals("")) {
