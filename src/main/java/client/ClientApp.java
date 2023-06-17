@@ -28,10 +28,6 @@ public class ClientApp {
                         inetAddress = inetAddresses.nextElement();
 
                         address.add(inetAddress.getHostAddress());
-
-
-
-
                         if (count == 1) {
                             System.setProperty("java.rmi.server.hostname", address.get(0));
                             System.out.println("Indirizzo IP: " + address.get(0));
@@ -42,14 +38,7 @@ public class ClientApp {
                         count++;
                     }
                 }
-
-
-
-
-
             }
-
-
         } catch (SocketException e) {
             throw new RuntimeException(e);
         }

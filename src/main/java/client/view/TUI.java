@@ -23,14 +23,13 @@ public class TUI extends ViewObservable implements View {  //dovrà diventare ob
 
     private boolean isLastTurn = false;
 
+    private ArrayList<Player> playerList;
 
-    private boolean goOnPicking=true;
-    private boolean moveOn;
+
     private String currPlayer;
 
     public String nickname;
-    private boolean isPaused = true;
-    private Semaphore semaphore= new Semaphore(0);
+    private final Semaphore semaphore= new Semaphore(0);
 
     private boolean checker = false;
 
@@ -53,20 +52,32 @@ this.isLastTurn = true;
     public void resetNeedNick(){
         this.needNick = false;
     }
+    @Override
+    public void setPlayerList(ArrayList<Player> playerList) {
+        this.playerList = playerList;
+    }
 
 
     //Implementando il metodo Runnable ereditiamo tutte le sue classi e oggetti
     //Run è un costruttore basilare costruito direttamente dal metodo Runnable al posto di init
     public void init() throws InterruptedException {
+        boolean isConnected = false;
         out.println("╔════════════════════════════════════════╗");
         out.println("║    --------------------------------    ║");
         out.println("║    |*****WELCOME TO MYSHELFIE*****|    ║");
         out.println("║    --------------------------------    ║");
         out.println("╚════════════════════════════════════════╝");
 
-        String serverAddress = askServerInfo();
-        int portNum = askServerPort();
-        connectToServerFromTUI(serverAddress, portNum);
+        while(!isConnected) {
+            try {
+                String serverAddress = askServerInfo();
+                int portNum = askServerPort();
+                connectToServerFromTUI(serverAddress, portNum);
+                isConnected = true;
+            } catch (RuntimeException e) {
+                out.println("Errore di connessione: indirizzo ip del server sbagliato...riprova");
+            }
+        }
         scanner.nextLine();
         new Thread(() -> {
             while(true){
@@ -86,18 +97,20 @@ this.isLastTurn = true;
                     return;
                 }
         }
-
-
-            semaphore.acquire();
-            do{
-            askPlayerNextMove();
-            }while (!isLastTurn);
+        semaphore.acquire();
+        notifyObserver(obs -> obs.onUpdateSetPlayersList());
+        do{
+        askPlayerNextMove();
+        }while (!isLastTurn);
 
 
         out.println("it was your last turn please wait for final results");
-     while (gameOn){
+     while (true){
+         if (!gameOn) break;
      }
     }
+
+
 
     private void OnVerifyConnection() {
         notifyObserver(obs -> {
@@ -120,16 +133,9 @@ this.isLastTurn = true;
         this.gameOn = false;
     }
 
-    public void setGameOn(){
-        this.gameOn=true;
-    }
-
-    public void resetPaused(){
-        this.isPaused=false;
-    }
-
-
-
+    /**
+     *
+     */
     @Override
     public void askPlayerNextMove(){
 
@@ -180,7 +186,7 @@ this.isLastTurn = true;
                     System.exit(0);
                 }
             }
-            case 3 -> notifyObserver(obs -> obs.onUpdateShowPlayersList());
+            case 3 -> showPlayersList(playerList);
             case 4 -> notifyObserver(obs -> obs.onUpdateShowPlayerShelf(nickname));
             case 5 -> {
                 final int[] points = new int[1];
@@ -193,25 +199,54 @@ this.isLastTurn = true;
 
     }
 
-    public void setMoveOn(){
-        moveOn=true;
-    }
-
-
-
     @Override
     public void WriteInChat(){
         String chatMessage;
-        out.println("Write in the following line the content of your message");
+        boolean isValid = false;
+        boolean isNameValid = false;
+        int choosenOption = -1;
+        String receiver = "Everyone";
+        out.println("Se vuoi mandare il messaggio in privato premi 1 altrimenti 0");
+        do{
+            String num = scanner.next();
+            try {
+                 choosenOption = Integer.parseInt(num);
+                if (choosenOption != 1 && choosenOption!= 0)
+                    out.println("numero non valido..riprova ");
+                else isValid = true;
+            }
+            catch (NumberFormatException ex) {
+                out.println( "Stringa non valida per favore immetti stringa numerica!");
+            }}
+        while(!isValid);
+        if (choosenOption == 1) {
+            showPlayersList(playerList);
+            do{
+                out.println("scrivi il nome del giocatore a cui vuoi scrivere ");
+                receiver = scanner.next();
+                for(Player player : playerList){
+                    if (receiver.equals(player.getNickname())) {
+
+                        isNameValid = true;
+                        break;
+                    }
+                }
+                if(!isNameValid){
+                    out.println("Non ci sono giocatori con quel nickname..riprova");
+                }
+            }while(!isNameValid);
+        }
+        out.println("Scrivi a seguire il contenuto del tuo messaggio ");
         chatMessage = scanner.nextLine();
         while(chatMessage.equals("")) {
             chatMessage = scanner.nextLine();
         }
-
         String finalChatMessage = chatMessage;
+        String finalReceiver = receiver;
         notifyObserver(obs -> {
             try {
-                obs.onUpdateChat(this.nickname, finalChatMessage);
+                obs.onUpdateChat(this.nickname, finalChatMessage, finalReceiver);
+                out.println("Messaggio inviato!");
             } catch (RemoteException e) {
                 throw new RuntimeException(e);
             }
@@ -233,9 +268,7 @@ this.isLastTurn = true;
                 checker = false;
             }
         }while(!checker);
-
         return serverAddress;
-        //dovrò fornire a qualcuno serverAddress e serverPort per effettuare il collegamento
     }
 
     public static boolean checkAddressValidity(String ipAddress) {
@@ -270,7 +303,6 @@ this.isLastTurn = true;
         do {
             scanner.nextLine();
             out.println("Inserisci la porta del Server [default = ??]:");
-            //effettuo check validità su in.nextLine();
             portNum = scanner.nextInt();
             if (checkPortValidity(portNum)) {
                 checker = true;
@@ -382,15 +414,9 @@ this.isLastTurn = true;
         });
     }
 
-
-    public void maxTilesPicked(){
-        out.println("Numero massimo di tessere raccolte dalla LivingRoom, procedi ora a inserirle nella Shelf");
-        setMoveOn();
-    }
-
     @Override
     public void showLoginResults(boolean nickAccepted, String chosenNickname) {
-        if(nickAccepted == true){
+        if(nickAccepted){
             out.println("Login successful, nickname accepted!");
             out.println("Il nickname scelto è: " + this.nickname);
             resetNeedNick();
@@ -401,24 +427,16 @@ this.isLastTurn = true;
     }
 
 
-
-    @Override
-    public void invalidTileHandler() {
-        out.println("Tessera scelta non disponibile, scegline un'altra!");
-        goOnPicking = true;
-        setMoveOn();
-    }
-
     @Override
     public void showPlayersList(ArrayList<Player> playerList) {
         int i=0;
-        String nickName = null;
+        String nickName;
 
         String j = String.valueOf(playerList.size());
-        out.println("In the current Game we have "+j+"players whose Names are:\n");
+        out.println("Nella partita ci sono "+j+" giocatori :");
         while(i<playerList.size()){
              nickName = playerList.get(i).getNickname();
-            out.println(nickName+" , ");
+            out.print(nickName+" , ");
             i++;
         }
 
@@ -502,23 +520,6 @@ this.isLastTurn = true;
     out.println("Your total point so far is :"+point);
     }
 
-    @Override
-    public void showDisconnectionMessage(String disconnectedPlayerNickname, String disconnectionMessage) {
-
-    }
-
-    @Override
-    public void showErrorMessage(String errorMessage) {
-
-    }
-
-    @Override
-    public void showDefaultMessage(String defaultMessage) {
-
-    }
-
-
-
     public void resetTUI(){
         out.println("Cleaning of the textual interface...");
         //out.flush();
@@ -551,8 +552,9 @@ this.isLastTurn = true;
                 observers.add(viewManager.connectRMI(address, port, this));
                 out.println("Connessione col Server riuscita!");
             } catch (Exception e) {
-                throw new RuntimeException(e);
+                throw new RuntimeException();
             }
+
     }
 }
 

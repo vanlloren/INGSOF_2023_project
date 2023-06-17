@@ -8,21 +8,16 @@ import Util.CommonGoalType;
 import Util.PersonalGoalType;
 import client.view.TurnView;
 import client.view.View;
-import server.Model.GameBoard;
 import server.Model.PlayableItemTile;
 import server.Model.Player;
 import server.enumerations.PickTileResponse;
-
-import java.io.IOException;
 import java.io.PrintStream;
 import java.io.Serial;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
-
 import java.util.Scanner;
-
 
 public  class RemoteClientImplementation extends Client implements RemoteClientInterface, ViewObserver, LivingRoomObserver, ShelfObserver, PlayerObserver, GameModelObserver, PersonalGoalObserver {
 
@@ -44,16 +39,6 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
     public void connectionInit() throws Exception {
         Registry registry = LocateRegistry.getRegistry(getServerAddress(), getPortNum());
         server = (RemoteServerInterface) registry.lookup("MyShelfieServer");
-
-    }
-
-    @Override
-    public void sendMessage(Message message) throws IOException {
-
-    }
-
-    @Override
-    public void closeConnection() throws Exception {
 
     }
 
@@ -153,7 +138,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
             }
             case UPDATE_CHAT -> {
                 UpdateChatEvent newEvent = (UpdateChatEvent) event;
-                UpdateAllClientOnNewMessageChat(newEvent.getNickname(),newEvent.getChat());
+                UpdateAllClientOnNewMessageChat(newEvent.getNickname(),newEvent.getChat(),newEvent.getReceiver());
 
             }
         }
@@ -273,8 +258,10 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
 
 
     @Override
-    public void UpdateAllClientOnNewMessageChat(String Nickname, String chatMessage) {
-        System.out.println(Nickname+": "+chatMessage+".");
+    public void UpdateAllClientOnNewMessageChat(String Nickname, String chatMessage,String receiver) {
+        if(receiver.equals(this.nickname)||receiver.equals("Everyone")){
+            System.out.println(Nickname+": "+chatMessage+".");
+        }
     }
 
     @Override
@@ -296,18 +283,11 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
         String buffer;
 
         System.out.println("In qualsiasi momento dell'esecuzione della sequenza di pesca/inserimento delle tile, scrivere 'chat' permetterà di inviare un messaggio nella chat del gioco!");
-        //pesca prima tessera
         do {
             System.out.println("Scegli la posizione x della prima tessera che vuoi pescare!");
             while(!scanner.hasNextInt()){
                 if(scanner.nextLine().equals("chat")) {
-                    ChatThread thread = new ChatThread(userInterface, this);
-                    thread.start();
-                    try {
-                        thread.join();
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
+                    chatThread();
                     System.out.println("Scegli la posizione x della prima tessera che vuoi pescare!");
                 }else{
                     if (!scanner.nextLine().equals("")) {
@@ -325,13 +305,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
             out.println("Scegli la posizione y della prima tessera che vuoi pescare!");
             while(!scanner.hasNextInt()){
                 if(scanner.nextLine().equals("chat")) {
-                    ChatThread thread = new ChatThread(userInterface, this);
-                    thread.start();
-                    try {
-                        thread.join();
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
+                    chatThread();
                     System.out.println("Scegli la posizione y della prima tessera che vuoi pescare!");
                 }else{
                     if (!scanner.nextLine().equals("")) {
@@ -340,25 +314,10 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
                 }
             }
             y = scanner.nextInt();
-            scanner.nextLine();
             if (y < 0 || y > 8) {
                 out.println("Coordinata non valida, riprova!");
             }
         }while(y<0 || y>8);
-
-        /*
-        buffer = scanner.nextLine();
-        while(buffer.equals("chat")){
-            ChatThread thread = new ChatThread(userInterface, this);
-            thread.start();
-            try {
-                thread.join();
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-            buffer = scanner.nextLine();
-        }
-        */
         TileReplyMessage message = server.onTilePickMessage(nickname, x, y);
         while (message.isTileAccepted().equals(PickTileResponse.MAX_TILE_PICKED) || message.isTileAccepted().equals(PickTileResponse.INVALID_TILE)){
             if(message.isTileAccepted().equals(PickTileResponse.MAX_TILE_PICKED)){
@@ -374,13 +333,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
                     System.out.println("Scegli la posizione x della prima tessera che vuoi pescare!");
                     while(!scanner.hasNextInt()){
                         if(scanner.nextLine().equals("chat")) {
-                            ChatThread thread = new ChatThread(userInterface, this);
-                            thread.start();
-                            try {
-                                thread.join();
-                            } catch (InterruptedException e) {
-                                throw new RuntimeException(e);
-                            }
+                            chatThread();
                             System.out.println("Scegli la posizione x della prima tessera che vuoi pescare!");
                         }else{
                             if (!scanner.nextLine().equals("")) {
@@ -399,13 +352,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
                     out.println("Scegli la posizione y della prima tessera che vuoi pescare!");
                     while(!scanner.hasNextInt()){
                         if(scanner.nextLine().equals("chat")) {
-                            ChatThread thread = new ChatThread(userInterface, this);
-                            thread.start();
-                            try {
-                                thread.join();
-                            } catch (InterruptedException e) {
-                                throw new RuntimeException(e);
-                            }
+                            chatThread();
                             System.out.println("Scegli la posizione y della prima tessera che vuoi pescare!");
                         }else{
                             if (!scanner.nextLine().equals("")) {
@@ -429,13 +376,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
         out.println("Una tessera pescata, vuoi pescare altre tessere? [Y/N]");
         String test = scanner.nextLine();
         while(test.equals("chat")){
-            ChatThread thread = new ChatThread(userInterface, this);
-            thread.start();
-            try {
-                thread.join();
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
+            chatThread();
             out.println("Una tessera pescata, vuoi pescare altre tessere? [Y/N]");
             test = scanner.nextLine();
         }
@@ -450,25 +391,13 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
             out.println("Simbolo errato!");
             buffer = scanner.nextLine();
             while(buffer.equals("chat")){
-                ChatThread thread = new ChatThread(userInterface, this);
-                thread.start();
-                try {
-                    thread.join();
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
+                chatThread();
                 buffer = scanner.nextLine();
             }
             out.println("Una tessera pescata, vuoi pescare altre tessere? [Y/N]");
             test = buffer;
             while(test.equals("chat")){
-                ChatThread thread = new ChatThread(userInterface, this);
-                thread.start();
-                try {
-                    thread.join();
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
+                chatThread();
                 out.println("Una tessera pescata, vuoi pescare altre tessere? [Y/N]");
                 test = scanner.nextLine();
                 while(test.equals("")) {
@@ -493,13 +422,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
             System.out.println("Scegli la posizione x della seconda tessera che vuoi pescare!");
             while(!scanner.hasNextInt()){
                 if(scanner.nextLine().equals("chat")) {
-                    ChatThread thread = new ChatThread(userInterface, this);
-                    thread.start();
-                    try {
-                        thread.join();
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
+                    chatThread();
                     System.out.println("Scegli la posizione x della seconda tessera che vuoi pescare!");
                 }else{
                     if (!scanner.nextLine().equals("")) {
@@ -518,13 +441,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
             out.println("Scegli la posizione y della seconda tessera che vuoi pescare!");
             while(!scanner.hasNextInt()){
                 if(scanner.nextLine().equals("chat")) {
-                    ChatThread thread = new ChatThread(userInterface, this);
-                    thread.start();
-                    try {
-                        thread.join();
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
+                    chatThread();
                     System.out.println("Scegli la posizione y della seconda tessera che vuoi pescare!");
                 }else {
                     if (!scanner.nextLine().equals("")) {
@@ -552,13 +469,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
                     System.out.println("Scegli la posizione x della seconda tessera che vuoi pescare!");
                     while(!scanner.hasNextInt()){
                         if(scanner.nextLine().equals("chat")) {
-                            ChatThread thread = new ChatThread(userInterface, this);
-                            thread.start();
-                            try {
-                                thread.join();
-                            } catch (InterruptedException e) {
-                                throw new RuntimeException(e);
-                            }
+                            chatThread();
                             System.out.println("Scegli la posizione x della seconda tessera che vuoi pescare!");
                         }else{
                             if (!scanner.nextLine().equals("")) {
@@ -576,13 +487,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
                     out.println("Scegli la posizione y della seconda tessera che vuoi pescare!");
                     while(!scanner.hasNextInt()){
                         if(scanner.nextLine().equals("chat")) {
-                            ChatThread thread = new ChatThread(userInterface, this);
-                            thread.start();
-                            try {
-                                thread.join();
-                            } catch (InterruptedException e) {
-                                throw new RuntimeException(e);
-                            }
+                            chatThread();
                             System.out.println("Scegli la posizione y della seconda tessera che vuoi pescare!");
                         }else{
                             if (!scanner.nextLine().equals("")) {
@@ -615,13 +520,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
         out.println("Due tessere pescate, vuoi pescare altre tessere? [Y/N]");
         test = scanner.nextLine();
         while(test.equals("chat")){
-            ChatThread thread = new ChatThread(userInterface, this);
-            thread.start();
-            try {
-                thread.join();
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
+            chatThread();
             out.println("Due tessere pescate, vuoi pescare altre tessere? [Y/N]");
             test = scanner.nextLine();
         }
@@ -635,25 +534,13 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
             out.println("Simbolo errato!");
             buffer = scanner.nextLine();
             while(buffer.equals("chat")){
-                ChatThread thread = new ChatThread(userInterface, this);
-                thread.start();
-                try {
-                    thread.join();
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
+                chatThread();
                 buffer = scanner.nextLine();
             }
             out.println("Due tessere pescate, vuoi pescare altre tessere? [Y/N]");
             test = scanner.nextLine();
             while(test.equals("chat")){
-                ChatThread thread = new ChatThread(userInterface, this);
-                thread.start();
-                try {
-                    thread.join();
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
+                chatThread();
                 out.println("Due tessere pescate, vuoi pescare altre tessere? [Y/N]");
                 test = scanner.nextLine();
                 while(test.equals("")) {
@@ -677,13 +564,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
             System.out.println("Scegli la posizione x della terza tessera che vuoi pescare!");
             while(!scanner.hasNextInt()){
                 if(scanner.nextLine().equals("chat")) {
-                    ChatThread thread = new ChatThread(userInterface, this);
-                    thread.start();
-                    try {
-                        thread.join();
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
+                    chatThread();
                     System.out.println("Scegli la posizione x della terza tessera che vuoi pescare!");
                 }else{
                     if (!scanner.nextLine().equals("")) {
@@ -702,13 +583,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
             out.println("Scegli la posizione y della terza tessera che vuoi pescare!");
             while(!scanner.hasNextInt()){
                 if(scanner.nextLine().equals("chat")) {
-                    ChatThread thread = new ChatThread(userInterface, this);
-                    thread.start();
-                    try {
-                        thread.join();
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
+                    chatThread();
                     System.out.println("Scegli la posizione y della terza tessera che vuoi pescare!");
                 }else{
                     if (!scanner.nextLine().equals("")) {
@@ -736,13 +611,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
                     System.out.println("Scegli la posizione x della terza tessera che vuoi pescare!");
                     while(!scanner.hasNextInt()){
                         if(scanner.nextLine().equals("chat")) {
-                            ChatThread thread = new ChatThread(userInterface, this);
-                            thread.start();
-                            try {
-                                thread.join();
-                            } catch (InterruptedException e) {
-                                throw new RuntimeException(e);
-                            }
+                            chatThread();
                             System.out.println("Scegli la posizione x della terza tessera che vuoi pescare!");
                         }else{
                             if (!scanner.nextLine().equals("")) {
@@ -760,13 +629,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
                     out.println("Scegli la posizione y della terza tessera che vuoi pescare!");
                     while(!scanner.hasNextInt()){
                         if(scanner.nextLine().equals("chat")) {
-                            ChatThread thread = new ChatThread(userInterface, this);
-                            thread.start();
-                            try {
-                                thread.join();
-                            } catch (InterruptedException e) {
-                                throw new RuntimeException(e);
-                            }
+                            chatThread();
                             System.out.println("Scegli la posizione y della terza tessera che vuoi pescare!");
                         }else{
                             if (!scanner.nextLine().equals("")) {
@@ -810,13 +673,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
         while (!scanner.hasNextInt()) {
             buffer = scanner.nextLine();
             if (buffer.equals("chat")) {
-                ChatThread thread = new ChatThread(userInterface, this);
-                thread.start();
-                try {
-                    thread.join();
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
+                chatThread();
                 switch (turnTiles.size()) {
                     case 1 -> out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 0 ])");
                     case 2 -> out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 0 , 1 ])");
@@ -842,13 +699,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
                 while(!scanner.hasNextInt()) {
                     buffer = scanner.nextLine();
                     if(buffer.equals("chat")) {
-                        ChatThread thread = new ChatThread(userInterface, this);
-                        thread.start();
-                        try {
-                            thread.join();
-                        } catch (InterruptedException e) {
-                            throw new RuntimeException(e);
-                        }
+                        chatThread();
                         switch (turnTiles.size()) {
                             case 1 -> out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 0 ])");
                             case 2 -> out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 0 , 1 ])");
@@ -870,13 +721,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
             while (!scanner.hasNextInt()) {
                 buffer = scanner.nextLine();
                 if (buffer.equals("chat")) {
-                    ChatThread thread = new ChatThread(userInterface, this);
-                    thread.start();
-                    try {
-                        thread.join();
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
+                    chatThread();
                     out.println("Choose the x_coordinate where you want to put the tile in the shelf(Valid insert:[ 0 , 1 , 2 , 3 , 4 , 5 ])");
                 } else {
                     if (!buffer.equals("")) {
@@ -892,13 +737,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
                 while (!scanner.hasNextInt()) {
                     buffer = scanner.nextLine();
                     if (buffer.equals("chat")) {
-                        ChatThread thread = new ChatThread(userInterface, this);
-                        thread.start();
-                        try {
-                            thread.join();
-                        } catch (InterruptedException e) {
-                            throw new RuntimeException(e);
-                        }
+                        chatThread();
                         out.println("Choose the x_coordinate where you want to put the tile in the shelf(Valid insert:[ 0 , 1 , 2 , 3 , 4 , 5 ])");
                     } else {
                         if (!buffer.equals("")) {
@@ -913,13 +752,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
             while (!scanner.hasNextInt()) {
                 buffer = scanner.nextLine();
                 if (buffer.equals("chat")) {
-                    ChatThread thread = new ChatThread(userInterface, this);
-                    thread.start();
-                    try {
-                        thread.join();
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
+                    chatThread();
                     out.println("Choose the position y where you want to put the tile(Valid insert: [ 0 , 1 , 2 , 3 , 4 ])!\n");
                 } else {
                     if (!buffer.equals("")) {
@@ -935,13 +768,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
                 while (!scanner.hasNextInt()) {
                     buffer = scanner.nextLine();
                     if (buffer.equals("chat")) {
-                        ChatThread thread = new ChatThread(userInterface, this);
-                        thread.start();
-                        try {
-                            thread.join();
-                        } catch (InterruptedException e) {
-                            throw new RuntimeException(e);
-                        }
+                        chatThread();
                         out.println("Choose the position y where you want to put the tile(Valid insert: [ 0 , 1 , 2 , 3 , 4 ])!\n");
                     } else {
                         if (!buffer.equals("")) {
@@ -973,13 +800,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
             while (!scanner.hasNextInt()) {
                 buffer = scanner.nextLine();
                 if (buffer.equals("chat")) {
-                    ChatThread thread = new ChatThread(userInterface, this);
-                    thread.start();
-                    try {
-                        thread.join();
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
+                    chatThread();
                     switch (turnTiles.size()) {
                         case 1 -> out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 0 ])");
                         case 2 -> out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 0 , 1 ])");
@@ -1002,13 +823,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
                     while(!scanner.hasNextInt()) {
                         buffer = scanner.nextLine();
                         if(buffer.equals("chat")) {
-                            ChatThread thread = new ChatThread(userInterface, this);
-                            thread.start();
-                            try {
-                                thread.join();
-                            } catch (InterruptedException e) {
-                                throw new RuntimeException(e);
-                            }
+                            chatThread();
                             switch (turnTiles.size()) {
                                 case 1 -> out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 0 ])");
                                 case 2 -> out.println("Choose the tile that you want to put in the shelf(Valid insert:[ 0 , 1 ])");
@@ -1028,13 +843,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
             while (!scanner.hasNextInt()) {
                 buffer = scanner.nextLine();
                 if (buffer.equals("chat")) {
-                    ChatThread thread = new ChatThread(userInterface, this);
-                    thread.start();
-                    try {
-                        thread.join();
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
+                    chatThread();
                     out.println("Choose the x_coordinate where you want to put the tile in the shelf(Valid insert:[ 0 , 1 , 2 , 3 , 4 , 5 ])");
                 } else {
                     if (!buffer.equals("")) {
@@ -1050,13 +859,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
                 while (!scanner.hasNextInt()) {
                     buffer = scanner.nextLine();
                     if (buffer.equals("chat")) {
-                        ChatThread thread = new ChatThread(userInterface, this);
-                        thread.start();
-                        try {
-                            thread.join();
-                        } catch (InterruptedException e) {
-                            throw new RuntimeException(e);
-                        }
+                        chatThread();
                         out.println("Choose the x_coordinate where you want to put the tile in the shelf(Valid insert:[ 0 , 1 , 2 , 3 , 4 , 5 ])");
                     } else {
                         if (!buffer.equals("")) {
@@ -1095,17 +898,13 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
     }
 
     @Override
-    public void onUpdateChat(String Nickname, String chat) throws RemoteException {
-        server.onMessage(new WriteInChatMessage(Nickname, chat));
+    public void onUpdateChat(String Nickname, String chat,String receiver) throws RemoteException {
+        server.onMessage(new WriteInChatMessage(Nickname, chat,receiver));
     }
 
 
 
-    public void onUpdateIsGameOn(){
-        if(turnView.getIsGameOn()){
-            this.userInterface.resetGameOn();
-        }
-    }
+
 
     public void onUpdateShowLivingRoom(){
         this.userInterface.showLivingRoom(turnView.getLivingRoom());
@@ -1124,8 +923,8 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
     }
 
     @Override
-    public void onUpdateShowPlayersList() {
-        this.userInterface.showPlayersList(turnView.getGameModel().getPlayersInGame());
+    public void onUpdateSetPlayersList() {
+        this.userInterface.setPlayerList(turnView.getGameModel().getPlayersInGame());
     }
 
     @Override
@@ -1205,8 +1004,8 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
     }
 
     @Override
-    public void onUpdateModelChat(TurnView turnView, String nickname, String chat) {
-        onModelModify(turnView, new UpdateChatEvent(nickname,chat));
+    public void onUpdateModelChat(TurnView turnView, String nickname, String chat,String receiver) {
+        onModelModify(turnView, new UpdateChatEvent(nickname,chat,receiver));
     }
 
     @Override
@@ -1239,7 +1038,15 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
         onModelModify(turnView, new UpdateStatusCommonGoal1Event(turnView.getNicknameCurrentPlayer()));
     }
 
-
+    public void chatThread(){
+        ChatThread thread = new ChatThread(userInterface);
+        thread.start();
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     //-------------------------Qua scrivo per le shelf---------------------------------//
     @Override

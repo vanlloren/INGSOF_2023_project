@@ -15,7 +15,7 @@ public interface View {
     //è il server che poi si occupa di verificare che sia univoco
     void askNickname();
 
-    void setMoveOn();
+
 
     void setCurrPlayer(String currPlayer);
 
@@ -57,34 +57,17 @@ public interface View {
     //mostra al player il suo punteggio (volendo si può mostrare anche quello degli avversari)
     void showPartialPoint(int point);
 
-    //messaggio di disconnessione
-    void showDisconnectionMessage(String disconnectedPlayerNickname, String disconnectionMessage);
-
-    void showErrorMessage(String errorMessage);
-
-    void showDefaultMessage( String defaultMessage);
-
     void setNickname(String nickname);
-
-
-
 
     void setIsTurn();
 
-
+    void setPlayerList(ArrayList<Player> playerList);
 
     void riprendiEsecuzione();
 
     void resetGameOn();
 
-
-
     void askPlayerNextMove() throws SocketException;
-
-    void maxTilesPicked();
-
-
-    void invalidTileHandler();
 
     void WriteInChat();
 }

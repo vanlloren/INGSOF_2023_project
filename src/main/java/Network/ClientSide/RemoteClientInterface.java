@@ -16,7 +16,6 @@ public interface RemoteClientInterface extends Remote, LivingRoomObserver, Shelf
 
     void onMessage(Message message) throws RemoteException;
 
-    //void ping() throws RemoteException;
 
     void disconnect() throws RemoteException;
 
@@ -36,7 +35,7 @@ public interface RemoteClientInterface extends Remote, LivingRoomObserver, Shelf
 
 
 
-    void onUpdateModelChat(TurnView turnView, String nickname, String chat) throws RemoteException;
+    void onUpdateModelChat(TurnView turnView, String nickname, String chat,String receiver) throws RemoteException;
 
 
 

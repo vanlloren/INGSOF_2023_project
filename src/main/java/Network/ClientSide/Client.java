@@ -1,17 +1,13 @@
 package Network.ClientSide;
 
 import Network.Events.Event;
-import Network.message.Message;
 import Util.CommonGoalType;
 import Util.PersonalGoalType;
 import client.view.TurnView;
 import client.view.View;
 import Observer.*;
-
 import server.Model.PlayableItemTile;
 import server.Model.Player;
-
-import java.io.IOException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
@@ -47,9 +43,7 @@ public abstract class Client extends UnicastRemoteObject implements ViewObserver
 
     public abstract void connectionInit() throws Exception;
 
-    public abstract void sendMessage(Message message) throws IOException;
 
-    public abstract void closeConnection() throws Exception;
 
     public abstract void onModelModify(TurnView turnView, Event event);
 
@@ -59,7 +53,7 @@ public abstract class Client extends UnicastRemoteObject implements ViewObserver
 
     abstract void UpdateAllClientOnModelCurrPlayer(Player currPlayer);
 
-    abstract void UpdateAllClientOnNewMessageChat(String Nickname, String chatMessage);
+    abstract void UpdateAllClientOnNewMessageChat(String Nickname, String chatMessage,String receiver);
 
     abstract void UpdateAllClientOnPickedTileFromLivingRoom(String currPlayer, int x, int y);
 

@@ -68,9 +68,9 @@ public interface ViewObserver {
     /**
      * Informs the {@link Network.ClientSide.RemoteClientImplementation RemoteClient} that the {@link Player Player}
      * has asked to see the {@link java.util.ArrayList ArrayList} containing the {@link Player Players}
-     * in the current match
+     * in the current match MODIFICAREEEEEEE
      */
-    void onUpdateShowPlayersList();
+    void onUpdateSetPlayersList();
 
     /**
      * Informs the {@link Network.ClientSide.RemoteClientImplementation RemoteClient} that the {@link Player Player}
@@ -103,7 +103,7 @@ public interface ViewObserver {
      * @param chat a {@link String String} representing the actual content of the chat message
      * @throws RemoteException
      */
-    void onUpdateChat(String Nickname, String chat) throws RemoteException;
+    void onUpdateChat(String Nickname, String chat,String receiver) throws RemoteException;
 
     /**
      * Tells the {@link Network.ServerSide.RemoteServerImplementation RemoteServer} that a

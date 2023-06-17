@@ -105,14 +105,14 @@ public class GameModel extends GameModelObservable implements Serializable, Simp
     /**
      * Method that controls the development of the chat and the chat {@link Message Messages} during the current match
      *
-     * @param Nickname the {@code nickname} of the {@link Player Player} that has sent the {@link Network.message.Message Message}
+     * @param Nickname the {@code nickname} of the {@link  Player Player} that has sent the {@link Network.message.Message Message}
      * @param chat the {@link String String} containing the text of the {@link Network.message.Message Message}
      */
-    public void setChat(String Nickname,String chat) {
+    public void setChat(String Nickname,String chat,String receiver) {
         this.Chat = chat;
         notifyObservers(obs -> {
             try {
-                obs.onUpdateModelChat(new TurnView(this), Nickname, chat);
+                obs.onUpdateModelChat(new TurnView(this), Nickname, chat,receiver);
             } catch (RemoteException e) {
                 throw new RuntimeException(e);
             }

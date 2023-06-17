@@ -132,7 +132,7 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
             }
             case WRITE_IN_CHAT -> {
                 WriteInChatMessage newMessage = (WriteInChatMessage) message;
-                gameController.getGame().setChat(newMessage.getNickname(),newMessage.getChat());
+                gameController.getGame().setChat(newMessage.getNickname(),newMessage.getChat(),newMessage.getReceiver());
             }
             case STOP_PICKING -> {
                 gameController.getGameBoardController().getControlledLivingRoom().updateAvailability();

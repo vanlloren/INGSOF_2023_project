@@ -104,7 +104,7 @@ public interface GameModelObserver {
      * @param chat a {@link String String} that contains the actual message sent in the chat
      * @throws RemoteException
      */
-    void onUpdateModelChat(TurnView turnView, String nickname, String chat) throws RemoteException;
+    void onUpdateModelChat(TurnView turnView, String nickname, String chat,String receiver) throws RemoteException;
 
     /**
      * This method allows the {@link server.Model.GameModel GameModel} to notify the {@link Network.ClientSide.RemoteClientImplementation RemoteClients}
