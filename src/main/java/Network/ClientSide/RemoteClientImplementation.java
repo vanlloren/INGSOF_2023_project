@@ -701,12 +701,12 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
         } while (index < 0 || index > turnTiles.size()-1);
 
         do {
-            out.println("Choose the x_coordinate where you want to put the tile in the shelf(Valid insert:[ 0 , 1 , 2 , 3 , 4 , 5 ])");
+            out.println("Scegli la coordinata in X sulla shelf dove mettere la tile(Inserimento Valido:[ 0 , 1 , 2 , 3 , 4 , 5 ])");
             while (!scanner.hasNextInt()) {
                 buffer = scanner.nextLine();
                 if (buffer.equals("chat")) {
                     chatThread();
-                    out.println("Choose the x_coordinate where you want to put the tile in the shelf(Valid insert:[ 0 , 1 , 2 , 3 , 4 , 5 ])");
+                    out.println("Scegli la coordinata in X sulla shelf dove mettere la tile(Inserimento Valido:[ 0 , 1 , 2 , 3 , 4 , 5 ])");
                 } else {
                     if (!buffer.equals("")) {
                         out.println("Input non valido, scrivi 'chat' per usare la chat oppure indica un intero");
@@ -716,13 +716,13 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
             xPos = scanner.nextInt();
             scanner.nextLine();
             while (xPos < 0 || xPos > 5) {
-                out.println("The position x for the the insertion of the tile is not valid!\n");
-                out.println("Choose the x_coordinate where you want to put the tile in the shelf(Valid insert:[ 0 , 1 , 2 , 3 , 4 , 5 ])");
+                out.println("Coordinata non valida..riprova");
+                out.println("Scegli la coordinata in X sulla shelf dove mettere la tile(Inserimento Valido:[ 0 , 1 , 2 , 3 , 4 , 5 ])");
                 while (!scanner.hasNextInt()) {
                     buffer = scanner.nextLine();
                     if (buffer.equals("chat")) {
                         chatThread();
-                        out.println("Choose the x_coordinate where you want to put the tile in the shelf(Valid insert:[ 0 , 1 , 2 , 3 , 4 , 5 ])");
+                        out.println("Scegli la coordinata in X sulla shelf dove mettere la tile(Inserimento Valido:[ 0 , 1 , 2 , 3 , 4 , 5 ])");
                     } else {
                         if (!buffer.equals("")) {
                             out.println("Input non valido, scrivi 'chat' per usare la chat oppure indica un intero");
@@ -732,12 +732,12 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
                 xPos = scanner.nextInt();
                 scanner.nextLine();
             }
-            out.println("Choose the position y where you want to put the tile(Valid insert: [ 0 , 1 , 2 , 3 , 4 ])!\n");
+            out.println("Scegli la coordinata in Y sulla shelf dove mettere la tile (Inserimento Valido: [ 0 , 1 , 2 , 3 , 4 ])!\n");
             while (!scanner.hasNextInt()) {
                 buffer = scanner.nextLine();
                 if (buffer.equals("chat")) {
                     chatThread();
-                    out.println("Choose the position y where you want to put the tile(Valid insert: [ 0 , 1 , 2 , 3 , 4 ])!\n");
+                    out.println("Scegli la coordinata in Y sulla shelf dove mettere la tile (Inserimento Valido: [ 0 , 1 , 2 , 3 , 4 ])!\n");
                 } else {
                     if (!buffer.equals("")) {
                         out.println("Input non valido, scrivi 'chat' per usare la chat oppure indica un intero");
@@ -747,13 +747,13 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
             yPos = scanner.nextInt();
             scanner.nextLine();
             while (yPos < 0 || yPos > 4) {
-                out.println("The position y for the the insertion of the tile is not valid!\n");
-                out.println("Choose the position y where you want to put the tile(Valid insert: [ 0 , 1 , 2 , 3 , 4 ])!\n");
+                out.println("Coordinata non valida riprova");
+                out.println("Scegli la coordinata in Y sulla shelf dove mettere la tile (Inserimento Valido: [ 0 , 1 , 2 , 3 , 4 ])!\n");
                 while (!scanner.hasNextInt()) {
                     buffer = scanner.nextLine();
                     if (buffer.equals("chat")) {
                         chatThread();
-                        out.println("Choose the position y where you want to put the tile(Valid insert: [ 0 , 1 , 2 , 3 , 4 ])!\n");
+                        out.println("Scegli la coordinata in Y sulla shelf dove mettere la tile (Inserimento Valido: [ 0 , 1 , 2 , 3 , 4 ])!\n");
                     } else {
                         if (!buffer.equals("")) {
                             out.println("Input non valido, scrivi 'chat' per usare la chat oppure indica un intero");
@@ -765,7 +765,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
             }
             message = server.ToPutTileRequestMessage(xPos, yPos, turnTiles.get(index), turnTiles.size());
             if (!message.isValid()) {
-                out.println("Error in the insertion: coordinates not valid");
+                out.println("Errore riscontrato:non puoi inserire in quella casella");
             }
         } while (!message.isValid());
 
@@ -774,7 +774,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
         while (turnTiles.size() > 0) {
             i=0;
             for (PlayableItemTile turnTile : turnTiles) {
-                out.println("Tile picked: {[" + turnTile.getColour() + ", " + turnTile.getIdCode() + "]," + " in position : " + i + "}");
+                out.println("Tile pescate dalla LivingRoom: {[" + turnTile.getColour() + ", " + turnTile.getIdCode() + "]," + " in posizione: " + i + "}");
                 i++;
             }
             switch (turnTiles.size()){
@@ -799,7 +799,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
             scanner.nextLine();
             do {
                 if(index < 0 || index > turnTiles.size()-1)
-                {out.println("The index of the tile is not valid!\n");
+                {out.println("Indice non valido..riprova");
                     switch (turnTiles.size()) {
                         case 1 -> out.println("Scegli la tile da inserire nella Shelf(Inserimento valido:[ 0 ])");
                         case 2 -> out.println("Scegli la tile da inserire nella Shelf(Inserimento valido:[ 0 , 1 ])");
@@ -823,12 +823,12 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
                 }
             } while (index < 0 || index > turnTiles.size()-1);
 
-            out.println("Choose the x_coordinate in the shelf(Valid insert:[ 0 , 1 , 2 , 3 , 4 , 5 ])");
+            out.println("Scegli la coordinata in X sulla shelf dove mettere la tile (Inserimento valido:[ 0 , 1 , 2 , 3 , 4 , 5 ])");
             while (!scanner.hasNextInt()) {
                 buffer = scanner.nextLine();
                 if (buffer.equals("chat")) {
                     chatThread();
-                    out.println("Choose the x_coordinate where you want to put the tile in the shelf(Valid insert:[ 0 , 1 , 2 , 3 , 4 , 5 ])");
+                    out.println("Scegli la coordinata in X sulla shelf dove mettere la tile (Inserimento valido:[ 0 , 1 , 2 , 3 , 4 , 5 ])");
                 } else {
                     if (!buffer.equals("")) {
                         out.println("Input non valido, scrivi 'chat' per usare la chat oppure indica un intero");
@@ -838,13 +838,13 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
             xPos = scanner.nextInt();
             scanner.nextLine();
             while (xPos < 0 || xPos > 5) {
-                out.println("The position x for the the insertion of the tile is not valid!");
-                out.println("Choose the x_coordinate in the shelf(Valid insert:[ 0 , 1 , 2 , 3 , 4 , 5 ])");
+                out.println("Coordinata non valida..riprova");
+                out.println("Scegli la coordinata in X sulla shelf dove mettere la tile (Inserimento valido:[ 0 , 1 , 2 , 3 , 4 , 5 ])");
                 while (!scanner.hasNextInt()) {
                     buffer = scanner.nextLine();
                     if (buffer.equals("chat")) {
                         chatThread();
-                        out.println("Choose the x_coordinate where you want to put the tile in the shelf(Valid insert:[ 0 , 1 , 2 , 3 , 4 , 5 ])");
+                        out.println("Scegli la coordinata in X sulla shelf dove mettere la tile (Inserimento valido:[ 0 , 1 , 2 , 3 , 4 , 5 ])");
                     } else {
                         if (!buffer.equals("")) {
                             out.println("Input non valido, scrivi 'chat' per usare la chat oppure indica un intero");
@@ -857,7 +857,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
 
             message = server.ToPutTileRequestMessage(xPos, turnTiles.get(index), turnTiles.size());
             if (!message.isValid())
-                out.println("Error in the insertion: coordinates not valid");
+                out.println("Errore riscontrato:non puoi inserire in quella casella");
             else turnTiles.remove(index);
         }
         if (message.isLastTurn())
