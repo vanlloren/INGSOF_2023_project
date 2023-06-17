@@ -69,8 +69,10 @@ public class RandPersonalGoal {
                     newPersonalGoalType = PersonalGoalType.PERSONALGOAL12;
             }
             for (PersonalGoalType p : personalGoalTypeList) {
-                if (p == newPersonalGoalType)
+                if (p == newPersonalGoalType) {
                     isOK = false;
+                    break;
+                }
             }
         } while (!isOK);
 

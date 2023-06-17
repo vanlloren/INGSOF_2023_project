@@ -1,18 +1,9 @@
 package Controller;
 
-
-
 import server.Controller.RuleCommonGoal;
-
-
 import static org.junit.Assert.*;
-
 import org.junit.Test;
-import org.junit.jupiter.api.*;
-
-
 import server.Model.PlayableItemTile;
-
 
 public class RuleCommonGoalTest  {
     private PlayableItemTile[][] structure;
@@ -20,15 +11,6 @@ public class RuleCommonGoalTest  {
     /**
      * Tests rules of commonGoal card
      */
-@BeforeEach
-public void setUp(){
-     structure = new PlayableItemTile[6][5];
-     for (int i=0; i<6;i++){
-         for (int j=0; j<6;j++){
-             structure[i][j] = new PlayableItemTile("VOID",1);
-         }
-     }
-}
 
     @Test
     public void TestCheckCrux(){

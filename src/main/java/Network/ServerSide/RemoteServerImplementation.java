@@ -35,12 +35,12 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
 
     /**
      * This method provides an instance of {@link RemoteServerImplementation RemoteServer} and binds it
-     * with the {@link GameController GameController} of the respecitive {@link server.Model.GameModel GameModel}
+     * with the {@link GameController GameController} of the respective {@link server.Model.GameModel GameModel}
      *
      * @param gameController the {@link GameController GameController} to bind
      * @throws RemoteException exception that underlines problems with the RMI Connection
      */
-    RemoteServerImplementation(GameController gameController) throws RemoteException {
+    public RemoteServerImplementation(GameController gameController) throws RemoteException {
         this.gameController = gameController;
     }
 
@@ -52,7 +52,6 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
     }
 
     public TileReplyMessage onTilePickMessage(String nickname, int x, int y){
-
         return gameController.pickTile(x, y);
     }
 

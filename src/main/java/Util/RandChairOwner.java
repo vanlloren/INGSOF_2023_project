@@ -16,7 +16,6 @@ public class RandChairOwner {
      */
     public static int ChooseRand(int i){
         Random rand = new Random();
-        int n = rand.nextInt(i);
-        return n;
+        return rand.nextInt(i);
     }
 }

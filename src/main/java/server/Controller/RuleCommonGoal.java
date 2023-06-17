@@ -226,7 +226,7 @@ public class RuleCommonGoal {
      * @param structure the structure on which the check will be made
      * @return {@code true} if the {@link server.Model.CommonGoal CommonGoal} is completed, {@code false} otherwise
      */
-        public static boolean CheckColumn1(PlayableItemTile[][] structure) {//scorro colonne e uso algoritmo che controlla un max di 3 tipi diversi tramite un counter
+        public static boolean CheckColumn1(PlayableItemTile[][] structure) {
             int columnCount = 0;
             boolean checker = false;
 
@@ -259,7 +259,7 @@ public class RuleCommonGoal {
      * @param structure the structure on which the check will be made
      * @return {@code true} if the {@link server.Model.CommonGoal CommonGoal} is completed, {@code false} otherwise
      */
-        public static boolean CheckColumn2(PlayableItemTile[][] structure) {//due colonne di 6 tipi diversi una cazzata basta fare controllo delle colonne con due per considerare le 6 righe e scorro avanti di colonne quindi usa un while con dentro un for e usa un counter
+        public static boolean CheckColumn2(PlayableItemTile[][] structure) {
             int columnCount = 0;
             boolean checker = false;
 
@@ -287,8 +287,8 @@ public class RuleCommonGoal {
      * @param structure the structure on which the check will be made
      * @return {@code true} if the {@link server.Model.CommonGoal CommonGoal} is completed, {@code false} otherwise
      */
-        public static boolean CheckLine1(PlayableItemTile[][] structure) { //uguale a column 1 ma sviluppato per righe
-        int count = 0;
+        public static boolean CheckLine1(PlayableItemTile[][] structure) {
+            int count = 0;
             for(int i=0;i<6;i++){
                 HashSet<Colour> distinctColour;
                 distinctColour = new HashSet<>();
@@ -314,7 +314,7 @@ public class RuleCommonGoal {
      * @param structure the structure on which the check will be made
      * @return {@code true} if the {@link server.Model.CommonGoal CommonGoal} is completed, {@code false} otherwise
      */
-        public static boolean CheckLine2(PlayableItemTile[][] structure) { //uguale a column 2 ma sviluppato per le righe
+        public static boolean CheckLine2(PlayableItemTile[][] structure) {
             int count = 0;
             for(int i=0;i<6;i++){
                 ArrayList<Colour> colourArrayList = new ArrayList<>();

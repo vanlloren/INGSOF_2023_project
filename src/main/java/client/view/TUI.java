@@ -58,8 +58,7 @@ this.isLastTurn = true;
     }
 
 
-    //Implementando il metodo Runnable ereditiamo tutte le sue classi e oggetti
-    //Run è un costruttore basilare costruito direttamente dal metodo Runnable al posto di init
+
     public void init() throws InterruptedException {
         boolean isConnected = false;
         out.println("╔════════════════════════════════════════╗");

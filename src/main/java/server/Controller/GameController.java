@@ -85,7 +85,7 @@ public class GameController {
      * tried to pick an invalid {@link ItemTile ItemTile} and the pick procedure needs to be redone.
      * (2) if the field {@code tile} in {@link TileReplyMessage TileReplyMessage} is not {@code null} the procedure has been completed correctly.
      */
-    public TileReplyMessage pickTile(int x, int y) {  //restituisce le 1/2/3 tiles prese dalla livingRoom dal player nel suo turno
+    public TileReplyMessage pickTile(int x, int y) {
         PlayableItemTile tile;
         moveOn = false;
         full=false;
