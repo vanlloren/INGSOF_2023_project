@@ -1,6 +1,10 @@
 package Network.message;
 
+import java.io.Serial;
+
 public class WriteInChatMessage extends Message {
+    @Serial
+    private static final long serialVersionUID = -155371940956878789L;
     private final String Nickname;
     private final String chat;
     private final String receiver;

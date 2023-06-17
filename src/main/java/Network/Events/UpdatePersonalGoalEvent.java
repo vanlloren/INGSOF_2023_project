@@ -3,8 +3,8 @@ package Network.Events;
 import Util.PersonalGoalType;
 
 public class UpdatePersonalGoalEvent extends Event{
-    private PersonalGoalType personalGoalType;
-    private String player;
+    private final PersonalGoalType personalGoalType;
+    private final String player;
 
     public UpdatePersonalGoalEvent(String player, PersonalGoalType personalGoalType) {
         super(EventEnum.UPDATE_PERSONAL_GOAL);

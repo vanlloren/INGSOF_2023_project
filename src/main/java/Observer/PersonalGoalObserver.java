@@ -21,7 +21,7 @@ public interface PersonalGoalObserver {
      *                         belonging to the {@link server.Model.Player Player}
      * @param nickname the {@code nickname} of the {@link server.Model.Player Player} whose {@link server.Model.PersonalGoal PersonalGoal}
      *                 has been modified
-     * @throws RemoteException
+     * @throws RemoteException exception that underlines problems with the RMI Connection
      */
     void OnUpdateModelPersonalGoal(TurnView turnView, PersonalGoalType personalGoalType, String nickname) throws RemoteException;
 }

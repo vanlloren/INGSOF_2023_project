@@ -141,7 +141,7 @@ public class GameBoard implements Serializable {
      * @param y the 'y' position on the {@link LivingRoom LivingRoom} of the
      * {@link PlayableItemTile PlayableItemTile} to add
      */
-    public void setToPlayerFirstTile(int x, int y){ //prende tessera 1 dalla LivingRoom
+    public void setToPlayerFirstTile(int x, int y){ //prende prima tessera dalla LivingRoom
 
         toPlayerTiles = new ArrayList<>();
 
@@ -162,7 +162,7 @@ public class GameBoard implements Serializable {
      * @param y the 'y' position on the {@link LivingRoom LivingRoom} of the
      * {@link PlayableItemTile PlayableItemTile} to add
      */
-    public void setToPlayerAnotherTile(int x, int y){ //prende tessera 2/3 dalla LivingRoom
+    public void setToPlayerAnotherTile(int x, int y){ //prende seconda/terza tessera dalla LivingRoom
 
         toPlayerTiles.add(livingRoom.pickTile(x, y));
         livingRoom.updateAdjacentAvailabilityV2(x, y, this.firstX, this.firstY);

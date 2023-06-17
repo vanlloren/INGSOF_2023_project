@@ -19,19 +19,13 @@ public class NullItemTile extends ItemTile {
     private static final long serialVersionUID = -8726544593745400731L;
     private final Colour colour;
     private final int idCode;
-    private final boolean availability;
     private boolean adjacency;
-
-    private int xPos;
-
-    private int yPos;
 
     /**
      * Creates an instance of {@link NullItemTile NullItemTile} and sets its attributes
      */
     public NullItemTile() {
         colour = Colour.VOID;
-        availability = false;
         adjacency = false;
         idCode = 0;
     }
@@ -131,8 +125,7 @@ public class NullItemTile extends ItemTile {
      */
     @Override
     public ArrayList<Integer> getPosition(){
-        ArrayList<Integer> noPos = new ArrayList<Integer>();
+        return new ArrayList<>();
 
-        return noPos;
     }
 }

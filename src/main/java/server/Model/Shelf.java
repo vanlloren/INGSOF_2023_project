@@ -79,7 +79,8 @@ public class Shelf extends ShelfObservable implements Serializable, SimpleShelf 
      * Generates the internal structure of a {@link Shelf Shelf} by placing in all its cells
      * an instance of a {@link PlayableItemTile} with {@link Colour Colour} {@code VOID} and {@code idCode}
      * set to -1
-     * @return
+     *
+     * @return the initialized structure of the {@link Shelf Shelf}
      */
     public PlayableItemTile[][] setUp(){
         for (int i= 0;i<6;i++){
@@ -169,7 +170,8 @@ public class Shelf extends ShelfObservable implements Serializable, SimpleShelf 
      * Sets the attribute {@code columnChosen}, which indicates the column chosen by the
      * {@link Player CurrentPlayer} when putting the first {@link PlayableItemTile PlayableItemTile}
      * in the {@link Shelf Shelf}
-     * @param columnChosen
+     *
+     * @param columnChosen the number of the column chosen in the {@link Shelf Shelf}
      */
     public void setColumnChosen(int columnChosen){
         this.columnChosen = columnChosen;

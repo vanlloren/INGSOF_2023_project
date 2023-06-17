@@ -1,16 +1,10 @@
 package Controller;
 
-import Util.Colour;
-import junit.framework.TestCase;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import server.Controller.RuleShelf;
 import server.Model.GameModel;
 import server.Model.PlayableItemTile;
-import server.Model.Player;
 import server.Model.Shelf;
 
 

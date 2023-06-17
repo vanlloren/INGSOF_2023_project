@@ -9,21 +9,16 @@ import Util.CommonGoalType;
 import Util.PersonalGoalType;
 import Util.RandPersonalGoal;
 import client.view.TUI;
-import junit.framework.TestCase;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import server.Controller.GameController;
 import server.Model.*;
 import server.enumerations.PickTileResponse;
 
-
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Optional;
 
 import static server.Controller.GameController.findAdjGroups;
 
@@ -168,24 +163,24 @@ public class GameControllerTest {
     @Test
     public void testAddPoint(){
         GameController gameController = new GameController(new GameModel());
-        CommonGoal commonGoal = new CommonGoal(new GameModel());
+        CommonGoal commonGoal = new CommonGoal();
 
         commonGoal.setTokens(2);
-        Assert.assertTrue(gameController.addPoint(commonGoal) == 8);
-        Assert.assertTrue(gameController.addPoint(commonGoal) == 4);
+        Assert.assertEquals(8, (int) gameController.addPoint(commonGoal));
+        Assert.assertEquals(4, (int) gameController.addPoint(commonGoal));
 
-        commonGoal = new CommonGoal(new GameModel());
+        commonGoal = new CommonGoal();
         commonGoal.setTokens(3);
-        Assert.assertTrue(gameController.addPoint(commonGoal) == 8);
-        Assert.assertTrue(gameController.addPoint(commonGoal) == 6);
-        Assert.assertTrue(gameController.addPoint(commonGoal) == 4);
+        Assert.assertEquals(8, (int) gameController.addPoint(commonGoal));
+        Assert.assertEquals(6, (int) gameController.addPoint(commonGoal));
+        Assert.assertEquals(4, (int) gameController.addPoint(commonGoal));
 
-        commonGoal = new CommonGoal(new GameModel());
+        commonGoal = new CommonGoal();
         commonGoal.setTokens(4);
-        Assert.assertTrue(gameController.addPoint(commonGoal) == 8);
-        Assert.assertTrue(gameController.addPoint(commonGoal) == 6);
-        Assert.assertTrue(gameController.addPoint(commonGoal) == 4);
-        Assert.assertTrue(gameController.addPoint(commonGoal) == 2);
+        Assert.assertEquals(8, (int) gameController.addPoint(commonGoal));
+        Assert.assertEquals(6, (int) gameController.addPoint(commonGoal));
+        Assert.assertEquals(4, (int) gameController.addPoint(commonGoal));
+        Assert.assertEquals(2, (int) gameController.addPoint(commonGoal));
 
 
     }
@@ -223,7 +218,7 @@ public class GameControllerTest {
             player.getPersonalGoal().setPersonalGoalType(PersonalGoalType.PERSONALGOAL1, player.getNickname());
 
             gameController.calculatePoint(player, livingRoom);
-            Assert.assertTrue(player.getPoints() == 0);
+            Assert.assertEquals(0, (int) player.getPoints());
 
 
             PlayableItemTile[][] structure = player.getPersonalShelf().getStructure();
@@ -231,7 +226,7 @@ public class GameControllerTest {
             player.getPersonalShelf().setStructure(structure);
 
             gameController.calculatePoint(player, livingRoom);
-            Assert.assertTrue(player.getPoints() == 1);
+            Assert.assertEquals(1, (int) player.getPoints());
 
             structure[0][4] = new PlayableItemTile("PINK", 11);
             structure[5][0] = new PlayableItemTile("PINK", 12);
@@ -239,14 +234,14 @@ public class GameControllerTest {
             player.getPersonalShelf().setStructure(structure);
 
             gameController.calculatePoint(player, livingRoom);
-            Assert.assertTrue(player.getPoints() == 9);
+            Assert.assertEquals(9, (int) player.getPoints());
 
             structure[0][1] = new PlayableItemTile("PINK", 14);
             structure[1][0] = new PlayableItemTile("PINK", 15);
             player.getPersonalShelf().setStructure(structure);
 
             gameController.calculatePoint(player, livingRoom);
-            Assert.assertTrue(player.getPoints() == 11);
+            Assert.assertEquals(11, (int) player.getPoints());
 
             structure[2][2] = new PlayableItemTile("BLUE", 16);
             structure[2][3] = new PlayableItemTile("BLUE", 17);
@@ -256,11 +251,11 @@ public class GameControllerTest {
             player.getPersonalShelf().setStructure(structure);
 
             gameController.calculatePoint(player, livingRoom);
-            Assert.assertTrue(player.getPoints() == 14);
+            Assert.assertEquals(14, (int) player.getPoints());
 
             structure[4][4] = new PlayableItemTile("BLUE", 20);
             gameController.calculatePoint(player, livingRoom);
-            Assert.assertTrue(player.getPoints() == 16);
+            Assert.assertEquals(16, (int) player.getPoints());
 
             structure[4][1] = new PlayableItemTile("BLUE", 21);
             structure[0][2] = new PlayableItemTile("BLUE", 22);
@@ -268,13 +263,13 @@ public class GameControllerTest {
             player.getPersonalShelf().setStructure(structure);
 
             gameController.calculatePoint(player, livingRoom);
-            Assert.assertTrue(player.getPoints() == 25);
+            Assert.assertEquals(25, (int) player.getPoints());
 
             structure[2][4] = new PlayableItemTile("BLUE", 24);
             player.getPersonalShelf().setStructure(structure);
 
             gameController.calculatePoint(player, livingRoom);
-            Assert.assertTrue(player.getPoints() == 28);
+            Assert.assertEquals(28, (int) player.getPoints());
 
         } catch (RemoteException e) {
             throw new RuntimeException(e);
@@ -304,24 +299,24 @@ public class GameControllerTest {
             gameController.getGame().setCurrPlayer(player);
 
             TileReplyMessage message = gameController.pickTile(5,5);
-            Assert.assertTrue(message.getMessageEnumeration().equals(MessageEnumeration.TILE_REPLY));
-            Assert.assertTrue(message.getNickname() == null);
-            Assert.assertTrue(message.isTileAccepted().equals(PickTileResponse.INVALID_TILE));
+            Assert.assertEquals(message.getMessageEnumeration(), MessageEnumeration.TILE_REPLY);
+            Assert.assertNull(message.getNickname());
+            Assert.assertEquals(message.isTileAccepted(), PickTileResponse.INVALID_TILE);
 
             message = gameController.pickTile(1,3);
-            Assert.assertTrue(message.getMessageEnumeration().equals(MessageEnumeration.TILE_REPLY));
-            Assert.assertTrue(message.getNickname() == null);
-            Assert.assertTrue(message.isTileAccepted().equals(PickTileResponse.CORRECT_TILE));
+            Assert.assertEquals(message.getMessageEnumeration(), MessageEnumeration.TILE_REPLY);
+            Assert.assertNull(message.getNickname());
+            Assert.assertEquals(message.isTileAccepted(), PickTileResponse.CORRECT_TILE);
 
             message = gameController.pickTile(1,4);
-            Assert.assertTrue(message.getMessageEnumeration().equals(MessageEnumeration.TILE_REPLY));
-            Assert.assertTrue(message.getNickname() == null);
-            Assert.assertTrue(message.isTileAccepted().equals(PickTileResponse.CORRECT_TILE));
+            Assert.assertEquals(message.getMessageEnumeration(), MessageEnumeration.TILE_REPLY);
+            Assert.assertNull(message.getNickname());
+            Assert.assertEquals(message.isTileAccepted(), PickTileResponse.CORRECT_TILE);
 
             message = gameController.pickTile(1,5);
-            Assert.assertTrue(message.getMessageEnumeration().equals(MessageEnumeration.TILE_REPLY));
-            Assert.assertTrue(message.getNickname() == null);
-            Assert.assertTrue(message.isTileAccepted().equals(PickTileResponse.MAX_TILE_PICKED));
+            Assert.assertEquals(message.getMessageEnumeration(), MessageEnumeration.TILE_REPLY);
+            Assert.assertNull(message.getNickname());
+            Assert.assertEquals(message.isTileAccepted(), PickTileResponse.MAX_TILE_PICKED);
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
@@ -374,25 +369,25 @@ public class GameControllerTest {
 
             TileReplyMessage message = gameController.pickTile(1,3);
             gameController.getGameBoardController().getControlledLivingRoom().updateAdjacentAvailabilityV1(1,3);
-            Assert.assertTrue(message.getMessageEnumeration().equals(MessageEnumeration.TILE_REPLY));
-            Assert.assertTrue(message.getNickname() == null);
-            Assert.assertTrue(message.isTileAccepted().equals(PickTileResponse.CORRECT_TILE));
+            Assert.assertEquals(message.getMessageEnumeration(), MessageEnumeration.TILE_REPLY);
+            Assert.assertNull(message.getNickname());
+            Assert.assertEquals(message.isTileAccepted(), PickTileResponse.CORRECT_TILE);
 
-            Assert.assertTrue(gameController.getGameBoardController().getControlledLivingRoom().getAvailableTiles().size() ==1);
+            Assert.assertEquals(1, gameController.getGameBoardController().getControlledLivingRoom().getAvailableTiles().size());
 
 
             message = gameController.pickTile(2,3);
             gameController.getGameBoardController().getControlledLivingRoom().updateAdjacentAvailabilityV1(1,3);
-            Assert.assertTrue(message.getMessageEnumeration().equals(MessageEnumeration.TILE_REPLY));
-            Assert.assertTrue(message.getNickname() == null);
-            Assert.assertTrue(message.isTileAccepted().equals(PickTileResponse.CORRECT_TILE));
+            Assert.assertEquals(message.getMessageEnumeration(), MessageEnumeration.TILE_REPLY);
+            Assert.assertNull(message.getNickname());
+            Assert.assertEquals(message.isTileAccepted(), PickTileResponse.CORRECT_TILE);
 
-            Assert.assertTrue(gameController.getGameBoardController().getControlledLivingRoom().getAvailableTiles().size() ==0);
+            Assert.assertEquals(0, gameController.getGameBoardController().getControlledLivingRoom().getAvailableTiles().size());
 
             message = gameController.pickTile(1,5);
-            Assert.assertTrue(message.getMessageEnumeration().equals(MessageEnumeration.TILE_REPLY));
-            Assert.assertTrue(message.getNickname() == null);
-            Assert.assertTrue(message.isTileAccepted().equals(PickTileResponse.MAX_TILE_PICKED));
+            Assert.assertEquals(message.getMessageEnumeration(), MessageEnumeration.TILE_REPLY);
+            Assert.assertNull(message.getNickname());
+            Assert.assertEquals(message.isTileAccepted(), PickTileResponse.MAX_TILE_PICKED);
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
@@ -454,9 +449,9 @@ public class GameControllerTest {
 
 
             TileReplyMessage message = gameController.pickTile(1,3);
-            Assert.assertTrue(message.getMessageEnumeration().equals(MessageEnumeration.TILE_REPLY));
-            Assert.assertTrue(message.getNickname() == null);
-            Assert.assertTrue(message.isTileAccepted().equals(PickTileResponse.MAX_TILE_PICKED));
+            Assert.assertEquals(message.getMessageEnumeration(), MessageEnumeration.TILE_REPLY);
+            Assert.assertNull(message.getNickname());
+            Assert.assertEquals(message.isTileAccepted(), PickTileResponse.MAX_TILE_PICKED);
 
 
 
@@ -513,24 +508,24 @@ public class GameControllerTest {
             gameController.getGameBoardController().getControlledLivingRoom().updateAvailability();
 
             TileReplyMessage message = gameController.pickTile(1,3);
-            Assert.assertTrue(message.getMessageEnumeration().equals(MessageEnumeration.TILE_REPLY));
-            Assert.assertTrue(message.getNickname() == null);
-            Assert.assertTrue(message.isTileAccepted().equals(PickTileResponse.CORRECT_TILE));
+            Assert.assertEquals(message.getMessageEnumeration(), MessageEnumeration.TILE_REPLY);
+            Assert.assertNull(message.getNickname());
+            Assert.assertEquals(message.isTileAccepted(), PickTileResponse.CORRECT_TILE);
 
             message = gameController.pickTile(2,3);
-            Assert.assertTrue(message.getMessageEnumeration().equals(MessageEnumeration.TILE_REPLY));
-            Assert.assertTrue(message.getNickname() == null);
-            Assert.assertTrue(message.isTileAccepted().equals(PickTileResponse.CORRECT_TILE));
+            Assert.assertEquals(message.getMessageEnumeration(), MessageEnumeration.TILE_REPLY);
+            Assert.assertNull(message.getNickname());
+            Assert.assertEquals(message.isTileAccepted(), PickTileResponse.CORRECT_TILE);
 
             message = gameController.pickTile(3,3);
-            Assert.assertTrue(message.getMessageEnumeration().equals(MessageEnumeration.TILE_REPLY));
-            Assert.assertTrue(message.getNickname() == null);
-            Assert.assertTrue(message.isTileAccepted().equals(PickTileResponse.CORRECT_TILE));
+            Assert.assertEquals(message.getMessageEnumeration(), MessageEnumeration.TILE_REPLY);
+            Assert.assertNull(message.getNickname());
+            Assert.assertEquals(message.isTileAccepted(), PickTileResponse.CORRECT_TILE);
 
             message = gameController.pickTile(5,3);
-            Assert.assertTrue(message.getMessageEnumeration().equals(MessageEnumeration.TILE_REPLY));
-            Assert.assertTrue(message.getNickname() == null);
-            Assert.assertTrue(message.isTileAccepted().equals(PickTileResponse.MAX_TILE_PICKED));
+            Assert.assertEquals(message.getMessageEnumeration(), MessageEnumeration.TILE_REPLY);
+            Assert.assertNull(message.getNickname());
+            Assert.assertEquals(message.isTileAccepted(), PickTileResponse.MAX_TILE_PICKED);
 
         } catch (RemoteException e) {
             throw new RuntimeException(e);
@@ -680,9 +675,9 @@ public class GameControllerTest {
             gameModel.getCurrPlayer().getPersonalShelf().setStructure(structure);
 
             InsertionReplyMessage message = gameController.putTile(3,3, new PlayableItemTile("BLUE", 6), 1);
-            Assert.assertTrue(message.getNickname() == null);
-            Assert.assertTrue(!message.isValid());
-            Assert.assertTrue(!message.isLastTurn());
+            Assert.assertNull(message.getNickname());
+            Assert.assertFalse(message.isValid());
+            Assert.assertFalse(message.isLastTurn());
 
             structure = new PlayableItemTile[6][5];
             for(int i=0; i<6; i++){
@@ -695,7 +690,7 @@ public class GameControllerTest {
             gameModel.getCurrPlayer().getPersonalShelf().setStructure(structure);
 
             message = gameController.putTile(0,1, new PlayableItemTile("BLUE", 6), 1);
-            Assert.assertTrue(message.getNickname()== null);
+            Assert.assertNull(message.getNickname());
             Assert.assertTrue(gameModel.getEndGame());
             Assert.assertTrue(message.isValid());
             Assert.assertTrue(message.isLastTurn());
@@ -703,7 +698,7 @@ public class GameControllerTest {
             structure[0][1] = new PlayableItemTile("VOID", -1);
             gameModel.getCurrPlayer().getPersonalShelf().setStructure(structure);
             message = gameController.putTile(0,1, new PlayableItemTile("BLUE", 6), 1);
-            Assert.assertTrue(message.getNickname()== null);
+            Assert.assertNull(message.getNickname());
             Assert.assertTrue(message.isValid());
             Assert.assertTrue(message.isLastTurn());
 
@@ -712,9 +707,9 @@ public class GameControllerTest {
             structure[0][2] = new PlayableItemTile("VOID", -1);
             gameModel.getCurrPlayer().getPersonalShelf().setStructure(structure);
             message = gameController.putTile(0,2, new PlayableItemTile("BLUE", 6), 1);
-            Assert.assertTrue(message.getNickname()== null);
+            Assert.assertNull(message.getNickname());
             Assert.assertTrue(message.isValid());
-            Assert.assertTrue(!message.isLastTurn());
+            Assert.assertFalse(message.isLastTurn());
 
         } catch (RemoteException e) {
             throw new RuntimeException(e);
@@ -746,9 +741,9 @@ public class GameControllerTest {
             gameModel.getCurrPlayer().getPersonalShelf().setStructure(structure);
 
             InsertionReplyMessage message = gameController.putTile(3, new PlayableItemTile("BLUE", 6), 1);
-            Assert.assertTrue(message.getNickname() == null);
-            Assert.assertTrue(!message.isValid());
-            Assert.assertTrue(!message.isLastTurn());
+            Assert.assertNull(message.getNickname());
+            Assert.assertFalse(message.isValid());
+            Assert.assertFalse(message.isLastTurn());
 
 
             structure = new PlayableItemTile[6][5];
@@ -762,7 +757,7 @@ public class GameControllerTest {
             gameModel.getCurrPlayer().getPersonalShelf().setStructure(structure);
 
             message = gameController.putTile(0, new PlayableItemTile("BLUE", 6), 1);
-            Assert.assertTrue(message.getNickname()== null);
+            Assert.assertNull(message.getNickname());
             Assert.assertTrue(gameModel.getEndGame());
             Assert.assertTrue(message.isValid());
             Assert.assertTrue(message.isLastTurn());
@@ -770,7 +765,7 @@ public class GameControllerTest {
             structure[0][0] = new PlayableItemTile("VOID", -1);
             gameModel.getCurrPlayer().getPersonalShelf().setStructure(structure);
             message = gameController.putTile(0, new PlayableItemTile("BLUE", 6), 1);
-            Assert.assertTrue(message.getNickname()== null);
+            Assert.assertNull(message.getNickname());
             Assert.assertTrue(message.isValid());
             Assert.assertTrue(message.isLastTurn());
 
@@ -779,9 +774,9 @@ public class GameControllerTest {
             structure[1][0] = new PlayableItemTile("VOID", -1);
             gameModel.getCurrPlayer().getPersonalShelf().setStructure(structure);
             message = gameController.putTile(1, new PlayableItemTile("BLUE", 6), 1);
-            Assert.assertTrue(message.getNickname()== null);
+            Assert.assertNull(message.getNickname());
             Assert.assertTrue(message.isValid());
-            Assert.assertTrue(!message.isLastTurn());
+            Assert.assertFalse(message.isLastTurn());
 
 
         } catch (RemoteException e) {

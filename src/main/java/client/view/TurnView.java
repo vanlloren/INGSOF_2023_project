@@ -1,18 +1,9 @@
 package client.view;
 
-import Network.ClientSide.RemoteClientImplementation;
-import Network.ClientSide.RemoteClientInterface;
-import Network.Events.UpdatePlayersListEvent;
-import Network.Events.*;
-import Network.ServerSide.RemoteServerImplementation;
-import Observer.*;
-import Util.CommonGoalType;
-import Util.PersonalGoalType;
 import server.Model.*;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.ArrayList;
 
 
 public class TurnView implements Serializable {
@@ -33,10 +24,6 @@ public class TurnView implements Serializable {
         return this.livingRoom;
     }
 
-    public boolean getIsGameOn(){
-        return this.gameModel.getIsGameOn();
-    }
-
     public SimpleGameModel getGameModel(){
         return this.gameModel;
     }
@@ -45,18 +32,7 @@ public class TurnView implements Serializable {
         return this.currPlayer.getNickname();
     }
 
-    public SimplePlayer getPlayer(String nickname){
-        SimplePlayer player=null;
-        for (SimplePlayer p: gameModel.getPlayersInGame()
-        ) {
-            if(p.getNickname().equals(nickname)){
-                player = p;
-            }
-        }
-        return player;
-    }
-
-    public SimpleShelf getShelfTable(String nickname){
+    public SimpleShelf getShelfTable(){
         return currPlayer.getPersonalShelf();
     }
 
@@ -74,8 +50,6 @@ public class TurnView implements Serializable {
         }
         return point;
     }
-    // public void WriteToAllClient(String Nickname, String chatMessage){
-    //notifyObservers(obs -> obs.UpdateAllClientonNewMessageChat(Nickname,chatMessage));
 
 }
 

@@ -22,17 +22,12 @@ public class CommonGoal implements Serializable {
     private static final long serialVersionUID = 6744912126943243456L;
     CommonGoalType commonGoalType;
     private final ArrayList<Integer> token_list = new ArrayList<>();
-    private GameModel gameModel;
 
     /**
      * Method that creates an instance of {@link CommonGoal CommonGoal}.
-     * It also provides the binding between a {@link CommonGoal CommonGoal} and the specific instance
-     * of {@link GameModel GameModel}.
-     *
-     * @param gameModel the {@link GameModel GameModel} to bind
      */
-    public CommonGoal(GameModel gameModel){
-        this.gameModel=gameModel;
+    public CommonGoal(){
+
     }
 
     /**

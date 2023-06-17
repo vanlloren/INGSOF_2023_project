@@ -17,7 +17,7 @@ import java.rmi.RemoteException;
      *
      * @param turnView the updated version of {@link TurnView TurnView} which is later sent to the {@link Network.ClientSide.RemoteClientImplementation RemoteClients}
      * @param points the new amount of points scored by the {@link server.Model.Player Player}
-     * @throws RemoteException
+     * @throws RemoteException exception that underlines problems with the RMI Connection
      */
     void OnUpdateModelPlayerPoint(TurnView turnView, Integer points) throws RemoteException;
 
@@ -26,7 +26,7 @@ import java.rmi.RemoteException;
      * when the completion status of the {@link server.Model.CommonGoal CommonGoal2} has been modified
      *
      * @param turnView the updated version of {@link TurnView TurnView} which is later sent to the {@link Network.ClientSide.RemoteClientImplementation RemoteClients}
-     * @throws RemoteException
+     * @throws RemoteException exception that underlines problems with the RMI Connection
      */
     void OnUpdateModelStatusCommonGoal2(TurnView turnView) throws RemoteException;
 
@@ -35,7 +35,7 @@ import java.rmi.RemoteException;
      * when the completion status of the {@link server.Model.CommonGoal CommonGoal1} has been modified
      *
      * @param turnView the updated version of {@link TurnView TurnView} which is later sent to the {@link Network.ClientSide.RemoteClientImplementation RemoteClients}
-     * @throws RemoteException
+     * @throws RemoteException exception that underlines problems with the RMI Connection
      */
     void OnUpdateModelStatusCommonGoal1(TurnView turnView) throws RemoteException;
 

@@ -1,11 +1,10 @@
 package Model;
 
 import Util.PersonalGoalType;
-import org.junit.*;
-import server.Controller.CheckPersonalGoal;
+import org.junit.Assert;
+import org.junit.Test;
 import server.Model.GameModel;
 import server.Model.PersonalGoal;
-import server.Model.PlayableItemTile;
 
 
 public class PersonalGoalTest {
@@ -18,14 +17,14 @@ public class PersonalGoalTest {
     public void testSetGetPoint(){
         personalGoal.setPoint(5);
 
-        Assert.assertTrue(personalGoal.getPoint() == 5);
+        Assert.assertEquals(5, (int) personalGoal.getPoint());
     }
 
     @Test
     public void testSetGetPersonalGoalType(){
         personalGoal.setPersonalGoalType(PersonalGoalType.PERSONALGOAL3, "tizio");
-        Assert.assertTrue(personalGoal.getPersonalGoalType().equals(PersonalGoalType.PERSONALGOAL3));
-        Assert.assertFalse(personalGoal.getPersonalGoalType().equals(PersonalGoalType.PERSONALGOAL2));
+        Assert.assertEquals(personalGoal.getPersonalGoalType(), PersonalGoalType.PERSONALGOAL3);
+        Assert.assertNotEquals(personalGoal.getPersonalGoalType(), PersonalGoalType.PERSONALGOAL2);
     }
 
 }

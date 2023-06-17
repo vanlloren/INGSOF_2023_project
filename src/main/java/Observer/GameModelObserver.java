@@ -4,7 +4,6 @@ package Observer;
 import Util.CommonGoalType;
 import client.view.TurnView;
 import server.Model.CommonGoal;
-import server.Model.GameBoard;
 import server.Model.Player;
 
 import java.rmi.RemoteException;
@@ -22,7 +21,7 @@ public interface GameModelObserver {
      *
      * @param turnView the updated version of {@link TurnView TurnView} which is later sent to the {@link Network.ClientSide.RemoteClientImplementation RemoteClients}
      * @param player the {@link Player Player} added to the match
-     * @throws RemoteException
+     * @throws RemoteException exception that underlines problems with the RMI Connection
      */
     void onUpdateModelListPlayers(TurnView turnView, Player player) throws RemoteException;
 
@@ -33,7 +32,7 @@ public interface GameModelObserver {
      * @param turnView the updated version of {@link TurnView TurnView} which is later sent to the {@link Network.ClientSide.RemoteClientImplementation RemoteClients}
      * @param currPlayer the {@link Player Player} which is the {@code currPlayer} in the match
      * @param endGame a {@link Boolean Boolean} signaling whether the game has ended or not
-     * @throws RemoteException
+     * @throws RemoteException exception that underlines problems with the RMI Connection
      */
     void onUpdateModelEndGame(TurnView turnView, Player currPlayer, boolean endGame) throws RemoteException;
 
@@ -43,7 +42,7 @@ public interface GameModelObserver {
      *
      * @param turnView the updated version of {@link TurnView TurnView} which is later sent to the {@link Network.ClientSide.RemoteClientImplementation RemoteClients}
      * @param playersNumber the number of {@link Player Players} set for this match
-     * @throws RemoteException
+     * @throws RemoteException exception that underlines problems with the RMI Connection
      */
     void onUpdateModelPlayersNumber(TurnView turnView, int playersNumber) throws RemoteException;
 
@@ -53,7 +52,7 @@ public interface GameModelObserver {
      *
      * @param turnView the updated version of {@link TurnView TurnView} which is later sent to the {@link Network.ClientSide.RemoteClientImplementation RemoteClients}
      * @param player the {@link Player Player} who has been made {@code chairOwner} for this match
-     * @throws RemoteException
+     * @throws RemoteException exception that underlines problems with the RMI Connection
      */
     void onUpdateModelChairOwner(TurnView turnView, Player player) throws RemoteException;
 
@@ -62,7 +61,7 @@ public interface GameModelObserver {
      * that the game has started
      *
      * @param turnView the updated version of {@link TurnView TurnView} which is later sent to the {@link Network.ClientSide.RemoteClientImplementation RemoteClients}
-     * @throws RemoteException
+     * @throws RemoteException exception that underlines problems with the RMI Connection
      */
     void onUpdateModelGameHasStarted(TurnView turnView) throws RemoteException;
 
@@ -72,7 +71,7 @@ public interface GameModelObserver {
      *
      * @param turnView the updated version of {@link TurnView TurnView} which is later sent to the {@link Network.ClientSide.RemoteClientImplementation RemoteClients}
      * @param currPlayer the {@link Player Player} who has become {@code currPlayer}
-     * @throws RemoteException
+     * @throws RemoteException exception that underlines problems with the RMI Connection
      */
     void onUpdateModelCurrentPlayer(TurnView turnView, Player currPlayer) throws RemoteException;
 
@@ -82,7 +81,7 @@ public interface GameModelObserver {
      *
      * @param turnView the updated version of {@link TurnView TurnView} which is later sent to the {@link Network.ClientSide.RemoteClientImplementation RemoteClients}
      * @param player the {@code nickname} of the {@link Player Player} that has won the match
-     * @throws RemoteException
+     * @throws RemoteException exception that underlines problems with the RMI Connection
      */
     void onUpdateModelMatchWinner(TurnView turnView, String player) throws RemoteException;
 
@@ -91,7 +90,7 @@ public interface GameModelObserver {
      * that the match has ended
      *
      * @param turnView the updated version of {@link TurnView TurnView} which is later sent to the {@link Network.ClientSide.RemoteClientImplementation RemoteClients}
-     * @throws RemoteException
+     * @throws RemoteException exception that underlines problems with the RMI Connection
      */
     void onUpdateModelGameHasEnd(TurnView turnView) throws RemoteException;
 
@@ -102,7 +101,7 @@ public interface GameModelObserver {
      * @param turnView the updated version of {@link TurnView TurnView} which is later sent to the {@link Network.ClientSide.RemoteClientImplementation RemoteClients}
      * @param nickname the {@code nickname} of the {@link Player Player} that has sent the message
      * @param chat a {@link String String} that contains the actual message sent in the chat
-     * @throws RemoteException
+     * @throws RemoteException exception that underlines problems with the RMI Connection
      */
     void onUpdateModelChat(TurnView turnView, String nickname, String chat,String receiver) throws RemoteException;
 
@@ -114,7 +113,7 @@ public interface GameModelObserver {
      * @param turnView the updated version of {@link TurnView TurnView} which is later sent to the {@link Network.ClientSide.RemoteClientImplementation RemoteClients}
      * @param commonGoalType1 the {@link CommonGoalType CommonGoalType} set for {@link server.Model.CommonGoal CommonGoal1}
      * @param commonGoalType2 the {@link CommonGoalType CommonGoalType} set for {@link CommonGoal CommonGoal2}
-     * @throws RemoteException
+     * @throws RemoteException exception that underlines problems with the RMI Connection
      */
     void OnUpdateModelCommonGoal(TurnView turnView, CommonGoalType commonGoalType1, CommonGoalType commonGoalType2) throws RemoteException;
 }

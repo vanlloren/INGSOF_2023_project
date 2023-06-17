@@ -1,9 +1,7 @@
 package Network.Events;
 
-import server.Model.Player;
-
 public class UpdateMatchWinnerEvent extends Event{
-    private String player;
+    private final String player;
 
     public UpdateMatchWinnerEvent(String player) {
         super(EventEnum.UPDATE_MATCH_WINNER);

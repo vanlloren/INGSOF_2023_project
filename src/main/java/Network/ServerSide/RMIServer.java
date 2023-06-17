@@ -41,7 +41,7 @@ public class RMIServer {
      */
     public RemoteServerImplementation startRMIServer(){
         try{
-            RemoteServerImplementation remoteServer = new RemoteServerImplementation(this,gameController);
+            RemoteServerImplementation remoteServer = new RemoteServerImplementation(gameController);
 
             Registry registry = LocateRegistry.createRegistry(serverRMIPort);
 

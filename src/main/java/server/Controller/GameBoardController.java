@@ -5,8 +5,6 @@ import server.Model.GameBoard;
 import server.Model.LivingRoom;
 import server.Model.PlayableItemTile;
 
-import java.util.ArrayList;
-
 /**
  * This Class is the controller for the {@link GameBoard GameBoard} and its components {@link LivingRoom LivingRoom} and {@link server.Model.ItemBag ItemBag}
  */
@@ -181,7 +179,7 @@ public class GameBoardController {
 
         for(int i =0; i<9; i++){
             for(int j=0; j<9; j++) {
-                if (controlledLivingRoom.nullDetection(i, j) != true && controlledLivingRoom.nullTileDetection(i, j) != true){
+                if (!controlledLivingRoom.nullDetection(i, j) && !controlledLivingRoom.nullTileDetection(i, j)){
                     if (controlledLivingRoom.getTileAdjacency(i, j) && controlledLivingRoom.getTileAvailability(i, j)) {
                         return true;
                     }
@@ -205,22 +203,22 @@ public class GameBoardController {
 
         for(int i=0; i<9; i++){
             for(int j = 0; j < 9; j++){
-                if (controlledLivingRoom.nullDetection(i, j) != true && controlledLivingRoom.nullTileDetection(i, j) != true){
+                if (!controlledLivingRoom.nullDetection(i, j) && !controlledLivingRoom.nullTileDetection(i, j)){
                     //controllo corner cases
                     //1° tessere [0][3] e [0][4]
                     if(i == 0){
                         if (j==3) {
-                            if(controlledLivingRoom.nullDetection(1, 3) != true && controlledLivingRoom.nullTileDetection(1, 3) != true){
+                            if(!controlledLivingRoom.nullDetection(1, 3) && !controlledLivingRoom.nullTileDetection(1, 3)){
                                 adjCounter++;
                             }
-                            if (controlledLivingRoom.nullDetection(0, 4) != true && controlledLivingRoom.nullTileDetection(0, 4) != true){
+                            if (!controlledLivingRoom.nullDetection(0, 4) && !controlledLivingRoom.nullTileDetection(0, 4)){
                                 adjCounter++;
                             }
                         } else if (j==4){
-                            if (controlledLivingRoom.nullDetection(0, 3) != true && controlledLivingRoom.nullTileDetection(0, 3) != true){
+                            if (!controlledLivingRoom.nullDetection(0, 3) && !controlledLivingRoom.nullTileDetection(0, 3)){
                                 adjCounter++;
                             }
-                            if (controlledLivingRoom.nullDetection(1, 4) != true && controlledLivingRoom.nullTileDetection(1, 4) != true){
+                            if (!controlledLivingRoom.nullDetection(1, 4) && !controlledLivingRoom.nullTileDetection(1, 4)){
                                 adjCounter++;
                             }
 
@@ -229,18 +227,18 @@ public class GameBoardController {
                     //2° tessere  [4][0] e [5][0]
                     else if(j==0){
                         if(i==4){
-                            if (controlledLivingRoom.nullDetection(4, 1) != true && controlledLivingRoom.nullTileDetection(4, 1) != true){
+                            if (!controlledLivingRoom.nullDetection(4, 1) && !controlledLivingRoom.nullTileDetection(4, 1)){
                                 adjCounter++;
                             }
-                            if (controlledLivingRoom.nullDetection(5, 0) != true && controlledLivingRoom.nullTileDetection(5, 0) != true){
+                            if (!controlledLivingRoom.nullDetection(5, 0) && !controlledLivingRoom.nullTileDetection(5, 0)){
                                 adjCounter++;
                             }
                         }
                         if(i==5){
-                            if (controlledLivingRoom.nullDetection(4, 0) != true && controlledLivingRoom.nullTileDetection(4, 0) != true){
+                            if (!controlledLivingRoom.nullDetection(4, 0) && !controlledLivingRoom.nullTileDetection(4, 0)){
                                 adjCounter++;
                             }
-                            if (controlledLivingRoom.nullDetection(5, 1) != true && controlledLivingRoom.nullTileDetection(5, 1) != true){
+                            if (!controlledLivingRoom.nullDetection(5, 1) && !controlledLivingRoom.nullTileDetection(5, 1)){
                                 adjCounter++;
                             }
                         }
@@ -248,18 +246,18 @@ public class GameBoardController {
                     //3° tessere [8][4] e [8][5]
                     else if(i==8){
                         if(j==4){
-                            if (controlledLivingRoom.nullDetection(7,4) != true && controlledLivingRoom.nullTileDetection(7,4) != true){
+                            if (!controlledLivingRoom.nullDetection(7, 4) && !controlledLivingRoom.nullTileDetection(7, 4)){
                                 adjCounter++;
                             }
-                            if (controlledLivingRoom.nullDetection(8, 5) != true && controlledLivingRoom.nullTileDetection(8, 5) != true){
+                            if (!controlledLivingRoom.nullDetection(8, 5) && !controlledLivingRoom.nullTileDetection(8, 5)){
                                 adjCounter++;
                             }
                         }
                         if(j==5){
-                            if (controlledLivingRoom.nullDetection(7, 5) != true && controlledLivingRoom.nullTileDetection(7, 5) != true){
+                            if (!controlledLivingRoom.nullDetection(7, 5) && !controlledLivingRoom.nullTileDetection(7, 5)){
                                 adjCounter++;
                             }
-                            if (controlledLivingRoom.nullDetection(8, 4) != true && controlledLivingRoom.nullTileDetection(8, 4) != true){
+                            if (!controlledLivingRoom.nullDetection(8, 4) && !controlledLivingRoom.nullTileDetection(8, 4)){
                                 adjCounter++;
                             }
                         }
@@ -267,18 +265,18 @@ public class GameBoardController {
                     //4° tessere [3][8] e [4][8]
                     else if(j==8){
                         if(i==3){
-                            if (controlledLivingRoom.nullDetection(4, 8) != true && controlledLivingRoom.nullTileDetection(4, 8) != true){
+                            if (!controlledLivingRoom.nullDetection(4, 8) && !controlledLivingRoom.nullTileDetection(4, 8)){
                                 adjCounter++;
                             }
-                            if (controlledLivingRoom.nullDetection(3, 7) != true && controlledLivingRoom.nullTileDetection(3, 7) != true){
+                            if (!controlledLivingRoom.nullDetection(3, 7) && !controlledLivingRoom.nullTileDetection(3, 7)){
                                 adjCounter++;
                             }
                         }
                         if(i==4){
-                            if (controlledLivingRoom.nullDetection(3, 8) != true && controlledLivingRoom.nullTileDetection(3, 8) != true){
+                            if (!controlledLivingRoom.nullDetection(3, 8) && !controlledLivingRoom.nullTileDetection(3, 8)){
                                 adjCounter++;
                             }
-                            if (controlledLivingRoom.nullDetection(4, 7) != true && controlledLivingRoom.nullTileDetection(4, 7) != true){
+                            if (!controlledLivingRoom.nullDetection(4, 7) && !controlledLivingRoom.nullTileDetection(4, 7)){
                                 adjCounter++;
                             }
                         }
@@ -286,19 +284,19 @@ public class GameBoardController {
                     //ora guardo il caso generale
                     else{
                         //controllo la tile della riga sopra
-                        if(controlledLivingRoom.nullDetection(i-1, j) != true && controlledLivingRoom.nullTileDetection(i-1, j) != true){
+                        if(!controlledLivingRoom.nullDetection(i - 1, j) && !controlledLivingRoom.nullTileDetection(i - 1, j)){
                             adjCounter++;
                         }
                         //controllo la tile della riga sotto
-                        if (controlledLivingRoom.nullDetection(i+1, j) != true && controlledLivingRoom.nullTileDetection(i+1, j) != true){
+                        if (!controlledLivingRoom.nullDetection(i + 1, j) && !controlledLivingRoom.nullTileDetection(i + 1, j)){
                             adjCounter++;
                         }
                         //controllo la tile a sx
-                        if (controlledLivingRoom.nullDetection(i, j-1) != true && controlledLivingRoom.nullTileDetection(i, j-1) != true){
+                        if (!controlledLivingRoom.nullDetection(i, j - 1) && !controlledLivingRoom.nullTileDetection(i, j - 1)){
                             adjCounter++;
                         }
                         //controllo la tile a dx
-                        if (controlledLivingRoom.nullDetection(i, j+1) != true && controlledLivingRoom.nullTileDetection(i, j+1) != true){
+                        if (!controlledLivingRoom.nullDetection(i, j + 1) && !controlledLivingRoom.nullTileDetection(i, j + 1)){
                             adjCounter++;
                         }
                     }
@@ -306,10 +304,7 @@ public class GameBoardController {
             }
         }
 
-        if(adjCounter!=0) {
-            return true;
-        }
-        return false;
+        return adjCounter != 0;
 
     }
 

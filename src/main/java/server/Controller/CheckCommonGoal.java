@@ -17,7 +17,7 @@ public class CheckCommonGoal {
      *
      * @return boolean which indicates if the specified {@link CommonGoal CommonGoal} has been completed or not
      */
-    public static boolean checkGoal(Shelf myShelfy, CommonGoalType commonGoalType) { //il parametro è gia passato quando chiamo calculatepoints
+    public static boolean checkGoal(Shelf myShelfy, CommonGoalType commonGoalType) { //il parametro è gia passato quando chiamo calculatePoints
         return switch (commonGoalType) {
             case COMMONGOAL02 -> RuleCommonGoal.checkCorner(myShelfy.getStructure());
             case COMMONGOAL01 -> RuleCommonGoal.checkSixCouples(myShelfy.getStructure());

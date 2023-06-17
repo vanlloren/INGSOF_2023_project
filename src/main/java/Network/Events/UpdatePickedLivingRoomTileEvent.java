@@ -1,9 +1,9 @@
 package Network.Events;
 
 public class UpdatePickedLivingRoomTileEvent extends Event{
-    private int xPos;
-    private int yPos;
-    private String currPlayer;
+    private final int xPos;
+    private final int yPos;
+    private final String currPlayer;
 
     public UpdatePickedLivingRoomTileEvent(String player, int x, int y) {
         super(EventEnum.UPDATE_PICKED_LIVINGROOM_TILE);

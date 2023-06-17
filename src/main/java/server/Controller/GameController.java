@@ -365,29 +365,29 @@ public class GameController {
         return adjGroups;
     }
 
-    private static int findAdjGroupDim(PlayableItemTile[][] structure, boolean[][] visitated, int i, int j, Colour colour, ArrayList<Integer> dimension) {
-        if (i < 0 || i >= structure.length || j < 0 || j >= structure[0].length || structure[i][j] == null || visitated[i][j] || structure[i][j].getColour() != colour) {
+    private static int findAdjGroupDim(PlayableItemTile[][] structure, boolean[][] visited, int i, int j, Colour colour, ArrayList<Integer> dimension) {
+        if (i < 0 || i >= structure.length || j < 0 || j >= structure[0].length || structure[i][j] == null || visited[i][j] || structure[i][j].getColour() != colour) {
             return 0;
         }
 
-        visitated[i][j] = true;
+        visited[i][j] = true;
         int dimensione = 1;
 
         for (Integer d : dimension) {
             if (d != null && d == dimensione) {
-                dimensione += findAdjGroupDim(structure, visitated, i - 1, j, colour, dimension); // Alto
-                dimensione += findAdjGroupDim(structure, visitated, i + 1, j, colour, dimension); // Basso
-                dimensione += findAdjGroupDim(structure, visitated, i, j - 1, colour, dimension); // Sinistra
-                dimensione += findAdjGroupDim(structure, visitated, i, j + 1, colour, dimension); // Destra
+                dimensione += findAdjGroupDim(structure, visited, i - 1, j, colour, dimension); // Alto
+                dimensione += findAdjGroupDim(structure, visited, i + 1, j, colour, dimension); // Basso
+                dimensione += findAdjGroupDim(structure, visited, i, j - 1, colour, dimension); // Sinistra
+                dimensione += findAdjGroupDim(structure, visited, i, j + 1, colour, dimension); // Destra
                 return dimensione;
             }
         }
 
         dimension.add(dimensione);
-        dimensione += findAdjGroupDim(structure, visitated, i - 1, j, colour, dimension); // Alto
-        dimensione += findAdjGroupDim(structure, visitated, i + 1, j, colour, dimension); // Basso
-        dimensione += findAdjGroupDim(structure, visitated, i, j - 1, colour, dimension); // Sinistra
-        dimensione += findAdjGroupDim(structure, visitated, i, j + 1, colour, dimension); // Destra
+        dimensione += findAdjGroupDim(structure, visited, i - 1, j, colour, dimension); // Alto
+        dimensione += findAdjGroupDim(structure, visited, i + 1, j, colour, dimension); // Basso
+        dimensione += findAdjGroupDim(structure, visited, i, j - 1, colour, dimension); // Sinistra
+        dimensione += findAdjGroupDim(structure, visited, i, j + 1, colour, dimension); // Destra
         return dimensione;
     }
 

@@ -23,7 +23,7 @@ public interface ShelfObserver {
      * @param y the 'y' coordinate of the cell in the {@link Shelf Shelf} where the {@link PlayableItemTile PlayableItemTile}
      *          has been put
      * @param tile the {@link PlayableItemTile PlayableItemTile} that has been put into the {@link Shelf Shelf}
-     * @throws RemoteException
+     * @throws RemoteException exception that underlines problems with the RMI Connection
      */
     void onUpdatePuttedTileIntoShelf(TurnView turnView, int x, int y, PlayableItemTile tile) throws RemoteException;
 }

@@ -1,8 +1,8 @@
 package Network.Events;
 
 public class UpdateEndGameEvent extends Event {
-    private boolean endGame;
-    private String player;
+    private final boolean endGame;
+    private final String player;
 
     public UpdateEndGameEvent(String player,boolean endGame) {
         super(EventEnum.UPDATE_END_GAME);

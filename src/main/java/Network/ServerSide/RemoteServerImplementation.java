@@ -11,6 +11,7 @@ import server.Model.PlayableItemTile;
 import server.Model.Player;
 
 
+import java.io.Serial;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
@@ -19,7 +20,8 @@ import java.util.List;
 
 
 public class RemoteServerImplementation extends UnicastRemoteObject implements RemoteServerInterface {
-    private final RMIServer server;
+    @Serial
+    private static final long serialVersionUID = 5472205342096385232L;
 
     private final Object lock = new Object();
     private volatile boolean stop = false;
@@ -28,8 +30,7 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
     private HashMap<String, RemoteClientInterface> clientNickCombinations;
     private final GameController gameController;
 
-    RemoteServerImplementation(RMIServer server, GameController gameController) throws RemoteException {
-        this.server = server;
+    RemoteServerImplementation(GameController gameController) throws RemoteException {
         this.gameController = gameController;
         }
 

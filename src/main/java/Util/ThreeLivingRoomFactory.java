@@ -3,8 +3,6 @@ package Util;
 import server.Model.ItemTile;
 import server.Model.LivingRoom;
 import server.Model.NullItemTile;
-import server.Model.PlayableItemTile;
-
 /**
  * This Class extends {@link LivingRoomFactory LivingRoomFactory} and is used in case the number of {@link server.Model.Player Players} in the game is 3.
  */

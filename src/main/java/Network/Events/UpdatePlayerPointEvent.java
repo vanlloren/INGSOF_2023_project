@@ -1,8 +1,8 @@
 package Network.Events;
 
 public class UpdatePlayerPointEvent extends Event{
-    private int points;
-    private String player;
+    private final int points;
+    private final String player;
 
     public UpdatePlayerPointEvent(String player, int points) {
         super(EventEnum.UPDATE_PLAYER_POINTS);

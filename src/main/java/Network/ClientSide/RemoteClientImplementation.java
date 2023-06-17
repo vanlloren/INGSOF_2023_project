@@ -175,11 +175,6 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
     }
 
     @Override
-    public void disconnect() throws RemoteException {
-    System.out.println("ciao dal server");
-    }
-
-    @Override
     public void UpdateAllClientOnModelListPlayers(Player player) {
         System.out.println("...NEW UPDATE: We have a new player: "+player.getNickname()+" has joined this lobby");
     }
@@ -251,7 +246,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
                 + Tile.getColour() + " " + Tile.getIdCode() + " nella posizione x=" + x + ", y=" + y);
 
         System.out.println("A seguire verrà stampata la PlayerShelf aggiornata");
-        this.userInterface.showPlayerShelf(turnView.getShelfTable(turnView.getNicknameCurrentPlayer()));
+        this.userInterface.showPlayerShelf(turnView.getShelfTable());
 
     }
 
@@ -920,7 +915,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
 
     @Override
     public void onUpdateShowPlayerShelf(String nickname) {
-        this.userInterface.showPlayerShelf(turnView.getShelfTable(nickname));
+        this.userInterface.showPlayerShelf(turnView.getShelfTable());
     }
 
     @Override

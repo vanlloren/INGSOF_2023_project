@@ -1,13 +1,15 @@
 package Model;
 
 import Util.Colour;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static org.junit.Assert.*;
-import java.util.*;
-import org.junit.jupiter.api.*;
-
 import server.Model.ItemBag;
 import server.Model.PlayableItemTile;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class ItemBagTest {
@@ -62,7 +64,7 @@ public class ItemBagTest {
             actualCounts.put(colour, actualCounts.getOrDefault(colour, 0) + 1);
         }
 
-        assertEquals(expectedCounts, actualCounts);
+        Assertions.assertEquals(expectedCounts, actualCounts);
     }
 }
 

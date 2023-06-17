@@ -1,7 +1,5 @@
 package Util;
 
-
-import server.Model.CommonGoal;
 import server.Model.PersonalGoal;
 import server.Model.Player;
 
@@ -71,9 +69,8 @@ public class RandPersonalGoal {
                     newPersonalGoalType = PersonalGoalType.PERSONALGOAL12;
             }
             for (PersonalGoalType p : personalGoalTypeList) {
-                if (p == newPersonalGoalType) {
+                if (p == newPersonalGoalType)
                     isOK = false;
-                }
             }
         } while (!isOK);
 

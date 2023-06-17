@@ -5,7 +5,6 @@ import Observer.*;
 import Util.CommonGoalType;
 import Util.PersonalGoalType;
 import client.view.TurnView;
-import server.Model.GameBoard;
 import server.Model.PlayableItemTile;
 import server.Model.Player;
 
@@ -15,10 +14,6 @@ import java.rmi.RemoteException;
 public interface RemoteClientInterface extends Remote, LivingRoomObserver, ShelfObserver, PlayerObserver, GameModelObserver, PersonalGoalObserver {
 
     void onMessage(Message message) throws RemoteException;
-
-
-    void disconnect() throws RemoteException;
-
 
 
     void OnUpdateModelCommonGoal(TurnView turnView, CommonGoalType commonGoalType1, CommonGoalType commonGoalType2) throws RemoteException;

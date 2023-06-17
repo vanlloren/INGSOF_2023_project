@@ -23,7 +23,7 @@ public class ClientApp {
                     Enumeration<java.net.InetAddress> inetAddresses = networkInterface.getInetAddresses();
                     int count = 0;
                     ArrayList<String> address = new ArrayList<>();
-                    java.net.InetAddress inetAddress = null;
+                    java.net.InetAddress inetAddress;
                     while (inetAddresses.hasMoreElements()) {
                         inetAddress = inetAddresses.nextElement();
 

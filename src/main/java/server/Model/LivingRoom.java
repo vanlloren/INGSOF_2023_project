@@ -39,8 +39,8 @@ public class LivingRoom extends LivingRoomObservable implements Serializable, Si
     public LivingRoom(GameModel gameModel){
         this.gameModel=gameModel;
 
-        this.commonGoal1 = new CommonGoal(gameModel);
-        this.commonGoal2 = new CommonGoal(gameModel);
+        this.commonGoal1 = new CommonGoal();
+        this.commonGoal2 = new CommonGoal();
     }
     //MODEL
 
@@ -50,7 +50,7 @@ public class LivingRoom extends LivingRoomObservable implements Serializable, Si
      *
      * @param playerNum the number of {@link Player Players} in the match
      */
-    public void createGameTable(int playerNum) { //nell'inserimento di playernum chiamo metodo di gamemodel getnumplayer e lo metto come argomento
+    public void createGameTable(int playerNum) { //nell'inserimento di playerNum chiamo metodo di gameModel getNumPlayer e lo metto come argomento
         if (playerNum == 2) {
             LivingRoomFactory factory = new TwoLivingRoomFactory();
             this.gameTable = factory.create();
@@ -291,7 +291,7 @@ public class LivingRoom extends LivingRoomObservable implements Serializable, Si
                     }
                     //guardo il caso generale
                     else{
-                        //per ogni casella controllo se su almeno uno dei 4 lati c'è una NullItemTile
+                        //per ogni casella controllo se su almeno uno dei quattro lati c'è una NullItemTile
                         //oppure null
                         //controllo la tile della riga sopra
                         if(gameTable[i-1][j] == null || nullTileDetection(i-1,j)){

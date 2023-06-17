@@ -3,8 +3,8 @@ package Network.Events;
 import Util.CommonGoalType;
 
 public class UpdateCommonGoalEvent extends Event{
-    private CommonGoalType commonGoalType1;
-    private CommonGoalType commonGoalType2;
+    private final CommonGoalType commonGoalType1;
+    private final CommonGoalType commonGoalType2;
 
     public UpdateCommonGoalEvent(CommonGoalType commonGoalType1, CommonGoalType commonGoalType2) {
         super(EventEnum.UPDATE_COMMON_GOAL);

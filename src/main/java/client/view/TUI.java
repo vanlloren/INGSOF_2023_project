@@ -204,14 +204,14 @@ this.isLastTurn = true;
         String chatMessage;
         boolean isValid = false;
         boolean isNameValid = false;
-        int choosenOption = -1;
+        int chosenOption = -1;
         String receiver = "Everyone";
         out.println("Se vuoi mandare il messaggio in privato premi 1 altrimenti 0");
         do{
             String num = scanner.next();
             try {
-                 choosenOption = Integer.parseInt(num);
-                if (choosenOption != 1 && choosenOption!= 0)
+                 chosenOption = Integer.parseInt(num);
+                if (chosenOption != 1 && chosenOption!= 0)
                     out.println("numero non valido..riprova ");
                 else isValid = true;
             }
@@ -219,7 +219,7 @@ this.isLastTurn = true;
                 out.println( "Stringa non valida per favore immetti stringa numerica!");
             }}
         while(!isValid);
-        if (choosenOption == 1) {
+        if (chosenOption == 1) {
             showPlayersList(playerList);
             do{
                 out.println("scrivi il nome del giocatore a cui vuoi scrivere ");

@@ -1,24 +1,14 @@
 package Model;
 
-import static org.junit.Assert.*;
+import Network.ClientSide.RemoteClientImplementation;
+import client.view.TUI;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import server.Model.GameModel;
+import server.Model.Player;
 
 import java.rmi.RemoteException;
-import java.util.ArrayList;
-
-import Network.ClientSide.RemoteClientImplementation;
-import Network.ClientSide.RemoteClientInterface;
-import Network.message.Message;
-import Util.CommonGoalType;
-import Util.PersonalGoalType;
-import client.view.TUI;
-import client.view.TurnView;
-import org.junit.Assert;
-import org.junit.jupiter.api.*;
-
-import org.junit.jupiter.api.Test;
-
-
-import server.Model.*;
 
 
 public class GameModelTest {
@@ -26,8 +16,7 @@ public class GameModelTest {
 
     @BeforeEach
     public void setup(){
-        GameModel model = new GameModel();
-        this.model=model;
+        this.model = new GameModel();
     }
 
     @Test
@@ -40,8 +29,8 @@ public class GameModelTest {
             throw new RuntimeException(e);
         }
 
-        Assert.assertFalse(model.isNicknameAvailable("Lorenzo1"));
-        Assert.assertTrue(model.isNicknameAvailable("lorenzo1"));
+        Assertions.assertFalse(model.isNicknameAvailable("Lorenzo1"));
+        Assertions.assertTrue(model.isNicknameAvailable("lorenzo1"));
     }
 
     @Test
@@ -55,7 +44,7 @@ public class GameModelTest {
             model.getMyShelfie().setLivingRoom(4);
             model.setPlayersInGame(player);
 
-            Assert.assertEquals(player, model.getPlayersInGame().get(0));
+            Assertions.assertEquals(player, model.getPlayersInGame().get(0));
 
             model.setPlayersNumber(4);
 
@@ -67,9 +56,9 @@ public class GameModelTest {
             model.setPlayersInGame(player3);
             model.setPlayersInGame(player4);
 
-            Assert.assertEquals(player2, model.getPlayersInGame().get(1));
-            Assert.assertEquals(player3, model.getPlayersInGame().get(2));
-            Assert.assertEquals(player4, model.getPlayersInGame().get(3));
+            Assertions.assertEquals(player2, model.getPlayersInGame().get(1));
+            Assertions.assertEquals(player3, model.getPlayersInGame().get(2));
+            Assertions.assertEquals(player4, model.getPlayersInGame().get(3));
 
         } catch (RemoteException e) {
             throw new RuntimeException(e);
@@ -78,7 +67,7 @@ public class GameModelTest {
 
     @Test
     public void testSetEndGame(){
-        RemoteClientImplementation client = null;
+        RemoteClientImplementation client;
         try {
             client = new RemoteClientImplementation("localhost", 1099, new TUI());
             model.getMyShelfie().setItemBag();
@@ -86,7 +75,7 @@ public class GameModelTest {
             Player player = new Player("lorenzo", new RemoteClientImplementation("localhost", 1099, new TUI()), new GameModel());
             model.setPlayersInGame(player);
 
-            Assert.assertEquals(player, model.getPlayersInGame().get(0));
+            Assertions.assertEquals(player, model.getPlayersInGame().get(0));
 
             model.setPlayersNumber(4);
 
@@ -98,16 +87,16 @@ public class GameModelTest {
             model.setPlayersInGame(player3);
             model.setPlayersInGame(player4);
 
-            Assert.assertEquals(player2, model.getPlayersInGame().get(1));
-            Assert.assertEquals(player3, model.getPlayersInGame().get(2));
-            Assert.assertEquals(player4, model.getPlayersInGame().get(3));
+            Assertions.assertEquals(player2, model.getPlayersInGame().get(1));
+            Assertions.assertEquals(player3, model.getPlayersInGame().get(2));
+            Assertions.assertEquals(player4, model.getPlayersInGame().get(3));
             model.addObserver(client);
 
             model.setCurrPlayer(player2);
 
             model.setEndGame();
 
-            Assert.assertTrue(model.getEndGame());
+            Assertions.assertTrue(model.getEndGame());
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }

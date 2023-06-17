@@ -55,7 +55,7 @@ public class ItemBag {
                 bag.add(factory.createPlayableItemTile("BLUE", i + 1));
             } else if (i < 110) {
                 bag.add(factory.createPlayableItemTile("CYAN", i + 1));
-            } else if (i < 131) {
+            } else {
                 bag.add(factory.createPlayableItemTile("PINK", i + 1));
             }
         }

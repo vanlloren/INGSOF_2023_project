@@ -3,7 +3,7 @@ package Network.Events;
 import server.Model.Player;
 
 public class UpdateChairOwnerEvent extends Event {
-    private Player player;
+    private final Player player;
     public UpdateChairOwnerEvent(Player player) {
         super(EventEnum.UPDATE_CHAIR_OWNER);
         this.player = player;

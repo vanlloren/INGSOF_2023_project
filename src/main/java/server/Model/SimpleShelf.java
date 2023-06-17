@@ -9,7 +9,6 @@ import java.io.Serializable;
  * It contains only the methods of {@link Shelf Shelf} that are strictly necessary to the
  * {@link Network.ClientSide.RemoteClientImplementation RemoteClient} to interact with the objects in
  * the {@link GameModel GameModel}.
- *
  * <i>Have a look at MyShelfie RuleBook for further information</i>
  */
 public interface SimpleShelf extends Serializable {

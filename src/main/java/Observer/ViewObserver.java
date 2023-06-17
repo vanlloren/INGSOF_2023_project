@@ -35,7 +35,7 @@ public interface ViewObserver {
      * {@link Player Player} wants to begin picking {@link server.Model.PlayableItemTile PlayableItemTiles}
      * from the {@link server.Model.LivingRoom LivingRoom}
      *
-     * @throws RemoteException
+     * @throws RemoteException exception that underlines problems with the RMI Connection
      */
     void onUpdateToPickTile() throws RemoteException;
 
@@ -94,7 +94,7 @@ public interface ViewObserver {
      *
      * @param Nickname the {@code nickname} of the {@link Player Player} who wants to send the message
      * @param chat a {@link String String} representing the actual content of the chat message
-     * @throws RemoteException
+     * @throws RemoteException exception that underlines problems with the RMI Connection
      */
     void onUpdateChat(String Nickname, String chat,String receiver) throws RemoteException;
 
@@ -103,7 +103,7 @@ public interface ViewObserver {
      * {@link Player Player} wants to begin putting {@link server.Model.PlayableItemTile PlayableItemTiles}
      * into the {@link server.Model.Shelf Shelf}
      *
-     * @throws RemoteException
+     * @throws RemoteException exception that underlines problems with the RMI Connection
      */
     void onUpdateToStartPutting() throws RemoteException;
 
@@ -111,7 +111,7 @@ public interface ViewObserver {
      * Method used to verify if the connection with the {@link Network.ServerSide.RemoteServerImplementation RemoteServer}
      * is still on and running
      *
-     * @throws RemoteException
+     * @throws RemoteException exception that underlines problems with the RMI Connection
      */
     void onConnectionVerify() throws RemoteException;
 }

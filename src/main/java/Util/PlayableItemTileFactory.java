@@ -1,8 +1,5 @@
 package Util;
 
-import Exceptions.InvalidPlayableItemTileColourException;
-import server.Model.ItemTile;
-import server.Model.LivingRoom;
 import server.Model.PlayableItemTile;
 
 /**
@@ -18,7 +15,6 @@ public class PlayableItemTileFactory {
      * @return the {@link PlayableItemTile PlayableItemTile} just created
      */
     public PlayableItemTile createPlayableItemTile(String colour, int id){
-        PlayableItemTile helperTile = new PlayableItemTile(colour, id);
-        return helperTile;
+        return new PlayableItemTile(colour, id);
     }
 }

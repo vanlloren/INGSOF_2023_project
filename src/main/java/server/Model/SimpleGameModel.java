@@ -10,17 +10,9 @@ import java.util.ArrayList;
  * It contains only the methods of {@link GameModel GameModel} that are strictly necessary to the
  * {@link Network.ClientSide.RemoteClientImplementation RemoteClient} to interact with the objects in
  * the {@link GameModel GameModel}.
- *
  * <i>Have a look at MyShelfie RuleBook for further information</i>
  */
 public interface SimpleGameModel extends Serializable {
-
-    /**
-     *
-     * @return {@code true} if the current match is still ongoing,
-     * {@code false} otherwise
-     */
-    boolean getIsGameOn();
 
     /**
      *

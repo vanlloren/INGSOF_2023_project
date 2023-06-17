@@ -1,5 +1,6 @@
 package Network.message;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -9,6 +10,7 @@ import java.io.Serializable;
  */
 public abstract class Message implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 2L;
 
     private  String nickname;

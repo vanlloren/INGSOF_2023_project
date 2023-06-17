@@ -3,10 +3,9 @@ package Model;
 import Network.ClientSide.RemoteClientImplementation;
 import Util.Colour;
 import client.view.TUI;
-import org.junit.Assert;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import server.Model.*;
 
 import java.rmi.RemoteException;
@@ -38,41 +37,41 @@ public class LivingRoomTest {
         for (int i = 0; i < 9; i++) {
             //metto null Tiles da [0][0] a [0][8]
             for (int j = 0; j < 9 && i == 0; j++) {
-                Assert.assertTrue(livingRoom.nullTileDetection(i,j));
+                Assertions.assertTrue(livingRoom.nullTileDetection(i,j));
             }
             //metto null Tiles da [1][0] a [1][2] e da [1][5] a [1][8]
             for (int j = 0; j < 9 && i == 1; j++) {
                 if (j < 3 || j > 4) {
-                    Assert.assertTrue(livingRoom.nullTileDetection(i,j));
+                    Assertions.assertTrue(livingRoom.nullTileDetection(i,j));
                 }else{
-                    Assert.assertTrue(livingRoom.nullDetection(i,j));
+                    Assertions.assertTrue(livingRoom.nullDetection(i,j));
                 }
             }
 
             //metto null Tiles da [7][0] a [7][3] e da [7][6] a [7][8]
             for (int j = 0; j < 9 && i == 7; j++) {
                 if (j < 4 || j > 5) {
-                    Assert.assertTrue(livingRoom.nullTileDetection(i,j));
+                    Assertions.assertTrue(livingRoom.nullTileDetection(i,j));
                 }else{
-                    Assert.assertTrue(livingRoom.nullDetection(i,j));
+                    Assertions.assertTrue(livingRoom.nullDetection(i,j));
                 }
             }
             //metto null Tiles da [2][0] a [2][2] e da [2][6] a [2][8]
             //metto null Tiles da [6][0] a [6][2] e da [6][6] a [6][8]
             for (int j = 0; j < 9 && (i == 2 || i == 6); j++) {
                 if (j < 3 || j > 5) {
-                    Assert.assertTrue(livingRoom.nullTileDetection(i,j));
+                    Assertions.assertTrue(livingRoom.nullTileDetection(i,j));
                 }else{
-                    Assert.assertTrue(livingRoom.nullDetection(i,j));
+                    Assertions.assertTrue(livingRoom.nullDetection(i,j));
                 }
             }
             //metto null Tile in [3][0] e [3][1] e [3][8]
             if(i==3) {
                 for(int j=0; j<9; j++){
                     if(j==0 || j==1 || j==8){
-                        Assert.assertTrue(livingRoom.nullTileDetection(i,j));
+                        Assertions.assertTrue(livingRoom.nullTileDetection(i,j));
                     }else{
-                        Assert.assertTrue(livingRoom.nullDetection(i,j));
+                        Assertions.assertTrue(livingRoom.nullDetection(i,j));
                     }
                 }
             }
@@ -81,9 +80,9 @@ public class LivingRoomTest {
             if(i==4) {
                 for(int j=0; j<9; j++){
                     if(j==0 || j==8){
-                        Assert.assertTrue(livingRoom.nullTileDetection(i,j));
+                        Assertions.assertTrue(livingRoom.nullTileDetection(i,j));
                     }else{
-                        Assert.assertTrue(livingRoom.nullDetection(i,j));
+                        Assertions.assertTrue(livingRoom.nullDetection(i,j));
                     }
                 }
             }
@@ -91,16 +90,16 @@ public class LivingRoomTest {
             if(i==5) {
                 for(int j=0; j<9; j++){
                     if(j==7 || j==0 || j==8){
-                        Assert.assertTrue(livingRoom.nullTileDetection(i,j));
+                        Assertions.assertTrue(livingRoom.nullTileDetection(i,j));
                     }else{
-                        Assert.assertTrue(livingRoom.nullDetection(i,j));
+                        Assertions.assertTrue(livingRoom.nullDetection(i,j));
                     }
                 }
             }
 
             //metto null Tiles da [8][0] a [8][8]
             for (int j = 0; j < 9 && i == 8; j++) {
-                Assert.assertTrue(livingRoom.nullTileDetection(i,j));
+                Assertions.assertTrue(livingRoom.nullTileDetection(i,j));
             }
         }
 
@@ -112,44 +111,44 @@ public class LivingRoomTest {
             //metto null Tiles da [0][0] a [0][2] e da [0][4] a [0][8]
             for (int j = 0; j < 9 && i == 0; j++) {
                 if (j != 3) {
-                    Assert.assertTrue(livingRoom.nullTileDetection(i,j));
+                    Assertions.assertTrue(livingRoom.nullTileDetection(i,j));
                 }else{
-                    Assert.assertTrue(livingRoom.nullDetection(i,j));
+                    Assertions.assertTrue(livingRoom.nullDetection(i,j));
                 }
             }
             //metto null Tiles da [1][0] a [1][2] e da [1][5] a [1][8]
             for (int j = 0; j < 9 && i == 1; j++) {
                 if (j < 3 || j > 4) {
-                    Assert.assertTrue(livingRoom.nullTileDetection(i,j));
+                    Assertions.assertTrue(livingRoom.nullTileDetection(i,j));
                 }else{
-                    Assert.assertTrue(livingRoom.nullDetection(i,j));
+                    Assertions.assertTrue(livingRoom.nullDetection(i,j));
                 }
             }
 
             //metto null Tiles da [7][0] a [7][3] e da [7][6] a [7][8]
             for (int j = 0; j < 9 && i == 7; j++) {
                 if (j < 4 || j > 5) {
-                    Assert.assertTrue(livingRoom.nullTileDetection(i,j));
+                    Assertions.assertTrue(livingRoom.nullTileDetection(i,j));
                 }else{
-                    Assert.assertTrue(livingRoom.nullDetection(i,j));
+                    Assertions.assertTrue(livingRoom.nullDetection(i,j));
                 }
             }
             //metto null Tiles da [2][0] a [2][1] e da [2][7] a [2][8]
             //metto null Tiles da [6][0] a [6][1] e da [6][7] a [6][8]
             for (int j = 0; j < 9 && (i == 2 || i == 6); j++) {
                 if (j < 2 || j > 6) {
-                    Assert.assertTrue(livingRoom.nullTileDetection(i,j));
+                    Assertions.assertTrue(livingRoom.nullTileDetection(i,j));
                 }else{
-                    Assert.assertTrue(livingRoom.nullDetection(i,j));
+                    Assertions.assertTrue(livingRoom.nullDetection(i,j));
                 }
             }
             //metto null Tile in [3][0] e [3][1]
             if(i==3) {
                 for(int j=0; j<9; j++){
                     if(j==0 || j==1){
-                        Assert.assertTrue(livingRoom.nullTileDetection(i,j));
+                        Assertions.assertTrue(livingRoom.nullTileDetection(i,j));
                     }else{
-                        Assert.assertTrue(livingRoom.nullDetection(i,j));
+                        Assertions.assertTrue(livingRoom.nullDetection(i,j));
                     }
                 }
             }
@@ -158,9 +157,9 @@ public class LivingRoomTest {
             if(i==4) {
                 for(int j=0; j<9; j++){
                     if(j==0 || j==8){
-                        Assert.assertTrue(livingRoom.nullTileDetection(i,j));
+                        Assertions.assertTrue(livingRoom.nullTileDetection(i,j));
                     }else{
-                        Assert.assertTrue(livingRoom.nullDetection(i,j));
+                        Assertions.assertTrue(livingRoom.nullDetection(i,j));
                     }
                 }
             }
@@ -168,9 +167,9 @@ public class LivingRoomTest {
             if(i==5) {
                 for(int j=0; j<9; j++){
                     if(j==7 || j==8){
-                        Assert.assertTrue(livingRoom.nullTileDetection(i,j));
+                        Assertions.assertTrue(livingRoom.nullTileDetection(i,j));
                     }else{
-                        Assert.assertTrue(livingRoom.nullDetection(i,j));
+                        Assertions.assertTrue(livingRoom.nullDetection(i,j));
                     }
                 }
             }
@@ -179,9 +178,9 @@ public class LivingRoomTest {
             //metto null Tiles da [8][0] a [8][4] e da [8][6] a [8][8]
             for (int j = 0; j < 9 && i == 8; j++) {
                 if (j != 5) {
-                    Assert.assertTrue(livingRoom.nullTileDetection(i,j));
+                    Assertions.assertTrue(livingRoom.nullTileDetection(i,j));
                 }else{
-                    Assert.assertTrue(livingRoom.nullDetection(i,j));
+                    Assertions.assertTrue(livingRoom.nullDetection(i,j));
                 }
             }
         }
@@ -194,36 +193,36 @@ public class LivingRoomTest {
             //metto null Tiles da [0][0] a [0][2] e da [0][5] a [0][8]
             for (int j = 0; j < 9 && i == 0; j++) {
                 if (j < 3 || j > 4) {
-                    Assert.assertTrue(livingRoom.nullTileDetection(i,j));
+                    Assertions.assertTrue(livingRoom.nullTileDetection(i,j));
                 }else{
-                    Assert.assertTrue(livingRoom.nullDetection(i,j));
+                    Assertions.assertTrue(livingRoom.nullDetection(i,j));
                 }
             }
             //metto null Tiles da [1][0] a [1][2] e da [1][6] a [1][8]
             //metto null Tiles da [7][0] a [7][2] e da [7][6] a [7][8]
             for (int j = 0; j < 9 && (i == 1 || i == 7); j++) {
                 if (j < 3 || j > 5) {
-                    Assert.assertTrue(livingRoom.nullTileDetection(i,j));
+                    Assertions.assertTrue(livingRoom.nullTileDetection(i,j));
                 }else{
-                    Assert.assertTrue(livingRoom.nullDetection(i,j));
+                    Assertions.assertTrue(livingRoom.nullDetection(i,j));
                 }
             }
             //metto null Tiles da [2][0] a [2][1] e da [2][7] a [2][8]
             //metto null Tiles da [6][0] a [6][1] e da [6][7] a [6][8]
             for (int j = 0; j < 9 && (i == 2 || i == 6); j++) {
                 if (j < 2 || j > 6) {
-                    Assert.assertTrue(livingRoom.nullTileDetection(i,j));
+                    Assertions.assertTrue(livingRoom.nullTileDetection(i,j));
                 }else{
-                    Assert.assertTrue(livingRoom.nullDetection(i,j));
+                    Assertions.assertTrue(livingRoom.nullDetection(i,j));
                 }
             }
             //metto null Tile in [3][0]
             if(i==3) {
                 for(int j=0; j<9; j++){
                     if(j==0){
-                        Assert.assertTrue(livingRoom.nullTileDetection(i,j));
+                        Assertions.assertTrue(livingRoom.nullTileDetection(i,j));
                     }else{
-                        Assert.assertTrue(livingRoom.nullDetection(i,j));
+                        Assertions.assertTrue(livingRoom.nullDetection(i,j));
                     }
                 }
             }
@@ -231,16 +230,16 @@ public class LivingRoomTest {
 
             if(i==4) {
                 for(int j=0; j<9; j++){
-                    Assert.assertTrue(livingRoom.nullDetection(i,j));
+                    Assertions.assertTrue(livingRoom.nullDetection(i,j));
                 }
             }
             //metto null Tiles da [5][8]
             if(i==5) {
                 for(int j=0; j<9; j++){
                     if(j==8){
-                        Assert.assertTrue(livingRoom.nullTileDetection(i,j));
+                        Assertions.assertTrue(livingRoom.nullTileDetection(i,j));
                     }else{
-                        Assert.assertTrue(livingRoom.nullDetection(i,j));
+                        Assertions.assertTrue(livingRoom.nullDetection(i,j));
                     }
                 }
             }
@@ -248,9 +247,9 @@ public class LivingRoomTest {
             //metto null Tiles da [8][0] a [8][3] e da [8][6] a [8][8]
             for (int j = 0; j < 9 && i == 8; j++) {
                 if (j < 4 || j > 5) {
-                    Assert.assertTrue(livingRoom.nullTileDetection(i,j));
+                    Assertions.assertTrue(livingRoom.nullTileDetection(i,j));
                 }else{
-                    Assert.assertTrue(livingRoom.nullDetection(i,j));
+                    Assertions.assertTrue(livingRoom.nullDetection(i,j));
                 }
             }
         }
@@ -269,8 +268,8 @@ public class LivingRoomTest {
 
 
 
-        Assert.assertFalse(livingRoom.searchVoid(4,3));
-        Assert.assertTrue(livingRoom.searchVoid(3,3));
+        Assertions.assertFalse(livingRoom.searchVoid(4,3));
+        Assertions.assertTrue(livingRoom.searchVoid(3,3));
     }
 
     @Test
@@ -281,8 +280,8 @@ public class LivingRoomTest {
         livingRoom.createGameTable(2);
         livingRoom.fillVoid(4,3,helperTile);
 
-        Assert.assertFalse(livingRoom.nullDetection(4,3));
-        Assert.assertFalse(livingRoom.searchVoid(4,3));
+        Assertions.assertFalse(livingRoom.nullDetection(4,3));
+        Assertions.assertFalse(livingRoom.searchVoid(4,3));
     }
 
     @Test
@@ -293,8 +292,8 @@ public class LivingRoomTest {
         PlayableItemTile helperTile = bag.randPickTile();
         livingRoom.fillVoid(4,3, helperTile);
 
-        Assert.assertTrue(livingRoom.nullDetection(3,3));
-        Assert.assertFalse(livingRoom.nullDetection(4,3));
+        Assertions.assertTrue(livingRoom.nullDetection(3,3));
+        Assertions.assertFalse(livingRoom.nullDetection(4,3));
 
     }
 
@@ -306,8 +305,8 @@ public class LivingRoomTest {
         livingRoom.fillVoid(4, 3, testTile);
 
         PlayableItemTile helperTile = livingRoom.pickTile(4, 3);
-        Assert.assertEquals(testTile, helperTile);
-        Assert.assertTrue(livingRoom.nullDetection(4, 3));
+        Assertions.assertEquals(testTile, helperTile);
+        Assertions.assertTrue(livingRoom.nullDetection(4, 3));
 
     }
 
@@ -344,44 +343,44 @@ public class LivingRoomTest {
                     //1° tessere [0][3] e [0][4]
                     if (i == 0) {
                         if (j == 3) {
-                            Assert.assertTrue(livingRoom.getTileAvailability(i,j));
+                            Assertions.assertTrue(livingRoom.getTileAvailability(i,j));
                         }else if (j == 4) {
-                            Assert.assertTrue(livingRoom.getTileAvailability(i,j));
+                            Assertions.assertTrue(livingRoom.getTileAvailability(i,j));
                         }
                     }
                     //2° tessere  [4][0] e [5][0]
                     else if (j == 0) {
                         if (i == 4) {
-                            Assert.assertTrue(livingRoom.getTileAvailability(i,j));
+                            Assertions.assertTrue(livingRoom.getTileAvailability(i,j));
                         }
                         if (i == 5) {
-                            Assert.assertTrue(livingRoom.getTileAvailability(i,j));
+                            Assertions.assertTrue(livingRoom.getTileAvailability(i,j));
                         }
                     }
                     //3° tessere [8][4] e [8][5]
                     else if (i == 8) {
                         if (j == 4) {
-                            Assert.assertTrue(livingRoom.getTileAvailability(i,j));
+                            Assertions.assertTrue(livingRoom.getTileAvailability(i,j));
                         }
                         if (j == 5) {
-                            Assert.assertTrue(livingRoom.getTileAvailability(i,j));
+                            Assertions.assertTrue(livingRoom.getTileAvailability(i,j));
                         }
                     }
                     //4° tessere [3][8] e [4][8]
                     else if (j == 8) {
                         if (i == 3) {
-                            Assert.assertTrue(livingRoom.getTileAvailability(i,j));
+                            Assertions.assertTrue(livingRoom.getTileAvailability(i,j));
                         }
                         if (i == 4) {
-                            Assert.assertTrue(livingRoom.getTileAvailability(i,j));
+                            Assertions.assertTrue(livingRoom.getTileAvailability(i,j));
                         }
                     }
                     //guardo il caso generale
-                    Assert.assertFalse(livingRoom.getTileAvailability(4,3));
-                    Assert.assertTrue(livingRoom.getTileAvailability(3, 3));
-                    Assert.assertTrue(livingRoom.getTileAvailability(4,2));
-                    Assert.assertTrue(livingRoom.getTileAvailability(4,4));
-                    Assert.assertFalse(livingRoom.getTileAvailability(5,3));
+                    Assertions.assertFalse(livingRoom.getTileAvailability(4,3));
+                    Assertions.assertTrue(livingRoom.getTileAvailability(3, 3));
+                    Assertions.assertTrue(livingRoom.getTileAvailability(4,2));
+                    Assertions.assertTrue(livingRoom.getTileAvailability(4,4));
+                    Assertions.assertFalse(livingRoom.getTileAvailability(5,3));
 
                 }
             }
@@ -409,9 +408,9 @@ public class LivingRoomTest {
         for(int i=0;i<9;i++){
             for(int j=0;j<9;j++){
                 if((i==5 && j==3) || (i==3 && j==3) || (i==4 && j==4) || (i==4 && j==2)){
-                    Assert.assertTrue(livingRoom.getTileAdjacency(i,j));
+                    Assertions.assertTrue(livingRoom.getTileAdjacency(i,j));
                 }else {
-                    Assert.assertFalse(livingRoom.getTileAdjacency(i, j));
+                    Assertions.assertFalse(livingRoom.getTileAdjacency(i, j));
                 }
             }
         }
@@ -439,7 +438,7 @@ public class LivingRoomTest {
         for(int i=0;i<9;i++){
             for(int j=0;j<9;j++){
                 if (!livingRoom.nullTileDetection(i,j) && !livingRoom.nullDetection(i,j)) {
-                    Assert.assertFalse(livingRoom.getTileAdjacency(i, j));
+                    Assertions.assertFalse(livingRoom.getTileAdjacency(i, j));
                 }
             }
         }
@@ -479,9 +478,9 @@ public class LivingRoomTest {
         for(int i=0;i<9;i++){
             for(int j=0;j<9;j++){
                 if((i==5 && j==3) || (i==2 && j==3) || (i==3 && j==3)){
-                    Assert.assertTrue(livingRoom.getTileAdjacency(i,j));
+                    Assertions.assertTrue(livingRoom.getTileAdjacency(i,j));
                 }else {
-                    Assert.assertFalse(livingRoom.getTileAdjacency(i, j));
+                    Assertions.assertFalse(livingRoom.getTileAdjacency(i, j));
                 }
             }
         }
@@ -516,9 +515,9 @@ public class LivingRoomTest {
         for(int i=0;i<9;i++){
             for(int j=0;j<9;j++){
                 if((i==6 && j==3) || (i==3 && j==3) || (i==5 && j==3)){
-                    Assert.assertTrue(livingRoom.getTileAdjacency(i,j));
+                    Assertions.assertTrue(livingRoom.getTileAdjacency(i,j));
                 }else {
-                    Assert.assertFalse(livingRoom.getTileAdjacency(i, j));
+                    Assertions.assertFalse(livingRoom.getTileAdjacency(i, j));
                 }
             }
         }
@@ -553,9 +552,9 @@ public class LivingRoomTest {
         for(int i=0;i<9;i++){
             for(int j=0;j<9;j++){
                 if((i==4 && j==1) || (i==4 && j==4) || (i==4 && j==2)){
-                    Assert.assertTrue(livingRoom.getTileAdjacency(i,j));
+                    Assertions.assertTrue(livingRoom.getTileAdjacency(i,j));
                 }else {
-                    Assert.assertFalse(livingRoom.getTileAdjacency(i, j));
+                    Assertions.assertFalse(livingRoom.getTileAdjacency(i, j));
                 }
             }
         }
@@ -590,9 +589,9 @@ public class LivingRoomTest {
         for(int i=0;i<9;i++){
             for(int j=0;j<9;j++){
                 if((i==4 && j==2) || (i==4 && j==5) || (i==4 && j==4)){
-                    Assert.assertTrue(livingRoom.getTileAdjacency(i,j));
+                    Assertions.assertTrue(livingRoom.getTileAdjacency(i,j));
                 }else {
-                    Assert.assertFalse(livingRoom.getTileAdjacency(i, j));
+                    Assertions.assertFalse(livingRoom.getTileAdjacency(i, j));
                 }
             }
         }
@@ -612,7 +611,7 @@ public class LivingRoomTest {
         livingRoom.setGameTable(gameTable);
 
 
-        Assert.assertFalse(livingRoom.getTileAvailability(3,3));
+        Assertions.assertFalse(livingRoom.getTileAvailability(3,3));
     }
 
 
@@ -645,36 +644,36 @@ public class LivingRoomTest {
                     //1° tessere [0][3] e [0][4]
                     if (i == 0) {
                         if (j == 3) {
-                            Assert.assertTrue(livingRoom.getTileAvailability(i,j));
+                            Assertions.assertTrue(livingRoom.getTileAvailability(i,j));
                         }else if (j == 4) {
-                            Assert.assertFalse(livingRoom.getTileAvailability(i,j));
+                            Assertions.assertFalse(livingRoom.getTileAvailability(i,j));
                         }
                     }
                     //2° tessere  [4][0] e [5][0]
                     else if (j == 0) {
                         if (i == 4) {
-                            Assert.assertFalse(livingRoom.getTileAvailability(i,j));
+                            Assertions.assertFalse(livingRoom.getTileAvailability(i,j));
                         }
                         if (i == 5) {
-                            Assert.assertTrue(livingRoom.getTileAvailability(i,j));
+                            Assertions.assertTrue(livingRoom.getTileAvailability(i,j));
                         }
                     }
                     //3° tessere [8][4] e [8][5]
                     else if (i == 8) {
                         if (j == 4) {
-                            Assert.assertFalse(livingRoom.getTileAvailability(i,j));
+                            Assertions.assertFalse(livingRoom.getTileAvailability(i,j));
                         }
                         if (j == 5) {
-                            Assert.assertTrue(livingRoom.getTileAvailability(i,j));
+                            Assertions.assertTrue(livingRoom.getTileAvailability(i,j));
                         }
                     }
                     //4° tessere [3][8] e [4][8]
                     else if (j == 8) {
                         if (i == 3) {
-                            Assert.assertTrue(livingRoom.getTileAvailability(i,j));
+                            Assertions.assertTrue(livingRoom.getTileAvailability(i,j));
                         }
                         if (i == 4) {
-                            Assert.assertFalse(livingRoom.getTileAvailability(i,j));
+                            Assertions.assertFalse(livingRoom.getTileAvailability(i,j));
                         }
                     }
                 }
@@ -684,7 +683,7 @@ public class LivingRoomTest {
         livingRoom.createGameTable(4);
         bag = new ItemBag();
         bag.putTiles();
-        Boolean isVoid2;
+        boolean isVoid2;
         PlayableItemTile helperTile2;
 
         for (int i = 0; i < 9; i++) {
@@ -708,36 +707,36 @@ public class LivingRoomTest {
                     //1° tessere [0][3] e [0][4]
                     if (i == 0) {
                         if (j == 3) {
-                            Assert.assertTrue(livingRoom.getTileAvailability(i,j));
+                            Assertions.assertTrue(livingRoom.getTileAvailability(i,j));
                         }else if (j == 4) {
-                            Assert.assertTrue(livingRoom.getTileAvailability(i,j));
+                            Assertions.assertTrue(livingRoom.getTileAvailability(i,j));
                         }
                     }
                     //2° tessere  [4][0] e [5][0]
                     else if (j == 0) {
                         if (i == 4) {
-                            Assert.assertTrue(livingRoom.getTileAvailability(i,j));
+                            Assertions.assertTrue(livingRoom.getTileAvailability(i,j));
                         }
                         if (i == 5) {
-                            Assert.assertTrue(livingRoom.getTileAvailability(i,j));
+                            Assertions.assertTrue(livingRoom.getTileAvailability(i,j));
                         }
                     }
                     //3° tessere [8][4] e [8][5]
                     else if (i == 8) {
                         if (j == 4) {
-                            Assert.assertTrue(livingRoom.getTileAvailability(i,j));
+                            Assertions.assertTrue(livingRoom.getTileAvailability(i,j));
                         }
                         if (j == 5) {
-                            Assert.assertTrue(livingRoom.getTileAvailability(i,j));
+                            Assertions.assertTrue(livingRoom.getTileAvailability(i,j));
                         }
                     }
                     //4° tessere [3][8] e [4][8]
                     else if (j == 8) {
                         if (i == 3) {
-                            Assert.assertTrue(livingRoom.getTileAvailability(i,j));
+                            Assertions.assertTrue(livingRoom.getTileAvailability(i,j));
                         }
                         if (i == 4) {
-                            Assert.assertTrue(livingRoom.getTileAvailability(i,j));
+                            Assertions.assertTrue(livingRoom.getTileAvailability(i,j));
                         }
                     }
 

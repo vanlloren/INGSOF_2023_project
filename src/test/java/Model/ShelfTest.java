@@ -1,27 +1,12 @@
 package Model;
 
-import static org.junit.Assert.*;
-
-import java.rmi.RemoteException;
-import java.util.ArrayList;
-
-import Network.ClientSide.RemoteClientImplementation;
-import Network.ClientSide.RemoteClientInterface;
-import Network.message.Message;
 import Util.Colour;
-import Util.CommonGoalType;
-import Util.PersonalGoalType;
-import client.view.TUI;
-import client.view.TurnView;
-import org.junit.Assert;
-import org.junit.jupiter.api.*;
-
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-
-
-
-import server.Model.*;
+import server.Model.GameModel;
+import server.Model.PlayableItemTile;
+import server.Model.Shelf;
 
 
 public class ShelfTest {
@@ -38,8 +23,8 @@ public class ShelfTest {
 
         for(int i=0;i<6;i++){
             for (int j=0; j<5; j++){
-                Assert.assertTrue(shelf.getStructure()[i][j].getColour() == Colour.VOID );
-                Assert.assertTrue(shelf.getStructure()[i][j].getIdCode() == -1);
+                Assertions.assertSame(shelf.getStructure()[i][j].getColour(), Colour.VOID);
+                Assertions.assertEquals(-1, shelf.getStructure()[i][j].getIdCode());
             }
         }
     }
@@ -51,13 +36,13 @@ public class ShelfTest {
     @Test
     public void testPutTile() {
         shelf.putTile(1,2, new PlayableItemTile("GREEN", 4));
-        Assert.assertTrue(shelf.getStructure()[1][2].getColour().equals(Colour.GREEN));
-        Assert.assertTrue(shelf.getStructure()[1][2].getIdCode() == 4);
+        Assertions.assertEquals(shelf.getStructure()[1][2].getColour(), Colour.GREEN);
+        Assertions.assertEquals(4, shelf.getStructure()[1][2].getIdCode());
     }
     @Test
     public void testIsFull() {
         shelf.setUp();
-        Assert.assertFalse(shelf.isFull());
+        Assertions.assertFalse(shelf.isFull());
 
         int count=1;
         for(int i=0;i<6;i++){
@@ -67,27 +52,27 @@ public class ShelfTest {
             }
         }
 
-        Assert.assertTrue(shelf.isFull());
+        Assertions.assertTrue(shelf.isFull());
     }
 
     @Test
     public void testCountMaxVoidTilesShelfColumns(){
         shelf.setUp();
-        Assert.assertTrue(shelf.countMaxVoidTilesShelfColumns() == 6);
+        Assertions.assertEquals(6, shelf.countMaxVoidTilesShelfColumns());
 
         shelf.putTile(5,0, new PlayableItemTile("GREEN", 4));
-        Assert.assertTrue(shelf.countMaxVoidTilesShelfColumns() == 6);
+        Assertions.assertEquals(6, shelf.countMaxVoidTilesShelfColumns());
 
 
         shelf.putTile(4,0, new PlayableItemTile("GREEN", 4));
-        Assert.assertTrue(shelf.countMaxVoidTilesShelfColumns() == 6);
+        Assertions.assertEquals(6, shelf.countMaxVoidTilesShelfColumns());
 
 
         shelf.putTile(3,0, new PlayableItemTile("GREEN", 4));
-        Assert.assertTrue(shelf.countMaxVoidTilesShelfColumns() == 6);
+        Assertions.assertEquals(6, shelf.countMaxVoidTilesShelfColumns());
 
         shelf.putTile(2,0, new PlayableItemTile("GREEN", 4));
-        Assert.assertTrue(shelf.countMaxVoidTilesShelfColumns() == 6);
+        Assertions.assertEquals(6, shelf.countMaxVoidTilesShelfColumns());
 
         for(int j=1;j<5;j++){
             for(int i=0;i<6;i++){
@@ -95,19 +80,19 @@ public class ShelfTest {
             }
         }
         shelf.putTile(0,1, new PlayableItemTile("VOID", -1));
-        Assert.assertTrue(shelf.countMaxVoidTilesShelfColumns() == 2);
+        Assertions.assertEquals(2, shelf.countMaxVoidTilesShelfColumns());
 
         for(int j=1;j<5;j++){
             for(int i=0;i<6;i++){
                 shelf.putTile(i, j, new PlayableItemTile("GREEN", 10));
             }
         }
-        Assert.assertTrue(shelf.countMaxVoidTilesShelfColumns() == 2);
+        Assertions.assertEquals(2, shelf.countMaxVoidTilesShelfColumns());
 
         shelf.putTile(1,0, new PlayableItemTile("GREEN", 4));
-        Assert.assertTrue(shelf.countMaxVoidTilesShelfColumns() == 1);
+        Assertions.assertEquals(1, shelf.countMaxVoidTilesShelfColumns());
 
         shelf.putTile(0,0, new PlayableItemTile("GREEN", 4));
-        Assert.assertTrue(shelf.countMaxVoidTilesShelfColumns() == 0);
+        Assertions.assertEquals(0, shelf.countMaxVoidTilesShelfColumns());
     }
 }

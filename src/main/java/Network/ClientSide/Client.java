@@ -8,11 +8,15 @@ import client.view.View;
 import Observer.*;
 import server.Model.PlayableItemTile;
 import server.Model.Player;
+
+import java.io.Serial;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
 public abstract class Client extends UnicastRemoteObject implements ViewObserver, LivingRoomObserver, ShelfObserver, PlayerObserver, GameModelObserver, PersonalGoalObserver {
 
+    @Serial
+    private static final long serialVersionUID = 8809657577515345239L;
     private String nickname;
     private final String serverAddress;
     private final int portNum;

@@ -1,13 +1,14 @@
 package Controller;
 
 import Util.Colour;
-import org.junit.Assert;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
 import server.Controller.GameBoardController;
 import server.Controller.GameController;
-import server.Model.*;
+import server.Model.GameModel;
+import server.Model.ItemBag;
+import server.Model.LivingRoom;
+import server.Model.PlayableItemTile;
 
 public class GameBoardControllerTest {
     @Test
@@ -36,10 +37,10 @@ public class GameBoardControllerTest {
         gameBoardController.setPlayerNum(3);
         gameBoardController.gameBoardInit();
 
-        Assert.assertEquals(95, gameBoardController.getControlledGameBoard().getItemBag().getBag().size());
+        Assertions.assertEquals(95, gameBoardController.getControlledGameBoard().getItemBag().getBag().size());
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
-                Assert.assertEquals(livingRoom.getTileAvailability(i, j), gameBoardController.getControlledGameBoard().getLivingRoom().getTileAvailability(i, j));
+                Assertions.assertEquals(livingRoom.getTileAvailability(i, j), gameBoardController.getControlledGameBoard().getLivingRoom().getTileAvailability(i, j));
             }
         }
     }
@@ -62,7 +63,7 @@ public class GameBoardControllerTest {
 
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
-                Assert.assertTrue(gameBoardController.getControlledLivingRoom().getGameTable()[i][j] != null);
+                Assertions.assertNotNull(gameBoardController.getControlledLivingRoom().getGameTable()[i][j]);
             }
         }
     }
@@ -76,22 +77,22 @@ public class GameBoardControllerTest {
         Colour helperColour = gameBoardController.getControlledGameBoard().getLivingRoom().getGameTable()[1][3].getColour();
         int helperId = gameBoardController.getControlledGameBoard().getLivingRoom().getGameTable()[1][3].getIdCode();
 
-        Assert.assertEquals(null, gameBoardController.PickManager(4, 4));
+        Assertions.assertNull(gameBoardController.PickManager(4, 4));
 
         PlayableItemTile helperTile = gameBoardController.PickManager(1, 3);
-        Assert.assertTrue(helperColour.equals(helperTile.getColour()) &&
+        Assertions.assertTrue(helperColour.equals(helperTile.getColour()) &&
                 helperId == helperTile.getIdCode());
 
-        Assert.assertEquals(null, gameBoardController.PickManager(5, 1));
+        Assertions.assertNull(gameBoardController.PickManager(5, 1));
 
         helperColour = gameBoardController.getControlledGameBoard().getLivingRoom().getGameTable()[1][4].getColour();
         helperId = gameBoardController.getControlledGameBoard().getLivingRoom().getGameTable()[1][4].getIdCode();
 
         helperTile = gameBoardController.PickManager(1, 4);
-        Assert.assertTrue(helperColour.equals(helperTile.getColour()) &&
+        Assertions.assertTrue(helperColour.equals(helperTile.getColour()) &&
                 helperId == helperTile.getIdCode());
 
-        Assert.assertEquals(null, gameBoardController.PickManager(5, 5));
+        Assertions.assertNull(gameBoardController.PickManager(5, 5));
 
 
         gameBoardController = new GameBoardController(new GameController(new GameModel()));
@@ -122,9 +123,9 @@ public class GameBoardControllerTest {
         gameBoardController.getControlledLivingRoom().updateAvailability();
 
         helperTile = gameBoardController.PickManager(3, 2);
-        Assert.assertTrue(helperColour.equals(helperTile.getColour()) &&
+        Assertions.assertTrue(helperColour.equals(helperTile.getColour()) &&
                 helperId == helperTile.getIdCode());
-        Assert.assertEquals(null, gameBoardController.PickManager(4, 2));
+        Assertions.assertNull(gameBoardController.PickManager(4, 2));
     }
 
     @Test
@@ -133,7 +134,7 @@ public class GameBoardControllerTest {
         gameBoardController.setPlayerNum(4);
         gameBoardController.gameBoardInit();
 
-        Assert.assertTrue(gameBoardController.checkIfAdjacentTiles());
+        Assertions.assertTrue(gameBoardController.checkIfAdjacentTiles());
 
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
@@ -146,7 +147,7 @@ public class GameBoardControllerTest {
         gameBoardController.getControlledLivingRoom().getGameTable()[3][3] = new PlayableItemTile("BLUE", 5);
         gameBoardController.getControlledLivingRoom().getGameTable()[5][5] = new PlayableItemTile("PINK", 10);
 
-        Assert.assertFalse(gameBoardController.checkIfAdjacentTiles());
+        Assertions.assertFalse(gameBoardController.checkIfAdjacentTiles());
 
     }
 }

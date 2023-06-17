@@ -1,15 +1,11 @@
 package Model;
 
-import static org.junit.Assert.*;
-import java.util.ArrayList;
-
-import org.junit.Assert;
-import org.junit.jupiter.api.*;
-
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-
 import server.Model.*;
+
+import java.util.ArrayList;
 
 public class GameBoardTest {
 
@@ -25,20 +21,20 @@ public class GameBoardTest {
     @Test
     public void testSetItemBag() {
         board.setItemBag();
-        assertNotNull(board.getItemBag());
+        Assertions.assertNotNull(board.getItemBag());
     }
 
     @Test
     public void testSetLivingRoom() {
         board.setLivingRoom(2);
-        assertNotNull(board.getLivingRoom());
+        Assertions.assertNotNull(board.getLivingRoom());
     }
 
     @Test
     public void testSetNextInGameTile() {
         board.setItemBag();
         board.setNextInGameTile();
-        assertNotNull(board.getNextInGameTile());
+        Assertions.assertNotNull(board.getNextInGameTile());
     }
 
     @Test
@@ -46,8 +42,8 @@ public class GameBoardTest {
         board.setLivingRoom(2);
         board.setToPlayerFirstTile(4, 4);
         ArrayList<PlayableItemTile> helperList = board.getToPlayerTiles();
-        assertEquals(1, helperList.size());
-        assertNotNull(helperList.get(0));
+        Assertions.assertEquals(1, helperList.size());
+        Assertions.assertNotNull(helperList.get(0));
     }
 
     @Test
@@ -56,8 +52,8 @@ public class GameBoardTest {
         board.setToPlayerFirstTile(4, 4);
         board.setToPlayerAnotherTile(4, 5);
         ArrayList<PlayableItemTile> helperList = board.getToPlayerTiles();
-        assertEquals(2, helperList.size());
-        assertNotNull(helperList.get(1));
+        Assertions.assertEquals(2, helperList.size());
+        Assertions.assertNotNull(helperList.get(1));
     }
 
     @Test
@@ -76,11 +72,11 @@ public class GameBoardTest {
             }
         }
 
-        Assert.assertEquals(0, checker);
+        Assertions.assertEquals(0, checker);
     }
 
     @Test
     public void testGetPickedTilesNumber(){
-        Assert.assertTrue(board.getPickedTilesNum()==0);
+        Assertions.assertEquals(0, board.getPickedTilesNum());
     }
 }

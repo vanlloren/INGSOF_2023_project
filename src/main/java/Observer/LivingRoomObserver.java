@@ -20,7 +20,7 @@ public interface LivingRoomObserver {
      *          has been picked from the {@link server.Model.LivingRoom LivingRoom}
      * @param y the 'y' coordinate of the {@link server.Model.PlayableItemTile PlayableItemTile} that
      *          has been picked from the {@link server.Model.LivingRoom LivingRoom}
-     * @throws RemoteException
+     * @throws RemoteException exception that underlines problems with the RMI Connection
      */
     void onUpdatePickedTileFromLivingRoom(TurnView turnView, int x, int y) throws RemoteException;
 
@@ -30,7 +30,7 @@ public interface LivingRoomObserver {
      * the {@link server.Model.LivingRoom LivingRoom} may have changed
      *
      * @param turnView the updated version of {@link TurnView TurnView} which is later sent to the {@link Network.ClientSide.RemoteClientImplementation RemoteClients}
-     * @throws RemoteException
+     * @throws RemoteException exception that underlines problems with the RMI Connection
      */
     void onUpdateTilesAvailability(TurnView turnView) throws RemoteException;
 
@@ -39,7 +39,7 @@ public interface LivingRoomObserver {
      * that the {@link server.Model.LivingRoom LivingRoom} has been refilled with {@link server.Model.PlayableItemTile PlayableItemTiles}
      *
      * @param turnView the updated version of {@link TurnView TurnView} which is later sent to the {@link Network.ClientSide.RemoteClientImplementation RemoteClients}
-     * @throws RemoteException
+     * @throws RemoteException exception that underlines problems with the RMI Connection
      */
      void onUpdateRefillLivingRoom(TurnView turnView) throws RemoteException;
 }

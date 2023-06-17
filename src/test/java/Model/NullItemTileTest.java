@@ -1,12 +1,10 @@
 package Model;
 
-import org.junit.Assert;
-
+import Util.Colour;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
-import server.Model.NullItemTile;
-import Util.*;
-
 import org.junit.jupiter.api.Test;
+import server.Model.NullItemTile;
 
 import java.util.ArrayList;
 
@@ -22,49 +20,49 @@ public class NullItemTileTest {
 
     @Test
     public void testGetColour() {
-        Assert.assertEquals(Colour.VOID, nullItemTile.getColour());
+        Assertions.assertEquals(Colour.VOID, nullItemTile.getColour());
     }
 
     @Test
     public void testGetIdCode() {
-        Assert.assertEquals(0, nullItemTile.getIdCode());
+        Assertions.assertEquals(0, nullItemTile.getIdCode());
     }
 
     @Test
     public void testGetAvailability() {
-        Assert.assertFalse(nullItemTile.getAvailability());
+        Assertions.assertFalse(nullItemTile.getAvailability());
     }
 
     @Test
     public void testNullDetection() {
-        Assert.assertTrue(nullItemTile.nullDetection());
+        Assertions.assertTrue(nullItemTile.nullDetection());
     }
 
     @Test
     public void testGetAdjacency() {
         nullItemTile.setAdjacency();
-        Assert.assertFalse(nullItemTile.getAdjacency());
+        Assertions.assertFalse(nullItemTile.getAdjacency());
     }
 
     @Test
     public void testResetAdjacency() {
         nullItemTile.resetAdjacency();
-        Assert.assertFalse(nullItemTile.getAdjacency());
+        Assertions.assertFalse(nullItemTile.getAdjacency());
     }
 
     @Test
     public void testModifyAvailability(){
         nullItemTile.makeAvailable();
-        Assert.assertTrue(nullItemTile.getAvailability()==false);
+        Assertions.assertFalse(nullItemTile.getAvailability());
         nullItemTile.makeUnavailable();
-        Assert.assertTrue(nullItemTile.getAvailability()==false);
+        Assertions.assertFalse(nullItemTile.getAvailability());
     }
 
     @Test
     public void testGetAndSetPosition(){
         nullItemTile.setPosition(1,1);
-        ArrayList<Integer> noPos = new ArrayList<Integer>();
-        Assert.assertEquals(noPos, nullItemTile.getPosition());
+        ArrayList<Integer> noPos = new ArrayList<>();
+        Assertions.assertEquals(noPos, nullItemTile.getPosition());
     }
 }
 

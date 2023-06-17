@@ -3,9 +3,9 @@ package Network.Events;
 import server.Model.PlayableItemTile;
 
 public class UpdatePutShelfTileEvent extends Event{
-    private int xPos;
-    private int yPos;
-    private PlayableItemTile tile;
+    private final int xPos;
+    private final int yPos;
+    private final PlayableItemTile tile;
 
     public UpdatePutShelfTileEvent(int x, int y, PlayableItemTile tile) {
         super(EventEnum.UPDATE_PUT_SHELF_TILE);
