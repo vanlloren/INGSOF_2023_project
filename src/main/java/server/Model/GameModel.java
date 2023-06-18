@@ -179,8 +179,7 @@ public class GameModel extends GameModelObservable implements Serializable, Simp
      * Sets the number of {@link Player Players} of the current match.
      * The choice is made by the first {@link Player Player} that has joined the match lobby.
      * The {@code playersNumber} can only be a number from 2 to 4.
-     *
-     * @param playersNumber the number of {@link Player Players} chosen for the current match
+     * @param  playersNumber the number of {@link Player Players} chosen for the current match
      */
     public void setPlayersNumber(int playersNumber){
         this.chosenPlayersNumber = playersNumber;
