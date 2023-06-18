@@ -166,9 +166,9 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
                     System.out.println(Nickname+": "+chatMessage+".");
                 }
             }
-            case UPDATE_TILES_AVAILABILITY ->
-                System.out.println("Refilling della LivingRoom..........\n" +
-                                   "....................................");
+            case UPDATE_TILES_AVAILABILITY ->{
+            }
+
         }
     }
 
@@ -835,7 +835,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
 
     @Override
     public void onUpdateModelEndGame(TurnView turnView,Player player, boolean endGame)  {
-        onModelModify(turnView, new UpdateEndGameEvent(player.getNickname(), endGame));
+        onModelModify(turnView, new UpdateEndGameEvent(player.getNickname()));
     }
 
     @Override

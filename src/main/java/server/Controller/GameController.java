@@ -180,6 +180,8 @@ public class GameController {
             game.getCurrPlayer().getPersonalShelf().setColumnChosen(yPos);
 
             if (shelfIsFull && !game.getEndGame()) {
+                Integer point = game.getCurrPlayer().getPoints();
+                game.getCurrPlayer().setPoints(point+1);
                 game.setEndGame();
                 if(numOfTilesOnPutting==1) {
                     nextTurn();

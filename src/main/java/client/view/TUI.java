@@ -284,8 +284,8 @@ t    *this method sets the attribute  {@code isLastTurn} true only when the last
         String finalReceiver = receiver;
         notifyObserver(obs -> {
             try {
-                obs.onUpdateChat(this.nickname, finalChatMessage, finalReceiver);
                 out.println("Messaggio inviato!");
+                obs.onUpdateChat(this.nickname, finalChatMessage, finalReceiver);
             } catch (RemoteException e) {
                 throw new RuntimeException(e);
             }

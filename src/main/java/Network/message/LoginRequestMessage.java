@@ -17,7 +17,6 @@ public class LoginRequestMessage extends Message {
 
     /**
      * This method creates an instance of {@link LoginRequestMessage LoginRequestMessage}
-     *
      * @param client the {@link Network.ClientSide.RemoteClientImplementation RemoteClient} that is connecting to
      *               the {@link Network.ServerSide.RemoteServerImplementation RemoteServer}
      * @param nickname a {@link String String} containing the {@code nickname} of the sender

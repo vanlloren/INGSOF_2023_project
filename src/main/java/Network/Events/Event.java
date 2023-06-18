@@ -11,10 +11,19 @@ package Network.Events;
 public abstract class Event {
     private final EventEnum eventType;
 
+
+    /**
+     *This method creates an instance of
+     * {@link Event event}
+     * @param eventType is the {@link EventEnum} type of this class
+     */
     public Event(EventEnum eventType){
         this.eventType = eventType;
     }
 
+    /**
+     * @return the attribute {@code eventType} of this instance
+     */
     public EventEnum getEventType(){
         return this.eventType;
     }
