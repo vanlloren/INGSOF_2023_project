@@ -63,7 +63,8 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
                     this.userInterface.fullLobbyTerminateUI();
 
             case CHOICE_BEGIN ->
-                    onUpdateChoiceBegin();
+                    this.userInterface.riprendiEsecuzione();
+
 
 
 
@@ -74,202 +75,102 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
     public void onModelModify(TurnView turnView, Event event){
         this.turnView=turnView;
         switch (event.getEventType()){
-            case UPDATE_REFILL_LIVINGROOM ->
-                    UpdateAllClientOnRefillLivingRoom();
+            case UPDATE_REFILL_LIVINGROOM -> {
+                System.out.println("NEW UPDATE: LivingRoom has been refilled!");
+                System.out.println("New LivingRoom will now be printed");
+                this.userInterface.showLivingRoom(turnView.getLivingRoom());
+            }
             case UPDATE_PLAYERS_LIST -> {
                 UpdatePlayersListEvent newEvent = (UpdatePlayersListEvent) event;
-                UpdateAllClientOnModelListPlayers(newEvent.getPlayer());
+                System.out.println("...NEW UPDATE: We have a new player: "+newEvent.getPlayer().getNickname()+" has joined this lobby");
             }
             case UPDATE_END_GAME -> {
                 UpdateEndGameEvent newEvent = (UpdateEndGameEvent) event;
-                UpdateAllClientOnModelEndGame(newEvent.getPlayer(),newEvent.isEndGame());
+                System.out.println(newEvent.getPlayer()+" HAS FILLED ALL HIS SHELF FOR FIRST :" +
+                        "lAST TURN IN GAME....");
             }
             case UPDATE_PLAYERS_NUMBER -> {
                 UpdatePlayersNumberEvent newEvent = (UpdatePlayersNumberEvent) event;
-                UpdateAllClientOnPlayersNumber(newEvent.getPlayersNumber());
+                System.out.println("Your request of playerNumber for this game has been accepted\n" +
+                        "This game will have "+newEvent.getPlayersNumber()+" players");
             }
             case UPDATE_CHAIR_OWNER -> {
                 UpdateChairOwnerEvent newEvent = (UpdateChairOwnerEvent) event;
-                UpdateAllClientOnChairOwner(newEvent.getPlayer());
-
-
+                System.out.println("....NEW UPDATE: The chair owner is "+newEvent.getPlayer().getNickname());
             }
             case UPDATE_GAME_HAS_STARTED ->
-                    UpdateAllClientOnModelGameHasStarted();
+                 System.out.println("LOBBY HAS REACHED THE REQUESTED NUMBER OF PLAYER: GAME IS STARTING.....");
 
             case UPDATE_CURR_PLAYER -> {
                 UpdateCurrPlayerEvent newEvent = (UpdateCurrPlayerEvent) event;
-                UpdateAllClientOnModelCurrPlayer(newEvent.getCurrPlayer());
+                this.userInterface.setCurrPlayer(newEvent.getCurrPlayer().getNickname());
+                System.out.println("NEW UPDATE: " + newEvent.getCurrPlayer().getNickname() + " is now the current player");
+                this.userInterface.riprendiEsecuzione();
             }
             case UPDATE_MATCH_WINNER -> {
                 UpdateMatchWinnerEvent newEvent = (UpdateMatchWinnerEvent) event;
-                UpdateAllClientOnModelMatchWinner(newEvent.getMatchWinner());
+                System.out.println("CONGRATULATION : "+newEvent.getMatchWinner()+" HAS WON THIS GAME");
             }
-            case UPDATE_GAME_HAS_ENDED ->
-                    UpdateAllClientOnModelGameHasEnd();
-
+            case UPDATE_GAME_HAS_ENDED -> {
+                this.userInterface.resetGameOn();
+                System.out.println("""
+                    .......................
+                    .......................
+                    .......................
+                    .......................
+                    .......................
+                    .......GAME OVER......."""
+                );
+            }
             case UPDATE_PICKED_LIVINGROOM_TILE -> {
                 UpdatePickedLivingRoomTileEvent newEvent = (UpdatePickedLivingRoomTileEvent) event;
-                UpdateAllClientOnPickedTileFromLivingRoom(newEvent.getCurrPlayer(), newEvent.getXPos(), newEvent.getYPos());
+                System.out.println("Il giocatore " + newEvent.getCurrPlayer() + " ha pescato da LivingRoom " +
+                "la tessera in posizione: x=" + newEvent.getXPos() + ", y=" + newEvent.getYPos());
+                System.out.println("A seguire verrà stampata la LivingRoom aggiornata");
+                this.userInterface.showLivingRoom(turnView.getLivingRoom());
             }
             case UPDATE_PERSONAL_GOAL -> {
                 UpdatePersonalGoalEvent newEvent = (UpdatePersonalGoalEvent) event;
-                UpdateAllClientOnModelPersonalGoal(newEvent.getPlayer(), newEvent.getPersonalGoalType());
+                System.out.println("....NEW UPDATE:The PersonalGoal assigned to player "+newEvent.getPlayer()+" is "+newEvent.getPersonalGoalType());
             }
             case UPDATE_COMMON_GOAL -> {
                 UpdateCommonGoalEvent newEvent = (UpdateCommonGoalEvent) event;
-                UpdateAllClientOnModelCommonGoal(newEvent.getCommonGoalType1(), newEvent.getCommonGoalType2());
+                System.out.println("....NEW UPDATE:CommonGoal 1 for this game is "+newEvent.getCommonGoalType1());
+                System.out.println("....NEW UPDATE:CommonGoal 2 for this game is "+newEvent.getCommonGoalType2());
             }
             case UPDATE_PLAYER_POINTS -> {
                 UpdatePlayerPointEvent newEvent = (UpdatePlayerPointEvent) event;
-                UpdateAllClientOnModelPlayerPoint(newEvent.getPlayer(), newEvent.getPoints());
+                System.out.println("....NEW UPDATE:" +newEvent.getPlayer()+" has now"+newEvent.getPoints()+" points");
             }
             case UPDATE_STATUS_COMMON_GOAL2 -> {
                 UpdateStatusCommonGoal2Event newEvent = (UpdateStatusCommonGoal2Event) event;
-                UpdateAllClientOnModelStatusCommonGoal2(newEvent.getNickname());
+                System.out.println("....NEW UPDATE:"+newEvent.getNickname()+"has satisfied CommonGoal2");
             }
             case UPDATE_STATUS_COMMON_GOAL1 -> {
                 UpdateStatusCommonGoal1Event newEvent = (UpdateStatusCommonGoal1Event) event;
-                UpdateAllClientOnModelStatusCommonGoal1(newEvent.getNickname());
+                System.out.println("....NEW UPDATE:"+newEvent.getNickname()+"has satisfied CommonGoal1");
             }
             case UPDATE_PUT_SHELF_TILE -> {
                 UpdatePutShelfTileEvent newEvent = (UpdatePutShelfTileEvent) event;
-                UpdateAllClientOnStructureShelf(newEvent.getXPos(), newEvent.getYPos(), newEvent.getTile());
+                System.out.println("Il giocatore " + turnView.getNicknameCurrentPlayer() + " ha posizionato la tessera "
+                        + newEvent.getTile().getColour() + " " + newEvent.getTile().getIdCode() + " nella posizione x=" + newEvent.getXPos() + ", y=" + newEvent.getYPos());
+                System.out.println("A seguire verrà stampata la PlayerShelf aggiornata");
+                this.userInterface.showPlayerShelf(turnView.getShelfTable());
             }
             case UPDATE_CHAT -> {
                 UpdateChatEvent newEvent = (UpdateChatEvent) event;
-                UpdateAllClientOnNewMessageChat(newEvent.getNickname(),newEvent.getChat(),newEvent.getReceiver());
-
+                String receiver = newEvent.getReceiver();
+                String Nickname = newEvent.getNickname();
+                String chatMessage = newEvent.getChat();
+                if(receiver.equals(this.nickname)||receiver.equals("Everyone")){
+                    System.out.println(Nickname+": "+chatMessage+".");
+                }
             }
+            case UPDATE_TILES_AVAILABILITY ->
+                System.out.println("Refilling della LivingRoom..........\n" +
+                                   "....................................");
         }
     }
-
-    private void UpdateAllClientOnRefillLivingRoom() {
-        System.out.println("NEW UPDATE: LivingRoom has been refilled!");
-        System.out.println("New LivingRoom will now be printed");
-        this.userInterface.showLivingRoom(turnView.getLivingRoom());
-    }
-
-    @Override
-    public void UpdateAllClientOnModelGameHasEnd(){
-        this.userInterface.resetGameOn();
-        System.out.println("""
-                .......................
-                .......................
-                .......................
-                .......................
-                .......................
-                .......GAME OVER......."""
-        );
-
-    }
-    @Override
-    public void UpdateAllClientOnModelMatchWinner(String matchWinner) {
-        System.out.println("CONGRATULATION : "+matchWinner+" HAS WON THIS GAME");
-    }
-    @Override
-    public void UpdateAllClientOnModelCurrPlayer(Player currPlayer) {
-        this.userInterface.setCurrPlayer(currPlayer.getNickname());
-        System.out.println("NEW UPDATE: " + currPlayer.getNickname() + " is now the current player");
-        this.userInterface.riprendiEsecuzione();
-    }
-
-    @Override
-    public void UpdateAllClientOnModelListPlayers(Player player) {
-        System.out.println("...NEW UPDATE: We have a new player: "+player.getNickname()+" has joined this lobby");
-    }
-
-    @Override
-    public void UpdateAllClientOnModelEndGame(String Nickname,boolean endGame) {
-        System.out.println(Nickname+" HAS FILLED ALL HIS SHELF FOR FIRST :" +
-                "lAST TURN IN GAME....");
-    }
-    // gestisci un booleano per quando sei arrivato all'ultimo giocatore del turno finale
-    // dal controller si determina il vincitore si comunica e a quel punto lancio
-
-    @Override
-    public void UpdateAllClientOnPlayersNumber(int playersNumber) {
-
-        System.out.println("Your request of playerNumber for this game has been accepted\n" +
-                "This game will have "+playersNumber+" players");
-
-    }
-
-
-
-    @Override
-    public void UpdateAllClientOnModelPersonalGoal(String Nickname,PersonalGoalType personalGoalType) {
-        System.out.println("....NEW UPDATE:The PersonalGoal assigned to player "+Nickname+" is "+personalGoalType);
-    }
-
-    @Override
-    public void UpdateAllClientOnModelCommonGoal(CommonGoalType commonGoalType1, CommonGoalType commonGoalType2) {
-        System.out.println("....NEW UPDATE:CommonGoal 1 for this game is "+commonGoalType1);
-        System.out.println("....NEW UPDATE:CommonGoal 2 for this game is "+commonGoalType2);
-    }
-
-    @Override
-    public void UpdateAllClientOnModelPlayerPoint(String nickNameCurrentPlayer, Integer points) {
-        System.out.println("....NEW UPDATE:" +nickNameCurrentPlayer+" has now"+points+" points");
-    }
-
-    @Override
-    public void UpdateAllClientOnModelStatusCommonGoal1(String nickNameCurrentPlayer) {
-        System.out.println("....NEW UPDATE:"+nickNameCurrentPlayer+"has satisfied CommonGoal1");
-    }
-
-    @Override
-    public void UpdateAllClientOnModelStatusCommonGoal2(String nickNameCurrentPlayer) {
-        System.out.println("....NEW UPDATE:"+nickNameCurrentPlayer+"has satisfied CommonGoal2");
-    }
-
-    @Override
-    public void UpdateAllClientOnChairOwner(Player player) {
-        System.out.println("....NEW UPDATE: The chair owner is "+player.getNickname());
-    }
-
-    @Override
-    public void UpdateAllClientOnModelGameHasStarted() {
-        System.out.println("LOBBY HAS REACHED THE REQUESTED NUMBER OF PLAYER: GAME IS STARTING.....");
-
-    }
-
-
-
-    public void onUpdateChoiceBegin(){
-        this.userInterface.riprendiEsecuzione();
-    }
-
-    @Override
-    public void UpdateAllClientOnStructureShelf(int x, int y, PlayableItemTile Tile) {
-        System.out.println("Il giocatore " + turnView.getNicknameCurrentPlayer() + " ha posizionato la tessera "
-                + Tile.getColour() + " " + Tile.getIdCode() + " nella posizione x=" + x + ", y=" + y);
-
-        System.out.println("A seguire verrà stampata la PlayerShelf aggiornata");
-        this.userInterface.showPlayerShelf(turnView.getShelfTable());
-
-    }
-
-
-
-    @Override
-    public void UpdateAllClientOnNewMessageChat(String Nickname, String chatMessage,String receiver) {
-        if(receiver.equals(this.nickname)||receiver.equals("Everyone")){
-            System.out.println(Nickname+": "+chatMessage+".");
-        }
-    }
-
-    @Override
-    public void UpdateAllClientOnPickedTileFromLivingRoom(String currPlayer, int x, int y) {
-        System.out.println("Il giocatore " + currPlayer + " ha pescato da LivingRoom " +
-                "la tessera in posizione: x=" + x + ", y=" + y);
-
-        System.out.println("A seguire verrà stampata la LivingRoom aggiornata");
-        this.userInterface.showLivingRoom(turnView.getLivingRoom());
-    }
-
-    //
-
 
     public void onUpdateToPickTile() throws RemoteException{
         ArrayList<PlayableItemTile> helperList = new ArrayList<>();
@@ -945,8 +846,6 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
     public void onUpdateTilesAvailability(TurnView turnView){
         onModelModify(turnView, new UpdateTileAvailabilityEvent());
     }
-
-
 
     @Override
     public void onUpdateRefillLivingRoom(TurnView turnView) throws RemoteException {
