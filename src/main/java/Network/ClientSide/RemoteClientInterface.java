@@ -71,7 +71,8 @@ public interface RemoteClientInterface extends Remote, LivingRoomObserver, Shelf
     /**
      * This method allows the {@link RemoteClientImplementation RemoteClient} to answer to a ping request from
      * the {@link Network.ServerSide.RemoteServerImplementation RemoteServer}
-     * @throws RemoteException
+     * @throws RemoteException  an {@link Exception Exception} that notifies an error in the connection
+     *      * with the {@link Network.ServerSide.RemoteServerImplementation RemoteServer}
      */
     void pingReply() throws RemoteException;
 }

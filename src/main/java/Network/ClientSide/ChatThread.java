@@ -11,7 +11,7 @@ public class ChatThread extends Thread{
 
     /**
      * This method creates a new instance of {@link ChatThread ChatThread}
-     * @param userInterface
+     * @param userInterface the {@link View View} linked to the user
      */
     public ChatThread(View userInterface){
         this.userInterface = userInterface;
