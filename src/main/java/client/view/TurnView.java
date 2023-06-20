@@ -6,7 +6,7 @@ import java.io.Serial;
 import java.io.Serializable;
 
 /**
- * This Class represents the not modifiable copy of the {@link GameModel GameModel} which is
+ * This Class represents a not modifiable copy of the {@link GameModel GameModel} which is
  * sent to the {@link Network.ClientSide.RemoteClientImplementation RemoteClients} following any
  * type of change made on the {@link GameModel GameModel} or one of its components.
  */
@@ -30,7 +30,6 @@ public class TurnView implements Serializable {
     }
 
     /**
-     *
      * @return the current situation of the {@link LivingRoom LivingRoom}
      * simplified through a {@link SimpleLivingRoom SimpleLivingRoom}
      */
@@ -39,7 +38,6 @@ public class TurnView implements Serializable {
     }
 
     /**
-     *
      * @return the current situation of the {@link GameModel GameModel}
      * simplified through a {@link SimpleGameModel SimpleGameModel}
      */
@@ -48,7 +46,6 @@ public class TurnView implements Serializable {
     }
 
     /**
-     *
      * @return the {@code nickname} of the {@code currPlayer}
      */
     public String getNicknameCurrentPlayer(){
@@ -64,7 +61,6 @@ public class TurnView implements Serializable {
     }
 
     /**
-     *
      * @param nickName the {@code nickname} of the {@link Player Player} whose points has to be counted
      * @return the actual count of the points of the {@link Player Player}
      */

@@ -5,7 +5,10 @@ import server.Model.*;
 import java.net.SocketException;
 import java.util.ArrayList;
 
-
+/**
+ * This interface represents the generic {@code View} of a {@link Network.ClientSide.RemoteClientImplementation RemoteClient}.
+ * Its two possible implementations are {@link TUI TUI} and GUI.
+ */
 public interface View {
 
     /**

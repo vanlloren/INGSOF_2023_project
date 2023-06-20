@@ -12,7 +12,7 @@ import java.util.concurrent.Semaphore;
 /**
  * This class manages the initial outputs and inputs demands when the {@link client.ClientApp ClientApp} is launched from terminal.
  * Its functionalities include the methods to interact with the user so that he can enter his turn or see
- * the model data of the game
+ * the model data of the game.
  */
 public class TUI extends ViewObservable implements View {
     private final PrintStream out;
@@ -51,7 +51,7 @@ public class TUI extends ViewObservable implements View {
     /**
      *This method is called only when the {@code nickname} has been accepted from the model and
      * as a consequence sets the attribute {@code needNick} to {@code false}, which indicates that no more requests
-     * of a valid {@code nickname} are needed
+     * of a valid {@code nickname} are needed.
      */
     public void resetNeedNick(){
         this.needNick = false;
@@ -59,7 +59,7 @@ public class TUI extends ViewObservable implements View {
 
     /**
      *This method is called when the number of Player has reached the requested size,
-     *Sets the actual {@link ArrayList<Player> playerList} of the current match
+     *Sets the actual {@link ArrayList<Player> playerList} of the current match.
      *
      * @param playerList the instance of {@link ArrayList<Player> playerList} of the current match
      */
@@ -127,9 +127,9 @@ public class TUI extends ViewObservable implements View {
 
 
     /**
-     * This is the method that is actually responsible for the disconnection handling.
+     * This method is responsible for the disconnection handling.
      * It calls internally a method of the {@link Network.ServerSide.RemoteServerImplementation RemoteServer} and
-     * use a try-catch to see if there is a {@code RemoteException}
+     * uses a try-catch to see if there is a {@code RemoteException}
      */
     private void OnVerifyConnection() {
         notifyObserver(obs -> {

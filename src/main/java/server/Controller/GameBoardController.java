@@ -116,7 +116,6 @@ public class GameBoardController {
         }
 
     }
-    //----->LIVING ROOM
 
     /**
      * Launches the procedure to check if an {@link server.Model.ItemTile ItemTile} is available
@@ -175,6 +174,13 @@ public class GameBoardController {
         }
     }
 
+    /**
+     * Method that checks if at least one of the adjacent {@link PlayableItemTile PlayableItemTiles}
+     * is also available.
+     *
+     * @return {@code true} whether there is at least a {@link PlayableItemTile PlayableItemTile} adjacent and available,
+     * {@code false} otherwise
+     */
     private boolean checkAdjacentAvailability() {
 
         for(int i =0; i<9; i++){

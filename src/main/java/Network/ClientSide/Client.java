@@ -12,7 +12,7 @@ import java.rmi.server.UnicastRemoteObject;
 
 /**
  * This abstract class contains all the methods that provides the expected functionalities provided
- * by a {@link RemoteClientImplementation RemoteClient}
+ * by a {@link RemoteClientImplementation RemoteClient}.
  */
 public abstract class Client extends UnicastRemoteObject implements ViewObserver, LivingRoomObserver, ShelfObserver, PlayerObserver, GameModelObserver, PersonalGoalObserver {
 
@@ -27,7 +27,7 @@ public abstract class Client extends UnicastRemoteObject implements ViewObserver
     /**
      * This method creates an instance of {@link Client Client} and saves the
      * network parameters of the {@link Network.ServerSide.RemoteServerImplementation RemoteServer}
-     * it will try to log into
+     * it will try to log into.
      *
      * @param serverAddress the ipAddress of the {@link Network.ServerSide.RemoteServerImplementation RemoteServer}
      * @param portNum the number of the socketPort of the {@link Network.ServerSide.RemoteServerImplementation RemoteServer}
@@ -44,7 +44,7 @@ public abstract class Client extends UnicastRemoteObject implements ViewObserver
     /**
      * This method sets the {@code nickname} of the {@link Player Player}
      * using this {@link RemoteClientImplementation RemoteClient} in the {@link RemoteClientImplementation RemoteClient}
-     * itself
+     * itself.
      *
      * @param nickName a {@link String String} containing the {@code nickname} of the {@link Player Player}
      */
@@ -77,7 +77,8 @@ public abstract class Client extends UnicastRemoteObject implements ViewObserver
     }
 
     /**
-     * This method creates the connection between the {@link Client Client} and the {@link Network.ServerSide.RemoteServerImplementation RemoteServer}
+     * This method creates the connection between the {@link Client Client} and the {@link Network.ServerSide.RemoteServerImplementation RemoteServer}.
+     *
      * @throws Exception  an {@link Exception Exception} that notifies an error in the connection
      * with the {@link Network.ServerSide.RemoteServerImplementation RemoteServer}
      */
@@ -91,5 +92,4 @@ public abstract class Client extends UnicastRemoteObject implements ViewObserver
      * @param event the {@link Event Event} that triggered the notification
      */
     public abstract void onModelModify(TurnView turnView, Event event);
-
 }

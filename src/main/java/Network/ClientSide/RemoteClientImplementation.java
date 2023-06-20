@@ -19,6 +19,12 @@ import java.rmi.registry.Registry;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * This Class is the actual Client with all its necessary features fully implemented. Some methods in it
+ * are sent to the {@link Network.ServerSide.RemoteServerImplementation RemoteServer} through the
+ * {@link RemoteClientInterface RemoteClientInterface}, while others are meant to enable the communication
+ * between a {@link RemoteClientImplementation RemoteClient} and the {@link View View} linked to it.
+ */
 public  class RemoteClientImplementation extends Client implements RemoteClientInterface, ViewObserver, LivingRoomObserver, ShelfObserver, PlayerObserver, GameModelObserver, PersonalGoalObserver {
 
     @Serial
@@ -795,10 +801,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
         server.onMessage(new WriteInChatMessage(Nickname, chat,receiver));
     }
 
-
-
-
-
+    @Override
     public void onUpdateShowLivingRoom(){
         this.userInterface.showLivingRoom(turnView.getLivingRoom());
     }
@@ -835,7 +838,6 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
         this.userInterface.showNickCurrentPlayer(turnView.getNicknameCurrentPlayer());
     }
 
-    //---------------------------------//
     @Override
     public void onUpdateModelListPlayers(TurnView turnView, Player player) {
         onModelModify(turnView, new UpdatePlayersListEvent(player));
@@ -851,6 +853,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
         onModelModify(turnView, new UpdatePlayersNumberEvent(playersNumber));
     }
 
+    @Override
     public void onUpdateTilesAvailability(TurnView turnView){
         onModelModify(turnView, new UpdateTileAvailabilityEvent());
     }

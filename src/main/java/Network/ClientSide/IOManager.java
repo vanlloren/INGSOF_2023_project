@@ -4,13 +4,13 @@ import client.view.View;
 
 /**
  * This Class allows the {@link Client Client} to begin the process of initialization
- * of the connection with a {@link Network.ServerSide.RemoteServerImplementation RemoteServer}
+ * of the connection with a {@link Network.ServerSide.RemoteServerImplementation RemoteServer}.
  */
 public class IOManager{
 
     /**
      * This method creates an instance of {@link RemoteClientImplementation RemoteClient} and
-     * launches the process of connection with the {@link Network.ServerSide.RemoteServerImplementation RemoteServer}
+     * launches the process of connection with the {@link Network.ServerSide.RemoteServerImplementation RemoteServer}.
      *
      * @param address the ipAddress of the {@link Network.ServerSide.RemoteServerImplementation RemoteServer}
      * @param port the port of the {@link Network.ServerSide.RemoteServerImplementation RemoteServer}
