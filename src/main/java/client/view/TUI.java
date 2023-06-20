@@ -30,7 +30,7 @@ public class TUI extends ViewObservable implements View {
 
     /**
      * This method creates an instance of {@link TUI TUI}.
-     * It binds the attribute {@link PrintStream out} to the {@code System.out}
+     * It binds the attribute {@link PrintStream out} to the {@code System.out}.
      */
     public TUI(){
         this.out = System.out;
