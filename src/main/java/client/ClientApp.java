@@ -1,5 +1,7 @@
 package client;
 
+import Network.ClientSide.RemoteClientImplementation;
+import Network.ServerSide.RemoteServerImplementation;
 import client.view.TUI;
 
 import java.net.NetworkInterface;
@@ -7,7 +9,24 @@ import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 
+/**
+ * This Class is the launcher of the ClientSide part of <strong>MyShelfie</strong>
+ * application. By running this Class a new <strong>MyShelfieClient</strong> will be created.
+ */
 public class ClientApp {
+
+    /**
+     * The root method of the process that has the responsibility of creating and realizing the correct
+     * setup of the {@link RemoteClientImplementation RemoteClient}.
+     * In detail, the method focuses on checking all the {@link NetworkInterface NetworkInterfaces} of the host
+     * to set the correct hostname with whom the {@link java.rmi.registry.Registry RMIRegistry} will be called.
+     * The method skips all the virtual {@link NetworkInterface NetworkInterfaces} and the eventual {@link NetworkInterface NetworkInterfaces}
+     * that are created on the host by software that provide Virtualization services.
+     * This way it assures that the {@link Network.ClientSide.RemoteClientImplementation RemoteClient} will
+     * later be reachable by the {@link RemoteServerImplementation RemoteServer}.
+     *
+     * @param args an Array {@link String String} containing the eventual arguments
+     */
     public static void main(String[] args) throws InterruptedException {
 
         boolean cliSelector = true; // default è true, se vogliamo usare anche gui si può cambiare
@@ -56,7 +75,5 @@ public class ClientApp {
         } else {
             //eventuale gestione apertura GUI
         }
-
-        //se si decide per socket + rmi si può aggiungere anche la scelta tra le due sempre da linea di comando
     }
 }

@@ -31,7 +31,15 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
     private ArrayList<PlayableItemTile> turnTiles = null;
 
 
-
+    /**
+     * This method creates an instance of {@link RemoteClientImplementation RemoteClient}
+     *
+     * @param address the ipAddress of the {@link Network.ServerSide.RemoteServerImplementation RemoteServer}
+     * @param port th port of the {@link Network.ServerSide.RemoteServerImplementation RemoteServer}
+     * @param userInterface the {@link View View} of the user
+     * @throws RemoteException  an {@link Exception Exception} that notifies an error in the connection
+     *      * with the {@link Network.ServerSide.RemoteServerImplementation RemoteServer}
+     */
     public RemoteClientImplementation(String address, int port, View userInterface) throws RemoteException {
         super(address, port, userInterface);
     }
@@ -912,6 +920,10 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
         onModelModify(turnView, new UpdateStatusCommonGoal1Event(turnView.getNicknameCurrentPlayer()));
     }
 
+    /**
+     * This method creates a new instance of {@link ChatThread ChatTread} to deal
+     * with the current chat message
+     */
     public void chatThread(){
         ChatThread thread = new ChatThread(userInterface);
         thread.start();
@@ -922,7 +934,6 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
         }
     }
 
-    //-------------------------Qua scrivo per le shelf---------------------------------//
     @Override
     public void onUpdatePuttedTileIntoShelf(TurnView turnView, int x, int y, PlayableItemTile tile){
         onModelModify(turnView, new UpdatePutShelfTileEvent(x, y, tile));
