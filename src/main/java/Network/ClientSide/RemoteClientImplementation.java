@@ -147,15 +147,15 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
             }
             case UPDATE_PLAYER_POINTS -> {
                 UpdatePlayerPointEvent newEvent = (UpdatePlayerPointEvent) event;
-                System.out.println("....NEW UPDATE:" +newEvent.getPlayer()+" ha adesso "+newEvent.getPoints()+" punti");
+                System.out.println("....NEW UPDATE:" +newEvent.getPlayer()+" hai un nuovo punteggio : "+newEvent.getPoints()+" punti");
             }
             case UPDATE_STATUS_COMMON_GOAL2 -> {
                 UpdateStatusCommonGoal2Event newEvent = (UpdateStatusCommonGoal2Event) event;
-                System.out.println("....NEW UPDATE:"+newEvent.getNickname()+"ha soddisfatto la CommonGoal2");
+                System.out.println("....NEW UPDATE:"+newEvent.getNickname()+" hai soddisfatto la CommonGoal2");
             }
             case UPDATE_STATUS_COMMON_GOAL1 -> {
                 UpdateStatusCommonGoal1Event newEvent = (UpdateStatusCommonGoal1Event) event;
-                System.out.println("....NEW UPDATE:"+newEvent.getNickname()+"ha soddisfatto la CommonGoal1");
+                System.out.println("....NEW UPDATE:"+newEvent.getNickname()+" hai soddisfatto la CommonGoal1");
             }
             case UPDATE_PUT_SHELF_TILE -> {
                 UpdatePutShelfTileEvent newEvent = (UpdatePutShelfTileEvent) event;
