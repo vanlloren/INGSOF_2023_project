@@ -92,7 +92,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
             case UPDATE_PLAYERS_NUMBER -> {
                 UpdatePlayersNumberEvent newEvent = (UpdatePlayersNumberEvent) event;
                 System.out.println("la richiesta di numero di giocatori è stata accettata\n" +
-                        "Questa partita avrà "+newEvent.getPlayersNumber()+" giocaotori");
+                        "Questa partita avrà "+newEvent.getPlayersNumber()+" giocatori");
             }
             case UPDATE_CHAIR_OWNER -> {
                 UpdateChairOwnerEvent newEvent = (UpdateChairOwnerEvent) event;
@@ -104,16 +104,17 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
             case UPDATE_CURR_PLAYER -> {
                 UpdateCurrPlayerEvent newEvent = (UpdateCurrPlayerEvent) event;
                 this.userInterface.setCurrPlayer(newEvent.getCurrPlayer().getNickname());
-                System.out.println("NEW UPDATE: " + newEvent.getCurrPlayer().getNickname() + "è il nuovo giocatore corrente");
+                System.out.println("....NEW UPDATE: " + newEvent.getCurrPlayer().getNickname() + "è il nuovo giocatore corrente");
                 this.userInterface.riprendiEsecuzione();
             }
             case UPDATE_MATCH_WINNER -> {
                 UpdateMatchWinnerEvent newEvent = (UpdateMatchWinnerEvent) event;
-                System.out.println("IL VINCITORE E' : " + newEvent.getMatchWinner());
+
                 if(newEvent.getMatchWinner().equals(this.nickname)) {
                     System.out.println("CONGRATULAZIONI : HAI VINTO LA PARTITA!");
                 }
                 else {
+                    System.out.println("IL VINCITORE E' : " + newEvent.getMatchWinner());
                     System.out.println("HAI PERSO!..RITENTA SARAI PIU FORTUNATO..");
                 }
             }
@@ -639,12 +640,12 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
                 xPos = scanner.nextInt();
                 scanner.nextLine();
             }
-            out.println("Scegli la coordinata in Y sulla shelf dove mettere la tile (Inserimento Valido: [ 0 , 1 , 2 , 3 , 4 ])!\n");
+            out.println("Scegli la coordinata in Y sulla shelf dove mettere la tile (Inserimento Valido: [ 0 , 1 , 2 , 3 , 4 ])!");
             while (!scanner.hasNextInt()) {
                 buffer = scanner.nextLine();
                 if (buffer.equals("chat")) {
                     chatThread();
-                    out.println("Scegli la coordinata in Y sulla shelf dove mettere la tile (Inserimento Valido: [ 0 , 1 , 2 , 3 , 4 ])!\n");
+                    out.println("Scegli la coordinata in Y sulla shelf dove mettere la tile (Inserimento Valido: [ 0 , 1 , 2 , 3 , 4 ])!");
                 } else {
                     if (!buffer.equals("")) {
                         out.println("Input non valido, scrivi 'chat' per usare la chat oppure indica un intero");
@@ -655,12 +656,12 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
             scanner.nextLine();
             while (yPos < 0 || yPos > 4) {
                 out.println("Coordinata non valida riprova");
-                out.println("Scegli la coordinata in Y sulla shelf dove mettere la tile (Inserimento Valido: [ 0 , 1 , 2 , 3 , 4 ])!\n");
+                out.println("Scegli la coordinata in Y sulla shelf dove mettere la tile (Inserimento Valido: [ 0 , 1 , 2 , 3 , 4 ])!");
                 while (!scanner.hasNextInt()) {
                     buffer = scanner.nextLine();
                     if (buffer.equals("chat")) {
                         chatThread();
-                        out.println("Scegli la coordinata in Y sulla shelf dove mettere la tile (Inserimento Valido: [ 0 , 1 , 2 , 3 , 4 ])!\n");
+                        out.println("Scegli la coordinata in Y sulla shelf dove mettere la tile (Inserimento Valido: [ 0 , 1 , 2 , 3 , 4 ])!");
                     } else {
                         if (!buffer.equals("")) {
                             out.println("Input non valido, scrivi 'chat' per usare la chat oppure indica un intero");
