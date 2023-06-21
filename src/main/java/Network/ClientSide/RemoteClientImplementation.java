@@ -76,40 +76,46 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
         this.turnView=turnView;
         switch (event.getEventType()){
             case UPDATE_REFILL_LIVINGROOM -> {
-                System.out.println("NEW UPDATE: LivingRoom has been refilled!");
-                System.out.println("New LivingRoom will now be printed");
+                System.out.println("NEW UPDATE: La LivingRoom è stata riempita di nuovo!");
+                System.out.println("A seguire la stampa della nuova LivingRoom");
                 this.userInterface.showLivingRoom(turnView.getLivingRoom());
             }
             case UPDATE_PLAYERS_LIST -> {
                 UpdatePlayersListEvent newEvent = (UpdatePlayersListEvent) event;
-                System.out.println("...NEW UPDATE: We have a new player: "+newEvent.getPlayer().getNickname()+" has joined this lobby");
+                System.out.println("...NEW UPDATE: : "+newEvent.getPlayer().getNickname()+" si è unito alla partita");
             }
             case UPDATE_END_GAME -> {
                 UpdateEndGameEvent newEvent = (UpdateEndGameEvent) event;
-                System.out.println(newEvent.getPlayer()+" HAS FILLED ALL HIS SHELF FOR FIRST :" +
-                        "lAST TURN IN GAME....");
+                System.out.println(newEvent.getPlayer()+" ha riempito per primo la sua shelf! :" +
+                        "ha ora inizio l'ultimo turno di gioco");
             }
             case UPDATE_PLAYERS_NUMBER -> {
                 UpdatePlayersNumberEvent newEvent = (UpdatePlayersNumberEvent) event;
-                System.out.println("Your request of playerNumber for this game has been accepted\n" +
-                        "This game will have "+newEvent.getPlayersNumber()+" players");
+                System.out.println("la richiesta di numero di giocatori è stata accettata\n" +
+                        "Questa partita avrà "+newEvent.getPlayersNumber()+" giocaotori");
             }
             case UPDATE_CHAIR_OWNER -> {
                 UpdateChairOwnerEvent newEvent = (UpdateChairOwnerEvent) event;
-                System.out.println("....NEW UPDATE: The chair owner is "+newEvent.getPlayer().getNickname());
+                System.out.println("....NEW UPDATE: il chairOwner per questa partita è "+newEvent.getPlayer().getNickname());
             }
             case UPDATE_GAME_HAS_STARTED ->
-                 System.out.println("LOBBY HAS REACHED THE REQUESTED NUMBER OF PLAYER: GAME IS STARTING.....");
+                 System.out.println("numero giocatori richiesto è stato raggiunto: La partita sta per cominciare.....");
 
             case UPDATE_CURR_PLAYER -> {
                 UpdateCurrPlayerEvent newEvent = (UpdateCurrPlayerEvent) event;
                 this.userInterface.setCurrPlayer(newEvent.getCurrPlayer().getNickname());
-                System.out.println("NEW UPDATE: " + newEvent.getCurrPlayer().getNickname() + " is now the current player");
+                System.out.println("NEW UPDATE: " + newEvent.getCurrPlayer().getNickname() + "è il nuovo giocatore corrente");
                 this.userInterface.riprendiEsecuzione();
             }
             case UPDATE_MATCH_WINNER -> {
                 UpdateMatchWinnerEvent newEvent = (UpdateMatchWinnerEvent) event;
-                System.out.println("CONGRATULATION : "+newEvent.getMatchWinner()+" HAS WON THIS GAME");
+                System.out.println("IL VINCITORE E' : " + newEvent.getMatchWinner());
+                if(newEvent.getMatchWinner().equals(this.nickname)) {
+                    System.out.println("CONGRATULAZIONI : HAI VINTO LA PARTITA!");
+                }
+                else {
+                    System.out.println("HAI PERSO!..RITENTA SARAI PIU FORTUNATO..");
+                }
             }
             case UPDATE_GAME_HAS_ENDED -> {
                 this.userInterface.resetGameOn();
@@ -131,24 +137,24 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
             }
             case UPDATE_PERSONAL_GOAL -> {
                 UpdatePersonalGoalEvent newEvent = (UpdatePersonalGoalEvent) event;
-                System.out.println("....NEW UPDATE:The PersonalGoal assigned to player "+newEvent.getPlayer()+" is "+newEvent.getPersonalGoalType());
+                System.out.println("....NEW UPDATE:La personalGoal assegnata al giocatore "+newEvent.getPlayer()+" è "+newEvent.getPersonalGoalType());
             }
             case UPDATE_COMMON_GOAL -> {
                 UpdateCommonGoalEvent newEvent = (UpdateCommonGoalEvent) event;
-                System.out.println("....NEW UPDATE:CommonGoal 1 for this game is "+newEvent.getCommonGoalType1());
-                System.out.println("....NEW UPDATE:CommonGoal 2 for this game is "+newEvent.getCommonGoalType2());
+                System.out.println("....NEW UPDATE: La CommonGoal 1 per questa partita è "+newEvent.getCommonGoalType1());
+                System.out.println("....NEW UPDATE: La CommonGoal 2 per questa partita è "+newEvent.getCommonGoalType2());
             }
             case UPDATE_PLAYER_POINTS -> {
                 UpdatePlayerPointEvent newEvent = (UpdatePlayerPointEvent) event;
-                System.out.println("....NEW UPDATE:" +newEvent.getPlayer()+" has now"+newEvent.getPoints()+" points");
+                System.out.println("....NEW UPDATE:" +newEvent.getPlayer()+" ha adesso "+newEvent.getPoints()+" punti");
             }
             case UPDATE_STATUS_COMMON_GOAL2 -> {
                 UpdateStatusCommonGoal2Event newEvent = (UpdateStatusCommonGoal2Event) event;
-                System.out.println("....NEW UPDATE:"+newEvent.getNickname()+"has satisfied CommonGoal2");
+                System.out.println("....NEW UPDATE:"+newEvent.getNickname()+"ha soddisfatto la CommonGoal2");
             }
             case UPDATE_STATUS_COMMON_GOAL1 -> {
                 UpdateStatusCommonGoal1Event newEvent = (UpdateStatusCommonGoal1Event) event;
-                System.out.println("....NEW UPDATE:"+newEvent.getNickname()+"has satisfied CommonGoal1");
+                System.out.println("....NEW UPDATE:"+newEvent.getNickname()+"ha soddisfatto la CommonGoal1");
             }
             case UPDATE_PUT_SHELF_TILE -> {
                 UpdatePutShelfTileEvent newEvent = (UpdatePutShelfTileEvent) event;
