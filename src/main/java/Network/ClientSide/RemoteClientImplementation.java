@@ -19,6 +19,12 @@ import java.rmi.registry.Registry;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * This Class is the actual Client with all its necessary features fully implemented. Some methods in it
+ * are sent to the {@link Network.ServerSide.RemoteServerImplementation RemoteServer} through the
+ * {@link RemoteClientInterface RemoteClientInterface}, while others are meant to enable the communication
+ * between a {@link RemoteClientImplementation RemoteClient} and the {@link View View} linked to it.
+ */
 public  class RemoteClientImplementation extends Client implements RemoteClientInterface, ViewObserver, LivingRoomObserver, ShelfObserver, PlayerObserver, GameModelObserver, PersonalGoalObserver {
 
     @Serial
@@ -31,7 +37,15 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
     private ArrayList<PlayableItemTile> turnTiles = null;
 
 
-
+    /**
+     * This method creates an instance of {@link RemoteClientImplementation RemoteClient}
+     *
+     * @param address the ipAddress of the {@link Network.ServerSide.RemoteServerImplementation RemoteServer}
+     * @param port th port of the {@link Network.ServerSide.RemoteServerImplementation RemoteServer}
+     * @param userInterface the {@link View View} of the user
+     * @throws RemoteException  an {@link Exception Exception} that notifies an error in the connection
+     *      * with the {@link Network.ServerSide.RemoteServerImplementation RemoteServer}
+     */
     public RemoteClientImplementation(String address, int port, View userInterface) throws RemoteException {
         super(address, port, userInterface);
     }
@@ -275,6 +289,12 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
                 message = server.onTilePickMessage(nickname, x, y);
             }
         }
+        if(message.isTileAccepted().equals(PickTileResponse.CORRECT_LAST_TILE)){
+            helperList.add(message.getTile());
+            out.println("Massimo numero di tessere scelte. Ora ti verrà chiesto di collocare le tessere nella tua Shelf");
+            this.turnTiles=helperList;
+            return;
+        }
         helperList.add(message.getTile());
 
 
@@ -408,6 +428,12 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
                 }while(y<0 || y>8);
                 message = server.onTilePickMessage(nickname, x, y);
             }
+        }
+        if(message.isTileAccepted().equals(PickTileResponse.CORRECT_LAST_TILE)){
+            helperList.add(message.getTile());
+            out.println("Massimo numero di tessere scelte. Ora ti verrà chiesto di collocare le tessere nella tua Shelf");
+            this.turnTiles=helperList;
+            return;
         }
         helperList.add(message.getTile());
 
@@ -794,10 +820,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
         server.onMessage(new WriteInChatMessage(Nickname, chat,receiver));
     }
 
-
-
-
-
+    @Override
     public void onUpdateShowLivingRoom(){
         this.userInterface.showLivingRoom(turnView.getLivingRoom());
     }
@@ -834,7 +857,6 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
         this.userInterface.showNickCurrentPlayer(turnView.getNicknameCurrentPlayer());
     }
 
-    //---------------------------------//
     @Override
     public void onUpdateModelListPlayers(TurnView turnView, Player player) {
         onModelModify(turnView, new UpdatePlayersListEvent(player));
@@ -850,6 +872,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
         onModelModify(turnView, new UpdatePlayersNumberEvent(playersNumber));
     }
 
+    @Override
     public void onUpdateTilesAvailability(TurnView turnView){
         onModelModify(turnView, new UpdateTileAvailabilityEvent());
     }
@@ -919,6 +942,10 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
         onModelModify(turnView, new UpdateStatusCommonGoal1Event(turnView.getNicknameCurrentPlayer()));
     }
 
+    /**
+     * This method creates a new instance of {@link ChatThread ChatTread} to deal
+     * with the current chat message
+     */
     public void chatThread(){
         ChatThread thread = new ChatThread(userInterface);
         thread.start();
@@ -929,7 +956,6 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
         }
     }
 
-    //-------------------------Qua scrivo per le shelf---------------------------------//
     @Override
     public void onUpdatePuttedTileIntoShelf(TurnView turnView, int x, int y, PlayableItemTile tile){
         onModelModify(turnView, new UpdatePutShelfTileEvent(x, y, tile));

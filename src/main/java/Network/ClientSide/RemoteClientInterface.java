@@ -13,6 +13,14 @@ import java.rmi.RemoteException;
 
 public interface RemoteClientInterface extends Remote, LivingRoomObserver, ShelfObserver, PlayerObserver, GameModelObserver, PersonalGoalObserver {
 
+    /**
+     * This method allows the {@link RemoteClientImplementation RemoteClient} to receive requests through
+     * {@link Message Messages} from the {@link Network.ServerSide.RemoteServerImplementation RemoteServer}
+     *
+     * @param message the {@link Message Message} to send to the {@link RemoteClientImplementation RemoteClient}
+     * @throws RemoteException  an {@link Exception Exception} that notifies an error in the connection
+     *      * with the {@link Network.ServerSide.RemoteServerImplementation RemoteServer}
+     */
     void onMessage(Message message) throws RemoteException;
 
 
@@ -60,5 +68,11 @@ public interface RemoteClientInterface extends Remote, LivingRoomObserver, Shelf
 
     void onUpdateTilesAvailability(TurnView turnView) throws RemoteException;
 
+    /**
+     * This method allows the {@link RemoteClientImplementation RemoteClient} to answer to a ping request from
+     * the {@link Network.ServerSide.RemoteServerImplementation RemoteServer}
+     * @throws RemoteException  an {@link Exception Exception} that notifies an error in the connection
+     *      * with the {@link Network.ServerSide.RemoteServerImplementation RemoteServer}
+     */
     void pingReply() throws RemoteException;
 }

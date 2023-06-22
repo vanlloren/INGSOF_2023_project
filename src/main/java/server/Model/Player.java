@@ -56,8 +56,6 @@ public class Player extends PlayerObservable implements Serializable, SimplePlay
     }
 
 
-    // questi tre metodi vengono chiamati dal controller quando il player ha soddisfatto gli obbiettivi carte
-
     /**
      * Sets the completion state of {@link CommonGoal CommonGoal1} by the {@link Player Player}
      */

@@ -61,7 +61,7 @@ public interface ViewObserver {
     /**
      * Informs the {@link Network.ClientSide.RemoteClientImplementation RemoteClient} that the {@link Player Player}
      * has asked to see the {@link java.util.ArrayList ArrayList} containing the {@link Player Players}
-     * in the current match MODIFICAREEEEEEE
+     * in the current match
      */
     void onUpdateSetPlayersList();
 
