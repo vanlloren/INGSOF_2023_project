@@ -118,11 +118,10 @@ public class TUI extends ViewObservable implements View {
         askPlayerNextMove();
         }while (!isLastTurn);
 
-
-        out.println("E' stato il tuo ultimo turno...attendi risultati finali");
      while (true){
          if (!gameOn) break;
      }
+     System.exit(0);
     }
 
 
@@ -382,8 +381,6 @@ public class TUI extends ViewObservable implements View {
         String num;
         int playersNum = -1;
         boolean isValid = false;
-        out.println("Nickname accettato!");
-        out.println("Il nickname scelto è: " + this.nickname);
         resetNeedNick();
            out.println("Sei il primo giocatore entrato sul server!");
      do{ out.println("Inserisci il numero di giocatori per questa partita [min=2, max=4]:");
@@ -444,7 +441,6 @@ public class TUI extends ViewObservable implements View {
     public void showLoginResults(boolean nickAccepted, String chosenNickname) {
         if(nickAccepted){
             out.println("Login avvenuto con successo!");
-            out.println("Il nickname scelto è: " + this.nickname);
             resetNeedNick();
         }else{
             out.println("Nickname already chosen, choose another nickname!");
