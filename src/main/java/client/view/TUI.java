@@ -218,6 +218,7 @@ public class TUI extends ViewObservable implements View {
         String chatMessage;
         boolean isValid = false;
         boolean isNameValid = false;
+        boolean autoMessage = false;
         int chosenOption = -1;
         String receiver = "Everyone";
         out.println("Se vuoi mandare il messaggio in privato premi 1 altrimenti 0");
@@ -236,21 +237,29 @@ public class TUI extends ViewObservable implements View {
         if (chosenOption == 1) {
             showPlayersList(playerList);
             do{
-                out.println("scrivi il nome del giocatore a cui vuoi scrivere ");
+                out.println("Scrivi il nome del giocatore a cui vuoi inviare un messaggio");
                 receiver = scanner.next();
                 for(Player player : playerList){
                     if (receiver.equals(player.getNickname())) {
-
-                        isNameValid = true;
-                        break;
+                        if(!player.getNickname().equals(nickname)) {
+                            isNameValid = true;
+                            autoMessage = false;
+                            break;
+                        }else{
+                            autoMessage = true;
+                        }
                     }
                 }
-                if(!isNameValid){
+                if(!isNameValid && !autoMessage){
                     out.println("Non ci sono giocatori con quel nickname..riprova");
+
+                }else{
+                    out.println("Non puoi inviare un messaggio a te stesso...riprova");
+                    autoMessage = false;
                 }
             }while(!isNameValid);
         }
-        out.println("Scrivi a seguire il contenuto del tuo messaggio ");
+        out.println("Scrivi a seguire il contenuto del tuo messaggio");
         chatMessage = scanner.nextLine();
         while(chatMessage.equals("")) {
             chatMessage = scanner.nextLine();
@@ -322,7 +331,7 @@ public class TUI extends ViewObservable implements View {
         int portNum;
         do {
             scanner.nextLine();
-            out.println("Inserisci la porta del Server [default = ??]:");
+            out.println("Inserisci la porta del Server [default = 1099]:");
             portNum = scanner.nextInt();
             if (checkPortValidity(portNum)) {
                 checker = true;
@@ -443,7 +452,7 @@ public class TUI extends ViewObservable implements View {
             out.println("Login avvenuto con successo!");
             resetNeedNick();
         }else{
-            out.println("Nickname already chosen, choose another nickname!");
+            out.println("Nickname già scelto, scegli un altro nickname!");
         }
 
     }
@@ -457,15 +466,21 @@ public class TUI extends ViewObservable implements View {
         out.println("Nella partita ci sono "+j+" giocatori :");
         while(i<playerList.size()){
              nickName = playerList.get(i).getNickname();
-            out.print(nickName+" , ");
+             if(i+1==playerList.size()){
+                 out.println(nickName + ".");
+             }else {
+                 out.print(nickName + ", ");
+             }
             i++;
         }
+        out.println();
     }
 
 
     @Override
     public void showNickCurrentPlayer(String Nickname){
-    out.println("The current player is:  "+Nickname);
+    out.println("Il giocatore corrente è: "+Nickname);
+    out.println();
     }
 
 
@@ -492,6 +507,7 @@ public class TUI extends ViewObservable implements View {
                 }
             }
         }
+        out.println();
         out.println();
     }
 
@@ -521,12 +537,14 @@ public class TUI extends ViewObservable implements View {
             }
         }
         out.println();
+        out.println();
     }
 
 
     @Override
     public void showPartialPoint(int point) {
-    out.println("Il tuo punteggio corrente :"+point);
+    out.println("Il tuo punteggio corrente è di : "+point+ " punti");
+    out.println();
     }
 
     /**
@@ -548,7 +566,7 @@ public class TUI extends ViewObservable implements View {
         String connection;
          int connectionType;
         do{
-            out.println("Per favore, indica il tipo di connessione desiderata [0=RMI, 1=Socket]: ");
+            out.println("Per favore, indica il tipo di connessione desiderata [0=RMI]: ");
             connection = scanner.next();
             try{
                connectionType = Integer.parseInt(connection);
