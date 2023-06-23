@@ -38,6 +38,7 @@ public class ServerApp {
      * @param args an Array {@link String String} containing the eventual arguments
      */
     public static void main(String[] args){
+        String catchAddress = null;
 
         try {
             boolean found = false;
@@ -58,6 +59,7 @@ public class ServerApp {
                             System.setProperty("java.rmi.server.hostname", address.get(0));
                             System.out.println("Indirizzo IP: " + address.get(0));
                             System.out.println("Indirizzo IP: " + address.get(1));
+                            catchAddress = address.get(0);
                             found = true;
                         }
                         count++;
@@ -67,6 +69,8 @@ public class ServerApp {
         } catch (SocketException e) {
             throw new RuntimeException(e);
         }
+
+
 
 
         out.println("Benvenuto su MyShelfie! Stai per creare il server per la gestione della partita....");
@@ -82,7 +86,7 @@ public class ServerApp {
         }while (!isValid);
         GameModel gameModel = new GameModel();
         GameController gameController = new GameController(gameModel);
-        RMIServer RMIServerCreator = new RMIServer(serverPort, gameController);
+        RMIServer RMIServerCreator = new RMIServer(serverPort, gameController, catchAddress);
         remoteServer = RMIServerCreator.startRMIServer();
 
         new Thread(() -> {

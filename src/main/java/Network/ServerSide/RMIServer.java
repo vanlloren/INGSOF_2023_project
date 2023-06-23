@@ -18,6 +18,7 @@ import java.net.UnknownHostException;
 public class RMIServer {
     private final int serverRMIPort;
     private final GameController gameController;
+    private final String catchAddress;
 
     /**
      * This method generates an instance of {@link RMIServer RMIServer}
@@ -25,10 +26,12 @@ public class RMIServer {
      * @param port the port on which the {@link RemoteServerImplementation RemoteServer} will be registered
      *             in the {@link Registry RMIRegistry}
      * @param gameController the {@link GameController GameController} of the match
+     * @param catchAddress a {@link String String} containing the address of the {@link Registry RMIRegistry}
      */
-    RMIServer(int port, GameController gameController){
+    RMIServer(int port, GameController gameController, String catchAddress){
         this.serverRMIPort = port;
         this.gameController = gameController;
+        this.catchAddress = catchAddress;
     }
 
     /**
@@ -64,7 +67,7 @@ public class RMIServer {
             try {
                 InetAddress localhost = InetAddress.getLocalHost();
                 String hostname = localhost.getHostName();
-                String ipAddress = localhost.getHostAddress();
+                String ipAddress = catchAddress;
 
                 System.out.println("Hostname: " + hostname);
                 System.out.println("Indirizzo IP: " + ipAddress);
