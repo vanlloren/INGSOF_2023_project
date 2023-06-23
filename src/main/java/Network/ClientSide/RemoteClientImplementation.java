@@ -118,7 +118,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
             case UPDATE_CURR_PLAYER -> {
                 UpdateCurrPlayerEvent newEvent = (UpdateCurrPlayerEvent) event;
                 this.userInterface.setCurrPlayer(newEvent.getCurrPlayer().getNickname());
-                System.out.println("....NEW UPDATE: " + newEvent.getCurrPlayer().getNickname() + "è il nuovo giocatore corrente");
+                System.out.println("....NEW UPDATE: " + newEvent.getCurrPlayer().getNickname() + " è il nuovo giocatore corrente");
                 this.userInterface.riprendiEsecuzione();
             }
             case UPDATE_MATCH_WINNER -> {
@@ -197,17 +197,17 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
         ArrayList<PlayableItemTile> helperList = new ArrayList<>();
         int x;
         int y;
-        String buffer;
 
         System.out.println("In qualsiasi momento dell'esecuzione della sequenza di pesca/inserimento delle tile, scrivere 'chat' permetterà di inviare un messaggio nella chat del gioco!");
         do {
             System.out.println("Scegli la posizione x della prima tessera che vuoi pescare!");
             while(!scanner.hasNextInt()){
-                if(scanner.nextLine().equals("chat")) {
+                String buffer2 = scanner.nextLine();
+                if(buffer2.equals("chat")) {
                     chatThread();
                     System.out.println("Scegli la posizione x della prima tessera che vuoi pescare!");
                 }else{
-                    if (!scanner.nextLine().equals("")) {
+                    if (!buffer2.equals("")) {
                         out.println("Input non valido, scrivi 'chat' per usare la chat oppure indica un intero");
                     }
                 }
@@ -221,11 +221,12 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
         do {
             out.println("Scegli la posizione y della prima tessera che vuoi pescare!");
             while(!scanner.hasNextInt()){
-                if(scanner.nextLine().equals("chat")) {
+                String buffer3 = scanner.nextLine();
+                if(buffer3.equals("chat")) {
                     chatThread();
                     System.out.println("Scegli la posizione y della prima tessera che vuoi pescare!");
                 }else{
-                    if (!scanner.nextLine().equals("")) {
+                    if (!buffer3.equals("")) {
                         out.println("Input non valido, scrivi 'chat' per usare la chat oppure indica un intero");
                     }
                 }
@@ -251,11 +252,12 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
                 do {
                     System.out.println("Scegli la posizione x della prima tessera che vuoi pescare!");
                     while(!scanner.hasNextInt()){
-                        if(scanner.nextLine().equals("chat")) {
+                        String buffer4 = scanner.nextLine();
+                        if(buffer4.equals("chat")) {
                             chatThread();
                             System.out.println("Scegli la posizione x della prima tessera che vuoi pescare!");
                         }else{
-                            if (!scanner.nextLine().equals("")) {
+                            if (!buffer4.equals("")) {
                                 out.println("Input non valido, scrivi 'chat' per usare la chat oppure indica un intero");
                             }
                         }
@@ -270,11 +272,12 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
                 do {
                     out.println("Scegli la posizione y della prima tessera che vuoi pescare!");
                     while(!scanner.hasNextInt()){
-                        if(scanner.nextLine().equals("chat")) {
+                        String buffer5 = scanner.nextLine();
+                        if(buffer5.equals("chat")) {
                             chatThread();
                             System.out.println("Scegli la posizione y della prima tessera che vuoi pescare!");
                         }else{
-                            if (!scanner.nextLine().equals("")) {
+                            if (!buffer5.equals("")) {
                                 out.println("Input non valido, scrivi 'chat' per usare la chat oppure indica un intero");
                             }
                         }
@@ -314,20 +317,15 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
                 return;
             }
             out.println("Simbolo errato!");
-            buffer = scanner.nextLine();
-            while(buffer.equals("chat")){
-                chatThread();
-                buffer = scanner.nextLine();
-            }
-            out.println("Una tessera pescata, vuoi pescare altre tessere? [Y/N]");
-            test = buffer;
-            while(test.equals("chat")){
+            String buffer6 = scanner.nextLine();
+            while(buffer6.equals("chat")){
                 chatThread();
                 out.println("Una tessera pescata, vuoi pescare altre tessere? [Y/N]");
+                buffer6 = scanner.nextLine();
+            }
+            test = buffer6;
+            while(test.equals("")) {
                 test = scanner.nextLine();
-                while(test.equals("")) {
-                    test = scanner.nextLine();
-                }
             }
         }
 
@@ -346,11 +344,12 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
         do {
             System.out.println("Scegli la posizione x della seconda tessera che vuoi pescare!");
             while(!scanner.hasNextInt()){
-                if(scanner.nextLine().equals("chat")) {
+                String buffer8 = scanner.nextLine();
+                if(buffer8.equals("chat")) {
                     chatThread();
                     System.out.println("Scegli la posizione x della seconda tessera che vuoi pescare!");
                 }else{
-                    if (!scanner.nextLine().equals("")) {
+                    if (!buffer8.equals("")) {
                         out.println("Input non valido, scrivi 'chat' per usare la chat oppure indica un intero");
                     }
                 }
@@ -365,11 +364,12 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
         do {
             out.println("Scegli la posizione y della seconda tessera che vuoi pescare!");
             while(!scanner.hasNextInt()){
-                if(scanner.nextLine().equals("chat")) {
+                String buffer9 = scanner.nextLine();
+                if(buffer9.equals("chat")) {
                     chatThread();
                     System.out.println("Scegli la posizione y della seconda tessera che vuoi pescare!");
                 }else {
-                    if (!scanner.nextLine().equals("")) {
+                    if (!buffer9.equals("")) {
                         out.println("Input non valido, scrivi 'chat' per usare la chat oppure indica un intero");
                     }
                 }
@@ -393,11 +393,12 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
                 do {
                     System.out.println("Scegli la posizione x della seconda tessera che vuoi pescare!");
                     while(!scanner.hasNextInt()){
-                        if(scanner.nextLine().equals("chat")) {
+                        String buffer10 = scanner.nextLine();
+                        if(buffer10.equals("chat")) {
                             chatThread();
                             System.out.println("Scegli la posizione x della seconda tessera che vuoi pescare!");
                         }else{
-                            if (!scanner.nextLine().equals("")) {
+                            if (!buffer10.equals("")) {
                                 out.println("Input non valido, scrivi 'chat' per usare la chat oppure indica un intero");
                             }
                         }
@@ -411,11 +412,12 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
                 do {
                     out.println("Scegli la posizione y della seconda tessera che vuoi pescare!");
                     while(!scanner.hasNextInt()){
-                        if(scanner.nextLine().equals("chat")) {
+                        String buffer11 = scanner.nextLine();
+                        if(buffer11.equals("chat")) {
                             chatThread();
                             System.out.println("Scegli la posizione y della seconda tessera che vuoi pescare!");
                         }else{
-                            if (!scanner.nextLine().equals("")) {
+                            if (!buffer11.equals("")) {
                                 out.println("Input non valido, scrivi 'chat' per usare la chat oppure indica un intero");
                             }
                         }
@@ -438,34 +440,29 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
         helperList.add(message.getTile());
 
         out.println("Due tessere pescate, vuoi pescare altre tessere? [Y/N]");
-        test = scanner.nextLine();
-        while(test.equals("chat")){
+        String test2 = scanner.nextLine();
+        while(test2.equals("chat")){
             chatThread();
             out.println("Due tessere pescate, vuoi pescare altre tessere? [Y/N]");
-            test = scanner.nextLine();
+            test2 = scanner.nextLine();
         }
-        while(!test.equals("Y")){
-            if(test.equals("N")){
+        while(!test2.equals("Y")){
+            if(test2.equals("N")){
                 this.turnTiles=helperList;
                 server.onMessage(new StopPickingMessage(nickname));
                 out.println("Ora ti verrà chiesto di collocare le tessere nella tua Shelf");
                 return;
             }
             out.println("Simbolo errato!");
-            buffer = scanner.nextLine();
-            while(buffer.equals("chat")){
+            String buffer12 = scanner.nextLine();
+            while(buffer12.equals("chat")){
                 chatThread();
-                buffer = scanner.nextLine();
-            }
-            out.println("Due tessere pescate, vuoi pescare altre tessere? [Y/N]");
-            test = scanner.nextLine();
-            while(test.equals("chat")){
-                chatThread();
+                buffer12 = scanner.nextLine();
                 out.println("Due tessere pescate, vuoi pescare altre tessere? [Y/N]");
-                test = scanner.nextLine();
-                while(test.equals("")) {
-                    test = scanner.nextLine();
-                }
+            }
+            test2 = buffer12;
+            while(test2.equals("")) {
+                test2 = scanner.nextLine();
             }
         }
 
@@ -483,11 +480,12 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
         do {
             System.out.println("Scegli la posizione x della terza tessera che vuoi pescare!");
             while(!scanner.hasNextInt()){
-                if(scanner.nextLine().equals("chat")) {
+                String buffer13 = scanner.nextLine();
+                if(buffer13.equals("chat")) {
                     chatThread();
                     System.out.println("Scegli la posizione x della terza tessera che vuoi pescare!");
                 }else{
-                    if (!scanner.nextLine().equals("")) {
+                    if (!buffer13.equals("")) {
                         out.println("Input non valido, scrivi 'chat' per usare la chat oppure indica un intero");
                     }
                 }
@@ -502,11 +500,12 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
         do {
             out.println("Scegli la posizione y della terza tessera che vuoi pescare!");
             while(!scanner.hasNextInt()){
-                if(scanner.nextLine().equals("chat")) {
+                String buffer14 = scanner.nextLine();
+                if(buffer14.equals("chat")) {
                     chatThread();
                     System.out.println("Scegli la posizione y della terza tessera che vuoi pescare!");
                 }else{
-                    if (!scanner.nextLine().equals("")) {
+                    if (!buffer14.equals("")) {
                         out.println("Input non valido, scrivi 'chat' per usare la chat oppure indica un intero");
                     }
                 }
@@ -530,11 +529,12 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
                 do {
                     System.out.println("Scegli la posizione x della terza tessera che vuoi pescare!");
                     while(!scanner.hasNextInt()){
-                        if(scanner.nextLine().equals("chat")) {
+                        String buffer15 = scanner.nextLine();
+                        if(buffer15.equals("chat")) {
                             chatThread();
                             System.out.println("Scegli la posizione x della terza tessera che vuoi pescare!");
                         }else{
-                            if (!scanner.nextLine().equals("")) {
+                            if (!buffer15.equals("")) {
                                 out.println("Input non valido, scrivi 'chat' per usare la chat oppure indica un intero");
                             }
                         }
@@ -548,11 +548,12 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
                 do {
                     out.println("Scegli la posizione y della terza tessera che vuoi pescare!");
                     while(!scanner.hasNextInt()){
-                        if(scanner.nextLine().equals("chat")) {
+                        String buffer16 = scanner.nextLine();
+                        if(buffer16.equals("chat")) {
                             chatThread();
                             System.out.println("Scegli la posizione y della terza tessera che vuoi pescare!");
                         }else{
-                            if (!scanner.nextLine().equals("")) {
+                            if (!buffer16.equals("")) {
                                 out.println("Input non valido, scrivi 'chat' per usare la chat oppure indica un intero");
                             }
                         }
@@ -578,7 +579,6 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
         int yPos;
         int index;
         InsertionReplyMessage message;
-        String buffer;
 
         int i = 0;
         for (PlayableItemTile turnTile : turnTiles) {
@@ -591,7 +591,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
             case 3 -> out.println("Scegli la tile da inserire nella Shelf(Inserimento valido:[ 0 , 1 , 2 ])");
         }
         while (!scanner.hasNextInt()) {
-            buffer = scanner.nextLine();
+            String buffer = scanner.nextLine();
             if (buffer.equals("chat")) {
                 chatThread();
                 switch (turnTiles.size()) {
@@ -616,15 +616,15 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
                     case 3 -> out.println("Scegli la tile da inserire nella Shelf(Inserimento valido:[ 0 , 1 , 2 ])");
                 }
                 while(!scanner.hasNextInt()) {
-                    buffer = scanner.nextLine();
-                    if(buffer.equals("chat")) {
+                    String buffer2 = scanner.nextLine();
+                    if(buffer2.equals("chat")) {
                         chatThread();
                         switch (turnTiles.size()) {
                             case 1 -> out.println("Scegli la tile da inserire nella Shelf(Inserimento valido:[ 0 ])");
                             case 2 -> out.println("Scegli la tile da inserire nella Shelf(Inserimento valido:[ 0 , 1 ])");
                             case 3 -> out.println("Scegli la tile da inserire nella Shelf(Inserimento valido:[ 0 , 1 , 2 ])");    }
                     }else{
-                        if (!buffer.equals("")) {
+                        if (!buffer2.equals("")) {
                             out.println("Input non valido, scrivi 'chat' per usare la chat oppure indica un intero");
                         }
                     }
@@ -637,12 +637,12 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
         do {
             out.println("Scegli la coordinata in X sulla shelf dove mettere la tile(Inserimento Valido:[ 0 , 1 , 2 , 3 , 4 , 5 ])");
             while (!scanner.hasNextInt()) {
-                buffer = scanner.nextLine();
-                if (buffer.equals("chat")) {
+                String buffer3 = scanner.nextLine();
+                if (buffer3.equals("chat")) {
                     chatThread();
                     out.println("Scegli la coordinata in X sulla shelf dove mettere la tile(Inserimento Valido:[ 0 , 1 , 2 , 3 , 4 , 5 ])");
                 } else {
-                    if (!buffer.equals("")) {
+                    if (!buffer3.equals("")) {
                         out.println("Input non valido, scrivi 'chat' per usare la chat oppure indica un intero");
                     }
                 }
@@ -653,12 +653,12 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
                 out.println("Coordinata non valida..riprova");
                 out.println("Scegli la coordinata in X sulla shelf dove mettere la tile(Inserimento Valido:[ 0 , 1 , 2 , 3 , 4 , 5 ])");
                 while (!scanner.hasNextInt()) {
-                    buffer = scanner.nextLine();
-                    if (buffer.equals("chat")) {
+                    String buffer4 = scanner.nextLine();
+                    if (buffer4.equals("chat")) {
                         chatThread();
                         out.println("Scegli la coordinata in X sulla shelf dove mettere la tile(Inserimento Valido:[ 0 , 1 , 2 , 3 , 4 , 5 ])");
                     } else {
-                        if (!buffer.equals("")) {
+                        if (!buffer4.equals("")) {
                             out.println("Input non valido, scrivi 'chat' per usare la chat oppure indica un intero");
                         }
                     }
@@ -668,12 +668,12 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
             }
             out.println("Scegli la coordinata in Y sulla shelf dove mettere la tile (Inserimento Valido: [ 0 , 1 , 2 , 3 , 4 ])!");
             while (!scanner.hasNextInt()) {
-                buffer = scanner.nextLine();
-                if (buffer.equals("chat")) {
+                String buffer5 = scanner.nextLine();
+                if (buffer5.equals("chat")) {
                     chatThread();
                     out.println("Scegli la coordinata in Y sulla shelf dove mettere la tile (Inserimento Valido: [ 0 , 1 , 2 , 3 , 4 ])!");
                 } else {
-                    if (!buffer.equals("")) {
+                    if (!buffer5.equals("")) {
                         out.println("Input non valido, scrivi 'chat' per usare la chat oppure indica un intero");
                     }
                 }
@@ -684,12 +684,12 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
                 out.println("Coordinata non valida riprova");
                 out.println("Scegli la coordinata in Y sulla shelf dove mettere la tile (Inserimento Valido: [ 0 , 1 , 2 , 3 , 4 ])!");
                 while (!scanner.hasNextInt()) {
-                    buffer = scanner.nextLine();
-                    if (buffer.equals("chat")) {
+                    String buffer6 = scanner.nextLine();
+                    if (buffer6.equals("chat")) {
                         chatThread();
                         out.println("Scegli la coordinata in Y sulla shelf dove mettere la tile (Inserimento Valido: [ 0 , 1 , 2 , 3 , 4 ])!");
                     } else {
-                        if (!buffer.equals("")) {
+                        if (!buffer6.equals("")) {
                             out.println("Input non valido, scrivi 'chat' per usare la chat oppure indica un intero");
                         }
                     }
@@ -716,15 +716,15 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
                 case 2 -> out.println("Scegli la tile da inserire nella Shelf(Inserimento valido:[ 0 , 1 ])");
             }
             while (!scanner.hasNextInt()) {
-                buffer = scanner.nextLine();
-                if (buffer.equals("chat")) {
+                String buffer7 = scanner.nextLine();
+                if (buffer7.equals("chat")) {
                     chatThread();
                     switch (turnTiles.size()) {
                         case 1 -> out.println("Scegli la tile da inserire nella Shelf(Inserimento valido:[ 0 ])");
                         case 2 -> out.println("Scegli la tile da inserire nella Shelf(Inserimento valido:[ 0 , 1 ])");
                     }
                 } else {
-                    if (!buffer.equals("")) {
+                    if (!buffer7.equals("")) {
                         out.println("Input non valido, scrivi 'chat' per usare la chat oppure indica un intero");
                     }
                 }
@@ -739,15 +739,15 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
                         case 2 -> out.println("Scegli la tile da inserire nella Shelf(Inserimento valido:[ 0 , 1 ])");
                     }
                     while(!scanner.hasNextInt()) {
-                        buffer = scanner.nextLine();
-                        if(buffer.equals("chat")) {
+                        String buffer8 = scanner.nextLine();
+                        if(buffer8.equals("chat")) {
                             chatThread();
                             switch (turnTiles.size()) {
                                 case 1 -> out.println("Scegli la tile da inserire nella Shelf(Inserimento valido:[ 0 ])");
                                 case 2 -> out.println("Scegli la tile da inserire nella Shelf(Inserimento valido:[ 0 , 1 ])");
                             }
                         }else{
-                            if (!buffer.equals("")) {
+                            if (!buffer8.equals("")) {
                                 out.println("Input non valido, scrivi 'chat' per usare la chat oppure indica un intero");
                             }
                         }
@@ -759,12 +759,12 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
 
             out.println("Scegli la coordinata in X sulla shelf dove mettere la tile (Inserimento valido:[ 0 , 1 , 2 , 3 , 4 , 5 ])");
             while (!scanner.hasNextInt()) {
-                buffer = scanner.nextLine();
-                if (buffer.equals("chat")) {
+                String buffer9 = scanner.nextLine();
+                if (buffer9.equals("chat")) {
                     chatThread();
                     out.println("Scegli la coordinata in X sulla shelf dove mettere la tile (Inserimento valido:[ 0 , 1 , 2 , 3 , 4 , 5 ])");
                 } else {
-                    if (!buffer.equals("")) {
+                    if (!buffer9.equals("")) {
                         out.println("Input non valido, scrivi 'chat' per usare la chat oppure indica un intero");
                     }
                 }
@@ -775,12 +775,12 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
                 out.println("Coordinata non valida..riprova");
                 out.println("Scegli la coordinata in X sulla shelf dove mettere la tile (Inserimento valido:[ 0 , 1 , 2 , 3 , 4 , 5 ])");
                 while (!scanner.hasNextInt()) {
-                    buffer = scanner.nextLine();
-                    if (buffer.equals("chat")) {
+                    String buffer10 = scanner.nextLine();
+                    if (buffer10.equals("chat")) {
                         chatThread();
                         out.println("Scegli la coordinata in X sulla shelf dove mettere la tile (Inserimento valido:[ 0 , 1 , 2 , 3 , 4 , 5 ])");
                     } else {
-                        if (!buffer.equals("")) {
+                        if (!buffer10.equals("")) {
                             out.println("Input non valido, scrivi 'chat' per usare la chat oppure indica un intero");
                         }
                     }
