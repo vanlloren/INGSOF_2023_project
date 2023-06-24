@@ -51,7 +51,7 @@ java -jar Client.jar
 GUI
 ...
 
-Server
+SERVER
 L'esecuzione del server avviene attraverso il seguente comando.
 
 java -jar Server.jar
