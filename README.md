@@ -26,7 +26,7 @@ JavaDoc
 ====================
 
 Jars
-- Jars :
+- Jars : https://github.com/adrianpacheco-01/ing-sw-2023-pacheco-screpis-shytani-vaninetti/tree/master/deliverables/jars
 
 ====================
 
@@ -51,18 +51,18 @@ Funzionalità aggiuntive sviluppate
 - Chat
 
 Esecuzione dei JAR
-Client
+CLIENT
 Il client può essere eseguito utilzzando la modalità CLI e la modalità GUI
 CLI
 E' necessario eseguire il client con un terminale che supporti UTF-8 e gli ANSI escape codes per una migliore esperienza.
 Il comando per eseguire il client in modalità CLI è il seguente.
 
-java -jar client.jar cli
+java -jar Client.jar 
 
 GUI
 ...
 
-Server
+SERVER
 L'esecuzione del server avviene attraverso il seguente comando.
 
-java -jar server.jar
+java -jar Server.jar
