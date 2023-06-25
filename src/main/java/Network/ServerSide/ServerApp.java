@@ -56,10 +56,31 @@ public class ServerApp {
                         inetAddress = inetAddresses.nextElement();
                         address.add(inetAddress.getHostAddress());
                         if (count == 1) {
-                            System.setProperty("java.rmi.server.hostname", address.get(0));
+                            boolean isIPv4 = true;
+                            String[] partedAddress = address.get(0).split("\\.");
+                            if (partedAddress.length != 4) {
+                                isIPv4 = false;
+                            }
+
+                            for (String part : partedAddress) {
+                                try {
+                                    int value = Integer.parseInt(part);
+                                    if (value < 0 || value > 255) {
+                                        isIPv4 = false;
+                                    }
+                                } catch (NumberFormatException e) {
+                                    isIPv4 = false;
+                                }
+                            }
+                            if(isIPv4) {
+                                System.setProperty("java.rmi.server.hostname", address.get(0));
+                                catchAddress = address.get(0);
+                            }else {
+                                System.setProperty("java.rmi.server.hostname", address.get(1));
+                                catchAddress = address.get(1);
+                            }
                             System.out.println("Indirizzo IP: " + address.get(0));
                             System.out.println("Indirizzo IP: " + address.get(1));
-                            catchAddress = address.get(0);
                             found = true;
                         }
                         count++;
