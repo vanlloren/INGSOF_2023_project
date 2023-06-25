@@ -93,7 +93,6 @@ public class TUI extends ViewObservable implements View {
                 out.println("Errore di connessione: indirizzo ip del server sbagliato...riprova");
             }
         }
-        scanner.nextLine();
         new Thread(() -> {
             while(true){
                 try{
@@ -105,6 +104,8 @@ public class TUI extends ViewObservable implements View {
                 }
             }
         }).start();
+
+        scanner.nextLine();
         while (needNick) {
                 try {
                     askNickname();
@@ -113,6 +114,7 @@ public class TUI extends ViewObservable implements View {
                 }
         }
         semaphore.acquire();
+
         notifyObserver(obs -> obs.onUpdateSetPlayersList());
         do{
         askPlayerNextMove();
@@ -218,7 +220,6 @@ public class TUI extends ViewObservable implements View {
         String chatMessage;
         boolean isValid = false;
         boolean isNameValid = false;
-        boolean autoMessage = false;
         int chosenOption = -1;
         String receiver = "Everyone";
         out.println("Se vuoi mandare il messaggio in privato premi 1 altrimenti 0");
@@ -239,23 +240,19 @@ public class TUI extends ViewObservable implements View {
             do{
                 out.println("Scrivi il nome del giocatore a cui vuoi inviare un messaggio");
                 receiver = scanner.next();
-                for(Player player : playerList){
-                    if (receiver.equals(player.getNickname())) {
-                        if(!player.getNickname().equals(nickname)) {
+                if(receiver.equals(nickname)) {
+                    out.println("Non puoi inviare un messaggio a te stesso...riprova");
+                }
+                else {
+                    for (Player player : playerList) {
+                        if (receiver.equals(player.getNickname())) {
                             isNameValid = true;
-                            autoMessage = false;
                             break;
-                        }else{
-                            autoMessage = true;
                         }
                     }
-                }
-                if(!isNameValid && !autoMessage){
-                    out.println("Non ci sono giocatori con quel nickname..riprova");
-
-                }else{
-                    out.println("Non puoi inviare un messaggio a te stesso...riprova");
-                    autoMessage = false;
+                    if(!isNameValid){
+                        out.println("Non ci sono giocatori con quel nickname..riprova");
+                    }
                 }
             }while(!isNameValid);
         }
