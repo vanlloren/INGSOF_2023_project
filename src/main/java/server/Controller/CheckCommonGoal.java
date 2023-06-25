@@ -19,37 +19,37 @@ public class CheckCommonGoal {
     public static boolean checkGoal(Shelf myShelfie, CommonGoalType commonGoalType) { //il parametro è gia passato quando chiamo calculatePoints
 
         switch (commonGoalType) {
-            case COMMONGOAL01 -> {
+            case COMMONGOAL04 -> {
                 return RuleCommonGoal.checkSixCouples(myShelfie.getStructure());
             }
-            case COMMONGOAL02 -> {
+            case COMMONGOAL08 -> {
                 return RuleCommonGoal.checkCorner(myShelfie.getStructure());
             }
             case COMMONGOAL03 -> {
                 return RuleCommonGoal.checkFourGroups(myShelfie.getStructure());
             }
-            case COMMONGOAL04 -> {
+            case COMMONGOAL01 -> {
                 return RuleCommonGoal.checkSquare(myShelfie.getStructure());
             }
             case COMMONGOAL05 -> {
                 return RuleCommonGoal.CheckColumn1(myShelfie.getStructure());
             }
-            case COMMONGOAL06 -> {
+            case COMMONGOAL09 -> {
                 return RuleCommonGoal.checkEight(myShelfie.getStructure());
             }
-            case COMMONGOAL07 -> {
+            case COMMONGOAL11 -> {
                 return RuleCommonGoal.checkDiagonal(myShelfie.getStructure());
             }
-            case COMMONGOAL08 -> {
+            case COMMONGOAL07 -> {
                 return RuleCommonGoal.CheckLine1(myShelfie.getStructure());
             }
-            case COMMONGOAL09 -> {
+            case COMMONGOAL02 -> {
                 return RuleCommonGoal.CheckColumn2(myShelfie.getStructure());
             }
-            case COMMONGOAL10 -> {
+            case COMMONGOAL06 -> {
                 return RuleCommonGoal.CheckLine2(myShelfie.getStructure());
             }
-            case COMMONGOAL11 -> {
+            case COMMONGOAL10 -> {
                 return RuleCommonGoal.checkCrux(myShelfie.getStructure());
             }
             default -> {

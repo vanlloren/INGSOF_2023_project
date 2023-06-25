@@ -99,8 +99,11 @@ public class TUI extends ViewObservable implements View {
                     OnVerifyConnection();
                 }
                 catch (RuntimeException e){
-                    out.println("ci sono stati problemi di connessione, partita cancellata");
-                    System.exit(0);
+                    boolean copyGameOn = gameOn;
+                    if(copyGameOn) {
+                        out.println("ci sono stati problemi di connessione, partita cancellata");
+                        System.exit(0);
+                    }
                 }
             }
         }).start();
