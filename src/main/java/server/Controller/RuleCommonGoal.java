@@ -3,7 +3,11 @@ package server.Controller;
 import Util.Colour;
 import server.Model.PlayableItemTile;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Set;
+
+import static server.Controller.GameController.findAdjGroups;
 
 /**
  * Static Class that checks the completion of a {@link server.Model.CommonGoal CommonGoal} by a {@link server.Model.Player Player}
@@ -74,34 +78,17 @@ public class RuleCommonGoal {
      * @return {@code true} if the {@link server.Model.CommonGoal CommonGoal} is completed, {@code false} otherwise
      */
         public static boolean checkFourGroups(PlayableItemTile[][] structure) {
-            Colour[][] matrix= new Colour[6][5];
             int count = 0;
-            for (int i = 0; i < 6; i++) {
-                for (int j = 0; j < 5; j++) {
-                    if (structure[i][j].getColour() != Colour.VOID) {
-                        matrix[i][j] = structure[i][j].getColour();
-                    }
-                    else matrix[i][j] = Colour.VOID;
-                }
-            }
-            for(int i=0;i<6;i++){
-                for(int j=0;j<2;j++){
-                    if(matrix[i][j]!=Colour.VOID&&matrix[i][j+1]!=Colour.VOID&&matrix[i][j+2]!=Colour.VOID&&matrix[i][j+3]!=Colour.VOID
-                    && matrix[i][j]==matrix[i][j+1]&&matrix[i][j]==matrix[i][j+2]&&matrix[i][j]==matrix[i][j+3]){
-                        count++;
-                        matrix[i][j] = Colour.VOID;
-                        matrix[i][j+1] = Colour.VOID;
-                        matrix[i][j+2] = Colour.VOID;
-                        matrix[i][j+3] = Colour.VOID;
-                    }
-                }
-            }
-            for(int i=0;i<3;i++) {
-                for (int j = 0; j < 3; j++) {
-                    if(matrix[i][j]!=Colour.VOID&&matrix[i+1][j]!=Colour.VOID&&matrix[i+2][j]!=Colour.VOID&&matrix[i+3][j]!=Colour.VOID
-                            && matrix[i][j]==matrix[i+1][j]&&matrix[i][j]==matrix[i+2][j]&&matrix[i][j]==matrix[i+3][j]) {
-                        count++;
-                    }
+            HashMap<Colour, ArrayList<Integer>> groups = findAdjGroups(structure);
+            Set<Colour> keys = groups.keySet();
+            for (Colour colour : keys) {
+                ArrayList<Integer> counter = groups.get(colour);
+                for (Integer dim : counter) {
+                  if(dim>=4&&dim < 8) count++;
+                  if(dim>=8&&dim<12 ) count+=2;
+                  if(dim>=12&&dim < 16) count+=3;
+                  if(dim>=16&&dim < 20) count+=4;
+                  if(dim>=20) count+=5;
                 }
             }
             return count >= 4;
