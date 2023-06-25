@@ -253,7 +253,8 @@ public class GameController {
                 game.setCurrPlayer(listPLayer.get(0));
             } else game.setCurrPlayer(listPLayer.get(index + 1));
         } else {
-            if (game.getPlayersInGame().indexOf(game.getCurrPlayer()) == game.getPlayersInGame().indexOf(game.getChairOwner()) - 1) {
+            if (game.getPlayersInGame().indexOf(game.getCurrPlayer()) == game.getPlayersInGame().indexOf(game.getChairOwner()) - 1 ||
+                    ((game.getPlayersInGame().indexOf(game.getCurrPlayer()) == game.getPlayersInGame().size()-1) && (game.getPlayersInGame().indexOf(game.getChairOwner()) == 0))) {
                 CalculateWinner(game.getPlayersInGame());
             } else {
                 if (game.getPlayersInGame().indexOf(game.getCurrPlayer()) == game.getPlayersInGame().size() - 1) {

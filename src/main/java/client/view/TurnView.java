@@ -53,11 +53,18 @@ public class TurnView implements Serializable {
     }
 
     /**
+     * @param nickname the {@code nickname} of the {@link Player Player} who wants to see the
+     * {@link Shelf Shelf}
      * @return the current situation of the {@link Shelf Shelf}
      * simplified through a {@link SimpleLivingRoom SimpleShelf}
      */
-    public SimpleShelf getShelfTable(){
-        return currPlayer.getPersonalShelf();
+    public SimpleShelf getShelfTable(String nickname){
+        for(SimplePlayer player : gameModel.getPlayersInGame()){
+            if(player.getNickname().equals(nickname)){
+                return player.getPersonalShelf();
+            }
+        }
+        return null;
     }
 
     /**

@@ -176,7 +176,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
                 System.out.println("Il giocatore " + turnView.getNicknameCurrentPlayer() + " ha posizionato la tessera "
                         + newEvent.getTile().getColour() + " " + newEvent.getTile().getIdCode() + " nella posizione x=" + newEvent.getXPos() + ", y=" + newEvent.getYPos());
                 System.out.println("A seguire verrà stampata la PlayerShelf aggiornata");
-                this.userInterface.showPlayerShelf(turnView.getShelfTable());
+                this.userInterface.showPlayerShelf(turnView.getShelfTable(turnView.getNicknameCurrentPlayer()));
             }
             case UPDATE_CHAT -> {
                 UpdateChatEvent newEvent = (UpdateChatEvent) event;
@@ -844,7 +844,7 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
 
     @Override
     public void onUpdateShowPlayerShelf(String nickname) {
-        this.userInterface.showPlayerShelf(turnView.getShelfTable());
+        this.userInterface.showPlayerShelf(turnView.getShelfTable(nickname));
     }
 
     @Override
