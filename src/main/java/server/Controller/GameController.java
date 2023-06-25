@@ -410,6 +410,7 @@ public class GameController {
      * @param livingRoom the {@link LivingRoom LivingRoom} on which the checks will be made
      */
     public void calculatePoint(Player player, LivingRoom livingRoom) {
+        System.out.println("sono nel calculate ");
         if (!player.getHasCommonGoal1() && CheckCommonGoal.checkGoal(player.getPersonalShelf(), livingRoom.getCommonGoal1().getCommonGoalType())) {
             Integer i;
             i = player.getPoints();
