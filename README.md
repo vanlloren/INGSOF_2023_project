@@ -51,15 +51,14 @@ Funzionalità aggiuntive sviluppate
 
 Esecuzione dei JAR
 
-CLIENT
-
+- CLIENT:
 Il client può essere eseguito utilzzando la modalità CLI.
 E' necessario eseguire il client con un terminale che supporti UTF-8 e gli ANSI escape codes per una migliore esperienza.
-Il comando per eseguire il client in modalità CLI è il seguente.
+Il comando per eseguire il client in modalità CLI è il seguente:
 
-java -jar Client.jar 
+  java -jar Client.jar 
 
-SERVER
-L'esecuzione del server avviene attraverso il seguente comando.
+- SERVER:
+L'esecuzione del server avviene attraverso il seguente comando:
 
-java -jar Server.jar
+  java -jar Server.jar
