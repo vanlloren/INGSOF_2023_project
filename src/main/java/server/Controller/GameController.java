@@ -1,17 +1,14 @@
 package server.Controller;
-
 import Network.ServerSide.RemoteServerImplementation;
-import Network.message.InsertionReplyMessage;
-import Network.message.TileReplyMessage;
+import Network.message.*;
 import Util.Colour;
 import Util.RandCommonGoal;
+
+import client.view.TurnView;
 import server.Model.*;
 import server.enumerations.PickTileResponse;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Set;
+import java.rmi.RemoteException;
+import java.util.*;
 
 /**
  * This Class is the controller for the {@link GameBoard GameModel} and also for the {@link GameBoardController GameBoardController}.
@@ -97,13 +94,19 @@ public class GameController {
         if (gameBoardController.checkPickedTilesNum()) {
             //controllo su max numero caselle libere shelf
             if (gameBoardController.getControlledGameBoard().getPickedTilesNum() < getGame().getCurrPlayer().getMaxTiles()) {
-                int pickedTiles = gameBoardController.getControlledGameBoard().getPickedTilesNum();
                 tile = gameBoardController.PickManager(x, y);
                 if (tile == null) {
                     if (full) {
                         gameBoardController.getControlledLivingRoom().updateAvailability();
                         if (!gameBoardController.checkIfAdjacentTiles()) {
                             gameBoardController.livingRoomFiller();
+                            gameBoardController.getControlledLivingRoom().notifyObservers(obs -> {
+                                try {
+                                    obs.onUpdateRefillLivingRoom(new TurnView(game));
+                                } catch (RemoteException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            });
                             gameBoardController.getControlledLivingRoom().updateAvailability();
                         }
                         gameBoardController.getControlledGameBoard().getToPlayerTiles().clear();
@@ -112,15 +115,19 @@ public class GameController {
                         return new TileReplyMessage(null, PickTileResponse.INVALID_TILE);
                     }
                 } else {
-                    if(pickedTiles+1 == getGame().getCurrPlayer().getMaxTiles()){
-                        return new TileReplyMessage(tile, PickTileResponse.CORRECT_LAST_TILE);
-                    }
                     return new TileReplyMessage(tile, PickTileResponse.CORRECT_TILE);
                 }
             } else {
                 gameBoardController.getControlledLivingRoom().updateAvailability();
                 if (!gameBoardController.checkIfAdjacentTiles()) {
                     gameBoardController.livingRoomFiller();
+                    gameBoardController.getControlledLivingRoom().notifyObservers(obs -> {
+                        try {
+                            obs.onUpdateRefillLivingRoom(new TurnView(game));
+                        } catch (RemoteException e) {
+                            throw new RuntimeException(e);
+                        }
+                    });
                     gameBoardController.getControlledLivingRoom().updateAvailability();
                 }
                 gameBoardController.getControlledGameBoard().getToPlayerTiles().clear();
@@ -130,6 +137,13 @@ public class GameController {
             gameBoardController.getControlledLivingRoom().updateAvailability();
             if (!gameBoardController.checkIfAdjacentTiles()) {
                 gameBoardController.livingRoomFiller();
+                gameBoardController.getControlledLivingRoom().notifyObservers(obs -> {
+                    try {
+                        obs.onUpdateRefillLivingRoom(new TurnView(game));
+                    } catch (RemoteException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
                 gameBoardController.getControlledLivingRoom().updateAvailability();
             }
             gameBoardController.getControlledGameBoard().getToPlayerTiles().clear();
