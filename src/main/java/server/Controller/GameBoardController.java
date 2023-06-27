@@ -1,12 +1,9 @@
 package server.Controller;
 
 import Util.Colour;
-import client.view.TurnView;
 import server.Model.GameBoard;
 import server.Model.LivingRoom;
 import server.Model.PlayableItemTile;
-
-import java.rmi.RemoteException;
 
 /**
  * This Class is the controller for the {@link GameBoard GameBoard} and its components {@link LivingRoom LivingRoom} and {@link server.Model.ItemBag ItemBag}
@@ -175,14 +172,6 @@ public class GameBoardController {
                 }
             }
         }
-
-        getControlledLivingRoom().notifyObservers(obs -> {
-            try {
-                obs.onUpdateRefillLivingRoom(new TurnView(gameController.getGame()));
-            } catch (RemoteException e) {
-                throw new RuntimeException(e);
-            }
-        });
     }
 
     /**
