@@ -100,6 +100,13 @@ public class GameController {
                         gameBoardController.getControlledLivingRoom().updateAvailability();
                         if (!gameBoardController.checkIfAdjacentTiles()) {
                             gameBoardController.livingRoomFiller();
+                            gameBoardController.getControlledLivingRoom().notifyObservers(obs -> {
+                                try {
+                                    obs.onUpdateRefillLivingRoom(new TurnView(game));
+                                } catch (RemoteException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            });
                             gameBoardController.getControlledLivingRoom().updateAvailability();
                         }
                         gameBoardController.getControlledGameBoard().getToPlayerTiles().clear();
@@ -114,6 +121,13 @@ public class GameController {
                 gameBoardController.getControlledLivingRoom().updateAvailability();
                 if (!gameBoardController.checkIfAdjacentTiles()) {
                     gameBoardController.livingRoomFiller();
+                    gameBoardController.getControlledLivingRoom().notifyObservers(obs -> {
+                        try {
+                            obs.onUpdateRefillLivingRoom(new TurnView(game));
+                        } catch (RemoteException e) {
+                            throw new RuntimeException(e);
+                        }
+                    });
                     gameBoardController.getControlledLivingRoom().updateAvailability();
                 }
                 gameBoardController.getControlledGameBoard().getToPlayerTiles().clear();
@@ -123,6 +137,13 @@ public class GameController {
             gameBoardController.getControlledLivingRoom().updateAvailability();
             if (!gameBoardController.checkIfAdjacentTiles()) {
                 gameBoardController.livingRoomFiller();
+                gameBoardController.getControlledLivingRoom().notifyObservers(obs -> {
+                    try {
+                        obs.onUpdateRefillLivingRoom(new TurnView(game));
+                    } catch (RemoteException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
                 gameBoardController.getControlledLivingRoom().updateAvailability();
             }
             gameBoardController.getControlledGameBoard().getToPlayerTiles().clear();
