@@ -110,6 +110,10 @@ public class GameController {
                     }
                 } else {
                     if(pickedTiles+1 == getGame().getCurrPlayer().getMaxTiles()){
+                        if (!gameBoardController.checkIfAdjacentTiles()) {
+                            gameBoardController.livingRoomFiller();
+                            gameBoardController.getControlledLivingRoom().updateAvailability();
+                        }
                         gameBoardController.getControlledGameBoard().getToPlayerTiles().clear();
                         return new TileReplyMessage(tile, PickTileResponse.CORRECT_LAST_TILE);
                     }
