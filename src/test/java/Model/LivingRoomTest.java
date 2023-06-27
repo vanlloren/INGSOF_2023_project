@@ -745,5 +745,27 @@ public class LivingRoomTest {
         }
     }
 
+    @Test
+    public void testOnError(){
+        LivingRoom livingRoom = new LivingRoom(new GameModel());
+        livingRoom.createGameTable(2);
+
+        ItemTile[][] gameTable = livingRoom.getGameTable();
+        gameTable[2][3] = new PlayableItemTile("BLUE", 85);
+        gameTable[2][5] = new PlayableItemTile("YELLOW", 60);
+        gameTable[3][3] = new PlayableItemTile("CYAN", 100);
+        gameTable[3][2] = new PlayableItemTile("CYAN", 101);
+
+        livingRoom.setGameTable(gameTable);
+
+        livingRoom.updateAvailability();
+        Assertions.assertEquals(4, livingRoom.getAvailableTiles().size());
+        Assertions.assertTrue(livingRoom.getAvailableTiles().contains(gameTable[2][3]));
+        Assertions.assertTrue(livingRoom.getAvailableTiles().contains(gameTable[2][5]));
+        Assertions.assertTrue(livingRoom.getAvailableTiles().contains(gameTable[3][3]));
+        Assertions.assertTrue(livingRoom.getAvailableTiles().contains(gameTable[3][2]));
+
+    }
+
 
 }
