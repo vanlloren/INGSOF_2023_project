@@ -62,3 +62,5 @@ Il comando per eseguire il client in modalità CLI è il seguente:
 L'esecuzione del server avviene attraverso il seguente comando:
 
   java -jar Server.jar
+
+N.B. Per l'esecuzione dei jars è necessario avere installata come minimo la versione 17 di Java
