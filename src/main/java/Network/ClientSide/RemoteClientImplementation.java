@@ -292,6 +292,12 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
                 message = server.onTilePickMessage(nickname, x, y);
             }
         }
+        if(message.isTileAccepted().equals(PickTileResponse.CORRECT_LAST_TILE)){
+            helperList.add(message.getTile());
+            out.println("Massimo numero di tessere scelte. Ora ti verrà chiesto di collocare le tessere nella tua Shelf");
+            this.turnTiles=helperList;
+            return;
+        }
         helperList.add(message.getTile());
 
 
@@ -424,6 +430,12 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
                 }while(y<0 || y>8);
                 message = server.onTilePickMessage(nickname, x, y);
             }
+        }
+        if(message.isTileAccepted().equals(PickTileResponse.CORRECT_LAST_TILE)){
+            helperList.add(message.getTile());
+            out.println("Massimo numero di tessere scelte. Ora ti verrà chiesto di collocare le tessere nella tua Shelf");
+            this.turnTiles=helperList;
+            return;
         }
         helperList.add(message.getTile());
 

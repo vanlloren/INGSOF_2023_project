@@ -94,6 +94,7 @@ public class GameController {
         if (gameBoardController.checkPickedTilesNum()) {
             //controllo su max numero caselle libere shelf
             if (gameBoardController.getControlledGameBoard().getPickedTilesNum() < getGame().getCurrPlayer().getMaxTiles()) {
+                int pickedTiles = gameBoardController.getControlledGameBoard().getPickedTilesNum();
                 tile = gameBoardController.PickManager(x, y);
                 if (tile == null) {
                     if (full) {
@@ -108,6 +109,10 @@ public class GameController {
                         return new TileReplyMessage(null, PickTileResponse.INVALID_TILE);
                     }
                 } else {
+                    if(pickedTiles+1 == getGame().getCurrPlayer().getMaxTiles()){
+                        gameBoardController.getControlledGameBoard().getToPlayerTiles().clear();
+                        return new TileReplyMessage(tile, PickTileResponse.CORRECT_LAST_TILE);
+                    }
                     return new TileReplyMessage(tile, PickTileResponse.CORRECT_TILE);
                 }
             } else {
