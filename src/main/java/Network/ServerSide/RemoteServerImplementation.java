@@ -164,15 +164,15 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
      * @throws RemoteException exception that underlines problems with the RMI Connection
      */
     public void pingAllClient() throws RemoteException {
-        List<RemoteClientInterface> clientsCopy = new ArrayList<>(clientList);
-        for (RemoteClientInterface client : clientsCopy) {
-            try {
-                client.pingReply();
-            } catch (RemoteException e) {
-               System.exit(0);
+            List<RemoteClientInterface> clientsCopy = new ArrayList<>(clientList);
+            for (RemoteClientInterface client : clientsCopy) {
+                try {
+                    client.pingReply();
+                } catch (RemoteException e) {
+                    System.exit(0);
+                }
             }
         }
-    }
     @Override
     public void verifyStillConnected() throws RemoteException{
     }
