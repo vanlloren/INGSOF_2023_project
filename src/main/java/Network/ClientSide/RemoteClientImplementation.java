@@ -102,7 +102,8 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
             case UPDATE_PLAYERS_NUMBER -> {
                 UpdatePlayersNumberEvent newEvent = (UpdatePlayersNumberEvent) event;
                 System.out.println("la richiesta di numero di giocatori è stata accettata\n" +
-                        "Questa partita avrà "+newEvent.getPlayersNumber()+" giocatori");
+                        "Questa partita avrà "+newEvent.getPlayersNumber()+" giocatori\n" +
+                        "In attesa che tutti i giocatori si uniscano alla partita...");
             }
             case UPDATE_CHAIR_OWNER -> {
                 UpdateChairOwnerEvent newEvent = (UpdateChairOwnerEvent) event;

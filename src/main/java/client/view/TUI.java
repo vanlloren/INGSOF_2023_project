@@ -452,7 +452,8 @@ public class TUI extends ViewObservable implements View {
     @Override
     public void showLoginResults(boolean nickAccepted, String chosenNickname) {
         if(nickAccepted){
-            out.println("Login avvenuto con successo!");
+            out.println("Login avvenuto con successo!\n" +
+                    "In attesa che gli altri giocatori si connettano...");
             resetNeedNick();
         }else{
             out.println("Nickname già scelto, scegli un altro nickname!");
