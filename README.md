@@ -11,13 +11,15 @@ Componenti del gruppo:
 
 Documentazione
 UML
-- UML Iniziale Model : https://github.com/adrianpacheco-01/ing-sw-2023-pacheco-screpis-shytani-vaninetti/blob/master/deliverables/uml/UML_Model_Initial_Simplified.png
-- UML Finali : https://github.com/adrianpacheco-01/ing-sw-2023-pacheco-screpis-shytani-vaninetti/blob/master/deliverables/uml/Model.png
-               https://github.com/adrianpacheco-01/ing-sw-2023-pacheco-screpis-shytani-vaninetti/blob/master/deliverables/uml/UML_Model_Final.png
-- UML ServerSide: https://github.com/adrianpacheco-01/ing-sw-2023-pacheco-screpis-shytani-vaninetti/blob/master/deliverables/uml/ServerSide.png
-- UML ClientSide: https://github.com/adrianpacheco-01/ing-sw-2023-pacheco-screpis-shytani-vaninetti/blob/master/deliverables/uml/ClientSide.png
-- UML Controller: https://github.com/adrianpacheco-01/ing-sw-2023-pacheco-screpis-shytani-vaninetti/blob/master/deliverables/uml/Controller.png
-
+- UML Iniziale Model: https://github.com/adrianpacheco-01/ing-sw-2023-pacheco-screpis-shytani-vaninetti/blob/master/deliverables/uml/ModelInitial.png
+- UML Finale Model: https://github.com/adrianpacheco-01/ing-sw-2023-pacheco-screpis-shytani-vaninetti/blob/master/deliverables/uml/ModelFinal.png
+- UML Finale Client: https://github.com/adrianpacheco-01/ing-sw-2023-pacheco-screpis-shytani-vaninetti/blob/master/deliverables/uml/ClientFinal.png
+- UML ServerSide Finale: https://github.com/adrianpacheco-01/ing-sw-2023-pacheco-screpis-shytani-vaninetti/blob/master/deliverables/uml/ServerSideFinal.png
+- UML ClientSide Finale: https://github.com/adrianpacheco-01/ing-sw-2023-pacheco-screpis-shytani-vaninetti/blob/master/deliverables/uml/ClientSideFinal.png
+- UML Finale Controller: https://github.com/adrianpacheco-01/ing-sw-2023-pacheco-screpis-shytani-vaninetti/blob/master/deliverables/uml/ControllerFinal.png
+- UML Iniziale Controller: https://github.com/adrianpacheco-01/ing-sw-2023-pacheco-screpis-shytani-vaninetti/blob/master/deliverables/uml/ControllerInitial.png
+- Sequence Diagram: https://github.com/adrianpacheco-01/ing-sw-2023-pacheco-screpis-shytani-vaninetti/blob/master/deliverables/uml/SequenceDiagram.png
+  
 ====================
 
 JavaDoc
