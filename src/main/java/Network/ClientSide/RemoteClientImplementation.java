@@ -78,10 +78,6 @@ public  class RemoteClientImplementation extends Client implements RemoteClientI
 
             case CHOICE_BEGIN ->
                     this.userInterface.riprendiEsecuzione();
-
-
-
-
         }
     }
 
