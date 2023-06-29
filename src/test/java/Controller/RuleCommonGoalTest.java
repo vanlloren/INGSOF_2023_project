@@ -491,7 +491,7 @@ public class RuleCommonGoalTest  {
         structure[4][1] = new PlayableItemTile("PINK",1);
         structure[3][1] = new PlayableItemTile("PINK",1);
         structure[1][3] = new PlayableItemTile("CYAN",1);
-        structure[20][3] = new PlayableItemTile("CYAN",1);
+        structure[2][3] = new PlayableItemTile("CYAN",1);
         assertTrue(RuleCommonGoal.checkSixCouples(structure));
     }
 

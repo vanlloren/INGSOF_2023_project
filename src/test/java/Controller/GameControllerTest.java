@@ -210,8 +210,8 @@ public class GameControllerTest {
 
         livingRoom.getCommonGoal1().setTokens(2);
         livingRoom.getCommonGoal2().setTokens(2);
-        livingRoom.getCommonGoal1().setCommonGoalType(CommonGoalType.COMMONGOAL02);
-        livingRoom.getCommonGoal2().setCommonGoalType(CommonGoalType.COMMONGOAL06);
+        livingRoom.getCommonGoal1().setCommonGoalType(CommonGoalType.COMMONGOAL08);
+        livingRoom.getCommonGoal2().setCommonGoalType(CommonGoalType.COMMONGOAL09);
 
         try {
             Player player = new Player("lorenzo", new RemoteClientImplementation("localhost", 1099, new TUI()), new GameModel());
