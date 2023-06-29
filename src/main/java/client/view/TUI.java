@@ -133,7 +133,8 @@ public class TUI extends ViewObservable implements View {
     /**
      * This method is responsible for the disconnection handling.
      * It calls internally a method of the {@link Network.ServerSide.RemoteServerImplementation RemoteServer} and
-     * uses a try-catch to see if there is a {@code RemoteException}
+     * uses a try-catch to see if there is a {@code RemoteException} or a {@code NullPointerException} if the
+     * server process crashed
      */
     private void OnVerifyConnection() {
         notifyObserver(obs -> {
@@ -141,6 +142,8 @@ public class TUI extends ViewObservable implements View {
                 obs.onConnectionVerify();
             } catch (RemoteException e) {
                 throw new RuntimeException(e);
+            } catch (NullPointerException e){
+                System.exit(0);
             }
         });
     }

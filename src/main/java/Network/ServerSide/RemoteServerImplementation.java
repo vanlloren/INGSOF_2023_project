@@ -162,13 +162,14 @@ public class RemoteServerImplementation extends UnicastRemoteObject implements R
      * with them is still on and running
      *
      * @throws RemoteException exception that underlines problems with the RMI Connection
+     *  @throws NullPointerException exception when a client terminates its process
      */
     public void pingAllClient() throws RemoteException {
             List<RemoteClientInterface> clientsCopy = new ArrayList<>(clientList);
             for (RemoteClientInterface client : clientsCopy) {
                 try {
                     client.pingReply();
-                } catch (RemoteException e) {
+                } catch (RemoteException | NullPointerException e) {
                     System.exit(0);
                 }
             }
