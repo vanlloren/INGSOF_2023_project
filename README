@@ -49,12 +49,12 @@ Funzionalità aggiuntive sviluppate
 Chat
 Esecuzione dei JAR
 
-CLIENT: Il client può essere eseguito utilzzando la modalità CLI. E' necessario eseguire il client con un terminale che supporti UTF-8 e gli ANSI escape codes per una migliore esperienza. Il comando per eseguire il client in modalità CLI è il seguente:
+CLIENT: Il client può essere eseguito utilzzando la modalità CLI. Il comando per eseguire il client in modalità CLI è il seguente:
 
-java -jar Client.jar
+java -jar softeng13Client.jar
 
 SERVER: L'esecuzione del server avviene attraverso il seguente comando:
 
-java -jar Server.jar
+java -jar softeng13Server.jar
 
 N.B. Per l'esecuzione dei jars è necessario avere installata come minimo la versione 17 di Java
